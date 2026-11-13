@@ -1,10 +1,16 @@
-# Nod
+<p align="center">
+  <img src="web/public/icons/icon.svg" alt="Nod" width="96">
+</p>
 
-A local pull request and issue queue for GitHub.
+<h1 align="center">Nod</h1>
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-blue.svg)](tsconfig.json)
-[![pnpm](https://img.shields.io/badge/pnpm-f69220.svg)](pnpm-workspace.yaml)
+<p align="center">A local pull request and issue queue for GitHub.</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="tsconfig.json"><img src="https://img.shields.io/badge/TypeScript-blue.svg" alt="TypeScript"></a>
+  <a href="pnpm-workspace.yaml"><img src="https://img.shields.io/badge/pnpm-f69220.svg" alt="pnpm"></a>
+</p>
 
 <p align="center">
   <img src="docs/images/review.png" alt="The Nod review queue" width="720">
