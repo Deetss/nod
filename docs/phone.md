@@ -46,9 +46,9 @@ scripts/install-desktop.sh --install-service
 systemctl --user enable --now nod
 ```
 
-The first line installs the app and copies `scripts/nod.service` (a systemd user unit, `Restart=on-failure`, `RestartSec=10`) to `~/.config/systemd/user/`. The second is printed for you to run. The unit needs `gh` and `tailscale` on its `PATH` and a GitHub login that works without a desktop keyring prompt.
+The first line installs the app and copies `scripts/nod.service` (a systemd user unit, `Restart=always`, `RestartSec=10`, so a self-update comes back on the new build) to `~/.config/systemd/user/`. The second is printed for you to run. The unit needs `gh` and `tailscale` on its `PATH` and a GitHub login that works without a desktop keyring prompt.
 
-After `pnpm app:dist`, `scripts/install-desktop.sh --restart` restarts a running service. The phones reload onto the new build when their event stream reconnects. Update phones reaches the ones that were not open.
+The service installs new releases itself (see [Desktop updates](desktop.md#updates)). After a local `pnpm app:dist`, `scripts/install-desktop.sh --restart` restarts a running service. The phones reload onto the new build when their event stream reconnects. Update phones reaches the ones that were not open.
 
 When the desktop window opens, it checks `http://127.0.0.1:4477/api/health`. If the service answers, the window connects to it and starts no second server. Settings > Pair phone then manages the service's devices. Otherwise the app starts its own server. The service reads no desktop settings, and phone access is always on for it.
 

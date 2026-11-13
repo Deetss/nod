@@ -12,6 +12,12 @@ files:
   - electron/assets/**
   - "!**/node_modules/**"
 linux:
-  target: dir
+  target: AppImage
+  artifactName: nod-${version}.AppImage
   category: Development
   icon: electron/assets/icon-512.png
+# Owner and repo come from package.json `repository`.
+publish:
+  provider: github
+  # The updater skips drafts, so publish straight to a release.
+  releaseType: release

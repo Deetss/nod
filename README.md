@@ -79,7 +79,7 @@ scripts/install-desktop.sh
 nod
 ```
 
-See [docs/desktop.md](docs/desktop.md) for updates, autostart and uninstall.
+It then updates itself from GitHub releases. See [docs/desktop.md](docs/desktop.md) for updates, autostart and uninstall.
 
 ## Settings
 

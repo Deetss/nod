@@ -7,7 +7,8 @@ Wants=network-online.target
 Type=simple
 ExecStart=%h/.local/bin/nod serve
 Environment=PATH=%h/.local/bin:%h/.asdf/shims:/usr/local/bin:/usr/bin:/bin
-Restart=on-failure
+# Always, so a self-update that exits cleanly comes back on the new build.
+Restart=always
 RestartSec=10
 
 [Install]

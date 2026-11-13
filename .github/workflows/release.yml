@@ -1,0 +1,42 @@
+name: Release
+
+# Bump package.json in a PR, then tag main with the same version: git tag v0.2.1 && git push origin v0.2.1
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  appimage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Tag matches package.json
+        run: |
+          want="v$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "$want" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json ($want)" >&2
+            exit 1
+          fi
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.18.0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 25
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      # Uploads nod-<version>.AppImage and latest-linux.yml, which the in-app updater reads.
+      - name: Build and publish
+        run: pnpm build && node scripts/build-electron.mjs && pnpm exec electron-builder --linux AppImage --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
