@@ -175,8 +175,9 @@ describe('thread and draft routes', () => {
 
 describe('GitHub inline comment path', () => {
   const HEAD = 'deadbeef';
-  function provider(opts: { review?: { id: string; drafts: number } } = {}) {
+  function provider(opts: { review?: { id: string; drafts: number }; raceLost?: boolean } = {}) {
     const calls: { query?: string; path?: string; body?: Record<string, unknown>; vars?: Record<string, unknown> }[] = [];
+    let review = opts.review;
     const client = {
       lastRate: undefined,
       graphqlRate: undefined,
@@ -188,10 +189,14 @@ describe('GitHub inline comment path', () => {
               pullRequest: {
                 id: 'PR_7',
                 headRefOid: HEAD,
-                reviews: { nodes: opts.review ? [{ id: opts.review.id, comments: { totalCount: opts.review.drafts } }] : [] },
+                reviews: { nodes: review ? [{ id: review.id, comments: { totalCount: review.drafts } }] : [] },
               },
             },
           };
+        }
+        if (query === ADD_PENDING_REVIEW && opts.raceLost) {
+          review = { id: 'PRR_race', drafts: 1 };
+          throw new Error('User can only have one pending review per pull request');
         }
         if (query === ADD_PENDING_REVIEW) return { addPullRequestReview: { pullRequestReview: { id: 'PRR_new' } } };
         return {};
@@ -227,6 +232,26 @@ describe('GitHub inline comment path', () => {
     await p.addReviewComment({ ...ref, ...file, line: 0, side: 'RIGHT' });
     const rest = calls.find((c) => c.path !== undefined);
     expect(rest?.body).toEqual({ body: 'Split this file.', commit_id: HEAD, path: 'a.ts', subject_type: 'file' });
+  });
+
+  it('adds a post-now comment to the pending review when one exists, since GitHub rejects it otherwise', async () => {
+    const { p, calls } = provider({ review: { id: 'PRR_old', drafts: 2 } });
+    const res = await p.addReviewComment({ ...ref, ...line });
+    expect(res).toEqual({
+      ok: true,
+      message: 'Added to your pending review (3 pending). Submit the review to post it.',
+    });
+    expect(calls.some((c) => c.path !== undefined)).toBe(false);
+    const draft = calls.find((c) => c.query === ADD_REVIEW_THREAD);
+    expect(draft?.vars).toMatchObject({ pullRequestReviewId: 'PRR_old', path: 'a.ts', line: 12 });
+  });
+
+  it('uses the pending review a parallel draft created when starting one fails', async () => {
+    const { p, calls } = provider({ raceLost: true });
+    const res = await p.addDraftComment({ ...ref, ...line });
+    expect(res.ok).toBe(true);
+    const draft = calls.find((c) => c.query === ADD_REVIEW_THREAD);
+    expect(draft?.vars).toMatchObject({ pullRequestReviewId: 'PRR_race' });
   });
 
   it('adds a draft to the existing pending review without creating one', async () => {
