@@ -439,14 +439,18 @@
 }
 
 .inline-composer {
-  margin: 8px 16px;
+  /* Pinned to the left edge and as wide as the visible diff column (.df-body is the container). */
+  position: sticky;
+  left: 0;
+  box-sizing: border-box;
+  width: 100cqw;
+  margin: 8px 0;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: var(--bgColor-muted);
   color: var(--fgColor-default);
   font: 400 14px/20px var(--fontStack-system);
   white-space: normal;
-  position: relative;
   z-index: 1;
 }
 
@@ -558,6 +562,7 @@
 
 .ic-foot {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
@@ -565,13 +570,18 @@
 }
 
 .ic-hint {
-  flex: 1;
+  flex: 1 1 260px;
   font-size: 12px;
 }
 
 /* Threads and drafts drawn under their line. Tokens from tokens.css. */
 .thread-card {
-  margin: 8px 16px;
+  /* Pinned to the left edge and as wide as the visible diff column, like .inline-composer. */
+  position: sticky;
+  left: 0;
+  box-sizing: border-box;
+  width: 100cqw;
+  margin: 8px 0;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: var(--bgColor-default);
@@ -579,7 +589,6 @@
   font: 400 14px/20px var(--fontStack-system);
   white-space: normal;
   min-width: 0;
-  max-width: calc(100% - 32px);
   overflow-wrap: anywhere;
 }
 
