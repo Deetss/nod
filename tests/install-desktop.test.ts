@@ -139,6 +139,17 @@ describe('install-desktop.sh', () => {
     expect(res.stdout).not.toContain('Removed');
   });
 
+  it('restarts a running service with --install-service, so the relaunched window cannot take its port', () => {
+    expect(run('--install-service').status).toBe(0);
+    write(join(dir, 'active-nod'), '');
+    const res = run('--install-service');
+    expect(res.status, res.stderr).toBe(0);
+    const calls = systemctlCalls().split('\n');
+    const stop = calls.lastIndexOf('--user stop nod');
+    expect(stop).toBeGreaterThan(-1);
+    expect(calls.lastIndexOf('--user start nod')).toBeGreaterThan(stop);
+  });
+
   it('is safe to re-run', () => {
     oldInstall();
     expect(run().status).toBe(0);
