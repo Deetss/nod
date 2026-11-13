@@ -291,3 +291,46 @@
     transition: none;
   }
 }
+
+/* Resolve controls on an inline thread's path row */
+.tl-code {
+  white-space: nowrap;
+}
+
+.tl-actions {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.tl-hidden-count {
+  margin-left: 2px;
+  flex: none;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+}
+
+/* The failure box sits 4 under the path row and 10 above the card. */
+.tl-thread-error {
+  margin-top: -16px;
+  margin-bottom: 10px;
+}
+
+.tl-thread-error .thread-error {
+  margin: 0;
+  padding: 5px 8px;
+  line-height: 18px;
+}
+
+.tl-thread-error .thread-error > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.tl-thread-error .thread-btn {
+  height: 24px;
+  margin-left: auto;
+}

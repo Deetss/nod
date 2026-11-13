@@ -74,7 +74,7 @@ describe('PrThreadList', () => {
     const text = mount().textContent ?? '';
     expect(text).toContain('Looks odd');
     expect(text).toContain('Please fix');
-    expect(text).toContain('Rename');
+    expect(text).not.toContain('Rename');
   });
 
   it('shows the review state words', () => {

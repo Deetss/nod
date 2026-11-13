@@ -1,4 +1,4 @@
-import { useCallback, useState, type ReactNode } from 'react';
+import { useCallback, useState, type KeyboardEventHandler, type ReactNode } from 'react';
 import { minimizedPill, minimizedSentence } from '../shared/minimized';
 import { EyeIcon } from './ui';
 
@@ -21,17 +21,26 @@ interface EventProps {
   badge?: 'danger' | 'success';
   /** A Nod line: muted text and no badge fill. */
   quiet?: boolean;
+  /** Buttons at the right end of the row. */
+  actions?: ReactNode;
+  onKeyDown?: KeyboardEventHandler<HTMLElement>;
 }
 
 /** A one-row event on the rail: a 28 icon, its text, the age at the right. */
-export function TlEvent({ id, icon, children, age, badge, quiet }: EventProps) {
+export function TlEvent({ id, icon, children, age, badge, quiet, actions, onKeyDown }: EventProps) {
   return (
-    <li className={`tl-item tl-event-row${quiet ? ' tl-quiet' : ''}`} id={id} tabIndex={id ? -1 : undefined}>
+    <li
+      className={`tl-item tl-event-row${quiet ? ' tl-quiet' : ''}`}
+      id={id}
+      tabIndex={id ? -1 : undefined}
+      onKeyDown={onKeyDown}
+    >
       <span className={`tl-icon${badge ? ` tl-badge tl-badge-${badge}` : ''}`} aria-hidden="true">
         {icon}
       </span>
       <span className="tl-text">{children}</span>
       {age ? <span className="tl-age">{age}</span> : null}
+      {actions ? <span className="tl-actions">{actions}</span> : null}
     </li>
   );
 }
@@ -94,11 +103,12 @@ interface TlCardProps extends CardProps {
   /** The 32 avatar, or a verdict badge, on the rail. */
   avatar: ReactNode;
   badge?: 'danger' | 'success';
+  onKeyDown?: KeyboardEventHandler<HTMLElement>;
 }
 
-export function TlCard({ avatar, badge, id, tabIndex, ...card }: TlCardProps) {
+export function TlCard({ avatar, badge, id, tabIndex, onKeyDown, ...card }: TlCardProps) {
   return (
-    <li className="tl-item tl-card-row">
+    <li className="tl-item tl-card-row" onKeyDown={onKeyDown}>
       <span className={`tl-avatar${badge ? ` tl-badge tl-badge-${badge}` : ''}`} aria-hidden="true">
         {avatar}
       </span>

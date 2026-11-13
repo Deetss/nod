@@ -54,7 +54,7 @@ export const FIXTURE_INLINE_THREADS: PrThreadItem[] = [
     58,
     'Cap the response size here. fetch_page reads the whole body into memory, so one large page can exhaust the sandbox. Please stop at 2 MB and add a test for the limit.',
   ),
-  inline(4, '2026-11-08T19:40:00Z', 'build-bot', 'sandbox-api/app.py', 9, "Import of 'json' is not used.", { resolved: true }),
+  inline(4, '2026-11-08T19:40:00Z', 'github-code-quality', 'sandbox-api/app.py', 9, "Import of 'json' is not used.", { resolved: true }),
   inline(
     5,
     '2026-11-08T19:50:00Z',
