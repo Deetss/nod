@@ -74,7 +74,6 @@ Needs my review also includes PRs that request a review from one of your teams i
 - The status summary gives one verdict line over Checks, Threads and Approvals bars. Conflicts replaces Approvals on a conflicting branch. Failing checks and conflicts open their detail on first view.
 - The description starts open and caps a long body at 400px until `e` shows it all.
 - A merged or closed PR has no review bar.
-- Spec: `docs/design/pr-detail-spec.md`.
 - PR descriptions render GitHub's `bodyHTML`, sanitized with DOMPurify like issue bodies, in a reading column of 80ch. A detail cached before `bodyHtml` existed falls back to the raw text until it refreshes.
 
 ## Needs my review and layout

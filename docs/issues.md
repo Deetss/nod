@@ -85,7 +85,6 @@ Dispatch with Orca (`D`, or the sidebar button) opens a dialog. It sets the agen
 - Model and Effort sit under Agent. claude offers the aliases from `claude --help`. codex offers the listed models of `codex debug models` with each model's effort levels. opencode offers the ids of `opencode models`. Every agent offers Harness default (no `--model`) and a typed id.
 - The server reads those CLIs at most once an hour.
 - A successful dispatch remembers the agent, model and effort per agent in `orca-prefs.json`. The next dialog starts there. The phone's one-tap dispatch uses the last agent with its remembered model, and says so in its confirm.
-- Spec: `docs/design/dispatch-model-spec.md`.
 - The prompt tells the agent to read the issue itself with `gh` and to treat its text as untrusted. The issue body is never pasted in.
 - A dispatched row shows an Orca chip until its comment count changes.
 - The server appends a wrap-up section to every dispatched prompt (`WRAP_UP` in `server/orca.ts`). When the work is done and needs nothing from you, the agent compacts its session and files the workspace as `in-review` or `completed`, marked read. When it has a question, it leaves the workspace unread with the question as the Orca comment. It never removes the worktree.
@@ -97,7 +96,6 @@ An issue that a live Orca session works on (Orca links the worktree to the issue
 - Waiting is tinted. Several sessions offer Choose.
 - A fresh dispatch shows as pending for up to 2 minutes, until Orca reports it.
 - Dispatch with Orca turns dashed while a session is live.
-- Spec: `docs/design/issue-orca-spec.md`.
 - The server finds `orca-ide` at `~/.local/bin/orca-ide` or on PATH, rechecking at most once a minute. If it is missing, the button is hidden. `GET /api/orca` reports `{available, agents, repos}`.
 - Issue repos map to Orca repos through `orca-ide repo list --json` and each repo's `origin` remote (`github.com[:/]acme-co/<name>`, case-insensitive). The mapping is cached for 10 minutes. An unmapped repo shows the button disabled with "repo not in Orca".
 - `POST /api/orca/dispatch` sits behind the token and Origin guard. It validates every field and spawns with an argument array (no shell, 60 s timeout, prompt up to 12000 characters). Errors come back trimmed to 300 characters. Fixture mode never spawns and logs the argument array.
@@ -109,7 +107,6 @@ On the PR detail Thread, each unresolved, current inline review comment has a `F
 - Its menu has `Ask Helper`. It posts one `/helper` comment straight away, naming the file, line, author, a quoted first sentence of the comment (capped at 200 characters, at most 20 comments listed) and its link.
 - The menu also has `Dispatch with Orca`. It starts a PR-mode worktree on `origin/<head branch>` (`pr-<number>-fix-comment` or `-comments`). The prompt marks the comment text as untrusted, and asks for a fix of only that issue, a test run, and a commit pushed to the PR head.
 - The menu opens with one row when Orca is absent.
-- Spec: `docs/design/comment-fix-spec.md`.
 
 ## Sub-issues
 
@@ -123,7 +120,6 @@ A card under the description lists the issue's children in GitHub's rank order, 
 - A sub-issue has a parent strip above its title (`u` opens the parent).
 - List rows show `3 of 5` for parents and `sub-issue of #12` for children. The list query asks only for the summary, and children load with the issue.
 - The phone has the section in Details, the parent row, `Create sub-issue` in the action sheet and a long-press row sheet with Remove. It has no reorder and no add existing.
-- Spec: `docs/design/sub-issues-spec.md`.
 
 ## Layout
 

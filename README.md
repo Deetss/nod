@@ -18,33 +18,30 @@ A local pull request and issue queue for GitHub.
 
 ## Features
 
-Review queue and diff. A checks rollup per PR and a diff with a "since my review" mode. The hero image above shows it.
+- **Review queue.** PRs that need your review, your own, your org's and Dependabot's, with a checks rollup and a "since my review" diff.
+- **Inline comments.** Comment on a line, a range or a file. Keep drafts in a pending review, reply to threads and resolve them.
+- **Issues.** Groups by who is on them, including a `With <bot>` group for the issues a bot is working on, plus a Check with the bot action.
+- **Mentions.** Suggestions as you type `@` in a comment.
+- **Closed items.** Look back at closed PRs and issues.
+- **Phone.** The same queue on your phone over Tailscale. See [docs/phone.md](docs/phone.md).
+- **Settings.** Change the app's options from inside the app.
 
-Inline comments. Line, range and file comments, drafts and a pending review, and threads with reply and resolve.
+<p align="center">
+  <img src="docs/images/inline-comments.png" alt="Inline review comments and a thread" width="720">
+</p>
 
-<img src="docs/images/inline-comments.png" alt="Inline review comments in a thread" width="720">
+<p align="center">
+  <img src="docs/images/issues-bot.png" alt="The issues list with a bot group and the check card" width="720">
+</p>
 
-Issues. Issues in groups, including a "With <bot>" group, and a Check with the bot action.
+<p align="center">
+  <img src="docs/images/mentions.png" alt="@mention suggestions under a comment box" width="360">
+  <img src="docs/images/closed.png" alt="The closed items section" width="360">
+</p>
 
-<img src="docs/images/issues-bot.png" alt="The issues list with a bot group" width="720">
-
-Mentions. Suggestions as you type @ in a comment.
-
-<img src="docs/images/mentions.png" alt="@mention suggestions" width="720">
-
-Closed. Look back at closed PRs and issues.
-
-<img src="docs/images/closed.png" alt="Closed PRs and issues" width="720">
-
-Phone. The same queue on your phone over Tailscale. See [docs/phone.md](docs/phone.md).
-
-Settings. Change the app's options from inside the app.
-
-<img src="docs/images/settings.png" alt="The Nod settings panel" width="720">
-
-First run. What you see the first time Nod starts.
-
-<img src="docs/images/first-run.png" alt="Nod on first run" width="720">
+<p align="center">
+  <img src="docs/images/settings.png" alt="The settings dialog" width="720">
+</p>
 
 ## Quick start
 
@@ -58,6 +55,12 @@ pnpm start
 Open the URL that `pnpm start` prints (default `http://127.0.0.1:4477`). Set `PORT` to change the port.
 
 To try the app without GitHub calls, run `NOD_FIXTURES=1 pnpm start` or `pnpm start --fixtures`. It serves synthetic data.
+
+The first time Nod starts it asks which GitHub org to watch. You can skip that and see only your own repos.
+
+<p align="center">
+  <img src="docs/images/first-run.png" alt="Nod on first run" width="560">
+</p>
 
 ## Desktop app
 
@@ -87,7 +90,7 @@ See [docs/settings.md](docs/settings.md) for the keys and the file location.
 - [Desktop](docs/desktop.md): the desktop app.
 - [Issues](docs/issues.md): the Issues view.
 - [Behaviour](docs/behaviour.md): polling, caching and rate limits.
-- [Development](docs/development.md): fixtures, scripts and the design docs.
+- [Development](docs/development.md): fixtures, scripts and contributing.
 
 ## Security
 

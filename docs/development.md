@@ -39,6 +39,4 @@ pnpm android:build
 pnpm android:install
 ```
 
-Design contract and mockups are in `docs/design`. The fidelity deltas are in `docs/design/nod-delta.md`.
-
 Release gate: `scripts/oss-gate.sh` runs the secrets scan, the private-name scrub, typecheck, tests and build.

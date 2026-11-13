@@ -47,4 +47,4 @@ In the diff, a deleted line and the added line that replaces it highlight the wo
 
 Each file header ends in a `…` menu: View file, Edit file and Delete file. They open GitHub on the PR's branch (a deleted file opens on the base branch). GitHub's own commit screen confirms an edit or a delete. Edit and Delete are off for a merged, closed or fork PR, and Edit is off for a binary file.
 
-Spec: `docs/design/file-actions-spec.md`. Dispatch details are in [Issues](issues.md).
+Dispatch details are in [Issues](issues.md).
