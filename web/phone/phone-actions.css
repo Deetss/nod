@@ -1,0 +1,496 @@
+/* B5 action sheet, S4 confirm dialog, S5 composer. */
+
+.ph-scrim {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: rgb(1 4 9 / 60%);
+}
+
+[data-theme='light'] .ph-scrim {
+  background: rgb(31 35 40 / 45%);
+}
+
+.ph-scrim.is-center {
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ph-asheet {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px calc(12px + var(--ph-bottom));
+  background: var(--bgColor-default);
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 116px);
+  animation: ph-up 280ms ease-out;
+}
+
+/* Rows scroll under the pinned title and Cancel. */
+.ph-asheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The bot's split preview sheet. */
+.ph-split-parts {
+  max-height: none;
+  padding: 0 16px 0 36px;
+}
+
+.ph-asheet-title.ph-split-heading {
+  white-space: normal;
+}
+
+.ph-split-note {
+  padding: 0 16px 8px;
+}
+
+.ph-split-actions {
+  display: grid;
+  gap: 8px;
+  padding: 0 16px 16px;
+}
+
+/* Edit title sheet, bottom aligned on the scrim and so on top of the keyboard. */
+.ph-etitle {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 220px;
+  padding: 0 16px calc(12px + var(--ph-bottom));
+  background: var(--bgColor-default);
+  border-radius: 20px 20px 0 0;
+  animation: ph-up 280ms ease-out;
+}
+
+.ph-etitle-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+.ph-etitle-head h2 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.ph-etitle-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 0 11px;
+  font-size: 15px;
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border: 2px solid var(--borderColor-accent-emphasis);
+  border-radius: 10px;
+  caret-color: var(--fgColor-accent);
+}
+
+.ph-etitle-input:focus {
+  outline: none;
+}
+
+.ph-etitle-note {
+  margin: 8px 0 12px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-etitle-err {
+  color: var(--fgColor-danger);
+}
+
+.ph-etitle-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ph-etitle-actions .ph-btn {
+  flex: 1;
+}
+
+.ph-etitle-actions .ph-etitle-cancel {
+  flex: none;
+  min-width: 114px;
+}
+
+.ph-arow.is-dashed {
+  margin: 4px 0;
+  padding: 0 12px;
+  border: 1px dashed var(--borderColor-emphasis);
+  border-radius: 10px;
+  opacity: 1;
+}
+
+.ph-arow.is-dashed .ph-arow-title {
+  color: var(--fgColor-muted);
+}
+
+.ph-arow.is-dashed .ph-arow-sub {
+  white-space: normal;
+}
+
+/* Bot rows at the top of the sheet: Trim primary, Check beside it. Both keep the 48px tap target. */
+.ph-bot-top {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ph-bot-top .ph-aprimary {
+  flex: 1;
+  min-height: 48px;
+  margin-bottom: 0;
+}
+
+.ph-bot-check {
+  flex: 1;
+  min-height: 48px;
+}
+
+.ph-bot-check.is-wide {
+  flex: 1 1 100%;
+}
+
+.ph-bot-foot {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* Emphasis on existing rows: primary for the verdict's follow-up, neutral for Not planned. */
+.ph-arow.is-primary .ph-arow-title {
+  color: var(--fgColor-accent);
+}
+
+.ph-arow.is-neutral .ph-arow-title {
+  color: var(--fgColor-default);
+}
+
+.ph-seg button.is-primary {
+  background: var(--button-primary-bgColor-rest);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-seg button.is-neutral {
+  background: var(--bgColor-neutral-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-asheet-title {
+  margin: 12px 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-aprimary {
+  width: 100%;
+  min-height: 52px;
+  margin-bottom: 8px;
+}
+
+.ph-arow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+  text-align: left;
+}
+
+.ph-arow:disabled {
+  opacity: 0.6;
+}
+
+/* Notification switch rows: the description may wrap, the switch sits on the right. */
+.ph-nrow {
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.ph-nrow .ph-arow-sub {
+  white-space: normal;
+}
+
+.ph-nrow .ph-switch {
+  flex: none;
+}
+
+.ph-arow-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ph-arow-title,
+.ph-arow-sub {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-arow-title {
+  font-weight: 600;
+}
+
+.ph-arow-sub {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-pad-x {
+  margin-left: 0;
+}
+
+.ph-seg {
+  display: flex;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ph-seg button {
+  flex: 1;
+  height: 48px;
+  background: none;
+  border: 0;
+}
+
+.ph-seg button + button {
+  border-left: 1px solid var(--borderColor-default);
+}
+
+.ph-seg-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ph-seg-wrap button {
+  height: 44px;
+}
+
+.ph-seg-wrap button:nth-child(3n + 1) {
+  border-left: 0;
+}
+
+.ph-seg-wrap button:nth-child(n + 4) {
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.ph-seg-wrap button[aria-pressed='true'] {
+  font-weight: 600;
+  background: var(--bgColor-neutral-muted);
+}
+
+.ph-acancel {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.ph-confirm {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 80%;
+  overflow-y: auto;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 14px;
+}
+
+/* Above the keyboard the confirm may fill the shrunken scrim and scroll. */
+.ph-scrim.is-center.has-keyboard {
+  padding: 12px 24px;
+}
+
+.has-keyboard .ph-confirm {
+  max-height: 100%;
+}
+
+.ph-confirm h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.ph-confirm p {
+  margin: 0;
+}
+
+/* What a dispatch launches: 14/600 line, 12/400 muted note */
+.ph-confirm .ph-launch {
+  display: flex;
+  flex-direction: column;
+}
+
+.ph-launch strong {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.ph-launch .ph-muted {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.ph-confirm .ph-done {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fgColor-success);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ph-confirm .ph-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-danger-emphasis);
+  border-radius: 8px;
+}
+
+/* Fix failing checks sheets. */
+.ph-fix-label {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-fix-field {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 8px;
+}
+
+.ph-clip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Fill plus a 3px ring so the weightier button never relies on red alone. */
+.ph-btn.is-danger {
+  background: var(--bgColor-danger-emphasis);
+  border-color: var(--bgColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+  box-shadow: 0 0 0 3px var(--borderColor-danger-emphasis, var(--bgColor-danger-emphasis));
+  margin: 3px;
+}
+
+.ph-btn.is-danger:disabled {
+  opacity: 0.5;
+}
+
+.ph-composer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 75;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--ph-top) 16px 12px;
+  background: var(--bgColor-default);
+}
+
+.ph-composer-head h2 {
+  margin: 12px 0 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-composer-field {
+  flex: 1;
+  min-height: 96px;
+  box-sizing: border-box;
+  padding: 12px;
+  resize: none;
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  border: 2px solid var(--borderColor-accent-emphasis, var(--bgColor-accent-emphasis));
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 24px;
+  caret-color: var(--fgColor-accent);
+}
+
+.ph-composer-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ph-composer-tools .ph-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+}
+
+.ph-composer-md {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.ph-composer-actions {
+  display: flex;
+  gap: 8px;
+  padding-bottom: calc(var(--ph-bottom) - 12px);
+}
+
+.ph-composer-actions .ph-btn {
+  flex: 1;
+}
+
+.ph-composer-actions .ph-btn.is-primary {
+  flex: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-asheet {
+    animation: ph-fade 100ms linear;
+  }
+}

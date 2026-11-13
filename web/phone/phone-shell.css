@@ -1,0 +1,253 @@
+/* Phone shell: app bar, tab bar, chips, sheet. Spec: docs/design/mobile-spec.md */
+
+.phone {
+  /* The real inset only: in the TWA, Android draws the status bar outside the page and reports 0. */
+  --ph-top: env(safe-area-inset-top, 0px);
+  --ph-bottom: max(24px, env(safe-area-inset-bottom));
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  font-family: var(--fontStack-system);
+  font-size: 15px;
+  line-height: 22px;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.phone button,
+.phone input {
+  font: inherit;
+  color: inherit;
+}
+
+.phone button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* App bar: 56px under the top safe-area inset. */
+.ph-appbar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: content-box;
+  height: 56px;
+  padding: var(--ph-top) 8px 0 16px;
+  background: var(--bgColor-inset);
+  border-bottom: 1px solid var(--borderColor-default);
+}
+
+.ph-apptitle {
+  flex: 1;
+  min-width: 0;
+  margin: 0 8px 0 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ph-iconbtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 10px;
+  color: var(--fgColor-default);
+  cursor: pointer;
+}
+
+.ph-iconbtn:active {
+  border-color: var(--borderColor-emphasis);
+}
+
+.ph-search {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-accent-emphasis);
+  border-radius: 10px;
+}
+
+.ph-menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.ph-menu {
+  position: absolute;
+  z-index: 11;
+  top: calc(var(--ph-top) + 52px);
+  right: 8px;
+  min-width: 220px;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ph-menu button {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--borderColor-hairline);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ph-menu button:last-child {
+  border-bottom: 0;
+}
+
+.ph-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tab bar: 64px plus the gesture inset. */
+.ph-tabbar {
+  position: relative;
+  flex: none;
+  display: flex;
+  box-sizing: content-box;
+  height: 64px;
+  padding-bottom: var(--ph-bottom);
+  background: var(--bgColor-inset);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.ph-tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 64px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-muted);
+  font-size: 13px;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+.ph-tab-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.ph-tab.is-active {
+  color: var(--fgColor-default);
+  font-weight: 600;
+}
+
+.ph-tab.is-active .ph-tab-icon {
+  color: var(--fgColor-accent);
+}
+
+/* The active pill: one slot wide, it follows --swipe-pos under the icons. */
+.ph-tab-ind {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: calc(100% / var(--tab-count));
+  height: 32px;
+  transform: translateX(calc(var(--swipe-pos, 0) * 100%));
+  pointer-events: none;
+}
+
+.ph-tab-ind::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 32px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: var(--bgColor-accent-muted);
+}
+
+.ph-count {
+  position: absolute;
+  top: -2px;
+  right: 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  background: var(--bgColor-accent-emphasis);
+  box-shadow: 0 0 0 2px var(--bgColor-inset);
+  color: var(--fgColor-onEmphasis);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Chip row: the only horizontal scroller on a tab. */
+.ph-chips {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--bgColor-default);
+  border-bottom: 1px solid var(--borderColor-hairline);
+}
+
+.ph-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.ph-chip {
+  flex: none;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 22px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ph-chip.is-selected {
+  background: var(--bgColor-accent-emphasis);
+  border-color: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-chip-count {
+  margin-left: 6px;
+}
+

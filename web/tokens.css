@@ -1,0 +1,142 @@
+/* Primer functional tokens (see docs/design/tokens.md). Dark is the default. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bgColor-default: #0d1117;
+  --bgColor-muted: #151b23;
+  --bgColor-inset: #010409;
+  --bgColor-neutral-muted: #656c7633;
+  --bgColor-accent-muted: #388bfd1a;
+  --bgColor-accent-emphasis: #1f6feb;
+  --bgColor-success-muted: #2ea04326;
+  --bgColor-success-emphasis: #238636;
+  --bgColor-danger-muted: #f851491a;
+  --bgColor-attention-muted: #bb800926;
+  --bgColor-attention-emphasis: #9e6a03;
+  --fgColor-default: #f0f6fc;
+  --fgColor-muted: #9198a1;
+  --fgColor-onEmphasis: #ffffff;
+  --fgColor-accent: #4493f8;
+  --fgColor-success: #3fb950;
+  --fgColor-danger: #f85149;
+  --fgColor-attention: #d29922;
+  --borderColor-default: #3d444d;
+  --borderColor-muted: #3d444db3;
+  --borderColor-hairline: #3d444d80;
+  --bgColor-code-inline: #656c761f;
+  --borderColor-emphasis: #656c76;
+  --borderColor-accent-emphasis: #1f6feb;
+  --borderColor-success-emphasis: #238636;
+  --borderColor-danger-emphasis: #da3633;
+  --borderColor-attention-emphasis: #9e6a03;
+  --button-default-bgColor-rest: #212830;
+  --button-default-bgColor-hover: #262c36;
+  --button-primary-bgColor-rest: #238636;
+  --button-primary-bgColor-hover: #2ea043;
+  --diffBlob-addition-bgColor-line: #2ea04326;
+  --diffBlob-addition-bgColor-num: #3fb9504d;
+  --diffBlob-deletion-bgColor-line: #f851491a;
+  --diffBlob-deletion-bgColor-num: #f851494d;
+  --diffBlob-additionWord-bgColor: #2ea04366;
+  --diffBlob-deletionWord-bgColor: #f8514966;
+  --diffBlob-hunk-bgColor: #388bfd1a;
+  --fgColor-done: #ab7df8;
+  --bgColor-done-muted: #ab7df826;
+  --bgColor-done-emphasis: #8957e5;
+  --borderColor-done-emphasis: #8957e5;
+  --prettylights-syntax-keyword: #ff7b72;
+  --prettylights-syntax-string: #a5d6ff;
+  --prettylights-syntax-constant: #79c0ff;
+  --prettylights-syntax-entity-tag: #7ee787;
+  --prettylights-syntax-comment: #9ba3ad;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-inset: #f6f8fa;
+  --bgColor-neutral-muted: #818b981f;
+  --bgColor-accent-muted: #ddf4ff;
+  --bgColor-accent-emphasis: #0969da;
+  --bgColor-success-muted: #dafbe1;
+  --bgColor-success-emphasis: #1f883d;
+  --bgColor-danger-muted: #ffebe9;
+  --bgColor-attention-muted: #fff8c5;
+  --bgColor-attention-emphasis: #9a6700;
+  --fgColor-default: #1f2328;
+  --fgColor-muted: #59636e;
+  --fgColor-onEmphasis: #ffffff;
+  --fgColor-accent: #0969da;
+  --fgColor-success: #1a7f37;
+  --fgColor-danger: #d1242f;
+  /* Deviation from Primer (#9a6700): 6.6:1 on attention-muted at 12px. */
+  --fgColor-attention: #7d4e00;
+  --borderColor-default: #d1d9e0;
+  --borderColor-muted: #d1d9e0b3;
+  --borderColor-hairline: #d1d9e080;
+  --bgColor-code-inline: #818b9814;
+  --borderColor-emphasis: #818b98;
+  --borderColor-accent-emphasis: #0969da;
+  --borderColor-success-emphasis: #1f883d;
+  --borderColor-danger-emphasis: #cf222e;
+  --borderColor-attention-emphasis: #9a6700;
+  --button-default-bgColor-rest: #f6f8fa;
+  --button-default-bgColor-hover: #eff2f5;
+  --button-primary-bgColor-rest: #1f883d;
+  --button-primary-bgColor-hover: #1c8139;
+  --diffBlob-addition-bgColor-line: #dafbe1;
+  --diffBlob-addition-bgColor-num: #aceebb;
+  --diffBlob-deletion-bgColor-line: #ffebe9;
+  --diffBlob-deletion-bgColor-num: #ffcecb;
+  --diffBlob-additionWord-bgColor: #aceebb;
+  --diffBlob-deletionWord-bgColor: #ffcecb;
+  --diffBlob-hunk-bgColor: #ddf4ff;
+  --fgColor-done: #8250df;
+  --bgColor-done-muted: #fbefff;
+  --bgColor-done-emphasis: #8250df;
+  --borderColor-done-emphasis: #8250df;
+  --prettylights-syntax-keyword: #cf222e;
+  --prettylights-syntax-string: #0a3069;
+  --prettylights-syntax-constant: #0550ae;
+  --prettylights-syntax-entity-tag: #116329;
+  --prettylights-syntax-comment: #57606a;
+}
+
+:root {
+  --fontStack-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica,
+    Arial, sans-serif;
+  --fontStack-monospace: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+  --borderRadius-medium: 6px;
+  --borderRadius-full: 999px;
+}
+
+/* Density (docs/design/density-tokens.md). Comfortable is the default; compact keeps the original values. */
+html[data-density='comfortable'] {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --gap-chips: 6px;
+  --gap-row-lines: 6px;
+  --list-header-h: 48px;
+  --list-filter-row-h: 44px;
+  --list-group-h: 40px;
+  --row-pad-y: 12px;
+  --row-pad-x: 20px;
+}
+
+html[data-density='compact'] {
+  --gap-chips: 6px;
+  --gap-row-lines: 0px;
+  --list-header-h: 40px;
+  --list-filter-row-h: 36px;
+  --list-group-h: 34px;
+  --row-pad-y: 8px;
+  --row-pad-x: 8px;
+}

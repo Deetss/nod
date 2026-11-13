@@ -1,0 +1,169 @@
+/* Density: list panes (PRs 560 wide, issues 520 wide). Comfortable only; compact is the base CSS. */
+
+html[data-density='comfortable'] .inbox-pane .pane-h {
+  height: var(--list-header-h);
+  padding: 0 var(--space-4);
+}
+
+html[data-density='comfortable'] .inbox-pane .filter {
+  flex: 1;
+  width: auto;
+  height: 32px;
+  padding: 0 var(--space-2) 0 12px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .filter-row,
+html[data-density='comfortable'] .bulk-bar {
+  height: var(--list-filter-row-h);
+  padding: 0 var(--space-4);
+  border-bottom-color: var(--borderColor-hairline);
+}
+
+html[data-density='comfortable'] .dd-btn,
+html[data-density='comfortable'] .bulk-bar .btn {
+  height: 28px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+/* Filter buttons shrink and ellipsize instead of clipping the last one. */
+html[data-density='comfortable'] .filter-row > * {
+  min-width: 0;
+}
+
+html[data-density='comfortable'] .filter-row .dd-btn {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[data-density='comfortable'] .sec-h {
+  height: var(--list-group-h);
+  padding: 0 var(--space-5);
+  background: var(--bgColor-default);
+  border-top: 0;
+  border-bottom: 1px solid var(--borderColor-hairline);
+  color: var(--fgColor-muted);
+  font: 600 12px/18px var(--fontStack-system);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html[data-density='comfortable'] .sec-h > svg {
+  order: 3;
+  margin-left: auto;
+}
+
+html[data-density='comfortable'] .sec-h .count {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--fgColor-muted);
+  font-weight: 400;
+}
+
+html[data-density='comfortable'] .row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-row-lines);
+  padding: var(--row-pad-y) var(--row-pad-x) var(--row-pad-y) 40px;
+  border-bottom: 0;
+}
+
+/* Hairline separator, inset 20px each side. */
+html[data-density='comfortable'] .row::after {
+  content: '';
+  position: absolute;
+  left: var(--row-pad-x);
+  right: var(--row-pad-x);
+  bottom: 0;
+  height: 1px;
+  background: var(--borderColor-hairline);
+}
+
+html[data-density='comfortable'] .row.is-selected::after {
+  display: none;
+}
+
+html[data-density='comfortable'] .dot {
+  left: 17px;
+  top: 17px;
+}
+
+html[data-density='comfortable'] .irow-check {
+  left: 16px;
+  top: 16px;
+}
+
+html[data-density='comfortable'] .row-titleline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 10px;
+}
+
+/* Badges drop below the title once it would get narrower than the basis. */
+html[data-density='comfortable'] .row-titleline .row-title {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+html[data-density='comfortable'] .row-titleline .badge {
+  flex: none;
+  margin-top: 1px;
+}
+
+html[data-density='comfortable'] .row-ci,
+html[data-density='comfortable'] .row-chips {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-chips);
+  min-width: 0;
+  overflow: hidden;
+}
+
+html[data-density='comfortable'] .row-ci {
+  gap: 8px;
+}
+
+html[data-density='comfortable'] .row-status {
+  min-width: 0;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+html[data-density='comfortable'] .row-chips .chip {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-density='comfortable'] .row-chips .chip-more {
+  flex: none;
+  border-color: transparent;
+  background: var(--bgColor-neutral-muted);
+  color: var(--fgColor-muted);
+}
+
+html[data-density='comfortable'] .row-meta {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+html[data-density='comfortable'] .row-bubble {
+  flex: none;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

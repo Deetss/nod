@@ -1,0 +1,723 @@
+.diff-pane {
+  background: var(--bgColor-default);
+}
+
+.diff-toolbar {
+  container-type: inline-size;
+  flex: none;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+}
+
+.diff-label {
+  flex: none;
+  width: 42px;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  letter-spacing: 0.02em;
+}
+
+.seg {
+  flex: none;
+  height: 32px;
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bgColor-muted);
+}
+
+.seg button {
+  padding: 0 14px;
+  background: transparent;
+  border: 0;
+  font: 400 14px/20px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.seg button.is-active {
+  background: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.seg-key {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px 0 4px;
+}
+
+.range-chip {
+  flex: none;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  font: 400 12px/18px var(--fontStack-monospace);
+  color: var(--fgColor-muted);
+}
+
+.toolbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.viewed-count {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.files-btn strong {
+  font-weight: 600;
+}
+
+.diff-scroll {
+  outline: 0;
+  /* The pane never scrolls sideways; each file body does (.df-body). */
+  overflow-x: hidden;
+}
+
+.diff-empty,
+.notice {
+  padding: 16px;
+}
+
+.notice {
+  margin: 12px;
+  background: var(--bgColor-attention-muted);
+  border: 1px solid var(--borderColor-attention-emphasis);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.df-h {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 0 10px;
+  background: var(--bgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+  border-bottom: 1px solid var(--borderColor-default);
+  cursor: pointer;
+}
+
+.df:first-child .df-h {
+  border-top: 0;
+}
+
+.df-chev {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  display: inline-flex;
+  background: transparent;
+  border: 0;
+  color: var(--fgColor-muted);
+}
+
+.df-path {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Truncate the directory from the start, always keep the file name. */
+.df-dir {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+  color: var(--fgColor-muted);
+}
+
+.df-name {
+  flex: none;
+  font-weight: 600;
+}
+
+.df-stats {
+  flex: none;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.df-viewed {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* File menu button (docs/design/file-actions-spec.md): 28 x 24, the header's last item */
+.df-more.btn {
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+}
+
+.df-more.is-open {
+  background: var(--bgColor-neutral-muted);
+  border: 2px solid var(--borderColor-accent-emphasis);
+}
+
+.fix-menu.file-menu {
+  width: 280px;
+}
+
+.file-menu-danger:not(.is-disabled) .fix-menu-title {
+  color: var(--fgColor-danger);
+}
+
+.df-body {
+  container-type: inline-size;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.df-note {
+  padding: 12px 16px;
+}
+
+.dl-table {
+  width: max-content;
+  min-width: 100%;
+}
+
+.dl-hunk {
+  height: 22px;
+  padding-left: 108px;
+  font-size: 12px;
+  line-height: 22px;
+  color: var(--fgColor-muted);
+  background: var(--diffBlob-hunk-bgColor);
+  white-space: pre;
+}
+
+/* Stays at the gutter edge while the file body scrolls sideways. */
+.dl-hunk-text {
+  position: sticky;
+  left: 108px;
+  display: inline-block;
+  max-width: calc(100cqw - 124px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+
+.dl {
+  width: 100%;
+  height: 22px;
+  display: flex;
+  font: 400 13px/22px var(--fontStack-monospace);
+}
+
+/* Gutter cells paint the row tint over an opaque base, so code never shows through. */
+.dl-num,
+.dl-mark {
+  --tint: transparent;
+  position: sticky;
+  z-index: 1;
+  background: linear-gradient(var(--tint), var(--tint)), var(--bgColor-default);
+}
+
+.dl-num {
+  flex: none;
+  left: 0;
+  width: 94px;
+  display: flex;
+  font-size: 12px;
+  color: var(--fgColor-muted);
+}
+
+.dl-old {
+  width: 42px;
+  text-align: right;
+}
+
+.dl-new {
+  width: 44px;
+  text-align: right;
+}
+
+.dl-mark {
+  flex: none;
+  left: 94px;
+  width: 14px;
+  padding-left: 4px;
+  box-sizing: border-box;
+  font-weight: 600;
+  white-space: pre;
+}
+
+.dl-code {
+  flex: none;
+  white-space: pre;
+  padding-right: 16px;
+}
+
+.dl-add {
+  background: var(--diffBlob-addition-bgColor-line);
+}
+
+.dl-add .dl-num {
+  --tint: var(--diffBlob-addition-bgColor-num);
+}
+
+.dl-del {
+  background: var(--diffBlob-deletion-bgColor-line);
+}
+
+.dl-del .dl-num {
+  --tint: var(--diffBlob-deletion-bgColor-num);
+}
+
+.dl-add .dl-num,
+.dl-del .dl-num {
+  color: var(--fgColor-default);
+}
+
+.dl-add .dl-mark {
+  --tint: var(--diffBlob-addition-bgColor-line);
+}
+
+.dl-del .dl-mark {
+  --tint: var(--diffBlob-deletion-bgColor-line);
+}
+
+/* Changed words inside a paired deleted and added line. Square ends, so a change split across syntax tokens reads as one band. */
+.dl-add .dl-word {
+  background: var(--diffBlob-additionWord-bgColor);
+}
+
+.dl-del .dl-word {
+  background: var(--diffBlob-deletionWord-bgColor);
+}
+
+/* Soft wrap (`w`): lines break inside the pane, the gutter stays on the first visual line. */
+.diff-wrap .dl-table {
+  width: 100%;
+}
+
+.diff-wrap .dl,
+.diff-wrap .dl-hunk {
+  height: auto;
+  min-height: 22px;
+}
+
+.diff-wrap .dl-hunk {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.diff-wrap .dl-hunk-text {
+  position: static;
+  display: inline;
+  max-width: none;
+  overflow: visible;
+}
+
+.diff-wrap .dl-code {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.df-flash .df-h {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: -2px;
+}
+
+.lbl-short,
+.nav-icon {
+  display: none;
+}
+
+.nav-up svg {
+  transform: rotate(180deg);
+}
+
+/* Toolbar tiers use the toolbar's own width, not the window's. */
+@container (max-width: 760px) {
+  .lbl-long {
+    display: none;
+  }
+
+  .lbl-short {
+    display: inline;
+  }
+}
+
+@container (max-width: 700px) {
+  .range-chip {
+    display: none;
+  }
+}
+
+@container (max-width: 680px) {
+  .toolbar-right {
+    gap: 8px;
+  }
+
+  .diff-label,
+  .lbl-more {
+    display: none;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-icon {
+    display: inline-flex;
+  }
+}
+
+/* Inline comments: the gutter plus, the file button, the composer card. Tokens from tokens.css. */
+.dl-add-btn {
+  position: absolute;
+  left: 72px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 3px;
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  cursor: pointer;
+}
+
+.dl:hover .dl-add-btn,
+.dl-add-btn:focus-visible,
+.dl-cursor .dl-add-btn {
+  display: inline-flex;
+}
+
+.dl-cursor .dl-code {
+  box-shadow: inset 2px 0 0 var(--fgColor-accent);
+}
+
+.df-comment {
+  flex: none;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--button-default-bgColor-rest, var(--bgColor-default));
+  color: var(--fgColor-default);
+  font: 400 12px/16px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.inline-composer {
+  margin: 8px 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-muted);
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+  white-space: normal;
+  position: relative;
+  z-index: 1;
+}
+
+.ic-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--borderColor-default);
+}
+
+.ic-title {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.ic-close {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fgColor-muted);
+  cursor: pointer;
+}
+
+.ic-tabs {
+  margin: 8px 12px 0;
+}
+
+.composer-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 6px 12px 0;
+}
+
+.ct-btn {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fgColor-muted);
+  cursor: pointer;
+}
+
+.ct-btn:hover {
+  background: var(--bgColor-neutral-muted);
+  color: var(--fgColor-default);
+}
+
+.ic-text {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 6px 12px;
+  padding: 8px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-inset);
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.ic-preview,
+.ic-error,
+.ic-posting {
+  margin: 6px 12px;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.ic-error {
+  background: var(--bgColor-danger-muted);
+  border: 1px solid var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+}
+
+.ic-posting {
+  background: var(--bgColor-success-muted);
+  border: 1px solid var(--borderColor-success-emphasis);
+  color: var(--fgColor-success);
+}
+
+.ic-raw {
+  margin: 0;
+  white-space: pre-wrap;
+  font: 400 13px/20px var(--fontStack-monospace);
+}
+
+.ic-files {
+  margin: 0 12px 6px;
+  padding: 6px 8px;
+  border: 1px dashed var(--fgColor-muted);
+  border-radius: 6px;
+  color: var(--fgColor-muted);
+  font-size: 12px;
+}
+
+.ic-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.ic-hint {
+  flex: 1;
+  font-size: 12px;
+}
+
+/* Threads and drafts drawn under their line. Tokens from tokens.css. */
+.thread-card {
+  margin: 8px 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+  white-space: normal;
+  min-width: 0;
+  max-width: calc(100% - 32px);
+  overflow-wrap: anywhere;
+}
+
+.thread-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--borderColor-default);
+  font-size: 12px;
+}
+
+.thread-meta {
+  color: var(--fgColor-muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.thread-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.pill-pending {
+  background: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-emphasis);
+  color: var(--fgColor-attention);
+}
+
+.pill-resolved {
+  background: var(--bgColor-done-muted);
+  border-color: var(--borderColor-done-emphasis);
+  color: var(--fgColor-done);
+}
+
+.pill-outdated {
+  background: var(--bgColor-neutral-muted);
+  border-color: var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+}
+
+.thread-comment {
+  padding: 8px 12px;
+}
+
+.thread-author {
+  font-size: 12px;
+  color: var(--fgColor-muted);
+  overflow-wrap: anywhere;
+}
+
+.thread-body {
+  padding: 4px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.thread-reply {
+  padding: 0 12px 8px;
+}
+
+.thread-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.thread-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--borderColor-danger-emphasis);
+  border-radius: 6px;
+  background: var(--bgColor-danger-muted);
+  color: var(--fgColor-danger);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.thread-btn {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--button-default-bgColor-rest, var(--bgColor-default));
+  color: var(--fgColor-default);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.thread-btn-primary {
+  background: var(--bgColor-accent-emphasis);
+  border-color: transparent;
+  color: var(--fgColor-onEmphasis, #ffffff);
+}
+
+.thread-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.thread-link {
+  border-color: transparent;
+  background: transparent;
+  color: var(--fgColor-accent);
+  padding: 0 4px;
+}
+
+.dl-thread-btn {
+  position: absolute;
+  left: 52px;
+  top: 3px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 3px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 3px;
+  background: var(--bgColor-default);
+  color: var(--fgColor-muted);
+  font-size: 11px;
+  cursor: pointer;
+}

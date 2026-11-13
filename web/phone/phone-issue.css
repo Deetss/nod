@@ -1,0 +1,149 @@
+/* B4 issue sheet. */
+
+.ph-kv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+}
+
+.ph-kv-key {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--fgColor-muted);
+}
+
+.ph-kv-val {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Beats `.phone button { color: inherit }`. */
+.phone .expand-toggle {
+  min-height: 44px;
+  color: var(--fgColor-accent);
+}
+
+.ph-comment {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+  overflow-wrap: anywhere;
+}
+
+.ph-comment header {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.ph-comment .md img {
+  max-width: 100%;
+}
+
+.ph-comment .md pre,
+.ph-pr-md pre {
+  overflow-x: auto;
+}
+
+.ph-pr-md img {
+  max-width: 100%;
+}
+
+.ph-pr-md {
+  user-select: text;
+}
+
+/* Details rows that open a picker. */
+.ph-field {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 56px;
+  gap: 16px;
+  justify-content: flex-start;
+  font: inherit;
+  font-size: 15px;
+  color: var(--fgColor-default);
+  text-align: left;
+  background: none;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: var(--borderColor-muted, var(--borderColor-default));
+}
+
+button.ph-field:active {
+  background: var(--bgColor-neutral-muted);
+}
+
+.ph-field .ph-kv-key {
+  flex: none;
+  width: 88px;
+}
+
+.ph-field-val {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 0;
+}
+
+.ph-field-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-field-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ph-field-chev,
+.ph-field-note {
+  flex: none;
+  color: var(--fgColor-muted);
+}
+
+.ph-field-note {
+  font-size: 13px;
+}
+
+.ph-av {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 50%;
+}
+
+.ph-person {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ph-person-you {
+  font-size: 13px;
+  color: var(--fgColor-muted);
+}

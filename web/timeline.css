@@ -1,0 +1,293 @@
+/* Timeline rail, events, cards and hidden comments (docs/design/timeline-spec.md sections 4 and 5). */
+
+.tl-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px;
+}
+
+.tl-item {
+  position: relative;
+  min-width: 0;
+  margin: 0 0 20px;
+  padding-left: 48px;
+}
+
+.tl-item:last-child {
+  margin-bottom: 0;
+}
+
+/* The rail: 2 wide, from the first icon centre to the last, behind the icons. */
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 0;
+  bottom: -20px;
+  width: 2px;
+  background: var(--borderColor-default);
+}
+
+.tl-item:first-child::before {
+  top: 20px;
+}
+
+.tl-item:last-child::before {
+  bottom: auto;
+  height: 20px;
+}
+
+.tl-item:only-child::before {
+  display: none;
+}
+
+.tl-icon,
+.tl-avatar {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 999px;
+  background: var(--bgColor-muted);
+  color: var(--fgColor-muted);
+  box-shadow: 0 0 0 1px var(--bgColor-default);
+}
+
+.tl-icon {
+  left: 7px;
+  top: 6px;
+  width: 28px;
+  height: 28px;
+}
+
+.tl-avatar {
+  left: 5px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+}
+
+.tl-icon.tl-badge {
+  left: 5px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+}
+
+.tl-avatar .avatar {
+  width: 32px;
+  height: 32px;
+}
+
+.tl-badge-danger {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+}
+
+.tl-badge-success {
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+  color: var(--fgColor-success);
+}
+
+.tl-mark {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--borderColor-emphasis);
+  border-radius: 50%;
+}
+
+/* Event rows */
+.tl-event-row {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.tl-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  overflow-wrap: anywhere;
+}
+
+.tl-age {
+  margin-left: auto;
+  flex: none;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.tl-code {
+  font: 400 12px/18px var(--fontStack-mono, ui-monospace, monospace);
+  color: var(--fgColor-muted);
+}
+
+/* Cards */
+.tl-card {
+  position: relative;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+}
+
+.tl-card.is-new {
+  border-color: var(--borderColor-accent-emphasis);
+}
+
+.tl-card:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 2px;
+}
+
+.tl-card-row .tl-card::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid var(--borderColor-default);
+  border-bottom: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
+  transform: rotate(45deg);
+}
+
+.tl-card-h {
+  min-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--borderColor-default);
+  border-radius: 5px 5px 0 0;
+  background: var(--bgColor-muted);
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.tl-card-h strong {
+  font-weight: 600;
+}
+
+/* Inline review cards drop the verb and never wrap, so a long author name gives way before the Fix button moves. */
+.tl-card-h.is-inline {
+  flex-wrap: nowrap;
+}
+
+.tl-card-h.is-inline strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Age and a header control, kept together at the right end. */
+.tl-card-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  margin-left: auto;
+}
+
+.tl-card-tools .tl-age {
+  margin-left: 0;
+}
+
+.tl-card-h > :not(.tl-pill):not(.badge):not(.tl-age) {
+  white-space: nowrap;
+}
+
+.tl-card.is-new .tl-card-h {
+  background: var(--bgColor-accent-muted);
+}
+
+.tl-card-b {
+  padding: 14px 14px 16px;
+  line-height: 22px;
+  overflow-wrap: anywhere;
+}
+
+.tl-card-b > :first-child {
+  margin-top: 0;
+}
+
+.tl-card-b > :last-child {
+  margin-bottom: 0;
+}
+
+/* Pills: words and tone together */
+.tl-pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border: 1px solid var(--borderColor-emphasis);
+  border-radius: 999px;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+}
+
+.tl-pill-danger {
+  border-color: var(--borderColor-danger-emphasis);
+  background: var(--bgColor-danger-muted);
+  color: var(--fgColor-danger);
+}
+
+.tl-pill-success {
+  border-color: var(--borderColor-success-emphasis);
+  background: var(--bgColor-success-muted);
+  color: var(--fgColor-success);
+}
+
+.tl-pill-attention {
+  border-color: var(--borderColor-attention-emphasis);
+  background: var(--bgColor-attention-muted);
+  color: var(--fgColor-attention);
+}
+
+/* Hidden comments: one row, the card follows when shown */
+.tl-hidden-row {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tl-hidden-text {
+  flex: 1;
+  min-width: 0;
+  font: italic 400 14px/20px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.tl-hidden-btn {
+  flex: none;
+  min-width: 126px;
+  height: 28px;
+  justify-content: center;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.tl-hidden > .tl-card {
+  margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-card,
+  .tl-hidden-btn {
+    transition: none;
+  }
+}

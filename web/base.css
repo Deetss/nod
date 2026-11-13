@@ -1,0 +1,580 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: -2px;
+}
+
+.mono {
+  font-family: var(--fontStack-monospace);
+}
+
+.muted {
+  color: var(--fgColor-muted);
+}
+
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 48px minmax(0, 1fr) 28px;
+}
+
+.panes {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: 560px 440px minmax(0, 1fr);
+}
+
+/* Drag handle: 1px line, 8px hit area centred on it. */
+.pane-handle {
+  position: relative;
+  z-index: 2;
+  background: var(--borderColor-default);
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.pane-handle::before {
+  content: '';
+  position: absolute;
+  inset: 0 -4px 0 -3px;
+}
+
+.pane-handle:hover,
+.pane-handle.is-dragging {
+  background: var(--borderColor-accent-emphasis);
+}
+
+.pane-handle:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 0;
+}
+
+body.pane-resizing,
+body.pane-resizing * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+.pane {
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bgColor-default);
+}
+
+.pane-h {
+  flex: none;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  letter-spacing: 0.02em;
+}
+
+.scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* 6px thumbs in borderColor-emphasis. */
+.scroll::-webkit-scrollbar,
+.df-body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb,
+.df-body::-webkit-scrollbar-thumb {
+  background: var(--borderColor-emphasis);
+  border-radius: 3px;
+}
+
+.scroll::-webkit-scrollbar-track,
+.df-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Buttons */
+.btn {
+  flex: none;
+  height: 32px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.btn:hover {
+  background: var(--button-default-bgColor-hover);
+}
+
+.btn-primary {
+  background: var(--button-primary-bgColor-rest);
+  border-color: var(--borderColor-success-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--button-primary-bgColor-hover);
+}
+
+.btn-danger {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+  font-weight: 600;
+}
+
+.btn-danger:hover {
+  background: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.btn[disabled],
+.btn.is-disabled {
+  background: transparent;
+  border: 1px dashed var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+  cursor: not-allowed;
+}
+
+/* A setting that is already on: solid grey, unlike the dashed unavailable state. */
+.btn.btn-on[disabled] {
+  background: var(--bgColor-neutral-muted);
+  border-style: solid;
+  border-color: var(--borderColor-default);
+  cursor: default;
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  animation: spinner 0.9s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-color: currentColor;
+    border-right-color: transparent;
+  }
+}
+
+.btn.is-busy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: progress;
+}
+
+.btn-refresh {
+  min-width: 92px;
+  justify-content: center;
+}
+
+.btn-refresh.is-busy {
+  border: 1px solid var(--borderColor-default);
+}
+
+.sync-text {
+  min-width: 88px;
+  text-align: right;
+}
+
+.kbd {
+  flex: none;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 12px/18px var(--fontStack-monospace);
+  color: var(--fgColor-muted);
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 4px;
+}
+
+.btn-primary .kbd {
+  background: transparent;
+  color: var(--fgColor-onEmphasis);
+  border-color: var(--fgColor-onEmphasis);
+}
+
+/* Pills and chips */
+.ci {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.ci svg {
+  flex: none;
+}
+
+/* Only states that ask for action carry colour (docs/design/calm-colour-spec.md); pass and running are neutral. */
+.ci-pass {
+  color: var(--fgColor-muted);
+  background: transparent;
+  border-color: var(--borderColor-default);
+}
+
+.ci-fail {
+  color: var(--fgColor-danger);
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  font-weight: 600;
+}
+
+.ci-running {
+  color: var(--fgColor-muted);
+  background: transparent;
+  border: 1px dashed var(--borderColor-emphasis);
+}
+
+/* Conflicts: danger family like CI fail, but 6px corners and a triangle, so it is told apart by shape and word. */
+.ci-conflict {
+  color: var(--fgColor-danger);
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  border-radius: var(--borderRadius-medium);
+  font-weight: 600;
+}
+
+.pr-chip {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.pr-chip-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pr-chip-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pr-chip-wait {
+  color: var(--fgColor-accent);
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-emphasis);
+}
+
+.pr-chip-merged {
+  color: var(--fgColor-done);
+  background: var(--bgColor-done-muted);
+  border-color: var(--borderColor-done-emphasis);
+}
+
+.pr-chip-approved {
+  color: var(--fgColor-success);
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+}
+
+.pr-chip-row {
+  display: flex;
+  margin-top: 12px;
+  min-width: 0;
+}
+
+.row-ci .pr-chip {
+  margin-left: calc(var(--gap-chips) - 8px);
+}
+
+.row.is-exiting {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row.is-exiting {
+    transition: none;
+  }
+}
+
+.badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-onEmphasis);
+  white-space: nowrap;
+}
+
+/* The unread dot already marks unread, so the badge itself stays neutral. */
+.badge-new,
+.badge-updated {
+  color: var(--fgColor-muted);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--borderColor-default);
+}
+
+.is-selected .badge {
+  box-shadow: 0 0 0 1.5px var(--fgColor-default);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.chip-accent {
+  color: var(--fgColor-accent);
+  background: var(--bgColor-accent-muted);
+}
+
+.chip-changed {
+  height: 22px;
+  color: var(--fgColor-attention);
+  background: var(--bgColor-attention-muted);
+  border: 1px solid var(--borderColor-attention-emphasis);
+}
+
+.chip-new {
+  height: 20px;
+  padding: 0 8px;
+  font-weight: 600;
+  color: var(--fgColor-onEmphasis);
+  background: var(--bgColor-accent-emphasis);
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--bgColor-neutral-muted);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+/* Filter chip: the Activity view's chips and the Send message dialog's Start from chips. */
+.act-chip {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 16px;
+  background: var(--button-default-bgColor-rest);
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.act-chip.is-active {
+  background: var(--bgColor-accent-emphasis);
+  border-color: transparent;
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.act-chip:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: -2px;
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bgColor-default);
+}
+
+.card-h {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 4px 0;
+}
+
+input[type='checkbox'] {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--bgColor-accent-emphasis);
+  cursor: pointer;
+}
+
+.clamp2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bgColor-neutral-muted);
+  overflow: hidden;
+}
+
+.progress > div {
+  height: 100%;
+  background: var(--bgColor-success-emphasis);
+}
+
+.banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+.banner-error {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+}
+
+.banner-ratelimit {
+  background: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-emphasis);
+}
+
+.banner-title {
+  font-weight: 600;
+}
+
+.banner-detail {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.banner-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* Show/hide full description control, desktop and phone. */
+.expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-accent);
+  font: 400 12px/18px var(--fontStack-system);
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.expand-toggle:hover,
+.expand-toggle:focus-visible {
+  text-decoration: underline;
+}

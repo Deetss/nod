@@ -1,0 +1,139 @@
+/* Desktop Activity view (docs/design/activity-spec.md, layout B) */
+.panes.act-panes {
+  display: grid;
+  grid-template-columns: minmax(360px, 42%) minmax(0, 1fr);
+  min-height: 0;
+}
+
+.act-list-pane,
+.act-timeline-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.act-chips {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px 0;
+  flex-wrap: wrap;
+}
+
+.act-row:focus-visible,
+.act-link:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: -2px;
+}
+
+.act-filterline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 16px;
+  font: 400 13px/18px var(--fontStack-system);
+}
+
+.act-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fgColor-accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.act-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  column-gap: 12px;
+  width: 100%;
+  padding: 10px 16px 10px 28px;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid var(--borderColor-muted);
+  background: none;
+  color: var(--fgColor-default);
+  text-align: left;
+  cursor: pointer;
+}
+
+.act-row:hover {
+  background: var(--bgColor-muted);
+}
+
+.act-row.is-selected {
+  background: var(--bgColor-accent-muted);
+}
+
+.act-dot {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fgColor-accent);
+}
+
+.act-icon {
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--fgColor-muted);
+}
+
+.act-title {
+  grid-column: 2 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  font: 400 14px/22px var(--fontStack-system);
+}
+
+.act-row.is-unread .act-title {
+  font-weight: 600;
+}
+
+.act-text,
+.act-meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.act-updates {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: var(--bgColor-neutral-muted);
+  font: 600 12px/20px var(--fontStack-system);
+}
+
+.act-meta,
+.act-age {
+  color: var(--fgColor-muted);
+  font: 400 13px/20px var(--fontStack-system);
+}
+
+.act-note {
+  padding: 12px 16px;
+  font: 400 13px/18px var(--fontStack-system);
+}
+
+.act-tl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--borderColor-default);
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.act-tl-body {
+  padding: 12px 16px;
+}

@@ -1,0 +1,47 @@
+{
+  "name": "nod",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Nod: local pull request review for the acme-co GitHub org",
+  "main": "dist/electron/main.cjs",
+  "scripts": {
+    "start": "node scripts/ensure-build.mjs && tsx server/index.ts",
+    "serve": "node scripts/ensure-build.mjs && tsx server/index.ts --serve",
+    "dev:web": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "android:build": "tsx scripts/android.mjs build",
+    "android:install": "tsx scripts/android.mjs install",
+    "app": "vite build && node scripts/build-electron.mjs && electron .",
+    "app:dist": "vite build && node scripts/build-electron.mjs && electron-builder --linux dir"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.6",
+    "dompurify": "^3.4.17",
+    "hono": "^4.13.16",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "web-push": "4.0.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@bubblewrap/cli": "1.27.0",
+    "@primer/primitives": "^11.10.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/web-push": "3.6.4",
+    "@vitejs/plugin-react": "^6.2.1",
+    "electron": "44.9.0",
+    "electron-builder": "26.18.0",
+    "esbuild": "0.28.2",
+    "graphql": "17.1.0",
+    "jsdom": "^31.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,320 @@
+/* Issue detail pane and sidebar (docs/design/density-spec.md sections 4 and 5). Comfortable only. */
+
+/* Pane header: Edit title plus previous / next comment */
+html[data-density='comfortable'] .idetail-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+html[data-density='comfortable'] .idetail-tools .icon-btn {
+  width: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* One centred 680px column for title, body, thread, composer */
+html[data-density='comfortable'] .idetail-c {
+  width: min(680px, 100% - 48px);
+  margin: 0 auto;
+  padding: var(--space-8) 0 var(--space-6);
+  gap: 0;
+}
+
+html[data-density='comfortable'] .idetail-c .idetail-title {
+  margin-bottom: var(--space-3);
+}
+
+html[data-density='comfortable'] .idetail-sub {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  margin-bottom: var(--space-6);
+  font: 400 14px/21px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .idetail-sub .state-pill {
+  height: 28px;
+  flex: none;
+}
+
+/* Markdown at reading size */
+html[data-density='comfortable'] .idetail-md {
+  font: 400 15px/1.65 var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .idetail-md p,
+html[data-density='comfortable'] .idetail-md blockquote {
+  margin: 0 0 var(--space-3);
+}
+
+html[data-density='comfortable'] .idetail-md ul,
+html[data-density='comfortable'] .idetail-md ol {
+  margin: 0 0 var(--space-3);
+  padding-left: 32px;
+}
+
+html[data-density='comfortable'] .idetail-md li + li {
+  margin-top: 6px;
+}
+
+html[data-density='comfortable'] .idetail-md h1,
+html[data-density='comfortable'] .idetail-md h2 {
+  margin: var(--space-6) 0 var(--space-2);
+  font: 600 18px/28px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .idetail-md h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  font: 600 15px/24px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .idetail-md > :first-child {
+  margin-top: 0;
+}
+
+html[data-density='comfortable'] .idetail-md > :last-child {
+  margin-bottom: 0;
+}
+
+html[data-density='comfortable'] .idetail-md code {
+  padding: 1px 5px;
+  background: var(--bgColor-code-inline);
+  border: 0;
+  border-radius: 4px;
+  font: 400 13px/20px var(--fontStack-monospace);
+}
+
+html[data-density='comfortable'] .idetail-md pre {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  background: var(--bgColor-muted);
+  border: 0;
+  border-radius: 6px;
+  font: 400 13px/20px var(--fontStack-monospace);
+}
+
+html[data-density='comfortable'] .idetail-md .md-code {
+  margin: 0 0 var(--space-3);
+}
+
+html[data-density='comfortable'] .idetail-md .md-code > pre {
+  margin: 0;
+}
+
+html[data-density='comfortable'] .idetail-md pre code {
+  padding: 0;
+  background: none;
+  line-height: 20px;
+}
+
+/* Thread */
+html[data-density='comfortable'] .thread-h-c {
+  margin: var(--space-6) 0 var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--borderColor-hairline);
+  font-size: 14px;
+}
+
+html[data-density='comfortable'] .cmt {
+  position: relative;
+  margin-bottom: var(--space-6);
+}
+
+html[data-density='comfortable'] .cmt-h {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 24px;
+  font-size: 14px;
+}
+
+html[data-density='comfortable'] .cmt-h .badge {
+  margin-left: var(--space-1);
+}
+
+html[data-density='comfortable'] .cmt-b {
+  margin: var(--space-2) 0 0 36px;
+}
+
+/* New comment: accent bar on the avatar rail */
+html[data-density='comfortable'] .cmt.is-new::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--bgColor-accent-emphasis);
+}
+
+html[data-density='comfortable'] .tl-event {
+  margin-bottom: var(--space-6);
+  padding-left: 36px;
+}
+
+html[data-density='comfortable'] .tl-event::before {
+  left: 11px;
+}
+
+html[data-density='comfortable'] .tl-dot {
+  left: 7px;
+}
+
+/* Composer: 104 high, 36px text box, Comment below */
+html[data-density='comfortable'] .composer-c {
+  min-height: 104px;
+  padding: var(--space-3) max(24px, calc((100% - 680px) / 2));
+  gap: var(--space-3);
+  background: var(--bgColor-default);
+  border-top-color: var(--borderColor-hairline);
+}
+
+html[data-density='comfortable'] .composer-c .composer-box {
+  min-height: 36px;
+  padding: 7px 8px 0 12px;
+}
+
+html[data-density='comfortable'] .composer-c .composer-box .kbd {
+  margin-top: -2px;
+}
+
+/* Sidebar */
+html[data-density='comfortable'] .isidebar-scroll {
+  padding: var(--space-6);
+  gap: 0;
+}
+
+html[data-density='comfortable'] .isidebar-scroll > .icard {
+  padding: var(--space-5) 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+html[data-density='comfortable'] .isidebar-scroll > .icard + .icard {
+  border-top: 1px solid var(--borderColor-hairline);
+}
+
+html[data-density='comfortable'] .isidebar-scroll > .icard:first-child {
+  padding-top: 0;
+}
+
+html[data-density='comfortable'] .isidebar-scroll > .icard:last-child {
+  padding-bottom: 0;
+}
+
+html[data-density='comfortable'] .icard-h {
+  height: auto;
+  margin-bottom: var(--space-3);
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+html[data-density='comfortable'] .icard-title {
+  color: var(--fgColor-muted);
+  font: 600 12px/18px var(--fontStack-system);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html[data-density='comfortable'] .icard-hint {
+  font-size: 12px;
+}
+
+html[data-density='comfortable'] .icard-hint .link-btn,
+html[data-density='comfortable'] .icard-link {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-accent);
+  font: 400 12px/18px var(--fontStack-system);
+  cursor: pointer;
+}
+
+html[data-density='comfortable'] .icard-b {
+  padding: 0;
+  font: 400 14px/21px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .icard-empty .icard-h {
+  display: none;
+}
+
+html[data-density='comfortable'] .icard-empty {
+  padding: var(--space-5) 0;
+}
+
+html[data-density='comfortable'] .icard-empty-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 20px;
+  color: var(--fgColor-muted);
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+html[data-density='comfortable'] .icard-empty-line .link-btn {
+  color: var(--fgColor-accent);
+}
+
+html[data-density='comfortable'] .person-row {
+  height: 28px;
+}
+
+html[data-density='comfortable'] .assign-actions {
+  margin-top: var(--space-3);
+}
+
+/* Actions: 120 high, hairline above, no title */
+html[data-density='comfortable'] .actions-panel {
+  min-height: 120px;
+  padding: var(--space-6);
+  background: var(--bgColor-default);
+  border-top-color: var(--borderColor-hairline);
+}
+
+html[data-density='comfortable'] .actions-label,
+html[data-density='comfortable'] .actions-note {
+  display: none;
+}
+
+html[data-density='comfortable'] .actions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+html[data-density='comfortable'] .actions-grid .btn {
+  height: 32px;
+}
+
+html[data-density='comfortable'] .actions-grid {
+  flex-direction: column;
+}
+
+html[data-density='comfortable'] .actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Participants: overlapping avatars, then names, on one line */
+html[data-density='comfortable'] .people-stack {
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+}
+
+html[data-density='comfortable'] .avatar-stack {
+  display: inline-flex;
+  flex: none;
+}
+
+html[data-density='comfortable'] .avatar-stack .avatar + .avatar {
+  margin-left: -6px;
+  box-shadow: 0 0 0 2px var(--bgColor-default);
+}

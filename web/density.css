@@ -1,0 +1,76 @@
+/* Density (docs/design/density-spec.md). Compact is the base CSS; rules here apply to comfortable only unless noted. */
+
+/* Settings popover */
+.notify-title {
+  padding: 4px 12px;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.notify-group {
+  padding-bottom: 4px;
+}
+
+html[data-density='comfortable'] .notify-pop {
+  width: 260px;
+}
+
+/* Shared chrome: captions, key caps, legend, footer */
+html[data-density='comfortable'] .pane-cap,
+html[data-density='comfortable'] .pane-h-bare {
+  display: none;
+}
+
+html[data-density='comfortable'] .pane-h {
+  background: var(--bgColor-default);
+  border-bottom-color: var(--borderColor-hairline);
+}
+
+/*
+ * Key caps show only while Alt is held, so hover never changes a control's width.
+ * Buttons name their key in the tooltip; the footer and menus keep their caps.
+ */
+html[data-density='comfortable']:not(.alt-held)
+  :is(.btn, .view-seg, .search, .filter, .icard-h, .composer-box)
+  .kbd {
+  display: none;
+}
+
+/* While Alt is held, a button's cap sits over its label, so the button keeps its width. */
+html[data-density='comfortable'].alt-held :is(.btn, .view-seg, .seg, .hide-viewed, .card-h-btn) {
+  position: relative;
+}
+
+html[data-density='comfortable'].alt-held :is(.btn, .view-seg, .seg, .hide-viewed, .card-h-btn) .kbd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border-color: var(--borderColor-emphasis);
+  font-weight: 600;
+}
+
+html[data-density='comfortable'] .footer-all {
+  margin-left: auto;
+}
+
+/* The unseen / NEW / UPDATED key moves from the list into the help overlay. */
+html[data-density='comfortable'] .inbox-pane > .legend {
+  display: none;
+}
+
+.help-legend {
+  display: none;
+}
+
+html[data-density='comfortable'] .help-legend {
+  display: flex;
+  height: auto;
+  padding: 12px 0 0;
+  border-top: 0;
+  background: transparent;
+}

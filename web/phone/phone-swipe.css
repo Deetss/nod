@@ -1,0 +1,57 @@
+/* Swipe pager. useSwipeTabs writes --swipe-pos, the fractional tab index, on the track and the tab indicator. */
+
+.ph-pager {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* A list is its own scroll container, so it repeats the pager's touch-action. */
+.ph-pager .ph-list {
+  touch-action: pan-y pinch-zoom;
+}
+
+.ph-pager-track {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  transform: translateX(calc(var(--swipe-pos, 0) * -100%));
+  will-change: transform;
+}
+
+.ph-pane {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ph-pager-track:not(.is-moving) > .ph-pane:not(.is-active) {
+  visibility: hidden;
+}
+
+/* Flow panes sit in the sheet's scroller. The active pane sets the height; a neighbour shows one screen while moving. */
+.ph-pager.is-flow {
+  flex: none;
+  display: block;
+}
+
+.ph-pager.is-flow .ph-pager-track {
+  align-items: flex-start;
+}
+
+.ph-pager.is-flow .ph-pane {
+  display: block;
+}
+
+.ph-pager.is-flow .ph-pane:not(.is-active) {
+  max-height: 100vh;
+  overflow: hidden;
+  transform: translateY(var(--swipe-peek, 0px));
+}
+
+.ph-pager.is-flow .ph-pager-track:not(.is-moving) > .ph-pane:not(.is-active) {
+  height: 0;
+}

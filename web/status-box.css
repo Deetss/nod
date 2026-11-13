@@ -1,0 +1,308 @@
+/* Merge status box (docs/design/timeline-spec.md section 3). */
+
+.merge-box {
+  margin-bottom: 12px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+}
+
+/* No overflow clip, so the Resolve menu can hang below the box; the end rows round themselves. */
+.merge-box > :first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.merge-box > :last-child {
+  border-radius: 0 0 5px 5px;
+}
+
+.merge-box > :only-child {
+  border-radius: 5px;
+}
+
+.merge-box > * + * {
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+/* Resolve conflicts strip under the conflict row */
+.msb-resolve {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bgColor-default);
+}
+
+.msb-resolve-btn {
+  height: 32px;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.msb-resolve-btn.is-busy {
+  cursor: progress;
+}
+
+.fix-menu .spinner,
+.msb-resolve-btn .spinner {
+  width: 14px;
+  height: 14px;
+}
+
+/* The spinner fills the chevron slot (16px glyph plus 12px margin), so the button keeps its width. */
+.msb-resolve-btn .spinner {
+  margin: 0 1px 0 13px;
+}
+
+.fix-menu-row .spinner {
+  margin-left: auto;
+}
+
+.msb-gh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--fgColor-accent);
+  font: 600 12px/18px var(--fontStack-system);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.msb-gh-link:hover {
+  text-decoration: underline;
+}
+
+.msb-row {
+  width: 100%;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--fgColor-default);
+  text-align: left;
+  cursor: pointer;
+}
+
+.msb-row:hover {
+  background: var(--bgColor-muted);
+}
+
+.msb-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.msb-headline {
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.msb-sub {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.msb-chevron {
+  flex: none;
+  margin-right: 12px;
+  color: var(--fgColor-muted);
+}
+
+.msb-icon {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--borderColor-default);
+  border-radius: 999px;
+  background: var(--bgColor-neutral-muted);
+  color: var(--fgColor-muted);
+}
+
+.msb-icon:has(.checks-ring) {
+  border: 0;
+  background: transparent;
+}
+
+.msb-icon.tone-danger {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+}
+
+.msb-icon.tone-success {
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+  color: var(--fgColor-success);
+}
+
+.msb-icon.tone-attention {
+  background: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-emphasis);
+  color: var(--fgColor-attention);
+}
+
+.msb-icon.tone-done {
+  background: var(--bgColor-done-muted);
+  border-color: var(--borderColor-done-emphasis);
+  color: var(--fgColor-done);
+}
+
+/* Detail rows under the review row */
+.msb-detail {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 0 72px;
+  border: 0;
+  border-radius: 0;
+  background: var(--bgColor-muted);
+  color: var(--fgColor-default);
+  text-align: left;
+  cursor: pointer;
+}
+
+.msb-detail > span:nth-child(2) {
+  flex: 1;
+}
+
+.msb-detail:hover {
+  background: var(--bgColor-neutral-muted);
+}
+
+.msb-detail-glyph {
+  display: inline-flex;
+  color: var(--fgColor-muted);
+}
+
+/* Split ring */
+.checks-ring {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checks-ring .ring-track {
+  stroke: var(--borderColor-default);
+}
+
+.ring-seg-failing {
+  stroke: var(--fgColor-danger);
+}
+
+.ring-seg-cancelled {
+  stroke: var(--fgColor-muted);
+}
+
+.ring-seg-pending {
+  stroke: var(--fgColor-attention);
+}
+
+.ring-seg-skipped {
+  stroke: var(--borderColor-emphasis);
+}
+
+.ring-seg-successful {
+  stroke: var(--fgColor-success);
+}
+
+.ring-centre {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-centre-x {
+  color: var(--fgColor-danger);
+}
+
+.ring-centre-check {
+  color: var(--fgColor-success);
+}
+
+.ring-centre-spinner {
+  color: var(--fgColor-attention);
+}
+
+/* Expanded checks list */
+.msb-strip {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 0 16px;
+  background: var(--bgColor-muted);
+}
+
+.msb-strip-title {
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.msb-strip-sub {
+  flex: 1;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+html .merge-box .msb-checks .check-row {
+  height: 34px;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 76px 72px 18px 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 0 16px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+html .merge-box .msb-checks .check-word {
+  display: inline;
+}
+
+.check-cancelled,
+.check-skipped {
+  color: var(--fgColor-muted);
+}
+
+.msb-tail {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 16px;
+  border: 0;
+  border-top: 1px solid var(--borderColor-muted);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fgColor-accent);
+  font: 600 12px/18px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.msb-tail .msb-chevron {
+  margin-right: 0;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msb-row,
+  .msb-detail {
+    transition: none;
+  }
+}

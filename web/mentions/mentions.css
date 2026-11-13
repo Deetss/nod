@@ -1,0 +1,70 @@
+/* @mention strip (web/mentions/MentionTextarea.tsx). Uses existing tokens only. */
+.mention-host {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mention-strip {
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+  overflow: hidden;
+}
+
+.mention-hint {
+  padding: 4px 12px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  border-bottom: 1px solid var(--borderColor-muted);
+}
+
+.mention-list {
+  max-height: calc(4 * 48px);
+  overflow-y: auto;
+}
+
+.mention-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--borderColor-muted);
+  border-left: 4px solid transparent;
+  cursor: pointer;
+}
+
+.mention-row.is-selected {
+  background: var(--bgColor-accent-muted);
+  border-left-color: var(--borderColor-accent-emphasis);
+}
+
+.mention-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.mention-name strong {
+  font-weight: 600;
+}
+
+.mention-reason {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* Team avatar: square, unlike the round person avatar. */
+.avatar-square {
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+}
+
+.mention-loading .skeleton-row {
+  margin: 0 12px 8px;
+}

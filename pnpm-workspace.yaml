@@ -1,0 +1,6 @@
+allowBuilds:
+  esbuild: true
+  electron: true
+  electron-winstaller: false
+minimumReleaseAgeExclude:
+  - web-push@4.0.0

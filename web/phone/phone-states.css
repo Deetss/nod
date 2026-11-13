@@ -1,0 +1,177 @@
+/* S1 empty, S2 loading, S3 offline or error. */
+
+.ph-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 10px;
+  color: var(--fgColor-default);
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ph-btn:disabled {
+  color: var(--fgColor-muted);
+  cursor: default;
+}
+
+.ph-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--borderColor-emphasis);
+  border-top-color: var(--fgColor-accent);
+  border-radius: 50%;
+  animation: ph-spin 0.9s linear infinite;
+}
+
+.ph-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 280px;
+  margin: 72px auto 0;
+  text-align: center;
+}
+
+.ph-empty-ring {
+  color: var(--fgColor-success);
+}
+
+.ph-empty-title {
+  margin: 16px 0 8px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.ph-empty-body {
+  margin: 0;
+  color: var(--fgColor-muted);
+}
+
+.ph-empty-sync {
+  margin: 12px 0 24px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+/* Loading line with an indeterminate 2px bar. */
+.ph-loadline {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  align-self: stretch;
+}
+
+.ph-bar {
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  bottom: -5px;
+  height: 2px;
+  overflow: hidden;
+  background: var(--bgColor-neutral-muted);
+}
+
+.ph-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 35%;
+  background: var(--bgColor-accent-emphasis);
+  animation: ph-slide 1.2s ease-in-out infinite;
+}
+
+.ph-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 120px;
+  padding: 16px 16px 0 32px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--borderColor-hairline);
+}
+
+.ph-sk {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--bgColor-neutral-muted);
+  animation: ph-pulse 1.2s ease-in-out infinite;
+}
+
+.ph-error {
+  flex: none;
+  display: flex;
+  gap: 12px;
+  margin: 8px 12px;
+  padding: 16px;
+  background: var(--bgColor-danger-muted);
+  border: 1.5px solid var(--borderColor-danger-emphasis);
+  border-radius: 12px;
+}
+
+.ph-error-icon {
+  color: var(--fgColor-danger);
+}
+
+.ph-error-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.ph-error-body {
+  margin: 4px 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ph-error-detail {
+  color: var(--fgColor-muted);
+}
+
+.ph-error-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@keyframes ph-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ph-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@keyframes ph-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-sk,
+  .ph-bar::after,
+  .ph-spinner {
+    animation: none;
+  }
+}

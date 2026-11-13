@@ -1,0 +1,47 @@
+/* Status box and rail on the phone (docs/design/timeline-spec.md sections 3.7 and 4.3). */
+
+.ph-status-box {
+  margin: 0 0 16px;
+}
+
+.ph-status-box .msb-row {
+  min-height: 90px;
+}
+
+.ph-status-box .msb-headline {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.ph-status-box .msb-sub {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ph-status-box .msb-detail {
+  min-height: 48px;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.ph-thread .tl-list {
+  padding: 16px 12px;
+}
+
+.ph-thread .tl-item {
+  margin-bottom: 16px;
+}
+
+.ph-thread .tl-card-b {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ph-thread .tl-hidden-row {
+  min-height: 56px;
+}
+
+.ph-thread .tl-hidden-btn {
+  min-width: 108px;
+  min-height: 44px;
+}

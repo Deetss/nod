@@ -1,0 +1,15 @@
+node_modules
+dist
+release
+tmp
+*.log
+.crew
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+android/twa-manifest.json
+android/*.keystore
+android/*.apk
+android/*.aab
+android/*.idsig

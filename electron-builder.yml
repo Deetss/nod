@@ -1,0 +1,17 @@
+appId: dev.example.nod
+productName: nod
+executableName: nod
+asar: false
+npmRebuild: false
+directories:
+  output: release
+files:
+  - package.json
+  - dist/web/**
+  - dist/electron/**
+  - electron/assets/**
+  - "!**/node_modules/**"
+linux:
+  target: dir
+  category: Development
+  icon: electron/assets/icon-512.png

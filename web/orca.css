@@ -1,0 +1,585 @@
+/* Orca sessions (docs/design/orca-sessions-spec.md). Colours are existing tokens only. */
+
+/* State colours. Glyph shape and the printed word carry the state too, never colour alone. */
+.orca-state-working {
+  color: var(--fgColor-accent);
+}
+
+.orca-state-waiting {
+  color: var(--fgColor-attention);
+}
+
+.orca-state-done,
+.orca-state-unknown {
+  color: var(--fgColor-muted);
+}
+
+.orca-glyph {
+  flex: none;
+}
+
+/* Row chip */
+.orca-chip {
+  gap: 4px;
+}
+
+.orca-chip-name {
+  min-width: 0;
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 12px/18px var(--fontStack-monospace);
+  color: var(--fgColor-default);
+}
+
+/* The state colour stays on the glyph only (docs/design/calm-colour-spec.md). */
+.orca-chip-word {
+  flex: none;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.orca-chip-working,
+.orca-chip-waiting,
+.orca-chip-done {
+  background: transparent;
+  border-color: var(--borderColor-default);
+}
+
+.orca-chip-working {
+  color: var(--fgColor-accent);
+}
+
+.orca-chip-waiting {
+  color: var(--fgColor-attention);
+}
+
+.orca-chip-done {
+  color: var(--fgColor-muted);
+}
+
+.orca-chip-unknown {
+  color: var(--fgColor-muted);
+  background: none;
+  border: 1px dashed var(--borderColor-emphasis);
+}
+
+.orca-chip-unknown .orca-chip-name {
+  color: var(--fgColor-muted);
+}
+
+.orca-chip-many {
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border-color: var(--borderColor-emphasis);
+}
+
+/* Below 1399px the name goes and the glyph and state word stay. */
+@media (max-width: 1399px) {
+  .orca-chip-name {
+    display: none;
+  }
+
+  /* A row with a chip may wrap it to a second line instead of dropping its label. */
+  html[data-density='comfortable'] .row-ci:has(.orca-chip) {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    overflow: visible;
+  }
+
+  html[data-density='comfortable'] .row-ci:has(.orca-chip) .row-status {
+    flex: 1 1 0;
+  }
+}
+
+/* Detail card. Comfortable density flattens every other card into a hairline section, but this one stays a bordered card. */
+.orca-card {
+  margin-bottom: 4px;
+}
+
+html[data-density='comfortable'] .detail-body > .orca-card {
+  margin-bottom: 12px;
+  padding: 0;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+  overflow: hidden;
+}
+
+html[data-density='comfortable'] .orca-card .card-h {
+  height: 36px;
+  padding: 0 12px;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+  font: 600 14px/20px var(--fontStack-system);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fgColor-default);
+}
+
+html[data-density='comfortable'] .orca-card .card-h-right {
+  color: var(--fgColor-muted);
+}
+
+html[data-density='comfortable'] .detail-body > .orca-quiet {
+  margin-bottom: 12px;
+}
+
+.orca-right {
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-body {
+  padding: 12px;
+}
+
+.orca-session-row {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.orca-state-glyph {
+  flex: none;
+  display: inline-flex;
+}
+
+.orca-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 13px/22px var(--fontStack-monospace);
+}
+
+.orca-word {
+  flex: none;
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.orca-reason,
+.orca-detail,
+.orca-hint {
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-detail .mono {
+  font-size: 12px;
+}
+
+.orca-hint {
+  margin-top: 6px;
+}
+
+.orca-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.orca-foot {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-top: 1px solid var(--borderColor-muted);
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-foot svg {
+  flex: none;
+}
+
+.orca-ok {
+  display: inline-flex;
+  color: var(--fgColor-success);
+}
+
+.orca-muted {
+  display: inline-flex;
+  color: var(--fgColor-muted);
+}
+
+.orca-warn {
+  display: inline-flex;
+  color: var(--fgColor-attention);
+}
+
+.orca-danger {
+  display: inline-flex;
+  color: var(--fgColor-danger);
+}
+
+.orca-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fgColor-accent);
+  font: 600 12px/18px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.orca-link:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 2px;
+}
+
+/* Result states replace the card body in place */
+.orca-result {
+  display: flex;
+  gap: 10px;
+}
+
+.orca-result-icon {
+  flex: none;
+  margin-top: 2px;
+}
+
+.orca-result-text {
+  min-width: 0;
+}
+
+.orca-result-title {
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.orca-result-sub {
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+/* Quiet line: no border, no fill */
+.orca-quiet {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-quiet svg {
+  flex: none;
+}
+
+/* Picker rows carry a reason line */
+.picker-row-2 {
+  height: 48px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+}
+
+.picker-row-line1,
+.picker-row-line2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.picker-row-line1 .orca-picker-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 13px/22px var(--fontStack-monospace);
+}
+
+.picker-row-line2 {
+  padding-left: 24px;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-reason-text,
+.picker-row-line2 .orca-reason {
+  min-width: 0;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-group {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--fgColor-muted);
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.orca-group-count {
+  font-weight: 400;
+}
+
+.orca-group-split {
+  margin-top: 4px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.orca-picker .picker-act {
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+/* Send message dialog */
+.orca-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.orca-startfrom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.orca-label {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  margin-right: 2px;
+}
+
+.act-chip.is-off {
+  border-style: dashed;
+  border-color: var(--borderColor-emphasis);
+  background: none;
+  color: var(--fgColor-muted);
+  cursor: default;
+}
+
+.orca-fill {
+  margin: 0;
+}
+
+/* The Send key cap stays visible in this dialog. */
+html[data-density='comfortable'] .orca-send .btn-primary .kbd {
+  display: inline-flex;
+}
+
+.orca-send textarea {
+  height: 110px;
+}
+
+.orca-counter {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.orca-over {
+  color: var(--fgColor-danger);
+  font-weight: 600;
+}
+
+.orca-actions {
+  align-items: center;
+}
+
+.orca-nothing {
+  margin-right: auto;
+}
+
+/* Settings popover group */
+.orca-group-menu {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.orca-repo-row {
+  justify-content: space-between;
+  padding-left: 24px;
+}
+
+.orca-repo-name {
+  min-width: 0;
+}
+
+.orca-select {
+  flex: none;
+  width: 80px;
+  height: 24px;
+  padding: 0 6px;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.orca-select.is-set {
+  font-weight: 600;
+}
+
+.orca-menu-hint {
+  margin: 4px 12px 0;
+  white-space: normal;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+/* Activity entries: quieter than GitHub events */
+.tl-quiet .tl-text {
+  color: var(--fgColor-muted);
+}
+
+.tl-notice-alert {
+  display: inline-flex;
+  color: var(--fgColor-danger);
+}
+
+/* Toast stack: up to two, newest on top. Variants reuse .toast and .toast-action. */
+.toast-stack {
+  position: fixed;
+  right: 16px;
+  bottom: 44px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Over a toast another view draws at the corner (the Issues view keeps its own). */
+.toast-stack-raised {
+  bottom: 92px;
+}
+
+.toast-stack .toast {
+  position: static;
+}
+
+.toast-stack .toast-action .btn {
+  height: 24px;
+  padding: 0 10px;
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.toast-icon {
+  display: inline-flex;
+}
+
+.toast-icon-neutral {
+  color: var(--fgColor-muted);
+}
+
+.toast-icon-warn {
+  color: var(--fgColor-attention);
+}
+
+/* Issue session strip, pinned between the issue header and the thread (docs/design/issue-orca-spec.md) */
+.iorca {
+  flex: none;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 16px;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+}
+
+/* State bar: working and waiting only */
+.iorca-working {
+  box-shadow: inset 3px 0 0 var(--borderColor-accent-emphasis);
+}
+
+.iorca-waiting {
+  background: var(--bgColor-attention-muted);
+  box-shadow: inset 3px 0 0 var(--borderColor-attention-emphasis);
+}
+
+.iorca-pending {
+  background: var(--bgColor-default);
+  outline: 1px dashed var(--borderColor-emphasis);
+  outline-offset: -1px;
+}
+
+/* Cap at x 16, glyph centred on x 66, name from x 80 */
+.iorca-cap {
+  flex: none;
+  width: 40px;
+  font: 600 12px/18px var(--fontStack-system);
+  letter-spacing: 0.02em;
+  color: var(--fgColor-muted);
+}
+
+.iorca-glyph {
+  flex: none;
+  width: 20px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.iorca-many .iorca-glyph {
+  color: var(--fgColor-default);
+}
+
+/* One line: whatever does not fit wraps onto a hidden second line, so the detail drops whole. */
+.iorca-mid {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 20px;
+  margin-left: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 12px;
+  overflow: hidden;
+}
+
+.iorca-name {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 13px/20px var(--fontStack-monospace);
+  color: var(--fgColor-default);
+}
+
+.iorca-word {
+  flex: none;
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.iorca-detail {
+  flex: none;
+  white-space: nowrap;
+  font: 400 12px/20px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.iorca-many-text {
+  font: 600 14px/20px var(--fontStack-system);
+  color: var(--fgColor-default);
+  white-space: nowrap;
+}
+
+.iorca-buttons {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.iorca-buttons .btn {
+  height: 28px;
+}
+
+/* Dispatch with Orca while a session already works on the issue */
+.btn.dispatch-live {
+  border-style: dashed;
+  border-color: var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+}

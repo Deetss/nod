@@ -1,0 +1,521 @@
+/* Sheets: full-screen layers over the tab bar. Spec: docs/design/mobile-spec.md (B2 to B5, S4, S5). */
+
+.ph-sheet {
+  position: absolute;
+  inset: var(--ph-top) 0 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bgColor-default);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -2px 0 var(--borderColor-default);
+  animation: ph-up 280ms ease-out;
+  touch-action: pan-x pan-y;
+}
+
+.ph-strip {
+  flex: none;
+  touch-action: none;
+}
+
+.ph-handle {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 8px auto 0;
+  border-radius: 2px;
+  background: var(--borderColor-emphasis);
+}
+
+.ph-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--borderColor-default);
+}
+
+.ph-sheet-titles {
+  min-width: 0;
+  flex: 1;
+}
+
+.ph-sheet-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.ph-sheet-sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-sheet-title,
+.ph-sheet-sub {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ph-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ph-sheet-body.no-scroll {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Action bar: 14px above and below the 48px buttons, then the gesture inset. */
+.ph-actionbar {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px calc(14px + var(--ph-bottom));
+  background: var(--bgColor-inset);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.ph-actionbar .ph-btn {
+  flex: 1;
+  padding: 0 12px;
+}
+
+.ph-actionbar .ph-btn.is-narrow {
+  flex: none;
+  min-width: 72px;
+}
+
+.ph-btn.is-primary {
+  background: var(--button-primary-bgColor-rest);
+  border-color: var(--button-primary-bgColor-rest);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-btn.is-primary:disabled,
+.ph-btn.is-off {
+  background: transparent;
+  border: 1px dashed var(--borderColor-default);
+  color: var(--fgColor-muted);
+}
+
+.ph-bar-note {
+  flex: none;
+  padding: 6px 16px 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+  background: var(--bgColor-inset);
+}
+
+/* Tab strip under the header. Equal 48px tabs, a 3px underline that follows --swipe-pos. */
+.ph-tabs {
+  position: relative;
+  flex: none;
+  display: flex;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+}
+
+.ph-tabs button {
+  flex: 1;
+  height: 48px;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: var(--fgColor-muted);
+  font-size: 15px;
+}
+
+.ph-tabs button.is-active {
+  color: var(--fgColor-default);
+  font-weight: 600;
+}
+
+.ph-tabs-ind {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% / var(--tab-count));
+  height: 3px;
+  background: var(--bgColor-accent-emphasis);
+  transform: translateX(calc(var(--swipe-pos, 0) * 100%));
+  pointer-events: none;
+}
+
+.ph-pad {
+  padding: 16px;
+}
+
+.ph-sheet-h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  user-select: text;
+}
+
+.ph-meta {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--fgColor-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.ph-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 13px;
+  font-size: 13px;
+  line-height: 18px;
+  background: var(--bgColor-neutral-muted);
+}
+
+.ph-pill.is-open {
+  background: var(--bgColor-open-emphasis, var(--bgColor-success-emphasis));
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-pill.is-done {
+  background: var(--bgColor-done-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+/* Bot check chip in the header: 24 high beside the state pill, with the Trim line under it. */
+.ph-check-row {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ph-check-chip {
+  min-height: 24px;
+  text-decoration: none;
+}
+
+.ph-check-text {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.ph-check-danger,
+.ph-check-danger.ph-check-trim {
+  color: var(--fgColor-danger);
+}
+
+.ph-check-trim {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+
+
+.ph-reviews {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--fgColor-muted);
+}
+
+.ph-reviews strong {
+  color: var(--fgColor-default);
+}
+
+.ph-progress {
+  height: 8px;
+  margin: 12px 16px;
+  border-radius: 4px;
+  background: var(--bgColor-neutral-muted);
+  overflow: hidden;
+}
+
+.ph-progress > div {
+  height: 100%;
+  background: var(--bgColor-success-emphasis);
+}
+
+.ph-file {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 64px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+  text-align: left;
+}
+
+.ph-file:active {
+  background: var(--bgColor-neutral-muted);
+}
+
+.ph-file-check {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  align-self: stretch;
+  background: none;
+  border: 0;
+}
+
+.ph-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--borderColor-emphasis);
+  border-radius: 5px;
+}
+
+.ph-box.is-on {
+  background: var(--bgColor-accent-emphasis);
+  border-color: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.ph-file-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ph-file-name {
+  display: block;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-file-path {
+  display: block;
+  direction: rtl;
+  text-align: left;
+  font: 12px/18px var(--fontStack-monospace);
+  color: var(--fgColor-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-file-stat {
+  flex: none;
+  padding: 0 16px 0 8px;
+  text-align: right;
+  font: 12px/18px var(--fontStack-monospace);
+}
+
+.ph-file-stat .add,
+.ph-add {
+  color: var(--fgColor-success);
+}
+
+.ph-file-stat .del,
+.ph-del {
+  color: var(--fgColor-danger);
+}
+
+.ph-changed {
+  display: inline-block;
+  padding: 0 8px;
+  border: 1px solid var(--fgColor-attention);
+  border-radius: 10px;
+  color: var(--fgColor-attention);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+}
+
+.ph-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+}
+
+.ph-check-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-check-word {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ph-check-word.is-pass {
+  color: var(--fgColor-success);
+}
+
+.ph-check-word.is-fail {
+  color: var(--fgColor-danger);
+}
+
+.ph-check-word.is-running {
+  color: var(--fgColor-attention);
+}
+
+.ph-check-word.is-cancelled,
+.ph-check-word.is-skipped {
+  color: var(--fgColor-muted);
+}
+
+.ph-section-h {
+  margin: 20px 0 8px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--fgColor-muted);
+}
+
+.ph-commit {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ph-commit span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-mono {
+  font-family: var(--fontStack-monospace);
+}
+
+.ph-muted {
+  color: var(--fgColor-muted);
+}
+
+.ph-toast {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--ph-bottom) + 96px);
+  z-index: 90;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--bgColor-neutral-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-size: 15px;
+}
+
+.ph-toast.is-error {
+  background: var(--bgColor-danger-emphasis);
+}
+
+/* Over open sheets too. */
+.ph-update-toast {
+  z-index: 120;
+  border: 0;
+  text-align: left;
+  font-family: inherit;
+  background: var(--bgColor-accent-emphasis);
+}
+
+.ph-apk-banner {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px 12px 16px;
+  background: var(--bgColor-accent-muted);
+  border-bottom: 1px solid var(--borderColor-accent-emphasis);
+}
+
+.ph-apk-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-apk-text strong {
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--fgColor-default);
+}
+
+.ph-apk-install {
+  flex: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ph-apk-close {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: none;
+  color: var(--fgColor-muted);
+  font-size: 22px;
+}
+
+@keyframes ph-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-sheet {
+    animation: ph-fade 100ms linear;
+  }
+
+  @keyframes ph-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}

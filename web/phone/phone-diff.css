@@ -1,0 +1,103 @@
+/* B3 file diff sheet. Reuses the desktop .dl rows; gutters shrink to 36px each. */
+
+.ph-filestrip {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  height: 52px;
+  padding: 0 12px;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+}
+
+.ph-fchip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  background: none;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 20px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.ph-fchip.is-current {
+  background: var(--bgColor-accent-emphasis);
+  border-color: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-onEmphasis);
+  font-weight: 600;
+}
+
+.ph-diff {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  container-type: inline-size;
+  outline: none;
+}
+
+.ph-diff .dl-num {
+  width: 72px;
+}
+
+.ph-diff .dl-old,
+.ph-diff .dl-new {
+  width: 36px;
+}
+
+.ph-diff .dl-mark {
+  left: 72px;
+}
+
+.ph-diff .dl-hunk {
+  padding-left: 90px;
+}
+
+.ph-diff .dl-hunk-text {
+  left: 90px;
+  max-width: calc(100cqw - 100px);
+}
+
+.ph-switch {
+  position: relative;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-default);
+  box-sizing: border-box;
+}
+
+.ph-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fgColor-muted);
+}
+
+.ph-switch.is-on {
+  background: var(--bgColor-accent-emphasis);
+}
+
+.ph-switch.is-on::after {
+  left: 19px;
+  background: var(--fgColor-onEmphasis);
+}
+
+.ph-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bgColor-default);
+}
