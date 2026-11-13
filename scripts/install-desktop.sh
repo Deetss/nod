@@ -224,7 +224,7 @@ if [[ "$install_service" -eq 1 || "$replaced_unit" -eq 1 ]]; then
   fi
 fi
 
-if [[ "$service_was_active" -eq 1 && "$install_service" -eq 0 && -f "$unit" ]]; then
+if [[ "$service_was_active" -eq 1 && -f "$unit" ]]; then
   systemctl --user start nod
   echo "Restarted the Nod service"
   # The desktop app attaches to the service, so give it a moment to listen before relaunching.
