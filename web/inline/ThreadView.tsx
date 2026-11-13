@@ -5,6 +5,7 @@ import type { MentionCandidate } from '../mentions/mention-logic';
 import type { GroupedThread } from './group-threads';
 import { CheckIcon, ClockIcon, OutdatedIcon, WarningIcon } from './icons';
 import { commentText, threadControls, threadKeyAction, threadLabel, threadMode } from './thread-view-state';
+import { requestError, useResolveThread, type ResolveState } from './useResolveThread';
 
 export interface ThreadHost {
   repo: string;
@@ -15,9 +16,9 @@ export interface ThreadHost {
   onPosted: () => void;
 }
 
-type Busy = { status: 'idle' } | { status: 'posting' } | { status: 'failed'; error: string };
+type Busy = ResolveState;
 
-const message = (e: unknown) => (e instanceof Error ? e.message : 'Request failed');
+const message = requestError;
 
 const count = (n: number) => `${n} ${n === 1 ? 'comment' : 'comments'}`;
 
@@ -33,12 +34,12 @@ export function ThreadView({ g, host }: { g: GroupedThread; host: ThreadHost }) 
   const controls = threadControls(g, mode);
   const [reply, setReply] = useState('');
   const [busy, setBusy] = useState<Busy>({ status: 'idle' });
-  const [resolveBusy, setResolveBusy] = useState<Busy>({ status: 'idle' });
   const [editing, setEditing] = useState(false);
   const [draftText, setDraftText] = useState('');
   const root = t.comments[0];
   const commentId = root?.id ?? '';
   const threadId = t.threadId;
+  const { state: resolveBusy, toggle: toggleResolve } = useResolveThread(host, threadId, t.resolved, host.onPosted);
 
   const postReply = async () => {
     if (!threadId || reply.trim() === '' || busy.status === 'posting') return;
@@ -54,24 +55,6 @@ export function ThreadView({ g, host }: { g: GroupedThread; host: ThreadHost }) 
       }
     } catch (e) {
       setBusy({ status: 'failed', error: message(e) });
-    }
-  };
-
-  const toggleResolve = async () => {
-    if (!threadId || resolveBusy.status === 'posting') return;
-    setResolveBusy({ status: 'posting' });
-    try {
-      const r = t.resolved
-        ? await api.unresolveThread(host.repo, host.number, threadId)
-        : await api.resolveThread(host.repo, host.number, threadId);
-      if (r.ok) {
-        setResolveBusy({ status: 'idle' });
-        host.onPosted();
-      } else {
-        setResolveBusy({ status: 'failed', error: r.message });
-      }
-    } catch (e) {
-      setResolveBusy({ status: 'failed', error: message(e) });
     }
   };
 

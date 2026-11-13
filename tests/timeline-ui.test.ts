@@ -122,13 +122,13 @@ describe('hidden comment row', () => {
         id: 'T1',
         path: 'src/cart/round.ts',
         line: 42,
-        resolved: true,
+        resolved: false,
         comments: [comment('C2', { minimized: { reason: 'off-topic' } })],
       },
     ];
     const el = render(createElement(PrThreadList, { items }));
     expect(el.textContent).toContain('src/cart/round.ts:42');
-    expect(el.textContent).toContain('Resolved');
+    expect(el.textContent).toContain('Open');
     expect(el.querySelector('.tl-hidden-text')?.textContent).toBe('This comment was marked as off-topic');
   });
 });

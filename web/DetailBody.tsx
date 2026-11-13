@@ -8,13 +8,21 @@ import type { FixControls, MenuControls } from './useFixChecks';
 import type { CommentControls } from './useFixComments';
 import type { FileTarget } from './goto-file';
 import { PrBody } from './Markdown';
-import { PrThreadList } from './PrThread';
+import { PrThreadList, type ThreadHost } from './PrThread';
 import { Btn, CheckIcon, ExpandToggle, ExtLink, KeyCap } from './ui';
 import { repoLabel } from './repo-label';
 
 export type ActionKind = 'approve' | 'request' | 'comment' | 'merge' | 'admin' | 'ready';
 
-export function ThreadCard({ items, fix }: { items?: PrThreadItem[]; fix?: CommentControls | undefined }) {
+export function ThreadCard({
+  items,
+  fix,
+  host,
+}: {
+  items?: PrThreadItem[];
+  fix?: CommentControls | undefined;
+  host?: ThreadHost | undefined;
+}) {
   if (!items?.length) return null;
   return (
     <section className="card" aria-label="Thread" id="pr-thread" tabIndex={-1}>
@@ -24,7 +32,7 @@ export function ThreadCard({ items, fix }: { items?: PrThreadItem[]; fix?: Comme
         {fix ? <ThreadFixButton fix={fix} /> : null}
       </div>
       <div className="card-body">
-        <PrThreadList items={items} fix={fix} />
+        <PrThreadList items={items} fix={fix} host={host} />
       </div>
     </section>
   );
@@ -222,6 +230,8 @@ interface DetailBodyProps extends FilesSectionProps {
   comments?: CommentControls | undefined;
   /** The Orca session card or its quiet line. Sits under the description. */
   orca?: ReactNode;
+  /** Refetches the PR detail after a thread is resolved or reopened. Without it the thread has no Resolve button. */
+  onThreadChanged?: (() => void) | undefined;
 }
 
 /**
@@ -240,7 +250,15 @@ export function DetailBody(p: DetailBodyProps) {
         onToggle={p.onToggleDesc}
       />
       {p.orca}
-      <ThreadCard items={p.detail.thread} fix={p.comments} />
+      <ThreadCard
+        items={p.detail.thread}
+        fix={p.comments}
+        host={
+          p.onThreadChanged
+            ? { repo: p.detail.summary.repo, number: p.detail.summary.number, onChanged: p.onThreadChanged }
+            : undefined
+        }
+      />
       <CommitsCard detail={p.detail} />
       <FilesSection {...p} />
     </div>

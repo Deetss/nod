@@ -685,6 +685,7 @@ export function App() {
     resolve,
     comments,
     orca: orcaUi.section,
+    onThreadChanged: reloadAll,
   };
 
   const viewedCount = files.filter((f) => f.viewed).length;

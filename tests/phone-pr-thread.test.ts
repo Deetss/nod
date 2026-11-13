@@ -122,6 +122,6 @@ describe('PhonePrSheet thread tab', () => {
     expect(text).toContain('Please fix');
     expect(text).toContain('app/model.rb:12');
     expect(text).toContain('Resolved');
-    expect(text).toContain('Rename');
+    expect(text).not.toContain('Rename');
   });
 });

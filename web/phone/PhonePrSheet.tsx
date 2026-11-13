@@ -132,13 +132,13 @@ function Checks({ data }: { data: PhonePr }) {
   );
 }
 
-function Thread({ data }: { data: PhonePr }) {
+function Thread({ data, pr }: { data: PhonePr; pr: PrSummary }) {
   if (!data.detail.data) return <p className="ph-pad ph-muted">{data.detail.error ?? 'Loading…'}</p>;
   const items = data.detail.data.thread ?? [];
   if (items.length === 0) return <p className="ph-pad ph-muted">No conversation yet.</p>;
   return (
     <div className="ph-thread">
-      <PrThreadList items={items} />
+      <PrThreadList items={items} phone host={{ repo: pr.repo, number: pr.number, onChanged: data.reload }} />
     </div>
   );
 }
@@ -212,7 +212,7 @@ export function PhonePrSheet(p: PrSheetProps) {
             ))}
             {total === 0 ? <p className="ph-pad ph-muted">{data.detail.error ?? 'No files.'}</p> : null}
           </Fragment>,
-          <Thread key="thread" data={data} />,
+          <Thread key="thread" data={data} pr={pr} />,
           <Checks key="checks" data={data} />,
         ]}
       />

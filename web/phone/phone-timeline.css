@@ -45,3 +45,7 @@
   min-width: 108px;
   min-height: 44px;
 }
+
+.ph-thread .tl-thread-error {
+  margin-top: -12px;
+}

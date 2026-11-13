@@ -1,8 +1,11 @@
-import type { ReactNode } from 'react';
+import { useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { IssueComment } from '../shared/issue-types';
 import type { PrThreadItem, ReviewVerdict } from '../shared/types';
 import { Avatar } from './issues/parts';
 import { CommentFixButton } from './CommentFix';
+import { WarningIcon } from './inline/icons';
+import { threadKeyAction } from './inline/thread-view-state';
+import { resolveFailure, useResolveThread } from './inline/useResolveThread';
 import { Html } from './Markdown';
 import {
   CardArticle,
@@ -16,7 +19,7 @@ import {
   useShown,
   type Pill,
 } from './Timeline';
-import { CheckIcon, DiffIcon, formatAge } from './ui';
+import { Btn, CheckIcon, DiffIcon, formatAge } from './ui';
 import type { CommentControls } from './useFixComments';
 
 export const VERDICT_WORDS: Record<ReviewVerdict, string> = {
@@ -51,6 +54,8 @@ export function CommentItem({
   stepIndex,
   verb = 'commented',
   tools,
+  onKeyDown,
+  tabIndex,
 }: {
   comment: IssueComment;
   shown: Shown;
@@ -62,6 +67,8 @@ export function CommentItem({
   verb?: string | null;
   /** A control at the right end of the card header. */
   tools?: ReactNode;
+  onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
+  tabIndex?: number;
 }) {
   const age = `${formatAge(comment.createdAt)} ago`;
   if (!comment.minimized) {
@@ -74,6 +81,8 @@ export function CommentItem({
         tools={tools}
         isNew={isNew}
         stepIndex={stepIndex}
+        onKeyDown={onKeyDown}
+        tabIndex={tabIndex}
       >
         <Html html={comment.bodyHtml} className="idetail-md" />
       </TlCard>
@@ -170,33 +179,150 @@ function ReviewEntry({ item, shown }: { item: ReviewItem; shown: Shown }) {
   );
 }
 
-/** One PR conversation entry on the rail. */
-export function PrThreadRow({ item, shown, fix }: { item: PrThreadItem; shown: Shown; fix?: CommentControls }) {
-  if (item.kind === 'comment') return <CommentItem comment={item.comment} shown={shown} />;
-  if (item.kind === 'review') return <ReviewEntry item={item} shown={shown} />;
+type InlineThreadItem = Extract<PrThreadItem, { kind: 'thread' }>;
+
+/** What the thread controls need to write: the PR, and a refetch after a successful write. */
+export interface ThreadHost {
+  repo: string;
+  number: number;
+  onChanged: () => void;
+}
+
+const NO_HOST = { repo: '', number: 0 };
+
+const hiddenCount = (n: number) => `${n} ${n === 1 ? 'comment' : 'comments'} hidden`;
+
+/**
+ * An inline review thread: the path row with its Open or Resolved pill and Resolve, Unresolve,
+ * Expand or Collapse, then the cards. A resolved thread starts collapsed to the path row.
+ */
+function InlineThread({
+  item,
+  shown,
+  fix,
+  host,
+  phone,
+}: {
+  item: InlineThreadItem;
+  shown: Shown;
+  fix?: CommentControls | undefined;
+  host?: ThreadHost | undefined;
+  phone?: boolean | undefined;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const { state, toggle } = useResolveThread(host ?? NO_HOST, item.threadId, item.resolved, () => {
+    setExpanded(false);
+    host?.onChanged();
+  });
+  const canWrite = !!host && !!item.threadId;
+  const collapsed = item.resolved && !expanded;
+  const busy = state.status === 'posting';
+  const keyHint = phone ? undefined : 'x';
+
+  // `x` resolves or reopens the thread while focus is anywhere in its row or cards.
+  const onKey = (e: KeyboardEvent<HTMLElement>) => {
+    const typing = e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement;
+    if (canWrite && threadKeyAction(e.key, e.ctrlKey || e.metaKey, typing) === 'resolve') {
+      e.preventDefault();
+      void toggle();
+    }
+  };
+
+  const toggleButton = !canWrite ? null : busy ? (
+    <button type="button" className="btn is-busy" disabled>
+      <span className="spinner" aria-hidden="true" />
+      {item.resolved ? 'Unresolving...' : 'Resolving...'}
+    </button>
+  ) : (
+    <Btn keyHint={keyHint} onClick={() => void toggle()}>
+      {item.resolved ? 'Unresolve' : 'Resolve'}
+    </Btn>
+  );
+
+  const actions = collapsed ? (
+    <Btn aria-expanded={false} onClick={() => setExpanded(true)}>
+      Expand
+    </Btn>
+  ) : (
+    <>
+      {item.resolved ? (
+        <Btn aria-expanded={true} onClick={() => setExpanded(false)}>
+          Collapse
+        </Btn>
+      ) : null}
+      {toggleButton}
+    </>
+  );
+
   return (
     <>
-      <TlEvent icon={<span className="tl-mark" />}>
+      <TlEvent id={`tl-${item.id}`} icon={<span className="tl-mark" />} actions={actions} onKeyDown={onKey}>
         <code className="tl-code">
           {item.path}
           {item.line ? `:${item.line}` : ''}
         </code>
-        {item.resolved ? <TlPill pill={{ label: 'Resolved', tone: 'success' }} /> : null}
+        <TlPill pill={item.resolved ? { label: 'Resolved', tone: 'success' } : { label: 'Open', tone: 'neutral' }} />
+        {collapsed && !phone ? <span className="tl-hidden-count">{hiddenCount(item.comments.length)}</span> : null}
       </TlEvent>
-      {item.comments.map((c, i) => (
-        <CommentItem
-          key={c.id}
-          comment={c}
-          shown={shown}
-          verb={null}
-          tools={i === 0 && fix?.fixableIds.has(item.id) ? <CommentFixButton fix={fix} thread={item} /> : undefined}
-        />
-      ))}
+      {state.status === 'failed' ? (
+        <li className="tl-item tl-thread-error" onKeyDown={onKey}>
+          <div className="thread-error" role="alert">
+            <WarningIcon />
+            <span>{resolveFailure(item.resolved, state.error)}</span>
+            <button type="button" className="thread-btn" onClick={() => void toggle()}>
+              Retry
+            </button>
+          </div>
+        </li>
+      ) : null}
+      {collapsed
+        ? null
+        : item.comments.map((c, i) => (
+            <CommentItem
+              key={c.id}
+              comment={c}
+              shown={shown}
+              verb={null}
+              onKeyDown={onKey}
+              tabIndex={-1}
+              tools={i === 0 && fix?.fixableIds.has(item.id) ? <CommentFixButton fix={fix} thread={item} /> : undefined}
+            />
+          ))}
     </>
   );
 }
 
-export function PrThreadList({ items, fix }: { items: PrThreadItem[]; fix?: CommentControls }) {
+/** One PR conversation entry on the rail. */
+export function PrThreadRow({
+  item,
+  shown,
+  fix,
+  host,
+  phone,
+}: {
+  item: PrThreadItem;
+  shown: Shown;
+  fix?: CommentControls | undefined;
+  host?: ThreadHost | undefined;
+  phone?: boolean | undefined;
+}) {
+  if (item.kind === 'comment') return <CommentItem comment={item.comment} shown={shown} />;
+  if (item.kind === 'review') return <ReviewEntry item={item} shown={shown} />;
+  return <InlineThread item={item} shown={shown} fix={fix} host={host} phone={phone} />;
+}
+
+export function PrThreadList({
+  items,
+  fix,
+  host,
+  phone,
+}: {
+  items: PrThreadItem[];
+  fix?: CommentControls | undefined;
+  host?: ThreadHost | undefined;
+  /** Phone layout: no key chips and no hidden-comment count. */
+  phone?: boolean | undefined;
+}) {
   const shown = useShown();
   return (
     <TimelineList>
@@ -206,6 +332,8 @@ export function PrThreadList({ items, fix }: { items: PrThreadItem[]; fix?: Comm
           item={item}
           shown={shown}
           fix={fix}
+          host={host}
+          phone={phone}
         />
       ))}
     </TimelineList>
