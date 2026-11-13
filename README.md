@@ -27,16 +27,19 @@ A local pull request and issue queue for GitHub.
 - **Settings.** Change the app's options from inside the app.
 
 <p align="center">
-  <img src="docs/images/inline-comments.png" alt="Inline review comments and a thread" width="720">
+  <img src="docs/images/inline-comments.png" alt="A comment composer under a diff line" width="480">
 </p>
 
 <p align="center">
-  <img src="docs/images/issues-bot.png" alt="The issues list with a bot group and the check card" width="720">
+  <img src="docs/images/issues-bot.png" alt="The issues list with a With Helper group" width="720">
 </p>
 
 <p align="center">
-  <img src="docs/images/mentions.png" alt="@mention suggestions under a comment box" width="360">
-  <img src="docs/images/closed.png" alt="The closed items section" width="360">
+  <img src="docs/images/mentions.png" alt="@mention suggestions above a comment box" width="560">
+</p>
+
+<p align="center">
+  <img src="docs/images/closed.png" alt="The closed items section with a merged PR selected" width="720">
 </p>
 
 <p align="center">
