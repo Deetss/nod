@@ -1015,11 +1015,23 @@ export class GithubProvider implements Provider {
     };
   }
 
-  /** One line or file comment, posted now against the head commit. */
+  /**
+   * One line or file comment, posted now against the head commit. GitHub rejects a standalone
+   * comment while the viewer has a pending review, so it joins that review as a draft instead.
+   */
   async addReviewComment(args: InlineCommentArgs): Promise<ActionResult> {
     const ref = { repo: args.repo, number: args.number };
     try {
-      const { head } = await this.prState(ref);
+      const { head, review } = await this.prState(ref);
+      if (review) {
+        await this.addThread(review.id, args);
+        await this.store.invalidate(keyOf(ref));
+        this.follow(ref);
+        return {
+          ok: true,
+          message: `Added to your pending review (${review.drafts + 1} pending). Submit the review to post it.`,
+        };
+      }
       await this.client.rest(`/repos/${args.repo}/pulls/${args.number}/comments`, {
         method: 'POST',
         body: JSON.stringify(restCommentBody(args, head)),
@@ -1037,35 +1049,50 @@ export class GithubProvider implements Provider {
     const ref = { repo: args.repo, number: args.number };
     try {
       const st = await this.prState(ref);
-      let reviewId = st.review?.id;
-      if (!reviewId) {
-        const created = await this.client.graphql<{ addPullRequestReview: { pullRequestReview: { id: string } } }>(
-          ADD_PENDING_REVIEW,
-          { pullRequestId: st.prId, commitOID: st.head },
-          'AddPendingReview',
-        );
-        reviewId = created.addPullRequestReview.pullRequestReview.id;
-      }
-      await this.client.graphql(
-        ADD_REVIEW_THREAD,
-        {
-          pullRequestReviewId: reviewId,
-          path: args.path,
-          body: args.body,
-          line: args.subjectType === 'line' ? args.line : null,
-          side: args.subjectType === 'line' ? args.side : null,
-          startLine: args.startLine ?? null,
-          startSide: args.startSide ?? null,
-          subjectType: args.subjectType === 'file' ? 'FILE' : 'LINE',
-        },
-        'AddReviewThread',
-      );
+      const reviewId = st.review?.id ?? (await this.createPendingReview(ref, st));
+      await this.addThread(reviewId, args);
       await this.store.invalidate(keyOf(ref));
       this.follow(ref);
       return { ok: true, message: `Draft comment added (${(st.review?.drafts ?? 0) + 1} pending)` };
     } catch (e) {
       return this.fail(e);
     }
+  }
+
+  /**
+   * Starts the viewer's pending review. When a parallel draft already started one, GitHub refuses
+   * a second, so the review that won is used instead.
+   */
+  private async createPendingReview(ref: PrRef, st: { prId: string; head: string }): Promise<string> {
+    try {
+      const created = await this.client.graphql<{ addPullRequestReview: { pullRequestReview: { id: string } } }>(
+        ADD_PENDING_REVIEW,
+        { pullRequestId: st.prId, commitOID: st.head },
+        'AddPendingReview',
+      );
+      return created.addPullRequestReview.pullRequestReview.id;
+    } catch (e) {
+      const existing = (await this.prState(ref)).review;
+      if (existing) return existing.id;
+      throw e;
+    }
+  }
+
+  private async addThread(reviewId: string, args: InlineCommentArgs): Promise<void> {
+    await this.client.graphql(
+      ADD_REVIEW_THREAD,
+      {
+        pullRequestReviewId: reviewId,
+        path: args.path,
+        body: args.body,
+        line: args.subjectType === 'line' ? args.line : null,
+        side: args.subjectType === 'line' ? args.side : null,
+        startLine: args.startLine ?? null,
+        startSide: args.startSide ?? null,
+        subjectType: args.subjectType === 'file' ? 'FILE' : 'LINE',
+      },
+      'AddReviewThread',
+    );
   }
 
   async replyToThread(args: { repo: string; number: number; threadId: string; body: string }): Promise<ActionResult> {
