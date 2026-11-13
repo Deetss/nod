@@ -72,7 +72,9 @@ beforeEach(() => {
   mkdirSync(home);
   write(join(repo, 'scripts/install-desktop.sh'), readFileSync('scripts/install-desktop.sh', 'utf8'), 0o755);
   copyFileSync('scripts/nod.service', join(repo, 'scripts/nod.service'));
-  write(join(repo, 'release/linux-unpacked/nod'), 'new binary', 0o755);
+  // sort -V must pick 0.1.10 over 0.1.9.
+  write(join(repo, 'release/nod-0.1.9.AppImage'), 'old appimage', 0o755);
+  write(join(repo, 'release/nod-0.1.10.AppImage'), 'new appimage', 0o755);
   for (const size of [256, 512]) write(join(repo, `electron/assets/icon-${size}.png`), 'png');
   write(join(stubs, 'systemctl'), SYSTEMCTL, 0o755);
   for (const tool of ['pgrep', 'curl', 'setsid', 'gtk-update-icon-cache', 'update-desktop-database']) {
@@ -85,8 +87,8 @@ describe('install-desktop.sh', () => {
   it('installs the new names on a clean HOME and links the old command', () => {
     const res = run();
     expect(res.status, res.stderr).toBe(0);
-    expect(readFileSync(at('.local/opt/nod/nod'), 'utf8')).toBe('new binary');
-    expect(readFileSync(at('.local/bin/nod'), 'utf8')).toContain(`exec "${home}/.local/opt/nod/nod"`);
+    expect(readFileSync(at('.local/opt/nod/nod.AppImage'), 'utf8')).toBe('new appimage');
+    expect(readFileSync(at('.local/bin/nod'), 'utf8')).toContain(`exec "${home}/.local/opt/nod/nod.AppImage"`);
     const entry = readFileSync(at('.local/share/applications/nod.desktop'), 'utf8');
     expect(entry).toContain('Name=Nod');
     expect(entry).toContain('StartupWMClass=nod');

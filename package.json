@@ -1,6 +1,6 @@
 {
   "name": "nod",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Nod: local pull request review for the acme-co GitHub org",
@@ -15,11 +15,12 @@
     "android:build": "tsx scripts/android.mjs build",
     "android:install": "tsx scripts/android.mjs install",
     "app": "vite build && node scripts/build-electron.mjs && electron .",
-    "app:dist": "vite build && node scripts/build-electron.mjs && electron-builder --linux dir"
+    "app:dist": "vite build && node scripts/build-electron.mjs && electron-builder --linux AppImage --publish never"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.6",
     "dompurify": "^3.4.17",
+    "electron-updater": "^6.8.11",
     "hono": "^4.13.16",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -43,5 +44,9 @@
     "typescript": "^7.0.2",
     "vite": "^8.3.6",
     "vitest": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Deetss/nod.git"
   }
 }

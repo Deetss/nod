@@ -30,6 +30,7 @@ import { loadSettings } from '../server/settings';
 import { relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
+import { startUpdater } from './updater';
 import {
   detectTailnet,
   newSessionToken,
@@ -365,6 +366,7 @@ async function runService(): Promise<void> {
   await app.whenReady();
   app.dock?.hide();
   await startServer();
+  startUpdater({ service: true });
 }
 
 async function main(): Promise<void> {
@@ -385,6 +387,7 @@ async function main(): Promise<void> {
   phoneAccess = readPhoneSetting(await readJson(userFile('app-settings.json')));
   registerIpc();
   ({ origin, attached } = await attachOrStart(startServer));
+  if (!attached && !SMOKE) startUpdater({ service: false });
   buildMenu();
   win = await createWindow();
 

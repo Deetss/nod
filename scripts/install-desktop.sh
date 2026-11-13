@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Installs the unpacked app (pnpm app:dist) for the current user. Safe to re-run.
+# Installs the AppImage (pnpm app:dist) for the current user. Safe to re-run.
+# Later releases install themselves through the in-app updater.
 # Also replaces what the pre-rename installer (review-inbox) wrote, and nothing else.
 set -euo pipefail
 
@@ -16,8 +17,10 @@ for arg in "$@"; do
 done
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-src="$root/release/linux-unpacked"
+# The newest build, by version.
+src="$(ls -1 "$root"/release/nod-*.AppImage 2>/dev/null | sort -V | tail -n 1 || true)"
 opt="$HOME/.local/opt/nod"
+appimage="$opt/nod.AppImage"
 bin="$HOME/.local/bin/nod"
 desktop="$HOME/.local/share/applications/nod.desktop"
 icons="$HOME/.local/share/icons/hicolor"
@@ -41,9 +44,10 @@ refresh_caches() {
 }
 
 # Main process of the desktop app only: no --serve (the service) and no --type= (Chromium helpers).
+# An AppImage runs from its mount, /tmp/.mount_<name><random>; $opt/nod is the old unpacked install.
 desktop_pids() {
   local pid
-  for pid in $(pgrep -f "^($opt/nod|$old_opt/review-inbox)( |$)" || true); do
+  for pid in $(pgrep -f "^($opt/nod|/tmp/\.mount_nod[^/]*/nod|$old_opt/review-inbox)( |$)" || true); do
     if ! tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null | grep -qE -- '--serve|--type='; then
       echo "$pid"
     fi
@@ -87,8 +91,8 @@ if [[ "$uninstall" -eq 1 ]]; then
   exit 0
 fi
 
-if [[ ! -x "$src/nod" ]]; then
-  echo "No build at $src. Run: pnpm app:dist" >&2
+if [[ -z "$src" ]]; then
+  echo "No AppImage in $root/release. Run: pnpm app:dist" >&2
   exit 1
 fi
 
@@ -165,7 +169,8 @@ fi
 
 rm -rf "$opt"
 mkdir -p "$opt" "$(dirname "$bin")" "$(dirname "$desktop")"
-cp -a "$src/." "$opt/"
+cp "$src" "$appimage"
+chmod +x "$appimage"
 
 # `nod serve` runs the headless service; anything else opens the app.
 cat > "$bin" <<EOF
@@ -174,7 +179,7 @@ if [[ "\${1:-}" == serve ]]; then
   shift
   set -- --serve "\$@"
 fi
-exec "$opt/nod" "\$@"
+exec "$appimage" "\$@"
 EOF
 chmod +x "$bin"
 
