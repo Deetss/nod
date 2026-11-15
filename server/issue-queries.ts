@@ -1,16 +1,16 @@
 import { orgScope, searchTime } from './queries';
 
 /** Every open issue in the orgs, and the open ones that mention the viewer. */
-export const issueFullSearch = (orgs: readonly string[]): string => `is:open is:issue ${orgScope(orgs)}`;
-export const mentionFullSearch = (orgs: readonly string[]): string => `${issueFullSearch(orgs)} mentions:@me`;
+export const issueFullSearch = (orgs: readonly string[], involved = false): string => `is:open is:issue ${orgScope(orgs, involved)}`;
+export const mentionFullSearch = (orgs: readonly string[], involved = false): string => `${issueFullSearch(orgs, involved)} mentions:@me`;
 
 /** No `is:open`, so closed issues arrive and get removed. */
-export function issueDeltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number): string {
-  return `is:issue ${orgScope(orgs)} updated:>=${searchTime(lastSync - overlapMs)}`;
+export function issueDeltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number, involved = false): string {
+  return `is:issue ${orgScope(orgs, involved)} updated:>=${searchTime(lastSync - overlapMs)}`;
 }
 
-export function mentionDeltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number): string {
-  return `${issueDeltaSearch(orgs, lastSync, overlapMs)} mentions:@me`;
+export function mentionDeltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number, involved = false): string {
+  return `${issueDeltaSearch(orgs, lastSync, overlapMs, involved)} mentions:@me`;
 }
 
 export const ISSUE_FIELDS = `

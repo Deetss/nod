@@ -1,12 +1,8 @@
-/**
- * The search qualifier for the configured orgs. With none it falls back to everything the
- * viewer is involved in, so a personal setup works without an org.
- */
-export const orgScope = (orgs: readonly string[]): string =>
-  orgs.length ? orgs.map((o) => `org:${o}`).join(' ') : 'involves:@me';
+import { orgScope } from '../shared/org-scope';
+export { orgScope };
 
 /** Every open PR in the orgs. The front end derives the sections. */
-export const fullSearch = (orgs: readonly string[]): string => `is:open is:pr ${orgScope(orgs)}`;
+export const fullSearch = (orgs: readonly string[], involved = false): string => `is:open is:pr ${orgScope(orgs, involved)}`;
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -20,16 +16,16 @@ export function searchTime(ms: number): string {
 }
 
 /** No `is:open`, so closed and merged PRs arrive and get removed. */
-export function deltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number): string {
-  return `is:pr ${orgScope(orgs)} updated:>=${searchTime(lastSync - overlapMs)}`;
+export function deltaSearch(orgs: readonly string[], lastSync: number, overlapMs: number, involved = false): string {
+  return `is:pr ${orgScope(orgs, involved)} updated:>=${searchTime(lastSync - overlapMs)}`;
 }
 
 /**
  * The viewer's open PRs. A check run finishing does not move a PR's `updated` time, so the
  * delta search alone misses CI turning red until the hourly sweep.
  */
-export function ownOpenSearch(orgs: readonly string[], viewer: string): string {
-  return `is:pr is:open ${orgScope(orgs)} author:${viewer}`;
+export function ownOpenSearch(orgs: readonly string[], viewer: string, involved = false): string {
+  return `is:pr is:open ${orgScope(orgs, involved)} author:${viewer}`;
 }
 
 export const PR_FIELDS = `

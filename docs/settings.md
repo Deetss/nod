@@ -11,6 +11,7 @@ Org-specific values live in one JSON file, `app-settings.json`.
 | Key | Default | Meaning |
 | --- | --- | --- |
 | `org` | `"acme-co"` | GitHub org login. Drives searches, API paths, links and UI text. |
+| `includeInvolved` | `true` | Also show PRs and issues you are involved in, in any repo, beside the orgs. Searches become `(org:A OR org:B OR involves:@me)`. With no orgs it has no effect, since that search already is `involves:@me`. With it on, up to 4 orgs fit GitHub's five-operator search limit. |
 | `releaseMerge.base` | `"main"` | Base branch of the release PR. |
 | `releaseMerge.head` | `"staging"` | Head branch of the release PR. |
 | `releaseMerge.titleContains` | `"release staging to main"` | Case-insensitive title marker. A PR matching base, head and title merges with a merge commit. Every other PR squashes and deletes its branch. |
