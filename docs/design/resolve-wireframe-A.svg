@@ -106,7 +106,7 @@
 <text x="854" y="704" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Failed: message box inside the card, focus stays on Resolve.</text>
 <text x="854" y="726" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Resolved threads stay expanded; no collapse in this layout.</text>
 <rect x="10" y="594" width="810" height="262" rx="6" fill="#ffffff" stroke="#999999" stroke-width="1" stroke-dasharray="6 4"/>
-<text x="22" y="610" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222222" text-anchor="start">6 Notes for Dylan</text>
+<text x="22" y="610" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222222" text-anchor="start">6 Notes</text>
 <text x="24" y="638" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">State is shown by text pill: Open is dashed outline,</text>
 <text x="24" y="660" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Resolved is solid fill. Shape carries it, not colour.</text>
 <text x="24" y="682" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Path row keeps the file path and the pill, no button.</text>

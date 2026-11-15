@@ -115,7 +115,7 @@
 <text x="854" y="704" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Busy: Resolving... on the row, disabled. Failed: box in card.</text>
 <text x="854" y="726" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Fix stays in the card header.</text>
 <rect x="10" y="594" width="810" height="262" rx="6" fill="#ffffff" stroke="#999999" stroke-width="1" stroke-dasharray="6 4"/>
-<text x="22" y="610" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222222" text-anchor="start">7 Notes for Dylan</text>
+<text x="22" y="610" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222222" text-anchor="start">7 Notes</text>
 <text x="24" y="638" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Collapse removes the card, so Resolved is always one row.</text>
 <text x="24" y="660" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Greyscale: Open is dashed outline, Resolved is solid pill.</text>
 <text x="24" y="682" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#222222" text-anchor="start">Path row is the control row, so the card header has only Fix.</text>
