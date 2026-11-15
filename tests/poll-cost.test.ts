@@ -166,12 +166,15 @@ describe('startup', () => {
     }
   }
 
-  it('runs a delta from a saved list under an hour old', async () => {
+  // The saved list may come from another scope or search, after a settings save or an update.
+  it('sweeps once from a saved list under an hour old, then runs deltas', async () => {
     const m = mockClient();
     const at = START - 30 * MINUTE;
     const { provider } = setup(m.client, new SavedPrs(at), new SavedIssues(at));
     await provider.poll('delta');
-    expect(m.calls.some((c) => c.vars.q?.startsWith('is:open is:pr'))).toBe(false);
+    expect(m.calls.filter((c) => c.vars.q?.startsWith('is:open is:pr'))).toHaveLength(1);
+    await provider.poll('delta');
+    expect(m.calls.filter((c) => c.vars.q?.startsWith('is:open is:pr'))).toHaveLength(1);
     expect(m.calls.filter((c) => c.name === 'Poll')).toHaveLength(1);
   });
 

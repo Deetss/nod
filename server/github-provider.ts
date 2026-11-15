@@ -320,7 +320,10 @@ export class GithubProvider implements Provider {
   private loading: Promise<void> | undefined;
   /** Syncs in flight, by effective mode. */
   private readonly syncing: Partial<Record<'delta' | 'full', Promise<boolean>>> = {};
-  /** Start of the last full sweep; a saved list counts as swept when it was last synced. */
+  /**
+   * Start of the last full sweep. A saved list is never counted as swept, so the first sync
+   * after a start is full and picks up a changed scope or search from a settings save or update.
+   */
   private fullAt = 0;
   /** Teams and project ids were refreshed at this time; 0 until the first sync. */
   private metaAt = 0;
@@ -372,7 +375,6 @@ export class GithubProvider implements Provider {
   private load(): Promise<void> {
     this.loading ??= (async () => {
       this.state = await this.store.loadState();
-      this.fullAt = this.state.lastSync;
       await this.expire();
     })();
     return this.loading;
