@@ -11,6 +11,7 @@ import type {
 import type { DevicesResponse, PairCode } from '../shared/pairing';
 import type { AndroidRelease } from '../shared/android-release';
 import type { PhonesUpdateResult } from '../shared/build-update';
+import type { UpdateCheckResult } from '../shared/app-update';
 import type { NotifyTestResult } from '../shared/notify-test';
 import type { UploadResult } from '../shared/image-upload';
 import type { NumberHit } from '../shared/number-query';
@@ -231,6 +232,8 @@ export const api = {
   /** Reloads connected phones and pushes to the rest. Loopback only. */
   updatePhones: () => post<PhonesUpdateResult>('/api/phones/update', {}),
   testNotifications: () => post<NotifyTestResult>('/api/notifications/test', {}),
+  /** Checks for a newer release now; one found starts downloading. Loopback only. */
+  checkUpdates: () => post<UpdateCheckResult>('/api/updates/check', {}),
   /** The published APK's metadata. Rejects with "No Android build published" before the first build. */
   androidLatest: () => get<AndroidRelease>('/api/android/latest'),
   pushKey: () => get<{ publicKey: string }>('/api/push/key'),

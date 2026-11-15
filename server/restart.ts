@@ -28,6 +28,15 @@ export function exitRestarter(
   };
 }
 
+/**
+ * What `app.relaunch` needs to start the same command line again. Inside an AppImage the binary
+ * lives on a mount that goes away on quit, and may be an older build than the file, so it relaunches
+ * the AppImage file itself. Undefined means Electron's own default.
+ */
+export function relaunchOptions(appImage: string | undefined, argv: readonly string[]): { execPath: string; args: string[] } | undefined {
+  return appImage ? { execPath: appImage, args: argv.slice(1) } : undefined;
+}
+
 /** The Electron app: relaunch the same command line, then quit this instance. */
 export function relaunchRestarter(relaunch: () => void, quit: () => void): Restarter {
   return {

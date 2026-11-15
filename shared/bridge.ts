@@ -10,6 +10,10 @@ export interface NodBridge {
   onOpen: (cb: (target: NotifyTarget) => void) => () => void;
   getSettings: () => Promise<NotifySettings>;
   setSettings: (settings: NotifySettings) => Promise<NotifySettings>;
+  /** The build of this Electron shell, which can trail the service's after a self-update. Missing before 0.2.4. */
+  shellBuild?: () => Promise<string>;
+  /** Quits this window and starts it again from the installed AppImage. Missing before 0.2.4. */
+  relaunch?: () => Promise<void>;
 }
 
 declare global {

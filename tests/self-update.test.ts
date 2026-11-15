@@ -1,0 +1,110 @@
+import { readFileSync } from 'node:fs';
+import { describe, expect, it, vi } from 'vitest';
+import { createApp } from '../server/app';
+import { DeviceStore } from '../server/devices';
+import { FixtureProvider } from '../server/fixture-provider';
+import { relaunchOptions } from '../server/restart';
+import type { PhoneAccess } from '../server/security';
+import { updateCheckText, type UpdateCheckResult } from '../shared/app-update';
+import { DEV_BUILD, shellNotice } from '../shared/build-update';
+
+const PORT = 4477;
+const TOKEN = 'test-token';
+const PHONE: PhoneAccess = { host: 'nod.example.invalid', owner: 'owner@example.com' };
+const LOOPBACK = `http://127.0.0.1:${PORT}`;
+const DESKTOP = { host: `127.0.0.1:${PORT}`, origin: LOOPBACK, 'x-nod-token': TOKEN, 'content-type': 'application/json' };
+const OLD = '8152277-2026-11-11T17:00:00Z';
+const NEW = 'a995b64-2026-11-11T18:00:00Z';
+
+function setup(updates?: { check(): Promise<UpdateCheckResult> }) {
+  const devices = DeviceStore.memory();
+  const app = createApp({ provider: new FixtureProvider(), port: PORT, token: TOKEN, phone: PHONE, devices, updates });
+  const post = (headers: Record<string, string>) => app.request(`${LOOPBACK}/api/updates/check`, { method: 'POST', headers, body: '{}' });
+  return { devices, post };
+}
+
+describe('POST /api/updates/check', () => {
+  it('answers with what the updater found', async () => {
+    const check = vi.fn(async (): Promise<UpdateCheckResult> => ({ state: 'found', version: '0.2.4', installs: 'restart' }));
+    const res = await setup({ check }).post(DESKTOP);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ state: 'found', version: '0.2.4', installs: 'restart' });
+    expect(check).toHaveBeenCalledOnce();
+  });
+
+  it('says unsupported without an updater', async () => {
+    expect(await (await setup().post(DESKTOP)).json()).toEqual({ state: 'unsupported' });
+  });
+
+  it('is loopback only: a paired phone gets 403 and no check runs', async () => {
+    const check = vi.fn(async (): Promise<UpdateCheckResult> => ({ state: 'unsupported' }));
+    const { devices, post } = setup({ check });
+    const key = await devices.add('Pixel');
+    const res = await post({
+      host: `${PHONE.host}:8443`,
+      'tailscale-user-login': PHONE.owner,
+      origin: `https://${PHONE.host}:8443`,
+      'x-nod-token': TOKEN,
+      'content-type': 'application/json',
+      cookie: `nod_device=${key}`,
+    });
+    expect(res.status).toBe(403);
+    expect(check).not.toHaveBeenCalled();
+  });
+});
+
+describe('updateCheckText', () => {
+  it('says where a found release installs', () => {
+    expect(updateCheckText({ state: 'found', version: '0.2.4', installs: 'restart' })).toBe(
+      'Nod 0.2.4 is downloading. The service restarts on it when done.',
+    );
+    expect(updateCheckText({ state: 'found', version: '0.2.4', installs: 'quit' })).toBe('Nod 0.2.4 is downloading. It installs when you quit Nod.');
+  });
+
+  it('reads the other answers', () => {
+    expect(updateCheckText({ state: 'current', version: '0.2.3' })).toBe('Nod 0.2.3 is the latest release.');
+    expect(updateCheckText({ state: 'failed', error: 'offline' })).toBe('Update check failed: offline');
+    expect(updateCheckText({ state: 'unsupported' })).toContain('AppImage');
+  });
+});
+
+describe('shellNotice', () => {
+  it('offers a relaunch when the page is newer than the shell', () => {
+    expect(shellNotice(NEW, OLD)).toBe('relaunch');
+  });
+
+  it('asks for a manual restart from a shell too old to report its build', () => {
+    expect(shellNotice(NEW, undefined)).toBe('restart');
+  });
+
+  it('stays quiet on a matching build and on dev builds', () => {
+    expect(shellNotice(NEW, NEW)).toBe('none');
+    expect(shellNotice(DEV_BUILD, OLD)).toBe('none');
+    expect(shellNotice(NEW, DEV_BUILD)).toBe('none');
+  });
+});
+
+describe('relaunchOptions', () => {
+  it('relaunches the AppImage file, not the binary on its mount', () => {
+    expect(relaunchOptions('/home/u/.local/opt/nod/nod.AppImage', ['/tmp/.mount_nod.x/nod', '--serve'])).toEqual({
+      execPath: '/home/u/.local/opt/nod/nod.AppImage',
+      args: ['--serve'],
+    });
+  });
+
+  it("leaves Electron's default outside an AppImage", () => {
+    expect(relaunchOptions(undefined, ['/usr/bin/electron', '.'])).toBeUndefined();
+  });
+});
+
+describe('nod.service', () => {
+  const unit = readFileSync('scripts/nod.service', 'utf8');
+
+  it('stops Nod before the AppImage mount it runs from', () => {
+    expect(unit).toMatch(/^ExecStop=.*kill -TERM "\$\$MAINPID".*tail --pid="\$\$MAINPID"/m);
+  });
+
+  it('sends stdout to the journal', () => {
+    expect(unit).toContain('Environment=ELECTRON_ENABLE_LOGGING=1');
+  });
+});

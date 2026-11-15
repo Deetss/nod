@@ -54,7 +54,7 @@ import { NO_ACCESS, reviewAccess } from '../shared/pr-actions';
 import { useInbox } from './useInbox';
 import { setKnownRepos } from './repo-label';
 import { parseOpenParam, reloadUrl, type OpenRef } from '../shared/build-update';
-import { UpdateToast, useBuildUpdates } from './UpdateNotice';
+import { ShellToast, UpdateToast, useBuildUpdates, useShellUpdate } from './UpdateNotice';
 import { PhoneApp } from './phone/PhoneApp';
 import type { SheetTarget } from './phone/PhoneSheet';
 import type { PhoneTab } from './phone/phone-logic';
@@ -638,7 +638,13 @@ export function App() {
     return issue ? { kind: 'issue', repo: issue.repo, number: issue.number } : undefined;
   };
   const updates = useBuildUpdates(currentOpen);
-  const updateToast = <UpdateToast notice={updates.notice} phone={phone} onReload={updates.reloadNow} />;
+  const shell = useShellUpdate();
+  // A pending page reload comes first: the shell notice is about the page that loads after it.
+  const updateToast = updates.notice ? (
+    <UpdateToast notice={updates.notice} phone={phone} onReload={updates.reloadNow} />
+  ) : (
+    <ShellToast notice={shell.notice} onDismiss={shell.dismiss} />
+  );
 
   const searchItems = useMemo(
     (): SearchItem[] => [

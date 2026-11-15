@@ -15,12 +15,14 @@ The install script copies the newest AppImage to `~/.local/opt/nod/nod.AppImage`
 
 ## Updates
 
-After the first install, Nod updates itself from [GitHub releases](https://github.com/Deetss/nod/releases). Only the process that owns the server checks, at start and every 6 hours.
+After the first install, Nod updates itself from [GitHub releases](https://github.com/Deetss/nod/releases). Only the process that owns the server checks, at start and every hour. Settings > Updates > Check for updates checks now.
 
 - The service installs a new release as soon as it downloads and exits. systemd restarts it on the new build, and open windows and phones reload onto it.
 - A window running its own server installs on quit (`Ctrl+Q`).
-- A window attached to the service never updates the file itself. It picks up the new page when the service restarts, and the new shell at its next launch.
-- `[update]` lines in the log show each check and download. `pnpm app` and other builds outside an AppImage never check.
+- A window attached to the service never updates the file itself. It reloads onto the new page, then offers Relaunch to move its own shell onto the new build.
+- `[update]` lines in the log show each check and download. For the service, read them with `journalctl --user -u nod`. `pnpm app` and other builds outside an AppImage never check.
+
+The unit's `ExecStop` stops Nod before the AppImage's FUSE daemon. Stopping both at once crashes Nod with SIGBUS and leaves a dead `/tmp/.mount_nod.*` mount. Rerunning the install script refreshes an installed unit. Dead mounts from older units clear with `fusermount -u` or a reboot.
 
 To cut a release, bump `version` in `package.json` in a PR. After it merges, tag `main` (`git tag v0.2.1 && git push origin v0.2.1`). The tag must match the version. It runs `.github/workflows/release.yml`, which tests, builds and publishes the AppImage and `latest-linux.yml`.
 

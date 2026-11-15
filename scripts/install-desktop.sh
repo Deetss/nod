@@ -58,6 +58,7 @@ desktop_pids() {
 old_bin_is_ours() { [[ -f "$old_bin" && ! -L "$old_bin" ]] && grep -qF "$old_opt/review-inbox" "$old_bin"; }
 old_desktop_is_ours() { [[ -f "$old_desktop" ]] && grep -qx 'StartupWMClass=review-inbox' "$old_desktop"; }
 old_unit_is_ours() { [[ -f "$old_unit" ]] && grep -qF '/.local/bin/review-inbox serve' "$old_unit"; }
+unit_is_ours() { [[ -f "$unit" ]] && grep -qx 'ExecStart=%h/.local/bin/nod serve' "$unit"; }
 legacy_link_is_ours() { [[ -L "$old_bin" && "$(readlink "$old_bin")" == nod ]]; }
 
 if [[ "$uninstall" -eq 1 ]]; then
@@ -210,7 +211,14 @@ refresh_caches
 
 echo "Installed to $opt. Launch with: nod"
 
-if [[ "$install_service" -eq 1 || "$replaced_unit" -eq 1 ]]; then
+if [[ "$install_service" -eq 0 && "$replaced_unit" -eq 0 ]] && unit_is_ours; then
+  # Keeps an installed unit current, so it gets fixes such as the clean stop.
+  if ! cmp -s "$root/scripts/nod.service" "$unit"; then
+    cp "$root/scripts/nod.service" "$unit"
+    have_systemctl && systemctl --user daemon-reload 2>/dev/null || true
+    echo "Updated the service unit at $unit."
+  fi
+elif [[ "$install_service" -eq 1 || "$replaced_unit" -eq 1 ]]; then
   mkdir -p "$unit_dir"
   cp "$root/scripts/nod.service" "$unit"
   have_systemctl && systemctl --user daemon-reload 2>/dev/null || true

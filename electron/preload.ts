@@ -14,6 +14,8 @@ const bridge: NodBridge = {
   },
   getSettings: () => ipcRenderer.invoke('settings:get'),
   setSettings: (settings) => ipcRenderer.invoke('settings:set', settings),
+  shellBuild: () => ipcRenderer.invoke('shell:build'),
+  relaunch: () => ipcRenderer.invoke('shell:relaunch'),
 };
 
 contextBridge.exposeInMainWorld('nod', bridge);
