@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="412" height="915" viewBox="0 0 412 915"><style>
+.t{font:12px sans-serif;fill:#222}
+.b{font:700 12px sans-serif;fill:#111}
+.g{font:12px sans-serif;fill:#666}
+.w{font:700 12px sans-serif;fill:#fff}
+.h{font:700 14px sans-serif;fill:#111}
+.m{font:12px monospace;fill:#444}
+</style><rect width="100%" height="100%" fill="#fff"/><rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="14" y="20" class="b">9:41</text>
+<text x="14" y="52" class="h">orders-api #365</text>
+<text x="14" y="70" class="g">fix: resolve duplicate migration version</text>
+<rect x="0" y="82" width="412" height="30" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="206" y="102" class="t" text-anchor="middle">Files        [Threads 3]        Checks</text>
+<rect x="10" y="120" width="392" height="34" rx="0" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<rect x="18" y="129" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<line x1="21" y1="137" x2="25" y2="141" stroke="#111" stroke-width="2"/>
+<line x1="25" y1="141" x2="31" y2="133" stroke="#111" stroke-width="2"/>
+<text x="40" y="142" class="b">2 selected</text>
+<text x="394" y="142" class="g" text-anchor="end">Actions below</text>
+<rect x="10" y="160" width="70" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="45.0" y="175" class="t" text-anchor="middle">All 4</text>
+<rect x="86" y="160" width="100" height="22" rx="11" fill="#555" stroke="#555" stroke-width="1"/>
+<text x="136.0" y="175" class="w" text-anchor="middle">Findings 2</text>
+<rect x="192" y="160" width="100" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="242.0" y="175" class="t" text-anchor="middle">Unresolved 3</text>
+<rect x="298" y="160" width="90" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.0" y="175" class="t" text-anchor="middle">Resolved 1</text>
+<rect x="10" y="190" width="392" height="138" rx="4" fill="#fff" stroke="#111" stroke-width="3"/>
+<rect x="18" y="200" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<line x1="21" y1="208" x2="25" y2="212" stroke="#111" stroke-width="2"/>
+<line x1="25" y1="212" x2="31" y2="204" stroke="#111" stroke-width="2"/>
+<rect x="42" y="198" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="74" y="212" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="112" y="198" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="153" y="212" class="t" text-anchor="middle">review-bot</text>
+<text x="42" y="234" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="42" y="250" class="t">The diff adds the new migration without deleting the</text>
+<text x="42" y="264" class="t">old version, so the duplicate version remains and</text>
+<text x="42" y="278" class="t">migration loading still fails.</text>
+<text x="42" y="298" class="g">Reply R    Open on GitHub    more</text>
+<rect x="42" y="306" width="24" height="16" rx="3" fill="#eee" stroke="#444" stroke-width="1"/>
+<text x="54" y="318" class="b" text-anchor="middle">...</text>
+<text x="72" y="318" class="t">Handed 09:42, waiting</text>
+<rect x="10" y="334" width="392" height="138" rx="4" fill="#fff" stroke="#111" stroke-width="3"/>
+<rect x="18" y="344" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<line x1="21" y1="352" x2="25" y2="356" stroke="#111" stroke-width="2"/>
+<line x1="25" y1="356" x2="31" y2="348" stroke="#111" stroke-width="2"/>
+<rect x="42" y="342" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="70" y="356" class="b" text-anchor="middle">MAJOR</text>
+<rect x="104" y="342" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="145" y="356" class="t" text-anchor="middle">review-bot</text>
+<text x="42" y="378" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="42" y="394" class="t">Rolling back the new migration drops the existing</text>
+<text x="42" y="408" class="t">parcels table on a database where the old migration</text>
+<text x="42" y="422" class="t">already ran.</text>
+<text x="42" y="442" class="g">Reply R    Open on GitHub    more</text>
+<rect x="42" y="450" width="24" height="16" rx="3" fill="#fff" stroke="#444" stroke-width="2"/>
+<text x="54" y="462" class="b" text-anchor="middle">!</text>
+<text x="72" y="462" class="t">Dispatch failed: Orca down</text>
+<rect x="310" y="446" width="80" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="350.0" y="462.0" class="b" text-anchor="middle">Retry  T</text>
+<rect x="10" y="478" width="392" height="36" rx="0" fill="#fff" stroke="#999" stroke-width="1"/>
+<rect x="18" y="488" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<text x="42" y="493" class="b">riley-k</text>
+<text x="102" y="493" class="t">Can we rename the migration class too?</text>
+<text x="42" y="508" class="g">human thread</text>
+<rect x="1" y="590" width="410" height="255" rx="0" fill="#fff" stroke="#111" stroke-width="3"/>
+<rect x="176" y="598" width="60" height="5" rx="3" fill="#999" stroke="#999" stroke-width="1"/>
+<text x="14" y="628" class="h">Actions for 2 selected findings</text>
+<rect x="14" y="640" width="384" height="34" rx="4" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="206.0" y="661.0" class="w" text-anchor="middle">Hand 2 to bot  H</text>
+<rect x="14" y="682" width="384" height="34" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="206.0" y="703.0" class="b" text-anchor="middle">Dispatch 2 to Orca session  D</text>
+<rect x="14" y="724" width="384" height="34" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="206.0" y="745.0" class="b" text-anchor="middle">Resolve 2  E</text>
+<text x="14" y="784" class="g">No Orca session linked: Dispatch opens the picker.</text>
+<text x="14" y="802" class="g">No bot set: Hand to bot is not listed.</text>
+<rect x="0" y="845" width="412" height="70" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="14" y="876" class="w">MERGE BLOCKED  ·  3 unresolved threads</text>
+<text x="14" y="896" class="w">Sticky footer, always visible</text></svg>

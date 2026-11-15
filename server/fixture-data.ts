@@ -68,6 +68,7 @@ function summary(s: PrSeed, now: number): PrSummary {
 const bot = 'dependabot[bot]';
 
 const NEEDS: PrSeed[] = [
+  { repo: 'acme-co/orders-api', number: 365, title: 'fix: resolve duplicate migration version', author: 'sam-lee', ageH: 3, add: 18, del: 4, files: 2, ci: 'pass', review: 'needs review', seen: 'seen' },
   { repo: 'acme-co/acme-api', number: 310, title: 'fix: hide sale bonus from data:read', author: 'build-bot', ageH: 2, add: 42, del: 8, files: 4, ci: 'pass', review: 'needs review', seen: 'updated', note: '2 commits since you looked', commits: 5, conflicting: true },
 ];
 const MINE: PrSeed[] = [

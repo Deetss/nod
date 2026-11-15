@@ -92,7 +92,30 @@ function BotPane({ form, errors, patch, onEnter }: PaneProps) {
         <TextField path="bot.login" label="Bot GitHub login" value={bot.login} errors={errors} onChange={(login) => set({ login })} onEnter={onEnter} />
         <TextField path="bot.marker" label="Comment marker" value={bot.marker} errors={errors} onChange={(marker) => set({ marker })} onEnter={onEnter} />
       </div>
-      <PaneErrors errors={errors} roots={['bot']} />
+      <h3 className="settings-sub">Review findings</h3>
+      <p className="settings-help">
+        Threads the review bot opens as <code>**Blocker**:</code> or <code>**Major**:</code> get Hand to bot, Dispatch, Reply and
+        Resolve. Leave both empty to turn them off.
+      </p>
+      <div className="settings-grid">
+        <TextField
+          path="reviewer.login"
+          label="Reviewer GitHub login"
+          value={form.reviewer.login}
+          errors={errors}
+          onChange={(login) => patch({ reviewer: { ...form.reviewer, login } })}
+          onEnter={onEnter}
+        />
+        <TextField
+          path="reviewer.threadMarker"
+          label="Thread marker"
+          value={form.reviewer.threadMarker}
+          errors={errors}
+          onChange={(threadMarker) => patch({ reviewer: { ...form.reviewer, threadMarker } })}
+          onEnter={onEnter}
+        />
+      </div>
+      <PaneErrors errors={errors} roots={['bot', 'reviewer']} />
     </Pane>
   );
 }

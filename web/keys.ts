@@ -17,12 +17,13 @@ export const HELP_KEYS: KeyDef[] = [
   { keys: 'a', label: 'approve' },
   { keys: 'r', label: 'request changes' },
   { keys: 'c', label: 'comment' },
+  { keys: 'q', label: 'reply (on a finding card)' },
   { keys: 'n / p', label: 'next / prev diff line (in a diff)' },
   { keys: 'V', label: 'start range, then n / p extend' },
   { keys: 'i', label: 'comment on cursor line (in a diff)' },
   { keys: 'C', label: 'comment on file' },
   { keys: 'Enter', label: 'open or close thread (on a thread marker)' },
-  { keys: 'x', label: 'resolve or reopen thread (on a thread)' },
+  { keys: 'x', label: 'resolve or reopen thread (on a thread or finding card)' },
   { keys: 'Ctrl+Enter', label: 'post reply (in a thread reply box)' },
   { keys: 'Ctrl+Enter', label: 'submit review (in Finish review body)' },
   { keys: 'Up / Down / Enter / Esc', label: 'move, choose or close the Finish review menu' },
@@ -30,9 +31,11 @@ export const HELP_KEYS: KeyDef[] = [
   { keys: 'M', label: 'admin merge' },
   { keys: 'y', label: 'ready for review' },
   { keys: 'F', label: 'fix failing checks' },
+  { keys: 'b', label: 'hand finding to the bot (on a finding card)' },
+  { keys: 'H', label: 'hand all findings to the bot' },
   { keys: 'O', label: 'open on GitHub' },
   { keys: 'Y', label: 'copy link' },
-  { keys: 's', label: 'send message to Orca session (in Issues, s is status)' },
+  { keys: 's', label: 'send message to Orca session, or dispatch a finding (in Issues, s is status)' },
   { keys: 'o', label: 'open Orca session (in Issues, o is reopen)' },
   { keys: 't', label: 'details drawer (narrow)' },
   { keys: 'e', label: 'expand description' },
@@ -84,6 +87,16 @@ export const FOOTER_ISSUES_COMFORTABLE: KeyDef[] = [
   { keys: 'l', label: 'labels' },
   { keys: 'e', label: 'edit title' },
   { keys: 'x', label: 'close' },
+];
+
+/** Replaces the PR footer while a finding or review thread card has focus. */
+export const FOOTER_FINDINGS: KeyDef[] = [
+  { keys: 'j k', label: 'next finding' },
+  { keys: 'b', label: 'hand to bot' },
+  { keys: 's', label: 'dispatch' },
+  { keys: 'q', label: 'reply' },
+  { keys: 'x', label: 'resolve' },
+  { keys: 'H', label: 'hand all' },
 ];
 
 export const FOOTER_NARROW:KeyDef[] = [

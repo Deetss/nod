@@ -23,6 +23,8 @@ Org-specific values live in one JSON file, `app-settings.json`.
 | `project.options.done` | `"Done"` | Option name for Done. |
 | `orcaAgents` | `["claude", "codex", "gemini", "opencode"]` | Agent ids the Orca dispatch accepts. |
 | `bot.login` | `""` | The bot's GitHub login as GraphQL names it, without `[bot]` (for example `helper-bot`). Empty means no one is the bot, so its retry and split comments stay hidden. |
+| `reviewer.login` | `""` | GitHub login of the review bot whose threads count as findings (case and `[bot]` ignored). Empty hides finding cards and actions. |
+| `reviewer.threadMarker` | `""` | The string a finding thread's first comment starts with, before its `**Blocker**:` or `**Major**:` severity prefix. Empty hides finding cards and actions. |
 | `bot.marker` | `"bot"` | The word in the bot's `<!-- {marker}:retry -->` and `<!-- {marker}:split ... -->` comments (for example `helper-bot`). |
 
 Related: [Orca](orca.md) for the Orca settings, [Issues](issues.md) for the bot and status features.

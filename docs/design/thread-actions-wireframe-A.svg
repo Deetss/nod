@@ -1,0 +1,352 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="870" viewBox="0 0 1660 870"><style>
+.t{font:12px sans-serif;fill:#222}
+.b{font:700 12px sans-serif;fill:#111}
+.g{font:12px sans-serif;fill:#666}
+.w{font:700 12px sans-serif;fill:#fff}
+.h{font:700 14px sans-serif;fill:#111}
+.m{font:12px monospace;fill:#444}
+</style><rect width="100%" height="100%" fill="#fff"/><text x="10" y="17" class="h">Layout A: finding actions inline on each thread card, Hand all in the merge banner (1660x870)</text>
+<text x="10" y="39" class="b">1  Default: 2 unresolved findings, merge blocked</text>
+<rect x="10" y="44" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="10" y="44" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="20" y="59" class="b">acme-co/orders-api #365</text>
+<text x="395" y="59" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="17" y="70" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="27" y="89" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="248" y="73" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="320.0" y="89.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="17" y="104" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="27" y="112" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="59" y="126" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="97" y="112" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="138" y="126" class="t" text-anchor="middle">review-bot</text>
+<text x="388" y="126" class="g" text-anchor="end">unresolved</text>
+<text x="27" y="148" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="27" y="164" class="t">The diff adds the new migration without deleting the</text>
+<text x="27" y="178" class="t">old version, so the duplicate version remains and</text>
+<text x="27" y="192" class="t">migration loading still fails.</text>
+<rect x="27" y="198" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="85.0" y="215.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="149" y="198" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="191.0" y="215.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="239" y="198" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="270.0" y="215.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="307" y="198" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="345.0" y="215.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="17" y="232" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="27" y="240" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="55" y="254" class="b" text-anchor="middle">MAJOR</text>
+<rect x="89" y="240" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="130" y="254" class="t" text-anchor="middle">review-bot</text>
+<text x="388" y="254" class="g" text-anchor="end">unresolved</text>
+<text x="27" y="276" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="27" y="292" class="t">Rolling back the new migration drops the existing</text>
+<text x="27" y="306" class="t">parcels table on a database where the old migration</text>
+<text x="27" y="320" class="t">already ran.</text>
+<rect x="27" y="326" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="85.0" y="343.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="149" y="326" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="191.0" y="343.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="239" y="326" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="270.0" y="343.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="307" y="326" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="345.0" y="343.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="17" y="360" width="381" height="34" rx="0" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="27" y="374" class="b">riley-k</text>
+<text x="87" y="374" class="t">Can we rename the migration class too?</text>
+<text x="27" y="388" class="g">human thread, unresolved</text>
+<text x="388" y="388" class="g" text-anchor="end">Reply R   Resolve E</text>
+<rect x="17" y="398" width="381" height="24" rx="0" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<text x="27" y="414" class="g">resolved  MAJOR  review-bot  db/migrate/2026...rb</text>
+<text x="425" y="39" class="b">2  One finding handed to the bot, waiting</text>
+<rect x="425" y="44" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="425" y="44" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="435" y="59" class="b">acme-co/orders-api #365</text>
+<text x="810" y="59" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="432" y="70" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="442" y="89" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="663" y="73" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="735.0" y="89.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="432" y="104" width="381" height="146" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="442" y="112" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="474" y="126" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="512" y="112" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="553" y="126" class="t" text-anchor="middle">review-bot</text>
+<text x="803" y="126" class="g" text-anchor="end">unresolved</text>
+<text x="442" y="148" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="442" y="164" class="t">The diff adds the new migration without deleting the</text>
+<text x="442" y="178" class="t">old version, so the duplicate version remains and</text>
+<text x="442" y="192" class="t">migration loading still fails.</text>
+<rect x="442" y="198" width="116" height="26" rx="4" fill="#eee" stroke="#bbb" stroke-width="1"/>
+<text x="500.0" y="215.0" class="g" text-anchor="middle">Hand to bot  H</text>
+<rect x="564" y="198" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="606.0" y="215.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="654" y="198" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="685.0" y="215.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="722" y="198" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="760.0" y="215.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="442" y="230" width="24" height="16" rx="3" fill="#eee" stroke="#444" stroke-width="1"/>
+<text x="454" y="242" class="b" text-anchor="middle">...</text>
+<text x="472" y="242" class="t">Replied /review-bot fix: ... 09:42</text>
+<rect x="432" y="254" width="381" height="76" rx="4" fill="#f6f6f6" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="442" y="272" class="g">When the bot answers, this card shows</text>
+<text x="442" y="288" class="g">its reply text and the run link:</text>
+<text x="442" y="308" class="t">review-bot: Fixing, run #8841   [Open run]</text>
+<rect x="432" y="334" width="381" height="30" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="440" y="339" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="468" y="353" class="b" text-anchor="middle">MAJOR</text>
+<text x="502" y="353" class="g">review-bot  ·  unresolved  ·  same actions as above</text>
+<text x="840" y="39" class="b">3  One finding dispatched, sent</text>
+<rect x="840" y="44" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="840" y="44" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="850" y="59" class="b">acme-co/orders-api #365</text>
+<text x="1225" y="59" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="847" y="70" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="857" y="89" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="1078" y="73" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1150.0" y="89.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="847" y="104" width="381" height="146" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="857" y="112" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="889" y="126" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="927" y="112" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="968" y="126" class="t" text-anchor="middle">review-bot</text>
+<text x="1218" y="126" class="g" text-anchor="end">unresolved</text>
+<text x="857" y="148" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="857" y="164" class="t">The diff adds the new migration without deleting the</text>
+<text x="857" y="178" class="t">old version, so the duplicate version remains and</text>
+<text x="857" y="192" class="t">migration loading still fails.</text>
+<rect x="857" y="198" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="915.0" y="215.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="979" y="198" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1021.0" y="215.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="1069" y="198" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1100.0" y="215.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="1137" y="198" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1175.0" y="215.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="857" y="230" width="24" height="16" rx="3" fill="#eee" stroke="#444" stroke-width="1"/>
+<text x="869" y="242" class="b" text-anchor="middle">ok</text>
+<text x="887" y="242" class="t">Sent to fix-migration-365, confirmed 09:44</text>
+<rect x="847" y="254" width="381" height="86" rx="4" fill="#f6f6f6" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="857" y="272" class="g">Send message dialog (prefilled with the</text>
+<text x="857" y="288" class="g">finding and file path) opens before send.</text>
+<rect x="1046" y="308" width="84" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1088.0" y="324.0" class="b" text-anchor="middle">Cancel</text>
+<rect x="1136" y="308" width="84" height="24" rx="4" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="1178.0" y="324.0" class="w" text-anchor="middle">Send  Ent</text>
+<rect x="847" y="344" width="381" height="30" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="855" y="349" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="883" y="363" class="b" text-anchor="middle">MAJOR</text>
+<text x="917" y="363" class="g">review-bot  ·  unresolved  ·  same actions as above</text>
+<text x="1255" y="39" class="b">4  Actions failed: reply 403, Orca down</text>
+<rect x="1255" y="44" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="1255" y="44" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="1265" y="59" class="b">acme-co/orders-api #365</text>
+<text x="1640" y="59" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="1262" y="70" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="1272" y="89" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="1493" y="73" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1565.0" y="89.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="1262" y="104" width="381" height="146" rx="4" fill="#fff" stroke="#333" stroke-width="2"/>
+<rect x="1272" y="112" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="1304" y="126" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="1342" y="112" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="1383" y="126" class="t" text-anchor="middle">review-bot</text>
+<text x="1633" y="126" class="g" text-anchor="end">unresolved</text>
+<text x="1272" y="148" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="1272" y="164" class="t">The diff adds the new migration without deleting the</text>
+<text x="1272" y="178" class="t">old version, so the duplicate version remains and</text>
+<text x="1272" y="192" class="t">migration loading still fails.</text>
+<rect x="1272" y="198" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1330.0" y="215.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="1394" y="198" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1436.0" y="215.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="1484" y="198" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1515.0" y="215.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="1552" y="198" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1590.0" y="215.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="1272" y="230" width="24" height="16" rx="3" fill="#fff" stroke="#444" stroke-width="2"/>
+<text x="1284" y="242" class="b" text-anchor="middle">!</text>
+<text x="1302" y="242" class="t">Reply failed: GitHub 403</text>
+<rect x="1553" y="226" width="80" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1593.0" y="242.0" class="b" text-anchor="middle">Retry  T</text>
+<rect x="1262" y="254" width="381" height="146" rx="4" fill="#fff" stroke="#333" stroke-width="2"/>
+<rect x="1272" y="262" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="1300" y="276" class="b" text-anchor="middle">MAJOR</text>
+<rect x="1334" y="262" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="1375" y="276" class="t" text-anchor="middle">review-bot</text>
+<text x="1633" y="276" class="g" text-anchor="end">unresolved</text>
+<text x="1272" y="298" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="1272" y="314" class="t">Rolling back the new migration drops the existing</text>
+<text x="1272" y="328" class="t">parcels table on a database where the old migration</text>
+<text x="1272" y="342" class="t">already ran.</text>
+<rect x="1272" y="348" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1330.0" y="365.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="1394" y="348" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1436.0" y="365.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="1484" y="348" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1515.0" y="365.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="1552" y="348" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1590.0" y="365.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="1272" y="380" width="24" height="16" rx="3" fill="#fff" stroke="#444" stroke-width="2"/>
+<text x="1284" y="392" class="b" text-anchor="middle">!</text>
+<text x="1302" y="392" class="t">Not confirmed: Orca down</text>
+<rect x="1553" y="376" width="80" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1593.0" y="392.0" class="b" text-anchor="middle">Retry  T</text>
+<text x="10" y="447" class="b">5  No bot configured: Hand action absent</text>
+<rect x="10" y="452" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="10" y="452" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="20" y="467" class="b">acme-co/orders-api #365</text>
+<text x="395" y="467" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="17" y="478" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="27" y="497" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<text x="388" y="497" class="w" text-anchor="end">no bot set</text>
+<rect x="17" y="512" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="27" y="520" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="59" y="534" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="97" y="520" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="138" y="534" class="t" text-anchor="middle">review-bot</text>
+<text x="388" y="534" class="g" text-anchor="end">unresolved</text>
+<text x="27" y="556" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="27" y="572" class="t">The diff adds the new migration without deleting the</text>
+<text x="27" y="586" class="t">old version, so the duplicate version remains and</text>
+<text x="27" y="600" class="t">migration loading still fails.</text>
+<rect x="27" y="606" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="69.0" y="623.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="117" y="606" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="148.0" y="623.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="185" y="606" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="223.0" y="623.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="17" y="640" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="27" y="648" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="55" y="662" class="b" text-anchor="middle">MAJOR</text>
+<rect x="89" y="648" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="130" y="662" class="t" text-anchor="middle">review-bot</text>
+<text x="388" y="662" class="g" text-anchor="end">unresolved</text>
+<text x="27" y="684" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="27" y="700" class="t">Rolling back the new migration drops the existing</text>
+<text x="27" y="714" class="t">parcels table on a database where the old migration</text>
+<text x="27" y="728" class="t">already ran.</text>
+<rect x="27" y="734" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="69.0" y="751.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="117" y="734" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="148.0" y="751.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="185" y="734" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="223.0" y="751.0" class="b" text-anchor="middle">Resolve  E</text>
+<text x="17" y="782" class="g">Hand to bot is absent until a bot is set in</text>
+<text x="17" y="798" class="g">Settings, bot section. Other actions stay.</text>
+<text x="425" y="447" class="b">6  No Orca session: Dispatch shows picker</text>
+<rect x="425" y="452" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="425" y="452" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="435" y="467" class="b">acme-co/orders-api #365</text>
+<text x="810" y="467" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="432" y="478" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="442" y="497" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="663" y="481" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="735.0" y="497.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="432" y="512" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="442" y="520" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="474" y="534" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="512" y="520" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="553" y="534" class="t" text-anchor="middle">review-bot</text>
+<text x="803" y="534" class="g" text-anchor="end">unresolved</text>
+<text x="442" y="556" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="442" y="572" class="t">The diff adds the new migration without deleting the</text>
+<text x="442" y="586" class="t">old version, so the duplicate version remains and</text>
+<text x="442" y="600" class="t">migration loading still fails.</text>
+<rect x="442" y="606" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="500.0" y="623.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="564" y="606" width="84" height="26" rx="4" fill="#fff" stroke="#777" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="606.0" y="623.0" class="g" text-anchor="middle">Dispatch  D</text>
+<rect x="654" y="606" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="685.0" y="623.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="722" y="606" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="760.0" y="623.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="532" y="638" width="281" height="104" rx="4" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="542" y="656" class="b">No Orca session linked to PR #365</text>
+<rect x="542" y="664" width="261" height="22" rx="0" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="550" y="679" class="t">fix-migration-365 (worktree, idle)</text>
+<rect x="542" y="690" width="261" height="22" rx="0" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="550" y="705" class="t">orders-api main (running)</text>
+<rect x="542" y="716" width="261" height="22" rx="0" fill="#fff" stroke="#777" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="550" y="731" class="g">Pick another session...</text>
+<rect x="432" y="748" width="381" height="30" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="440" y="753" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="468" y="767" class="b" text-anchor="middle">MAJOR</text>
+<text x="502" y="767" class="g">review-bot  ·  unresolved  ·  same actions as above</text>
+<text x="840" y="447" class="b">7  All resolved: merge unblocked</text>
+<rect x="840" y="452" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="840" y="452" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="850" y="467" class="b">acme-co/orders-api #365</text>
+<text x="1225" y="467" class="t" text-anchor="end">Files   [Threads 4]   Checks</text>
+<rect x="847" y="478" width="381" height="30" rx="0" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="857" y="497" class="b">READY TO MERGE  ·  0 unresolved threads</text>
+<rect x="847" y="512" width="381" height="46" rx="0" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<text x="857" y="530" class="g">resolved  BLOCKER  review-bot  db/migrate/2026...rb</text>
+<text x="857" y="548" class="g">resolved by you 09:51</text>
+<text x="1218" y="548" class="g" text-anchor="end">Reopen O</text>
+<rect x="847" y="562" width="381" height="46" rx="0" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<text x="857" y="580" class="g">resolved  MAJOR  review-bot  db/migrate/2026...rb</text>
+<text x="857" y="598" class="g">resolved by you 09:50</text>
+<text x="1218" y="598" class="g" text-anchor="end">Reopen O</text>
+<rect x="847" y="612" width="381" height="46" rx="0" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<text x="857" y="630" class="g">resolved  riley-k  Can we rename the migration class</text>
+<text x="857" y="648" class="g">resolved by riley-k 09:48</text>
+<text x="1218" y="648" class="g" text-anchor="end">Reopen O</text>
+<rect x="847" y="662" width="381" height="46" rx="0" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<text x="857" y="680" class="g">resolved  MAJOR  review-bot  db/migrate/2026...rb</text>
+<text x="857" y="698" class="g">resolved by you 09:45</text>
+<text x="1218" y="698" class="g" text-anchor="end">Reopen O</text>
+<text x="1255" y="447" class="b">8  Bulk: Hand all to bot (confirm)</text>
+<rect x="1255" y="452" width="395" height="390" rx="0" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="1255" y="452" width="395" height="22" rx="0" fill="#f2f2f2" stroke="#999" stroke-width="1"/>
+<text x="1265" y="467" class="b">acme-co/orders-api #365</text>
+<text x="1640" y="467" class="t" text-anchor="end">Files   [Threads 3]   Checks</text>
+<rect x="1262" y="478" width="381" height="30" rx="0" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="1272" y="497" class="w">MERGE BLOCKED  ·  2 unresolved</text>
+<rect x="1493" y="481" width="144" height="24" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1565.0" y="497.0" class="b" text-anchor="middle">Hand all to bot  A</text>
+<rect x="1262" y="512" width="381" height="124" rx="4" fill="#fff" stroke="#333" stroke-width="1"/>
+<rect x="1272" y="520" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="1304" y="534" class="w" text-anchor="middle">BLOCKER</text>
+<rect x="1342" y="520" width="82" height="20" rx="4" fill="#ddd" stroke="#999" stroke-width="1"/>
+<text x="1383" y="534" class="t" text-anchor="middle">review-bot</text>
+<text x="1633" y="534" class="g" text-anchor="end">unresolved</text>
+<text x="1272" y="556" class="m">db/migrate/20261113000000_add_amounts.rb</text>
+<text x="1272" y="572" class="t">The diff adds the new migration without deleting the</text>
+<text x="1272" y="586" class="t">old version, so the duplicate version remains and</text>
+<text x="1272" y="600" class="t">migration loading still fails.</text>
+<rect x="1272" y="606" width="116" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1330.0" y="623.0" class="b" text-anchor="middle">Hand to bot  H</text>
+<rect x="1394" y="606" width="84" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1436.0" y="623.0" class="b" text-anchor="middle">Dispatch  D</text>
+<rect x="1484" y="606" width="62" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1515.0" y="623.0" class="b" text-anchor="middle">Reply  R</text>
+<rect x="1552" y="606" width="76" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1590.0" y="623.0" class="b" text-anchor="middle">Resolve  E</text>
+<rect x="1270" y="536" width="365" height="296" rx="6" fill="#fff" stroke="#111" stroke-width="3"/>
+<text x="1282" y="558" class="h">Hand 2 findings to review-bot?</text>
+<text x="1282" y="576" class="g">One reply per thread. Command from Settings, bot.</text>
+<rect x="1282" y="586" width="341" height="86" rx="4" fill="#f6f6f6" stroke="#999" stroke-width="1"/>
+<rect x="1290" y="594" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<line x1="1293" y1="602" x2="1297" y2="606" stroke="#111" stroke-width="2"/>
+<line x1="1297" y1="606" x2="1303" y2="598" stroke="#111" stroke-width="2"/>
+<rect x="1312" y="592" width="64" height="20" rx="10" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="1344" y="606" class="w" text-anchor="middle">BLOCKER</text>
+<text x="1615" y="606" class="g" text-anchor="end">thread 1</text>
+<text x="1292" y="630" class="m">/review-bot fix: The diff adds the new</text>
+<text x="1292" y="646" class="m">migration without deleting the old ...</text>
+<text x="1292" y="664" class="g">posts as a reply on the thread</text>
+<rect x="1282" y="678" width="341" height="86" rx="4" fill="#f6f6f6" stroke="#999" stroke-width="1"/>
+<rect x="1290" y="686" width="16" height="16" rx="2" fill="#fff" stroke="#444" stroke-width="2"/>
+<line x1="1293" y1="694" x2="1297" y2="698" stroke="#111" stroke-width="2"/>
+<line x1="1297" y1="698" x2="1303" y2="690" stroke="#111" stroke-width="2"/>
+<rect x="1312" y="684" width="56" height="20" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+<text x="1340" y="698" class="b" text-anchor="middle">MAJOR</text>
+<text x="1615" y="698" class="g" text-anchor="end">thread 2</text>
+<text x="1292" y="722" class="m">/review-bot fix: Rolling back the new</text>
+<text x="1292" y="738" class="m">migration drops the existing parcels ...</text>
+<text x="1292" y="756" class="g">posts as a reply on the thread</text>
+<rect x="1282" y="774" width="100" height="26" rx="4" fill="#f6f6f6" stroke="#666" stroke-width="1"/>
+<text x="1332.0" y="791.0" class="b" text-anchor="middle">Cancel  Esc</text>
+<rect x="1463" y="774" width="160" height="26" rx="4" fill="#444" stroke="#222" stroke-width="1"/>
+<text x="1543.0" y="791.0" class="w" text-anchor="middle">Hand 2 to bot  Ent</text></svg>

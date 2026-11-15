@@ -71,6 +71,21 @@ export const SettingsSchema = z.object({
         .default('bot'),
     })
     .default({ enabled: false, name: 'Bot', command: '/bot', label: 'bot', labelColor: '1f6feb', login: '', marker: 'bot' }),
+  /**
+   * The review bot whose threads count as findings. A thread is a finding when its first comment is by
+   * `login`, starts with `threadMarker`, and opens with `**Blocker**:` or `**Major**:`. Both empty (the
+   * default): no thread is a finding, so the finding actions and merge banner stay hidden.
+   */
+  reviewer: z
+    .object({
+      login: z
+        .string()
+        .trim()
+        .regex(/^(?:[A-Za-z0-9-]{1,39}(?:\[bot\])?)?$/, 'Login must be a GitHub login')
+        .default(''),
+      threadMarker: z.string().trim().max(120).default(''),
+    })
+    .default({ login: '', threadMarker: '' }),
   /** Web Push contact (VAPID subject): a mailto: or https: URL push services can reach. */
   push: z
     .object({
@@ -92,6 +107,7 @@ export const SettingsSchema = z.object({
 });
 
 export type BotSettings = Settings['bot'];
+export type ReviewerSettings = Settings['reviewer'];
 
 export type Settings = z.infer<typeof SettingsSchema>;
 export type StatusOptionKey = keyof Settings['project']['options'];

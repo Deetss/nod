@@ -9,7 +9,7 @@ import {
 import { ActionDialog, HelpSheet } from './Dialogs';
 import { screenPeople } from './mentions/mention-logic';
 import { PairDialog } from './PairDialog';
-import { ACTIVITY_HELP_KEYS, issueHelpKeys, type KeyDef } from './keys';
+import { ACTIVITY_HELP_KEYS, FOOTER_FINDINGS, issueHelpKeys, type KeyDef } from './keys';
 import { bot, isFirstRun, loadedSettings } from './org-settings';
 import { SettingsDialog } from './settings/SettingsDialog';
 import type { SectionId } from './settings/form';
@@ -77,6 +77,8 @@ import { useSeenOnView } from './useSeenOnView';
 import { FixDialogs } from './FixDialogs';
 import { ALL_FAILING, useFixChecks, useResolveConflicts } from './useFixChecks';
 import { useFixComments } from './useFixComments';
+import { useFindingFocus } from './finding-focus';
+import { useFindings, type FindingControls } from './useFindings';
 import { EmptyPane } from './Logo';
 
 interface QueuedView {
@@ -431,6 +433,8 @@ export function App() {
 
   /** Set once `useOrca` runs, which needs the detail and the Orca info loaded below. */
   const noticeRef = useRef<(res: { noticeId?: string }, forPr: boolean) => void>(undefined);
+  /** Set once `useFindings` runs, after `useOrca` it depends on. */
+  const findingResultRef = useRef<FindingControls['onSendResult']>(undefined);
   const runAction = useCallback(
     async (body: string) => {
       if (!selected || !action) return;
@@ -504,8 +508,18 @@ export function App() {
     repoNames,
     toast: pushToast,
     onDetails: goActivity,
+    onFindingResult: (tag, outcome) => findingResultRef.current?.(tag, outcome),
   });
   noticeRef.current = orcaUi.handleNotice;
+  const findings = useFindings({
+    detail: detail.data,
+    limited,
+    sender: orcaUi.findingSender,
+    notify: (ok, message) => setToast({ ok, message }),
+    onDone: reloadAll,
+  });
+  findingResultRef.current = findings?.onSendResult;
+  const findingFocus = useFindingFocus();
 
   useHotkeys(
     {
@@ -549,7 +563,7 @@ export function App() {
       goIssues,
       goActivity,
     },
-    !action && !help && !pairing && !settingsShown && !fixOpen && !orcaUi.modalOpen && listView === 'prs',
+    !action && !help && !pairing && !settingsShown && !fixOpen && !findings?.bulk && !orcaUi.modalOpen && listView === 'prs',
   );
   useSettingsKey(!phone, () => setSettingsOpen(true));
 
@@ -689,6 +703,7 @@ export function App() {
     fix,
     resolve,
     comments,
+    findings,
     orca: orcaUi.section,
     onThreadChanged: reloadAll,
   };
@@ -964,7 +979,7 @@ export function App() {
         narrow={narrow}
         view={listView}
         extra={listView === 'issues' ? orcaHints : undefined}
-        replace={listView === 'issues' ? footerKeys : undefined}
+        replace={listView === 'issues' ? footerKeys : findingFocus ? FOOTER_FINDINGS : undefined}
       />
       {action && dialogPr && d ? (
         <ActionDialog

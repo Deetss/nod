@@ -27,6 +27,7 @@ interface FakeWorktree {
 
 /** Synthetic sessions. Names, repos, numbers and times are invented. */
 const WORKTREES: FakeWorktree[] = [
+  { repo: 'orders-api', name: 'fix-migration-365', branch: 'sam-lee/fix-migration-365', linkedPr: 365, state: 'working', outputAgoS: 30 },
   { repo: 'acme-api', name: 'crew-310', branch: 'crew/acmeapi-data-read-bonus', state: 'working', outputAgoS: 12 },
   { repo: 'acme-api', name: 'crew-307', branch: 'feature/307-release', linkedPr: 307, state: 'waiting', outputAgoS: 180 },
   { repo: 'acme-web', name: 'helper-1343', branch: 'helper/release-1343', linkedPr: 1343, state: 'done', outputAgoS: 2460 },

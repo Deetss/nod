@@ -81,7 +81,7 @@ export interface Provider {
   /** Adds a line or file comment to the viewer's pending review, creating that review if none exists. */
   addDraftComment(args: InlineCommentArgs): Promise<ActionResult>;
   /** Replies to a review thread now. GraphQL `addPullRequestReviewThreadReply`. */
-  replyToThread(args: { repo: string; number: number; threadId: string; body: string }): Promise<ActionResult>;
+  replyToThread(args: { repo: string; number: number; threadId: string; body: string }, query?: StateQuery): Promise<ActionResult>;
   resolveThread(args: { repo: string; number: number; threadId: string }): Promise<ActionResult>;
   unresolveThread(args: { repo: string; number: number; threadId: string }): Promise<ActionResult>;
   /** Changes the body of one of the viewer's draft comments. GraphQL `updatePullRequestReviewComment`. */

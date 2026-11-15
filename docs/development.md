@@ -25,6 +25,7 @@ Fixture mode serves synthetic data, makes no GitHub calls, and turns every actio
 - `?open=issue/acme-banner/17` opens one issue directly.
 - Add `?view=issues` to open the Issues view. Add `?theme=light` (or `dark`) to force a theme.
 - `?state=ci-live` makes acme-web #1343's checks run to completion over about 30 s.
+- On acme-co/orders-api #365, `?state=findings-nobot` hides the bot actions and `?state=findings-failed` makes Hand to bot fail.
 - Issue writes in fixture mode log what they would do and change an in-memory copy only.
 
 Orca and Helper fixtures are described in [Orca](orca.md) and [Issues](issues.md).

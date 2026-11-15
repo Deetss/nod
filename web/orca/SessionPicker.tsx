@@ -7,6 +7,8 @@ interface Props {
   number: number;
   related: readonly SessionView[];
   possible: readonly SessionView[];
+  /** Replaces the default heading, such as when sending a finding with nothing linked. */
+  title?: string;
   /** A related session: remember it for this PR. */
   onChoose: (s: SessionView) => void;
   /** A possible session: open the Send message dialog to it, remembering nothing. */
@@ -39,7 +41,7 @@ function Row({ s, focused, hint, onHover, onPick }: { s: SessionView; focused: b
 }
 
 /** Chooses a session for one PR. Up, Down, Enter, Esc. Related rows are remembered; possible rows are send-once. */
-export function SessionPicker({ number, related, possible, onChoose, onSendOnce, onClose }: Props) {
+export function SessionPicker({ number, related, possible, title, onChoose, onSendOnce, onClose }: Props) {
   const rows = [...related.map((s) => ({ s, kind: 'related' as const })), ...possible.map((s) => ({ s, kind: 'possible' as const }))];
   const [focus, setFocus] = useState(0);
   const trap = useFocusTrap();
@@ -82,7 +84,7 @@ export function SessionPicker({ number, related, possible, onChoose, onSendOnce,
           }
         }}
       >
-        <h2 className="picker-title">Choose a session for #{number}</h2>
+        <h2 className="picker-title">{title ?? `Choose a session for #${number}`}</h2>
         <div className="picker-list orca-picker-list" role="listbox">
           {relatedRows.length > 0 ? (
             <>

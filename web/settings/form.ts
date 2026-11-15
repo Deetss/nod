@@ -5,6 +5,7 @@ import type { SettingsSaveResult } from '../../shared/settings-save';
 export interface FormState {
   orgs: string[];
   bot: Settings['bot'];
+  reviewer: Settings['reviewer'];
   projectNumber: string;
   statusField: string;
   options: Record<StatusOptionKey, string>;
@@ -32,6 +33,7 @@ export const SECTIONS: readonly { id: SectionId; label: string }[] = [
 const SECTION_OF_KEY: Record<string, SectionId> = {
   orgs: 'github',
   bot: 'bot',
+  reviewer: 'bot',
   project: 'project',
   releaseMerge: 'release',
   orcaAgents: 'orca',
@@ -43,6 +45,7 @@ export function toForm(s: Settings): FormState {
   return {
     orgs: [...s.orgs],
     bot: { ...s.bot },
+    reviewer: { ...s.reviewer },
     projectNumber: String(s.project.number),
     statusField: s.project.statusField,
     options: { ...s.project.options },
@@ -59,6 +62,7 @@ export function toRaw(f: FormState): unknown {
   return {
     orgs: f.orgs.map((o) => o.trim()).filter((o) => o !== ''),
     bot: f.bot,
+    reviewer: f.reviewer,
     project: { number, statusField: f.statusField, options: f.options },
     releaseMerge: f.releaseMerge,
     orcaAgents: f.orcaAgents

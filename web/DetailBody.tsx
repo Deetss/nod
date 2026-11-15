@@ -8,7 +8,9 @@ import type { FixControls, MenuControls } from './useFixChecks';
 import type { CommentControls } from './useFixComments';
 import type { FileTarget } from './goto-file';
 import { PrBody } from './Markdown';
-import { PrThreadList, type ThreadHost } from './PrThread';
+import { FindingList } from './FindingList';
+import { PrThreadList, threadLabel, type ThreadHost } from './PrThread';
+import type { FindingControls } from './useFindings';
 import { Btn, CheckIcon, ExpandToggle, ExtLink, KeyCap } from './ui';
 import { repoLabel } from './repo-label';
 
@@ -18,21 +20,24 @@ export function ThreadCard({
   items,
   fix,
   host,
+  findings,
 }: {
   items?: PrThreadItem[];
   fix?: CommentControls | undefined;
   host?: ThreadHost | undefined;
+  /** Present when the reviewer bot has findings on this PR. Replaces the plain list. */
+  findings?: FindingControls | undefined;
 }) {
   if (!items?.length) return null;
   return (
-    <section className="card" aria-label="Thread" id="pr-thread" tabIndex={-1}>
+    <section className={`card${findings ? ' finding-card' : ''}`} aria-label="Thread" id="pr-thread" tabIndex={-1}>
       <div className="card-h">
         <span>Thread</span>
-        <span className="card-h-sub">{items.length}</span>
-        {fix ? <ThreadFixButton fix={fix} /> : null}
+        <span className="card-h-sub">{findings ? threadLabel(items.length) : items.length}</span>
+        {fix && !findings ? <ThreadFixButton fix={fix} /> : null}
       </div>
       <div className="card-body">
-        <PrThreadList items={items} fix={fix} host={host} />
+        {findings ? <FindingList c={findings} phone={false} /> : <PrThreadList items={items} fix={fix} host={host} />}
       </div>
     </section>
   );
@@ -228,6 +233,8 @@ interface DetailBodyProps extends FilesSectionProps {
   resolve?: MenuControls | undefined;
   /** Absent unless the PR is open and has inline review threads. */
   comments?: CommentControls | undefined;
+  /** Absent unless the reviewer bot has findings on this PR. */
+  findings?: FindingControls | undefined;
   /** The Orca session card or its quiet line. Sits under the description. */
   orca?: ReactNode;
   /** Refetches the PR detail after a thread is resolved or reopened. Without it the thread has no Resolve button. */
@@ -239,8 +246,21 @@ interface DetailBodyProps extends FilesSectionProps {
  * Shared by the detail pane and the Details drawer; the review actions live outside it.
  */
 export function DetailBody(p: DetailBodyProps) {
+  const thread = (
+    <ThreadCard
+      items={p.detail.thread}
+      fix={p.comments}
+      findings={p.findings}
+      host={
+        p.onThreadChanged
+          ? { repo: p.detail.summary.repo, number: p.detail.summary.number, onChanged: p.onThreadChanged }
+          : undefined
+      }
+    />
+  );
   return (
     <div className="detail-body">
+      {p.findings ? thread : null}
       <StatusSummary key={p.detail.summary.id} detail={p.detail} own={p.access.ownPr} fix={p.fix} resolve={p.resolve} />
       <DescriptionCard
         body={p.detail.body}
@@ -250,15 +270,7 @@ export function DetailBody(p: DetailBodyProps) {
         onToggle={p.onToggleDesc}
       />
       {p.orca}
-      <ThreadCard
-        items={p.detail.thread}
-        fix={p.comments}
-        host={
-          p.onThreadChanged
-            ? { repo: p.detail.summary.repo, number: p.detail.summary.number, onChanged: p.onThreadChanged }
-            : undefined
-        }
-      />
+      {p.findings ? null : thread}
       <CommitsCard detail={p.detail} />
       <FilesSection {...p} />
     </div>

@@ -37,6 +37,8 @@ import type { SheetStack } from './useSheetStack';
 import { bot, projectStatuses, statusOption } from '../org-settings';
 import { copyLink, shareLink } from './link-actions';
 import { usePhonePr } from './usePhonePr';
+import { useFindings, type FindingControls } from '../useFindings';
+import { useOrca } from '../orca/useOrca';
 import { usePhoneWrites } from './usePhoneWrites';
 import { PhoneCreateSubIssue, PhoneRemoveSub, PhoneSubRowSheet } from './PhoneSubIssues';
 import { openExternal } from '../links';
@@ -81,6 +83,25 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const writes = usePhoneWrites(changed);
   const { notify } = writes;
   const prData = usePhonePr(pr, (m) => writes.notify(m, false));
+  const orca = useRemote('orca', () => api.orca());
+  const findingResult = useRef<FindingControls['onSendResult']>(undefined);
+  const orcaUi = useOrca({
+    detail: prData.detail.data,
+    orca: orca.data,
+    active: pr !== undefined,
+    syncedAt: undefined,
+    repoNames: [],
+    toast: (t) => writes.notify(t.message, t.kind !== 'err'),
+    onDetails: () => undefined,
+    onFindingResult: (tag, outcome) => findingResult.current?.(tag, outcome),
+  });
+  const findings = useFindings({
+    detail: prData.detail.data,
+    limited: writesOff,
+    sender: orcaUi.findingSender,
+    notify: (ok, message) => writes.notify(message, ok),
+    onDone: prData.reload,
+  });
   const issueDetail = useRemote(issue ? `issue:${issue.id}` : null, () =>
     api.issueDetail(issue?.repo ?? '', issue?.number ?? 0),
   );
@@ -105,7 +126,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   );
   const botTrim = useBotTrim(issueDetail.data, viewer, postTrim, () => issueDetail.reload());
   const botView = phoneBotState(botCheck.state, botTrim.state, issueDetail.data?.comments ?? []);
-  const orca = useRemote('orca', () => api.orca());
+  findingResult.current = findings?.onSendResult;
   reload.current = () => {
     prData.reload();
     issueDetail.reload();
@@ -428,6 +449,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
 
   return (
     <>
+      {orcaUi.overlays}
       {stack.map((level, i) => {
         const covered = i < last;
         switch (level.kind) {
@@ -438,6 +460,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 pr={pr}
                 viewer={viewer}
                 data={prData}
+                findings={findings}
                 writesOff={writesOff}
                 busy={writes.busy}
                 depth={i}

@@ -37,6 +37,7 @@ import {
 import { DEFAULT_SETTINGS, type Settings } from '../shared/settings';
 import { canAdminMerge } from './github-map';
 import { liveCi, liveChecks } from './fixture-live-ci';
+import { FINDINGS_PR, FINDINGS_REPO, FIXTURE_FINDING_THREADS } from './fixture-findings';
 import { FIXTURE_INLINE_THREADS } from './fixture-threads';
 import { FixtureReview } from './fixture-review';
 import { FixtureIssues } from './issue-fixtures';
@@ -84,6 +85,7 @@ const is307 =(ref: PrRef) => ref.repo === 'acme-co/acme-api' && ref.number === 3
 const isDraftFixture = (ref: PrRef) => ref.repo === 'acme-co/acme-web' && ref.number === 1352;
 /** Ruleset bypass: GitHub reports no admin merge, but the repo permission is ADMIN. */
 const isRulesetFixture = (ref: PrRef) => ref.repo === 'acme-co/acme-web' && ref.number === 1343;
+const is365 = (ref: PrRef) => ref.repo === FINDINGS_REPO && ref.number === FINDINGS_PR;
 const is310 =(ref: PrRef) => ref.repo === 'acme-co/acme-api' && ref.number === 310;
 /** build-bot authored, admin rights, and the viewer pushed the head commit, so Admin merge shows. */
 const isViewerPushFixture = (ref: PrRef) => ref.repo === 'acme-co/acme-api' && ref.number === 309;
@@ -310,6 +312,23 @@ export class FixtureProvider implements Provider {
         newCommits: 0,
       };
     }
+    if (is365(ref)) {
+      return {
+        ...common,
+        body: GENERIC_BODY,
+        bodyHtml: GENERIC_HTML,
+        checks: [{ name: 'build', status: 'pass', duration: '1m 12s' }],
+        mergeable: 'MERGEABLE',
+        mergeStateStatus: 'BLOCKED',
+        thread: this.inlineThreads(FIXTURE_FINDING_THREADS),
+        reviewLine: `${VIEWER}: no review yet`,
+        commits: [
+          { sha: summary.headSha.slice(0, 7), message: 'update', isNew: false, lastReviewed: false, url: commitUrl(ref.repo, summary.headSha) },
+        ],
+        commitTotal: 1,
+        newCommits: 0,
+      };
+    }
     if (!is310(ref)) {
       return {
         ...common,
@@ -440,8 +459,8 @@ export class FixtureProvider implements Provider {
   }
 
   /** The fixture inline threads, with any resolve change, reply and the draft threads applied. */
-  private inlineThreads(): PrThreadItem[] {
-    const threads = FIXTURE_INLINE_THREADS.map((t): PrThreadItem => {
+  private inlineThreads(base: PrThreadItem[] = FIXTURE_INLINE_THREADS): PrThreadItem[] {
+    const threads = base.map((t): PrThreadItem => {
       if (t.kind !== 'thread' || !t.threadId) return t;
       const over = this.inline.resolvedOverride(t.threadId);
       const replies = this.inline.repliesFor(t.threadId);
@@ -455,7 +474,7 @@ export class FixtureProvider implements Provider {
       const next = extra.length ? { ...t, comments: [...t.comments, ...extra] } : t;
       return over === undefined ? next : { ...next, resolved: over };
     });
-    return [...threads, ...this.inline.draftThreads()];
+    return base === FIXTURE_INLINE_THREADS ? [...threads, ...this.inline.draftThreads()] : threads;
   }
 
   async addReviewComment(args: InlineCommentArgs): Promise<ActionResult> {
@@ -473,7 +492,8 @@ export class FixtureProvider implements Provider {
     return { ok: true, message: `Draft comment added (${this.inline.pending()?.drafts ?? 0} pending)` };
   }
 
-  async replyToThread(args: { repo: string; number: number; threadId: string; body: string }): Promise<ActionResult> {
+  async replyToThread(args: { repo: string; number: number; threadId: string; body: string }, query?: StateQuery): Promise<ActionResult> {
+    if (query === 'findings-failed') return { ok: false, message: 'GitHub returned 502' };
     if (refusedComment(args.body)) return refusedResult();
     this.inline.addReply(args.threadId, args.body);
     return { ok: true, message: 'Reply posted' };

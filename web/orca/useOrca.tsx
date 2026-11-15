@@ -13,6 +13,7 @@ import { OrcaSection, type SendOutcome, type SentNote } from './OrcaSection';
 import type { OrcaSessionsValue } from './OrcaContext';
 import { SendDialog } from './SendDialog';
 import { SessionPicker } from './SessionPicker';
+import type { FindingSender } from '../useFindings';
 
 /** The poll cost is two CLI calls on the server, shared by every row. */
 export const SESSIONS_POLL_MS = 20_000;
@@ -39,6 +40,8 @@ export interface OrcaController {
   keys: { send: () => void; open: () => void };
   /** Settings popover group. Undefined when Orca is absent. */
   menu: OrcaMenu | undefined;
+  /** Sends a review finding through the Send flow. Undefined when Orca cannot take a message for this PR. */
+  findingSender: FindingSender | undefined;
   /** Handles the `noticeId` an action response carries: waits for the result and toasts it. */
   handleNotice: (res: { noticeId?: string }, forPr: boolean) => void;
 }
@@ -53,13 +56,15 @@ interface Options {
   toast: (t: ToastInput) => void;
   /** Opens the Activity view, for a failed notification's Details. */
   onDetails: () => void;
+  /** Called with the tag a finding was sent under, once its Send result is in. */
+  onFindingResult?: (tag: string, outcome: SendOutcome) => void;
 }
 
 const msg = (e: unknown, fallback: string): string => (e instanceof Error ? e.message : fallback);
 
 /** Everything behind the Orca session surfaces: polling, the card, the picker, the dialog, results and toasts. */
 export function useOrca(o: Options): OrcaController {
-  const { detail, orca, active, syncedAt, toast } = o;
+  const { detail, orca, active, syncedAt, toast, onFindingResult } = o;
   const remote = useRemote(active ? 'orca-sessions' : null, () => api.orcaSessions());
   const { reload } = remote;
   const [localPrefs, setLocalPrefs] = useState<Prefs>();
@@ -67,7 +72,9 @@ export function useOrca(o: Options): OrcaController {
   const [sent, setSent] = useState<SentNote>();
   const [busy, setBusy] = useState(false);
   const [picker, setPicker] = useState<string>();
-  const [dialog, setDialog] = useState<{ prId: string; session: SessionView; initialText?: string }>();
+  const [dialog, setDialog] = useState<{ prId: string; session: SessionView; initialText?: string; tag?: string }>();
+  /** A finding waiting for the picker to name its session. */
+  const [pending, setPending] = useState<{ text: string; tag: string }>();
   const [dispatch, setDispatch] = useState<{ prId: string; text: string }>();
   const [dispatchBusy, setDispatchBusy] = useState(false);
   const [dispatchError, setDispatchError] = useState<string>();
@@ -116,18 +123,21 @@ export function useOrca(o: Options): OrcaController {
     setPicker(undefined);
     setDialog(undefined);
     setDispatch(undefined);
+    setPending(undefined);
   }, [prId]);
 
   const single = sessions?.related.length === 1 ? sessions.related[0] : undefined;
 
   const doSend = useCallback(
-    (prIdFor: string, session: SessionView, text: string, requestId?: string) => {
+    (prIdFor: string, session: SessionView, text: string, requestId?: string, tag?: string) => {
       setBusy(true);
       api
         .orcaSend(session.id, text, requestId)
         .then((r) => {
-          setOutcome({ ...r, prId: prIdFor, session, text });
+          const out = { ...r, prId: prIdFor, session, text };
+          setOutcome(out);
           setDialog(undefined);
+          if (tag) onFindingResult?.(tag, out);
         })
         .catch((e: unknown) => toast({ kind: 'err', message: `Could not send: ${msg(e, 'Request failed')}` }))
         .finally(() => {
@@ -135,7 +145,7 @@ export function useOrca(o: Options): OrcaController {
           reload();
         });
     },
-    [toast, reload],
+    [toast, reload, onFindingResult],
   );
 
   const doCheck = useCallback(
@@ -155,10 +165,10 @@ export function useOrca(o: Options): OrcaController {
   );
 
   const openSend = useCallback(
-    (session?: SessionView, initialText?: string) => {
+    (session?: SessionView, initialText?: string, tag?: string) => {
       if (!prId) return;
       const target = session ?? single;
-      if (target) setDialog({ prId, session: target, ...(initialText === undefined ? {} : { initialText }) });
+      if (target) setDialog({ prId, session: target, ...(initialText === undefined ? {} : { initialText }), ...(tag === undefined ? {} : { tag }) });
       else if ((sessions?.possible.length ?? 0) > 0) setPicker(prId);
     },
     [prId, single, sessions?.possible.length],
@@ -282,12 +292,21 @@ export function useOrca(o: Options): OrcaController {
           number={summary.number}
           related={pickerSessions.related}
           possible={pickerSessions.possible}
-          onChoose={(s) => choose(picker, s)}
+          title={pending && pickerSessions.related.length === 0 ? `No Orca session linked to PR #${summary.number}` : undefined}
+          onChoose={(s) => {
+            choose(picker, s);
+            if (pending) openSend(s, pending.text, pending.tag);
+            setPending(undefined);
+          }}
           onSendOnce={(s) => {
             setPicker(undefined);
-            openSend(s);
+            openSend(s, pending?.text, pending?.tag);
+            setPending(undefined);
           }}
-          onClose={() => setPicker(undefined)}
+          onClose={() => {
+            setPicker(undefined);
+            setPending(undefined);
+          }}
         />
       ) : null}
       {dialog && detail && dialog.prId === prId ? (
@@ -296,7 +315,7 @@ export function useOrca(o: Options): OrcaController {
           options={prefillOptions(prefillFactsOf(detail))}
           initialText={dialog.initialText}
           busy={busy}
-          onSend={(text) => doSend(dialog.prId, dialog.session, text)}
+          onSend={(text) => doSend(dialog.prId, dialog.session, text, undefined, dialog.tag)}
           onCancel={() => setDialog(undefined)}
         />
       ) : null}
@@ -326,6 +345,24 @@ export function useOrca(o: Options): OrcaController {
     </>
   );
 
+  const findingSender: FindingSender | undefined = shown
+    ? {
+        send: (text, tag) => {
+          if (!prId) return false;
+          if (single) {
+            openSend(single, text, tag);
+            return true;
+          }
+          if (sessions && sessions.related.length + sessions.possible.length > 0) {
+            setPending({ text, tag });
+            setPicker(prId);
+            return true;
+          }
+          return false;
+        },
+      }
+    : undefined;
+
   const menu: OrcaMenu | undefined = available
     ? { enabled: prefs.enabled, repos: prefs.repos, repoNames: o.repoNames, onEnabled: setEnabled, onRepo: setRepoMode }
     : undefined;
@@ -336,6 +373,7 @@ export function useOrca(o: Options): OrcaController {
     overlays,
     modalOpen: picker !== undefined || dialog !== undefined || dispatch !== undefined,
     keys: { send: () => openSend(), open: () => openInOrca() },
+    findingSender,
     menu,
     handleNotice,
   };

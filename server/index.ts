@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import { createApp } from './app';
 import { buildProvider } from './build-provider';
 import { FIXTURE_BOT } from './bot-fixtures';
+import { FIXTURE_REVIEWER } from './fixture-findings';
 import { loadAssetLinks } from './assetlinks';
 import { ActivityStore } from './activity-store';
 import { DeviceStore } from './devices';
@@ -41,7 +42,7 @@ async function main(): Promise<void> {
   const port = parsePort(process.env.PORT);
   const loaded = await loadSettings(undefined, consoleSink);
   // Fixtures turn the bot on; NOD_FIXTURE_BOT=off keeps the settings file's bot, to capture the bot-off UI.
-  const settings = fixtures && appEnv('FIXTURE_BOT') !== 'off' ? { ...loaded, bot: FIXTURE_BOT } : loaded;
+  const settings = fixtures && appEnv('FIXTURE_BOT') !== 'off' ? { ...loaded, bot: { ...FIXTURE_BOT, name: 'review-bot', command: '/review-bot' }, reviewer: FIXTURE_REVIEWER } : loaded;
   const provider = await buildProvider(fixtures, settings).catch((e: unknown) => {
     console.error(e instanceof Error ? e.message : 'Could not start.');
     return process.exit(1);

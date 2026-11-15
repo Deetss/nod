@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { api } from './api';
+import { STATE_PARAM, api } from './api';
 import { rememberApk } from './apk-version';
 import { App } from './App';
 import { setFirstRun, setOrgSettings } from './org-settings';
@@ -25,6 +25,7 @@ import './status-box.css';
 import './pr-detail.css';
 import './orca.css';
 import './timeline.css';
+import './findings.css';
 import './pair.css';
 import './mentions/mentions.css';
 import './settings.css';
@@ -45,7 +46,11 @@ rememberApk();
 const root = document.getElementById('root');
 if (root) {
   // Org and status names come from the server's settings file; defaults apply if it is unreachable.
-  const loaded = api.settings().then(setOrgSettings, () => undefined);
+  // Fixture capture: `?state=findings-nobot` shows the finding cards with no bot configured.
+  const loaded = api.settings().then(
+    (s) => setOrgSettings(STATE_PARAM === 'findings-nobot' ? { ...s, bot: { ...s.bot, enabled: false } } : s),
+    () => undefined,
+  );
   const saved = api.settingsSaved().then((r) => setFirstRun(!r.saved), () => undefined);
   void Promise.all([loaded, saved]).then(() =>
     createRoot(root).render(
