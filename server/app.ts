@@ -685,7 +685,7 @@ export function createApp(opts: AppOptions): Hono {
     if (!ref) return c.json({ error: 'Bad PR reference' }, 400);
     const parsed = threadReplyBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
-    return c.json(await provider.replyToThread({ ...ref, ...parsed.data }));
+    return c.json(await provider.replyToThread({ ...ref, ...parsed.data }, state(c)));
   });
 
   mutating.post('/pr/:owner/:name/:number/threads/resolve', async (c) => {

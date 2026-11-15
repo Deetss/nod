@@ -109,6 +109,18 @@ On the PR detail Thread, each unresolved, current inline review comment has a `F
 - The menu also has `Dispatch with Orca`. It starts a PR-mode worktree on `origin/<head branch>` (`pr-<number>-fix-comment` or `-comments`). The prompt marks the comment text as untrusted, and asks for a fix of only that issue, a test run, and a commit pushed to the PR head.
 - The menu opens with one row when Orca is absent.
 
+## Finding actions
+
+When `reviewer.login` and `reviewer.threadMarker` are set in [Settings](settings.md), a PR thread opened by that review bot becomes a finding card with a severity badge and four actions.
+
+- `b` Hand to bot replies on the thread with the `bot.*` command. It is hidden when no bot is set.
+- `s` Dispatch sends the file and finding through the Orca Send flow, with a session picker when none is linked.
+- `c` replies, and `x` resolves or reopens.
+- A pinned banner shows `Merge blocked` with the unresolved count, or `Ready to merge`.
+- `H` Hand all to bot confirms, then posts one reply per finding thread and skips human threads.
+
+Spec: `docs/design/thread-actions-spec.md`.
+
 ## Sub-issues
 
 A card under the description lists the issue's children in GitHub's rank order, with a progress bar.

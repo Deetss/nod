@@ -12,6 +12,7 @@
   --bgColor-success-muted: #2ea04326;
   --bgColor-success-emphasis: #238636;
   --bgColor-danger-muted: #f851491a;
+  --bgColor-danger-emphasis: #da3633;
   --bgColor-attention-muted: #bb800926;
   --bgColor-attention-emphasis: #9e6a03;
   --fgColor-default: #f0f6fc;
@@ -63,6 +64,7 @@
   --bgColor-success-muted: #dafbe1;
   --bgColor-success-emphasis: #1f883d;
   --bgColor-danger-muted: #ffebe9;
+  --bgColor-danger-emphasis: #cf222e;
   --bgColor-attention-muted: #fff8c5;
   --bgColor-attention-emphasis: #9a6700;
   --fgColor-default: #1f2328;

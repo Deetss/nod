@@ -13,6 +13,7 @@
 | `m` | enable auto-merge (asks to confirm) |
 | `M` | admin merge (a PR you authored or last pushed to, with admin rights, every check passed; asks you to type the PR number) |
 | `y` | ready for review (your own draft PR; asks to confirm) |
+| `b` / `H` | hand the focused finding to the bot / hand all findings to the bot (see [Issues](issues.md#finding-actions)) |
 | `O` | open the PR on GitHub |
 | `Y` | copy the PR's link (in Issues, the issue's link). A link icon sits on every PR and issue header, row, check, comment and sub-issue, shown on hover or focus |
 | `s` | send a message to the PR's Orca session (in Issues, `s` is status) |

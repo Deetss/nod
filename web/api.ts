@@ -181,7 +181,7 @@ export const api = {
   addDraftComment: (repo: string, number: number, body: InlineCommentBody) =>
     post<ActionResult>(`${prPath(repo, number)}/comments/draft`, body),
   replyToThread: (repo: string, number: number, threadId: string, body: string) =>
-    post<ActionResult>(`${prPath(repo, number)}/threads/reply`, { threadId, body }),
+    post<ActionResult>(withState(`${prPath(repo, number)}/threads/reply`), { threadId, body }),
   resolveThread: (repo: string, number: number, threadId: string) =>
     post<ActionResult>(`${prPath(repo, number)}/threads/resolve`, { threadId }),
   unresolveThread: (repo: string, number: number, threadId: string) =>

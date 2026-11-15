@@ -1,0 +1,581 @@
+/* Finding cards on review threads: docs/design/thread-actions-spec.md */
+
+.finding-card {
+  overflow: visible;
+}
+
+.finding-card .card-h {
+  border-radius: 5px 5px 0 0;
+}
+
+.finding-card .card-body {
+  padding: 0;
+}
+
+.finding-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pinned under the pane header while the findings scroll past. */
+.finding-banner {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  flex: none;
+  min-height: 44px;
+  margin: 10px 11px 0;
+  padding: 8px 8px 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+.finding-banner.is-blocked {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+}
+
+.finding-banner.is-ready {
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+}
+
+.finding-banner-icon {
+  flex: none;
+  display: inline-flex;
+}
+
+.is-blocked .finding-banner-icon {
+  color: var(--bgColor-danger-emphasis);
+}
+
+.is-ready .finding-banner-icon {
+  color: var(--fgColor-success);
+}
+
+.finding-banner-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.finding-banner-text strong {
+  flex: none;
+  font: 600 14px/20px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.finding-banner-sub {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.finding-banner-note {
+  flex: none;
+}
+
+.finding-list {
+  padding: 10px 11px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.finding {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  outline: none;
+}
+
+.finding:focus-visible,
+.finding-resolved:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 2px;
+}
+
+.finding-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sev-badge {
+  flex: none;
+  height: 22px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.sev-blocker {
+  background: var(--bgColor-danger-emphasis);
+  border: 1px solid var(--bgColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.sev-major {
+  background: var(--bgColor-attention-muted);
+  color: var(--fgColor-attention);
+  /* Double ring: a second outline marks Major without colour. */
+  border: 1px solid var(--borderColor-attention-emphasis);
+  box-shadow: 0 0 0 1px var(--bgColor-attention-muted), 0 0 0 2px var(--borderColor-attention-emphasis);
+  margin: 0 2px;
+}
+
+.bot-chip {
+  min-width: 0;
+  max-width: 160px;
+  height: 22px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-muted);
+  border-radius: 999px;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.finding-state {
+  margin-left: auto;
+  flex: none;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.finding-path {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-monospace);
+}
+
+.finding-body {
+  margin: 0;
+  font: 400 14px/20px var(--fontStack-system);
+  overflow-wrap: anywhere;
+}
+
+.finding-body.is-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.finding-more {
+  align-self: flex-start;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-accent);
+  font: 400 12px/20px var(--fontStack-system);
+}
+
+.finding-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 28 high so four actions and their key caps fit a 400px card. */
+.finding-btn {
+  height: 28px;
+  padding: 0 10px;
+  gap: 6px;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.finding-btn .kbd {
+  display: none;
+}
+
+.finding:focus-within .finding-btn .kbd,
+.finding:hover .finding-btn .kbd,
+.finding-resolved:focus-within .finding-btn .kbd,
+.finding-banner .finding-btn .kbd {
+  display: inline-flex;
+}
+
+.finding-btn.is-spent {
+  background: var(--bgColor-default);
+  border: 1px dashed var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+  cursor: default;
+}
+
+.finding-btn.is-busy {
+  cursor: progress;
+}
+
+.finding-btn[aria-disabled='true']:not(.is-spent, .is-busy) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.finding-banner-btn {
+  flex: none;
+}
+
+.finding-status {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.finding-status-icon {
+  flex: none;
+  display: inline-flex;
+}
+
+.finding-status-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.finding-status.is-ok .finding-status-icon {
+  color: var(--fgColor-success);
+}
+
+.finding-status.is-err,
+.finding-status.is-err .finding-status-icon {
+  color: var(--fgColor-danger);
+}
+
+.finding-clock {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  position: relative;
+}
+
+.finding-clock::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1.5px;
+  width: 1.5px;
+  height: 4px;
+  background: currentColor;
+}
+
+.finding-retry {
+  flex: none;
+  height: 24px;
+  padding: 0 10px;
+  gap: 6px;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.finding-botreply {
+  padding: 6px 12px;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-muted);
+  border-radius: 6px;
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.finding-botreply-head {
+  display: flex;
+  gap: 8px;
+}
+
+.finding-botreply-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.finding-botreply-line a {
+  color: var(--fgColor-accent);
+  text-decoration: underline;
+}
+
+.finding-reply {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.finding-reply textarea {
+  width: 100%;
+  padding: 8px 12px;
+  resize: vertical;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.finding-reply-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.finding-reply-row > :first-child {
+  margin-right: auto;
+}
+
+.finding-reply-err {
+  color: var(--fgColor-danger);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+/* An ordinary thread: name, Reply and Resolve, first line. */
+.finding-human .finding-head {
+  gap: 8px;
+}
+
+.finding-human-name {
+  flex: none;
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.finding-human-state {
+  margin-left: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.finding-human-actions {
+  margin-left: auto;
+  flex: none;
+  display: flex;
+  gap: 8px;
+}
+
+.finding-human-line {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.finding-resolved {
+  padding: 6px 8px 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-muted);
+  border-radius: 6px;
+  outline: none;
+}
+
+.finding-resolved-row {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.finding-resolved-check {
+  flex: none;
+  display: inline-flex;
+  color: var(--fgColor-success);
+}
+
+.finding-resolved-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+}
+
+.finding-other {
+  margin-top: 4px;
+}
+
+/* Bulk confirm: the 520px dialog, command previews cut to one line. */
+.finding-bulk-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.finding-bulk-row {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.finding-bulk-check {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.finding-bulk-cmd {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-monospace);
+}
+
+.finding-bulk .btn {
+  height: 32px;
+}
+
+/* Phone: 44px targets, a 2 x 2 action grid, bottom-sheet confirm, no key caps. */
+.ph-thread .finding-card {
+  border: 0;
+}
+
+.ph-thread .finding-banner {
+  margin: 8px 12px 0;
+  min-height: 56px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 8px;
+}
+
+.ph-thread .finding-banner-text {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.ph-thread .finding-banner-text strong {
+  font: 600 15px/22px var(--fontStack-system);
+}
+
+.ph-thread .finding-banner-sub {
+  font: 400 13px/18px var(--fontStack-system);
+}
+
+.ph-thread .finding-list {
+  padding: 8px 12px 24px;
+}
+
+.ph-thread .finding {
+  border-radius: 8px;
+}
+
+.ph-thread .sev-badge {
+  height: 24px;
+  font: 600 12px/16px var(--fontStack-system);
+}
+
+.ph-thread .bot-chip {
+  height: 24px;
+  font: 400 12px/16px var(--fontStack-system);
+}
+
+.ph-thread .finding-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ph-thread .finding-actions .finding-btn {
+  justify-content: center;
+}
+
+.ph-thread .finding-btn,
+.ph-thread .finding-btn.is-spent,
+.ph-thread .finding-retry {
+  height: 44px;
+  border-radius: 10px;
+  font: 400 15px/22px var(--fontStack-system);
+}
+
+.ph-thread .finding-human-actions .finding-btn {
+  width: 100%;
+}
+
+.ph-thread .finding-human .finding-head {
+  flex-wrap: wrap;
+}
+
+.ph-thread .finding-human-actions {
+  flex: 1 0 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ph-thread .finding-human-line {
+  white-space: normal;
+}
+
+.ph-thread .finding-status {
+  font: 400 13px/18px var(--fontStack-system);
+}
+
+.ph-thread .finding-botreply-line a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ph-thread .finding-more {
+  min-height: 44px;
+  font-size: 13px;
+}
+
+.ph-thread .finding-resolved-row .finding-btn {
+  width: 92px;
+}
+
+.finding-bulk.is-phone {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 16px 24px;
+}
+
+.finding-bulk.is-phone .finding-bulk-row {
+  min-height: 44px;
+}
+
+.finding-bulk.is-phone .btn {
+  flex: 1;
+  height: 48px;
+  justify-content: center;
+}
+
+.finding-bulk-scrim {
+  align-items: flex-end;
+}

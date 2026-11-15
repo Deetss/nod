@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, statusNames, type BotSettings, type Settings } from '../shared/settings';
+import { DEFAULT_SETTINGS, statusNames, type BotSettings, type ReviewerSettings, type Settings } from '../shared/settings';
 
 let current: Settings = DEFAULT_SETTINGS;
 
@@ -30,6 +30,9 @@ export const projectStatuses = (): string[] => statusNames(current);
 
 /** The comment-driven bot. Its actions hide while `enabled` is false. */
 export const bot = (): BotSettings => current.bot;
+
+/** The review bot whose threads are findings. Empty fields mean no finding. */
+export const reviewer = (): ReviewerSettings => current.reviewer;
 
 /** The configured name for one Status option. */
 export const statusOption = (key: keyof Settings['project']['options']): string => current.project.options[key];

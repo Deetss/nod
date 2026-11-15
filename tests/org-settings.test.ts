@@ -21,6 +21,7 @@ const CUSTOM = {
   },
   orcaAgents: ['claude', 'aider'],
   bot: { enabled: true, name: 'Fixer', command: '/fixer', label: 'fixer', labelColor: 'aa00ff', login: 'fixer-app', marker: 'fixer' },
+  reviewer: { login: 'github-actions', threadMarker: '<!-- reviewer -->' },
   push: { contact: 'mailto:ops@acme.example' },
   android: { packageId: 'example.acme.inbox' },
 };

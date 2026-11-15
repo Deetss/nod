@@ -4,7 +4,9 @@ import type { PrSummary } from '../../shared/types';
 import { splitPath } from '../FilesTree';
 import { PrBody } from '../Markdown';
 import { MergeStatusBox } from '../MergeStatusBox';
+import { FindingList } from '../FindingList';
 import { PrThreadList } from '../PrThread';
+import type { FindingControls } from '../useFindings';
 import { CancelledIcon, CheckIcon, RingIcon, SkippedIcon, XIcon, formatAge } from '../ui';
 import { approveDisabled } from './action-items';
 import { PhoneSheet } from './PhoneSheet';
@@ -19,6 +21,8 @@ interface PrSheetProps {
   pr: PrSummary;
   viewer: string;
   data: PhonePr;
+  /** Present when the reviewer bot has findings on this PR. */
+  findings?: FindingControls | undefined;
   writesOff: boolean;
   busy: boolean;
   depth: number;
@@ -132,13 +136,17 @@ function Checks({ data }: { data: PhonePr }) {
   );
 }
 
-function Thread({ data, pr }: { data: PhonePr; pr: PrSummary }) {
+function Thread({ data, pr, findings }: { data: PhonePr; pr: PrSummary; findings?: FindingControls | undefined }) {
   if (!data.detail.data) return <p className="ph-pad ph-muted">{data.detail.error ?? 'Loading…'}</p>;
   const items = data.detail.data.thread ?? [];
   if (items.length === 0) return <p className="ph-pad ph-muted">No conversation yet.</p>;
   return (
     <div className="ph-thread">
-      <PrThreadList items={items} phone host={{ repo: pr.repo, number: pr.number, onChanged: data.reload }} />
+      {findings ? (
+        <FindingList c={findings} phone />
+      ) : (
+        <PrThreadList items={items} phone host={{ repo: pr.repo, number: pr.number, onChanged: data.reload }} />
+      )}
     </div>
   );
 }
@@ -212,7 +220,7 @@ export function PhonePrSheet(p: PrSheetProps) {
             ))}
             {total === 0 ? <p className="ph-pad ph-muted">{data.detail.error ?? 'No files.'}</p> : null}
           </Fragment>,
-          <Thread key="thread" data={data} pr={pr} />,
+          <Thread key="thread" data={data} pr={pr} findings={p.findings} />,
           <Checks key="checks" data={data} />,
         ]}
       />
