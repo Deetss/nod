@@ -12,6 +12,7 @@ import { PairDialog } from './PairDialog';
 import { ACTIVITY_HELP_KEYS, issueHelpKeys, type KeyDef } from './keys';
 import { bot, isFirstRun, loadedSettings } from './org-settings';
 import { SettingsDialog } from './settings/SettingsDialog';
+import type { SectionId } from './settings/form';
 import { useSettingsKey } from './settings/useSettingsKey';
 import { Welcome } from './settings/Welcome';
 import { ActivityView } from './ActivityView';
@@ -109,6 +110,7 @@ export function App() {
   const [footerKeys, setFooterKeys] = useState<KeyDef[]>();
   const [pairing, setPairing] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsSection, setSettingsSection] = useState<SectionId | undefined>();
   const [welcomeOpen, setWelcomeOpen] = useState(isFirstRun);
   const settingsShown = settingsOpen || welcomeOpen;
   const [action, setAction] = useState<ActionKind>();
@@ -841,6 +843,10 @@ export function App() {
           target={issueTarget}
           active={!help && !pairing && !settingsShown}
           onPair={() => setPairing(true)}
+          onSetupBot={() => {
+            setSettingsSection('bot');
+            setSettingsOpen(true);
+          }}
           searchRef={searchRef}
           onOpenPr={openPrFromIssue}
           onHelp={() => setHelp(true)}
@@ -974,7 +980,16 @@ export function App() {
         <HelpSheet onClose={() => setHelp(false)} keys={listView === 'issues' ? issueHelpKeys(bot()) : listView === 'activity' ? ACTIVITY_HELP_KEYS : undefined} />
       ) : null}
       {pairing ? <PairDialog onClose={() => setPairing(false)} /> : null}
-      {settingsOpen ? <SettingsDialog initial={loadedSettings()} onClose={() => setSettingsOpen(false)} /> : null}
+      {settingsOpen ? (
+        <SettingsDialog
+          initial={loadedSettings()}
+          initialSection={settingsSection}
+          onClose={() => {
+            setSettingsOpen(false);
+            setSettingsSection(undefined);
+          }}
+        />
+      ) : null}
       {welcomeOpen && !settingsOpen ? <Welcome current={loadedSettings()} onClose={() => setWelcomeOpen(false)} /> : null}
       {orcaUi.overlays}
       <ToastStack items={toasts.items} raised={listView === 'issues'} />

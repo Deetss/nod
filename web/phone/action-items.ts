@@ -29,6 +29,7 @@ export type ActionId =
   | 'fix-dispatch'
   | 'edit-title'
   | 'hand-bot'
+  | 'setup-bot'
   | 'bot-retry'
   | 'bot-split'
   | 'bot-check'
@@ -238,6 +239,7 @@ function issueItems(ctx: ActionContext): ActionItem[] {
   }
   const b = bot();
   if (b.enabled) items.push(botItem(ctx, b));
+  else items.push({ id: 'setup-bot', label: 'Set up bot', sub: 'Turn it on in Settings on the desktop' });
   if (!ctx.assignedToViewer) items.push({ id: 'assign-me', label: 'Assign me', sub: 'Adds you as assignee' });
   items.push({ id: 'comment', label: 'Comment', sub: 'Opens the composer' });
   items.push({ id: 'new-issue', label: 'New issue', sub: `In ${ctx.repo ?? 'this repo'}`, opens: true });

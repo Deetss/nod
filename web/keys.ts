@@ -97,10 +97,10 @@ export const FOOTER_NARROW:KeyDef[] = [
   { keys: '?', label: 'help' },
 ];
 
-/** Issue keys for the help sheet. `L`, `T` and `B` carry the bot's name; `L` is left out while the bot is off. */
+/** Issue keys for the help sheet. `L`, `T` and `B` carry the bot's name; `L` reads `set up a bot` while the bot is off. */
 export const issueHelpKeys = (b: BotSettings): KeyDef[] =>
   ISSUE_HELP_KEYS.flatMap((k) => {
-    if (k.keys === 'L') return b.enabled ? [{ keys: 'L', label: `hand to ${b.name}` }, ...botCheckKey(b)] : [];
+    if (k.keys === 'L') return b.enabled ? [{ keys: 'L', label: `hand to ${b.name}` }, ...botCheckKey(b)] : [{ keys: 'L', label: 'set up a bot' }];
     if (k.keys === 'T') return [{ keys: 'T', label: `ask ${b.name} to retry` }];
     if (k.keys === 'B') return [{ keys: 'B', label: `split as ${b.name} proposes` }];
     return [k];

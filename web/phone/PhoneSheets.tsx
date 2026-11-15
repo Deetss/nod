@@ -236,6 +236,10 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     if (item.id === 'fix-conflicts') return replaceTop({ kind: 'fix', mode: 'conflicts' });
     if (item.id === 'edit-title') return replaceTop({ kind: 'edit-title' });
     if (item.id === 'hand-bot') return replaceTop({ kind: 'confirm', action: 'bot' });
+    if (item.id === 'setup-bot') {
+      writes.notify('Turn the bot on in Settings on the desktop.');
+      return pop();
+    }
     if (item.id === 'bot-retry') {
       retry.request();
       return pop();

@@ -165,10 +165,47 @@ describe('bot settings', () => {
     expect(el.textContent).toContain('Fixer already has this issue. The fixer label is set.');
   });
 
-  it('hides Hand to and the L key when no bot is configured', () => {
+  it('hides Hand to when no bot is configured', () => {
     setOrgSettings(DEFAULT_SETTINGS);
     const el = render(panel({ held: false, onClick: noop }));
     expect(byText(el, 'Hand to')).toBeUndefined();
-    expect(issueHelpKeys(DEFAULT_SETTINGS.bot).some((k) => k.keys === 'L')).toBe(false);
+  });
+});
+
+describe('Set up bot button', () => {
+  const withSetup = (onSetupBot?: () => void) =>
+    createElement(ActionsPanel, {
+      disabled: false,
+      closed: false,
+      onComment: noop,
+      onEditTitle: noop,
+      onClose: noop,
+      onReopen: noop,
+      onNew: noop,
+      bot: { held: false, onClick: noop },
+      onSetupBot,
+    });
+
+  it('shows while the bot is off, runs the handler and explains itself', () => {
+    setOrgSettings(DEFAULT_SETTINGS);
+    const onSetupBot = vi.fn();
+    const el = render(withSetup(onSetupBot));
+    const btn = byText(el, 'Set up bot');
+    expect(btn?.disabled).toBe(false);
+    expect(btn?.textContent).toContain('L');
+    expect(el.textContent).toContain('Bot is off. Opens Settings, Bot pane.');
+    act(() => btn?.click());
+    expect(onSetupBot).toHaveBeenCalled();
+  });
+
+  it('is replaced by Hand to Bot while the bot is on', () => {
+    setOrgSettings(TEST_SETTINGS);
+    const el = render(withSetup(noop));
+    expect(byText(el, 'Set up bot')).toBeUndefined();
+    expect(byText(el, 'Hand to Bot')).toBeDefined();
+  });
+
+  it('lists L as set up a bot in the help keys while the bot is off', () => {
+    expect(issueHelpKeys(DEFAULT_SETTINGS.bot).find((k) => k.keys === 'L')?.label).toBe('set up a bot');
   });
 });

@@ -78,6 +78,8 @@ interface IssuesViewProps {
   onHelp: () => void;
   onGoPrs: () => void;
   onPair: () => void;
+  /** Opens Settings on the Bot pane. */
+  onSetupBot: () => void;
   onRefresh: () => void;
   /** Called with a successful write's response, so the app can show an Orca notification result. */
   onNotice?: (res: { noticeId?: string }) => void;
@@ -578,10 +580,15 @@ export function IssuesView(p: IssuesViewProps) {
   /** The newest check verdict, only while the bot is on: it sets the primary style on the action buttons. */
   const botVerdict = d && bot().enabled ? checkCardOf(d.comments)?.verdict : undefined;
 
+  const { onSetupBot } = p;
   const openBot = useCallback(() => {
-    if (!bot().enabled || disabled || !d || d.summary.state === 'closed' || botHeld) return;
+    if (!bot().enabled) {
+      onSetupBot();
+      return;
+    }
+    if (disabled || !d || d.summary.state === 'closed' || botHeld) return;
     setBotOpen(true);
-  }, [disabled, d, botHeld]);
+  }, [disabled, d, botHeld, onSetupBot]);
 
   const confirmBot = useCallback(async () => {
     if (!d || botBusy) return;
@@ -1086,6 +1093,7 @@ export function IssuesView(p: IssuesViewProps) {
                     : undefined
                 }
                 bot={{ held: botHeld, onClick: openBot }}
+                onSetupBot={onSetupBot}
               />
             </aside>
           </>
