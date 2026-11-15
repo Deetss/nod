@@ -60,8 +60,8 @@ export function ShellToast({ notice, onDismiss }: { notice: ShellState; onDismis
   const relaunch = window.nod?.relaunch;
   const text =
     notice === 'relaunch' && relaunch
-      ? 'Nod updated in the background. Relaunch this window to finish.'
-      : 'Nod updated in the background. Quit with Ctrl+Q and reopen to finish.';
+      ? 'Nod updated in the background.'
+      : 'Nod updated. Quit with Ctrl+Q and reopen to finish.';
   return (
     <div className="toast toast-action update-toast" role="status">
       <span className="toast-icon toast-icon-neutral">
