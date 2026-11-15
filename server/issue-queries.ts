@@ -37,7 +37,7 @@ export const ISSUE_INBOX_QUERY = `
 query IssueSync($q: String!, $after: String, $statusField: String!) {
   viewer { login id }
   ${RATE}
-  search(query: $q, type: ISSUE, first: 100, after: $after) {
+  search(query: $q, type: ISSUE_ADVANCED, first: 100, after: $after) {
     pageInfo { hasNextPage endCursor }
     nodes { ... on Issue { ${ISSUE_FIELDS} } }
   }
@@ -46,7 +46,7 @@ query IssueSync($q: String!, $after: String, $statusField: String!) {
 export const MENTION_QUERY = `
 query IssueMentions($q: String!, $after: String) {
   ${RATE}
-  search(query: $q, type: ISSUE, first: 100, after: $after) {
+  search(query: $q, type: ISSUE_ADVANCED, first: 100, after: $after) {
     pageInfo { hasNextPage endCursor }
     nodes { ... on Issue { id state } }
   }
@@ -61,18 +61,18 @@ export function pollQuery(prFields: string): string {
 query Poll($prs: String!, $own: String!, $watchOwn: Boolean!, $issues: String!, $mentions: String!, $statusField: String!) {
   viewer { login id }
   ${RATE}
-  prs: search(query: $prs, type: ISSUE, first: 10) {
+  prs: search(query: $prs, type: ISSUE_ADVANCED, first: 10) {
     pageInfo { hasNextPage endCursor }
     nodes { ... on PullRequest { ${prFields} } }
   }
-  own: search(query: $own, type: ISSUE, first: 10) @include(if: $watchOwn) {
+  own: search(query: $own, type: ISSUE_ADVANCED, first: 10) @include(if: $watchOwn) {
     nodes { ... on PullRequest { ${prFields} } }
   }
-  issues: search(query: $issues, type: ISSUE, first: 10) {
+  issues: search(query: $issues, type: ISSUE_ADVANCED, first: 10) {
     pageInfo { hasNextPage endCursor }
     nodes { ... on Issue { ${ISSUE_FIELDS} } }
   }
-  mentions: search(query: $mentions, type: ISSUE, first: 10) {
+  mentions: search(query: $mentions, type: ISSUE_ADVANCED, first: 10) {
     pageInfo { hasNextPage endCursor }
     nodes { ... on Issue { id state } }
   }

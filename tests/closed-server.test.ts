@@ -61,7 +61,7 @@ describe('closedSearch', () => {
 
   it('asks for closed issues over a 90 day window', () => {
     const q = closedSearch('issues', ['acme-co', 'acme-dev'], 90, NOW);
-    expect(q).toContain('is:issue is:closed org:acme-co org:acme-dev');
+    expect(q).toContain('is:issue is:closed (org:acme-co OR org:acme-dev)');
     expect(q).toContain('closed:>=2026-08-14T12:00:00Z');
   });
 
