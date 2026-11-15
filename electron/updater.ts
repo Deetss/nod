@@ -1,6 +1,6 @@
 import { autoUpdater } from 'electron-updater';
 
-const CHECK_EVERY_MS = 6 * 60 * 60 * 1000;
+const CHECK_EVERY_MS = 60 * 60 * 1000;
 
 const log = {
   info: (m: unknown) => console.log(`[update] ${String(m)}`),

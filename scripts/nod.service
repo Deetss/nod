@@ -10,6 +10,9 @@ Environment=PATH=%h/.local/bin:%h/.asdf/shims:/usr/local/bin:/usr/bin:/bin
 # Always, so a self-update that exits cleanly comes back on the new build.
 Restart=always
 RestartSec=10
+# Stop signals go to the app alone. The AppImage's FUSE helper unmounts once the app exits;
+# killing it first pulls the app's files away mid-shutdown (SIGBUS, core dump, stale mount).
+KillMode=mixed
 
 [Install]
 WantedBy=default.target

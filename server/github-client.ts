@@ -31,6 +31,8 @@ export interface Stored<T> {
 }
 
 const API = 'https://api.github.com';
+const RETRY_STATUSES = new Set([502, 503, 504]);
+const RETRY_DELAY_MS = 1000;
 const UPLOADS = 'https://uploads.github.com';
 const UPLOAD_TIMEOUT_MS = 60_000;
 
@@ -150,10 +152,14 @@ export class GithubClient {
     label?: string,
   ): Promise<T> {
     const name = label ?? operationName(query);
-    const res = await this.send('/graphql', {
-      method: 'POST',
-      body: JSON.stringify({ query, variables }),
-    });
+    const post = () => this.send('/graphql', { method: 'POST', body: JSON.stringify({ query, variables }) });
+    let res = await post();
+    // A large search can time out at GitHub's edge. Reads retry once; mutations never do.
+    if (RETRY_STATUSES.has(res.status) && !/^\s*mutation\b/.test(query)) {
+      this.log(`[gh] ${name} ${res.status}, retrying`);
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+      res = await post();
+    }
     if (!res.ok) throw new ApiError(`GitHub API error ${res.status}`, 'http', res.status);
     const json = (await res.json()) as GraphqlResponse<T>;
     const first = json.errors?.[0];
