@@ -27,6 +27,7 @@ import { Footer } from './Footer';
 import { DensityContext, useAltHeld, useDensity } from './density';
 import { FollowContext } from './follow';
 import { FollowStatus } from './FollowStatus';
+import { CopyLinkProvider, makeCopyUrl } from './copy-link';
 import { ToastStack, useToasts } from './toasts';
 import { OrcaSessionsContext } from './orca/OrcaContext';
 import { useOrca } from './orca/useOrca';
@@ -115,6 +116,7 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const toasts = useToasts();
   const pushToast = toasts.push;
+  const copyUrl = useMemo(() => makeCopyUrl(pushToast), [pushToast]);
   /** The action's own result. Orca notifications stack above it. */
   const setToast = useCallback(
     (t: { ok: boolean; message: string }) => pushToast({ kind: t.ok ? 'ok' : 'err', message: t.message, ms: 5000 }),
@@ -527,6 +529,7 @@ export function App() {
       adminMerge: () => startAction('admin'),
       ready: () => startAction('ready'),
       openGithub: () => selected && openExternal(selected.url),
+      copyLink: () => selected && void copyUrl(selected.url),
       filter: () => filterRef.current?.focus(),
       search: () => searchRef.current?.focus(),
       help: () => setHelp(true),
@@ -787,6 +790,7 @@ export function App() {
 
   return (
     <DensityContext.Provider value={density}>
+    <CopyLinkProvider value={copyUrl}>
     <LinkRouterContext.Provider value={routeLink}>
     <FollowContext.Provider value={inbox.follow}>
     <OrcaSessionsContext.Provider value={orcaUi.value}>
@@ -983,6 +987,7 @@ export function App() {
     </OrcaSessionsContext.Provider>
     </FollowContext.Provider>
     </LinkRouterContext.Provider>
+    </CopyLinkProvider>
     </DensityContext.Provider>
   );
 }

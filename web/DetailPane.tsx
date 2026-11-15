@@ -1,6 +1,7 @@
 import { AUTO_MERGE_ON, DRAFT_HINT, OWN_PR_HINT, type ReviewAccess } from '../shared/pr-actions';
 import { mergeMethodLabel, type PrDetail, type PrSummary } from '../shared/types';
 import type { ActionKind } from './DetailBody';
+import { CopyLinkButton } from './copy-link';
 import { useDensityValue } from './density';
 import { ClosedPill } from './ClosedSection';
 import { useFollow } from './follow';
@@ -56,6 +57,7 @@ export function PrHeader({ detail }: { detail: PrDetail }) {
         <Btn className="pr-open" keyHint="O" onClick={() => openExternal(detail.summary.url)}>
           <ExternalIcon /> Open on GitHub
         </Btn>
+        <CopyLinkButton url={detail.summary.url} variant="header" />
       </div>
       <PrMeta detail={detail} />
       <Branches detail={detail} />

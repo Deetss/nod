@@ -165,6 +165,7 @@ function commentFor(author: string, ageH: number, text: string, i: number, now: 
     author,
     createdAt: new Date(now - ageH * HOUR).toISOString(),
     bodyHtml: `<p>${escapeHtml(text)}</p>`,
+    url: `https://github.com/acme-dev/notes/issues/12#issuecomment-${i}`,
     ...(hidden ? { minimized: { reason: hidden } } : {}),
   };
 }

@@ -14,6 +14,7 @@ import './diff.css';
 import './issues.css';
 import './closed.css';
 import './sub-issues.css';
+import './copy-link.css';
 import './activity.css';
 import './density.css';
 import './density-list.css';

@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { SUB_ISSUE_LIMIT, type ParentIssue, type SubIssue } from '../../shared/issue-types';
 import { progressOf, subRef, type MoveTarget } from '../../shared/sub-issues';
+import { CopyLinkButton } from '../copy-link';
 import { DotsIcon } from '../FileMenu';
 import { Btn, KeyCap } from '../ui';
 import { Avatar, Card, SubStateGlyph } from './parts';
@@ -324,6 +325,7 @@ export function SubIssuesCard(p: SubIssuesCardProps) {
                 </span>
                 <span className="sub-ref">{subRef(child, p.parent.repo)}</span>
                 <span className="sub-av">{child.assignee ? <Avatar login={child.assignee} size={20} /> : null}</span>
+                <CopyLinkButton url={child.url} className="sub-copy" />
                 <span className="sub-more-slot">
                   {busy ? (
                     <span className="spinner" aria-label="Saving" />
