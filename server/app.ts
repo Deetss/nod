@@ -11,6 +11,7 @@ import { parseImageUrl, sniffImageType } from '../shared/image-url';
 import { DEFAULT_SETTINGS, statusNames, type Settings } from '../shared/settings';
 import type { SettingsSaveResult, SettingsSavedState } from '../shared/settings-save';
 import type { Restarter } from './restart';
+import type { UpdateCheckResult } from '../shared/app-update';
 import { defaultSettingsPath } from './settings';
 import { saveSettings, settingsFileExists } from './settings-write';
 import type { DiffMode } from '../shared/types';
@@ -85,6 +86,8 @@ export interface AppOptions {
   settingsPath?: string;
   /** Restarts the service after a settings save. Without one the save only writes the file. */
   restart?: Restarter;
+  /** Checks GitHub for a newer release. Without one, a check answers `unsupported`. */
+  updates?: { check(): Promise<UpdateCheckResult> };
   /** Orca message switch, per-repo overrides and chosen sessions. Defaults to an in-memory store. */
   orcaPrefs?: OrcaPrefsStore;
   /** Cached Orca session reads. Defaults to one over `orca`. */
@@ -525,6 +528,11 @@ export function createApp(opts: AppOptions): Hono {
         release: await readRelease(androidDir),
       }),
     ),
+  );
+
+  // Settings > Updates. Loopback only, so a phone cannot restart the service.
+  mutating.post('/updates/check', loopbackOnly, async (c) =>
+    c.json<UpdateCheckResult>(opts.updates ? await opts.updates.check() : { state: 'unsupported' }),
   );
 
   // The desktop's "Send test notification". Loopback only, so a phone cannot buzz the others.

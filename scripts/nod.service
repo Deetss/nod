@@ -6,7 +6,12 @@ Wants=network-online.target
 [Service]
 Type=simple
 ExecStart=%h/.local/bin/nod serve
+# Stops Nod before the AppImage's FUSE daemon, which serves Nod's own files. Stopping both at once
+# crashes Nod with SIGBUS and leaves a dead /tmp/.mount_nod.* behind.
+ExecStop=/bin/sh -c 'if [ -n "$$MAINPID" ]; then kill -TERM "$$MAINPID"; tail --pid="$$MAINPID" -f /dev/null; fi'
 Environment=PATH=%h/.local/bin:%h/.asdf/shims:/usr/local/bin:/usr/bin:/bin
+# Without it Electron drops stdout when it is not a terminal, and the journal stays empty.
+Environment=ELECTRON_ENABLE_LOGGING=1
 # Always, so a self-update that exits cleanly comes back on the new build.
 Restart=always
 RestartSec=10

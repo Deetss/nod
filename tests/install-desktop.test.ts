@@ -150,6 +150,22 @@ describe('install-desktop.sh', () => {
     expect(calls.lastIndexOf('--user start nod')).toBeGreaterThan(stop);
   });
 
+  it('refreshes an installed nod unit without --install-service', () => {
+    write(at('.config/systemd/user/nod.service'), '[Service]\nExecStart=%h/.local/bin/nod serve\n');
+    const res = run();
+    expect(res.status, res.stderr).toBe(0);
+    expect(readFileSync(at('.config/systemd/user/nod.service'), 'utf8')).toBe(readFileSync('scripts/nod.service', 'utf8'));
+    expect(systemctlCalls()).toContain('--user daemon-reload');
+    expect(res.stdout).toContain('Updated the service unit');
+  });
+
+  it('leaves a nod unit the user rewrote alone', () => {
+    const custom = '[Service]\nExecStart=/opt/custom/nod serve\n';
+    write(at('.config/systemd/user/nod.service'), custom);
+    expect(run().status).toBe(0);
+    expect(readFileSync(at('.config/systemd/user/nod.service'), 'utf8')).toBe(custom);
+  });
+
   it('is safe to re-run', () => {
     oldInstall();
     expect(run().status).toBe(0);

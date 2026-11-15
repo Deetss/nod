@@ -19,7 +19,7 @@ export interface FormState {
 /** The first message for each invalid field, keyed by its schema path (`bot.command`, `orgs.0`). */
 export type FieldErrors = Record<string, string>;
 
-export type SectionId = 'github' | 'bot' | 'project' | 'release' | 'orca' | 'phone';
+export type SectionId = 'github' | 'bot' | 'project' | 'release' | 'orca' | 'phone' | 'updates';
 
 export const SECTIONS: readonly { id: SectionId; label: string }[] = [
   { id: 'github', label: 'GitHub' },
@@ -28,6 +28,7 @@ export const SECTIONS: readonly { id: SectionId; label: string }[] = [
   { id: 'release', label: 'Release merge' },
   { id: 'orca', label: 'Orca agents' },
   { id: 'phone', label: 'Phone and push' },
+  { id: 'updates', label: 'Updates' },
 ];
 
 /** Which section owns each top-level settings key, so an error can point at its section. */

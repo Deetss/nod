@@ -27,10 +27,10 @@ import { appEnv } from '../server/env';
 import { migrateLegacyDirs } from '../server/migrate';
 import { consoleSink } from '../server/request-log';
 import { loadSettings } from '../server/settings';
-import { relaunchRestarter } from '../server/restart';
+import { relaunchOptions, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
-import { startUpdater } from './updater';
+import { startUpdater, type Updater } from './updater';
 import {
   detectTailnet,
   newSessionToken,
@@ -59,6 +59,7 @@ const FIXTURES = process.argv.includes('--fixtures') || appEnv('FIXTURES') === '
 /** `nod serve`: the server only, no window, phone access on. */
 const SERVICE = process.argv.includes('--serve');
 const DEFAULT_SIZE = { width: 1500, height: 900 };
+const DIST_DIR = join(__dirname, '..', 'web');
 
 // Before setName, so Chromium opens the copied profile rather than an empty one.
 migrateLegacyDirs();
@@ -77,6 +78,8 @@ let origin = '';
 /** True when the window talks to a service that was already running. */
 let attached = false;
 let quitting = false;
+/** Set in the process that owns the server; an attached window leaves updates to the service. */
+let updater: Updater | undefined;
 
 // Shutdown through Electron's quit path; a bare SIGTERM kills Chromium mid-teardown.
 const onSignal = createSignalHandler(app, () => {
@@ -108,10 +111,19 @@ function showWindow(): void {
   win.focus();
 }
 
+/** Starts this command line again once this instance exits. */
+function relaunch(): void {
+  app.relaunch(relaunchOptions(process.env.APPIMAGE, process.argv));
+}
+
+function quit(): void {
+  quitting = true;
+  app.quit();
+}
+
 async function startServer(): Promise<string> {
   const orgSettings = await loadSettings(userFile('app-settings.json'), consoleSink);
   const provider = await buildProvider(FIXTURES, orgSettings);
-  const distDir = join(__dirname, '..', 'web');
   // Tailscale Serve proxies to a fixed port, so phone access cannot use a random one.
   const port = SERVICE || phoneRequested(phoneAccess) ? PHONE_PORT : 0;
   phone = port === 0 ? undefined : await detectTailnet();
@@ -126,22 +138,17 @@ async function startServer(): Promise<string> {
     sync,
     port,
     token: FIXTURES ? newSessionToken() : await loadOrCreateSessionToken(),
-    distDir,
+    distDir: DIST_DIR,
     phone,
     devices,
     settings: orgSettings,
     settingsPath: userFile('app-settings.json'),
-    restart: relaunchRestarter(
-      () => app.relaunch(),
-      () => {
-        quitting = true;
-        app.quit();
-      },
-    ),
+    restart: relaunchRestarter(relaunch, quit),
+    updates: { check: () => updater?.check() ?? Promise.resolve({ state: 'unsupported' }) },
     assetLinks,
     vapidPublicKey: vapid?.publicKey,
     pushSender,
-    buildId: await readBuildId(distDir),
+    buildId: await readBuildId(DIST_DIR),
   });
   return new Promise((resolve, reject) => {
     const server = serve({ fetch: handler.fetch, port, hostname: '127.0.0.1' }, (info) => {
@@ -344,6 +351,17 @@ function registerIpc(): void {
     return settings;
   });
 
+  ipcMain.handle('shell:build', (event) => {
+    if (!fromApp(event)) throw new Error('Untrusted sender');
+    return readBuildId(DIST_DIR);
+  });
+
+  ipcMain.handle('shell:relaunch', (event) => {
+    if (!fromApp(event)) throw new Error('Untrusted sender');
+    relaunch();
+    quit();
+  });
+
   ipcMain.handle('settings:set', async (event, payload: unknown) => {
     if (!fromApp(event)) throw new Error('Untrusted sender');
     const next = parseSettings(payload);
@@ -366,7 +384,7 @@ async function runService(): Promise<void> {
   await app.whenReady();
   app.dock?.hide();
   await startServer();
-  startUpdater({ service: true });
+  updater = startUpdater({ service: true });
 }
 
 async function main(): Promise<void> {
@@ -387,7 +405,7 @@ async function main(): Promise<void> {
   phoneAccess = readPhoneSetting(await readJson(userFile('app-settings.json')));
   registerIpc();
   ({ origin, attached } = await attachOrStart(startServer));
-  if (!attached && !SMOKE) startUpdater({ service: false });
+  if (!attached && !SMOKE) updater = startUpdater({ service: false });
   buildMenu();
   win = await createWindow();
 

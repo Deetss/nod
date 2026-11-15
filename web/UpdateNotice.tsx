@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { OpenRef } from '../shared/build-update';
+import { shellNotice, type OpenRef } from '../shared/build-update';
 import { CLIENT_BUILD, createUpdateWatcher, hasUnsentDraft, parseSignal, type UpdateNotice } from './build-updates';
 import { onLiveEvent } from './live-events';
 import { InfoIcon } from './ui';
@@ -32,6 +32,52 @@ export function useBuildUpdates(currentOpen: () => OpenRef | undefined) {
   }, []);
 
   return { notice, reloadNow: () => watcher.current?.reloadNow() };
+}
+
+type ShellState = ReturnType<typeof shellNotice>;
+
+/** Asks the Electron shell for its build once, so a window left behind by a service update can offer a relaunch. */
+export function useShellUpdate(): { notice: ShellState; dismiss: () => void } {
+  const [notice, setNotice] = useState<ShellState>('none');
+  useEffect(() => {
+    const bridge = window.nod;
+    if (!bridge) return;
+    if (!bridge.shellBuild) {
+      setNotice(shellNotice(CLIENT_BUILD, undefined));
+      return;
+    }
+    bridge.shellBuild().then(
+      (shell) => setNotice(shellNotice(CLIENT_BUILD, shell)),
+      () => undefined,
+    );
+  }, []);
+  return { notice, dismiss: () => setNotice('none') };
+}
+
+/** "Nod updated in the background" with Relaunch, or how to restart a shell too old to relaunch itself. */
+export function ShellToast({ notice, onDismiss }: { notice: ShellState; onDismiss: () => void }) {
+  if (notice === 'none') return null;
+  const relaunch = window.nod?.relaunch;
+  const text =
+    notice === 'relaunch' && relaunch
+      ? 'Nod updated in the background.'
+      : 'Nod updated. Quit with Ctrl+Q and reopen to finish.';
+  return (
+    <div className="toast toast-action update-toast" role="status">
+      <span className="toast-icon toast-icon-neutral">
+        <InfoIcon size={16} />
+      </span>
+      <span>{text}</span>
+      {notice === 'relaunch' && relaunch ? (
+        <button type="button" className="btn" onClick={() => void relaunch()}>
+          Relaunch
+        </button>
+      ) : null}
+      <button type="button" className="btn" onClick={onDismiss}>
+        Later
+      </button>
+    </div>
+  );
 }
 
 interface UpdateToastProps {

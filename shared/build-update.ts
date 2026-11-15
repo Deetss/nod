@@ -41,6 +41,17 @@ export function reloadDecision({ signal, client, reloaded, draft }: ReloadInput)
   return draft ? 'prompt' : 'reload';
 }
 
+/**
+ * What the desktop window offers once the page it shows is newer than its Electron shell, which
+ * happens when the service updates under an attached window. `shell` is undefined for a shell
+ * from before the bridge reported its build, so it can only be restarted by hand.
+ */
+export function shellNotice(page: string, shell: string | undefined): 'none' | 'relaunch' | 'restart' {
+  if (page === DEV_BUILD || shell === DEV_BUILD) return 'none';
+  if (shell === undefined) return 'restart';
+  return shell === page ? 'none' : 'relaunch';
+}
+
 /** The open PR or issue as the `?open=` value phones already understand, for example `pr/acme-co/acme-api/12`. */
 export type OpenRef = { kind: 'pr' | 'issue'; repo: string; number: number };
 

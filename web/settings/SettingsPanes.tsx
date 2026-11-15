@@ -4,6 +4,7 @@ import { STATUS_KEYS, type StatusOptionKey } from '../../shared/settings';
 import { Btn } from '../ui';
 import type { FieldErrors, FormState, SectionId } from './form';
 import { PaneErrors, Switch, TextField } from './SettingsFields';
+import { UpdateCheck } from './UpdateCheck';
 
 export interface PaneProps {
   form: FormState;
@@ -199,6 +200,14 @@ function PhonePane({ form, errors, patch, onEnter }: PaneProps) {
   );
 }
 
+function UpdatesPane() {
+  return (
+    <Pane title="Updates" caption="Nod checks GitHub for a new release every hour. The service restarts on it once it downloads.">
+      <UpdateCheck />
+    </Pane>
+  );
+}
+
 const PANES: Record<SectionId, (p: PaneProps) => ReactNode> = {
   github: GithubPane,
   bot: BotPane,
@@ -206,6 +215,7 @@ const PANES: Record<SectionId, (p: PaneProps) => ReactNode> = {
   release: ReleasePane,
   orca: OrcaPane,
   phone: PhonePane,
+  updates: UpdatesPane,
 };
 
 export function SettingsPane({ section, ...props }: PaneProps & { section: SectionId }) {
