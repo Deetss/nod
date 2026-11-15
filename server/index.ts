@@ -39,7 +39,9 @@ async function main(): Promise<void> {
   migrateLegacyDirs();
   const fixtures = process.argv.includes('--fixtures') || appEnv('FIXTURES') === '1';
   const port = parsePort(process.env.PORT);
-  const settings = fixtures ? { ...(await loadSettings(undefined, consoleSink)), bot: FIXTURE_BOT } : await loadSettings(undefined, consoleSink);
+  const loaded = await loadSettings(undefined, consoleSink);
+  // Fixtures turn the bot on; NOD_FIXTURE_BOT=off keeps the settings file's bot, to capture the bot-off UI.
+  const settings = fixtures && appEnv('FIXTURE_BOT') !== 'off' ? { ...loaded, bot: FIXTURE_BOT } : loaded;
   const provider = await buildProvider(fixtures, settings).catch((e: unknown) => {
     console.error(e instanceof Error ? e.message : 'Could not start.');
     return process.exit(1);

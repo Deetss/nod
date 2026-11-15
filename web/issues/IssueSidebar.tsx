@@ -179,6 +179,8 @@ interface ActionsProps {
   dispatch?: { reason?: string; pending?: boolean; live?: number; onClick: () => void };
   /** Issues only. `held` is true when the issue already has the bot label. */
   bot?: { held: boolean; onClick: () => void };
+  /** Shown while the bot is off: opens Settings on the Bot pane. */
+  onSetupBot?: () => void;
   /** Which existing buttons take the primary style for the bot's verdict. */
   emphasis?: Emphasis;
 }
@@ -301,7 +303,8 @@ function FlatCards(p: CardsProps) {
 function DispatchButton(p: ActionsProps) {
   const b = bot();
   const handTo = b.enabled ? p.bot : undefined;
-  if (!p.dispatch && !handTo) return null;
+  const setup = !b.enabled ? p.onSetupBot : undefined;
+  if (!p.dispatch && !handTo && !setup) return null;
   const reason = p.dispatch?.reason;
   const live = p.dispatch?.live;
   const held = handTo?.held;
@@ -331,6 +334,12 @@ function DispatchButton(p: ActionsProps) {
           {held ? `With ${b.name}` : `Hand to ${b.name}`}
         </Btn>
       ) : null}
+      {setup ? (
+        <Btn keyHint="L" onClick={setup}>
+          Set up bot
+        </Btn>
+      ) : null}
+      {setup ? <span className="muted small actions-caption">Bot is off. Opens Settings, Bot pane.</span> : null}
       {held ? (
         <span id="bot-held" className="muted small actions-caption">
           {botHeld(b)}

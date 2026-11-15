@@ -38,10 +38,10 @@ function Status({ tone, children }: StatusProps) {
 }
 
 /** The Settings dialog: a section list, the open section's fields, and Cancel / Save. Opened by `,`. */
-export function SettingsDialog({ initial, onClose }: { initial: Settings; onClose: () => void }) {
+export function SettingsDialog({ initial, onClose, initialSection }: { initial: Settings; onClose: () => void; initialSection?: SectionId }) {
   const baseline = useMemo(() => toForm(initial), [initial]);
   const [form, setForm] = useState<FormState>(baseline);
-  const [section, setSection] = useState<SectionId>('github');
+  const [section, setSection] = useState<SectionId>(initialSection ?? 'github');
   const { state, save, reset } = useSaveSettings();
   const busy = state.phase === 'saving';
   const done = state.phase === 'done';
@@ -58,8 +58,12 @@ export function SettingsDialog({ initial, onClose }: { initial: Settings; onClos
   const canSave = invalid === 0 && !busy && !done;
 
   useEffect(() => {
-    document.getElementById(`settings-nav-${section}`)?.focus();
-    // Focus the list once, on open.
+    // Opened to a section: land on its first control. Otherwise focus the list.
+    const first = initialSection
+      ? document.querySelector<HTMLElement>('.settings-pane-body [role="switch"], .settings-pane-body input')
+      : null;
+    (first ?? document.getElementById(`settings-nav-${section}`))?.focus();
+    // Focus once, on open.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

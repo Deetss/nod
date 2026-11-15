@@ -3,7 +3,9 @@ import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { botHeld } from '../shared/bot';
-import { TEST_BOT } from './bot-settings';
+import { DEFAULT_SETTINGS } from '../shared/settings';
+import { setOrgSettings } from '../web/org-settings';
+import { TEST_BOT, TEST_SETTINGS } from './bot-settings';
 
 const BOT_HELD = botHeld(TEST_BOT);
 import { actionItems, type ActionContext } from '../web/phone/action-items';
@@ -50,6 +52,18 @@ describe('issue action rows', () => {
   it('disables Hand to Bot for a closed issue and while a write runs', () => {
     expect(find(ctx({ issueOpen: false }), 'hand-bot')?.disabled).toBe('Issue is closed');
     expect(find(ctx({ busy: true }), 'hand-bot')?.disabled).toBe('Working...');
+  });
+
+  it('offers Set up bot instead of Hand to Bot while the bot is off', () => {
+    setOrgSettings(DEFAULT_SETTINGS);
+    try {
+      const ids = actionItems(ctx()).map((i) => i.id);
+      expect(ids).toContain('setup-bot');
+      expect(ids).not.toContain('hand-bot');
+      expect(find(ctx(), 'setup-bot')).toMatchObject({ label: 'Set up bot', sub: 'Turn it on in Settings on the desktop' });
+    } finally {
+      setOrgSettings(TEST_SETTINGS);
+    }
   });
 
   it('keeps Edit title enabled on a closed issue', () => {
