@@ -22,7 +22,7 @@ const RATE = 'rateLimit { limit cost remaining resetAt }';
 export const CLOSED_PR_QUERY = `
 query ClosedPrs($q: String!, $after: String) {
   ${RATE}
-  search(query: $q, type: ISSUE, first: ${CLOSED_PAGE_SIZE}, after: $after) {
+  search(query: $q, type: ISSUE_ADVANCED, first: ${CLOSED_PAGE_SIZE}, after: $after) {
     pageInfo { hasNextPage endCursor }
     nodes {
       ... on PullRequest {
@@ -39,7 +39,7 @@ query ClosedPrs($q: String!, $after: String) {
 export const CLOSED_ISSUE_QUERY = `
 query ClosedIssues($q: String!, $after: String) {
   ${RATE}
-  search(query: $q, type: ISSUE, first: ${CLOSED_PAGE_SIZE}, after: $after) {
+  search(query: $q, type: ISSUE_ADVANCED, first: ${CLOSED_PAGE_SIZE}, after: $after) {
     pageInfo { hasNextPage endCursor }
     nodes {
       ... on Issue {

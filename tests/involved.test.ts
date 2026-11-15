@@ -2,20 +2,29 @@
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MAX_ORGS_WITH_INVOLVED, orgScope } from '../shared/org-scope';
+import { MAX_ORGS, MAX_ORGS_WITH_INVOLVED, orgScope } from '../shared/org-scope';
 import { DEFAULT_SETTINGS, parseSettings } from '../shared/settings';
-import { closedSearch } from '../server/closed';
-import { issueDeltaSearch, issueFullSearch, mentionDeltaSearch, mentionFullSearch } from '../server/issue-queries';
-import { deltaSearch, fullSearch, ownOpenSearch } from '../server/queries';
+import { CLOSED_ISSUE_QUERY, CLOSED_PR_QUERY, closedSearch } from '../server/closed';
+import {
+  ISSUE_INBOX_QUERY,
+  MENTION_QUERY,
+  issueDeltaSearch,
+  issueFullSearch,
+  mentionDeltaSearch,
+  mentionFullSearch,
+  pollQuery,
+} from '../server/issue-queries';
+import { INBOX_QUERY, deltaSearch, fullSearch, ownOpenSearch } from '../server/queries';
 import { SettingsPane } from '../web/settings/SettingsPanes';
 import { toForm, toRaw, validateForm, type FormState } from '../web/settings/form';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
 describe('orgScope', () => {
-  it('keeps the plain org list when the switch is off', () => {
-    expect(orgScope(['a', 'b'])).toBe('org:a org:b');
-    expect(orgScope(['a', 'b'], false)).toBe('org:a org:b');
+  it('ORs the orgs when the switch is off, since advanced search reads a space as AND', () => {
+    expect(orgScope(['a'])).toBe('org:a');
+    expect(orgScope(['a', 'b'])).toBe('(org:a OR org:b)');
+    expect(orgScope(['a', 'b'], false)).toBe('(org:a OR org:b)');
   });
 
   it('ORs the orgs with involves:@me when the switch is on', () => {
@@ -46,6 +55,15 @@ describe('searches take the switch', () => {
   it('keeps the current query when the switch is off', () => {
     expect(fullSearch(orgs, false)).toBe('is:open is:pr org:acme-co');
   });
+
+  // Legacy `type: ISSUE` search returns nothing for a parenthesised OR.
+  it('runs every search in advanced mode', () => {
+    const queries = [INBOX_QUERY, ISSUE_INBOX_QUERY, MENTION_QUERY, pollQuery('id'), CLOSED_PR_QUERY, CLOSED_ISSUE_QUERY];
+    for (const q of queries) {
+      expect(q).toContain('type: ISSUE_ADVANCED');
+      expect(q).not.toMatch(/type: ISSUE[,)]/);
+    }
+  });
 });
 
 describe('includeInvolved setting', () => {
@@ -63,9 +81,12 @@ describe('includeInvolved setting', () => {
     expect(over.ok === false && over.message).toContain('orgs.4');
   });
 
-  it('allows more orgs with the switch off', () => {
-    const many = Array.from({ length: 6 }, (_, i) => `org-${i}`);
-    expect(parseSettings({ orgs: many, includeInvolved: false }).ok).toBe(true);
+  it('allows one more org with the switch off, and names the sixth when over', () => {
+    const ok = Array.from({ length: MAX_ORGS }, (_, i) => `org-${i}`);
+    expect(parseSettings({ orgs: ok, includeInvolved: false }).ok).toBe(true);
+    const over = parseSettings({ orgs: [...ok, 'org-x'], includeInvolved: false });
+    expect(over.ok).toBe(false);
+    expect(over.ok === false && over.message).toContain('orgs.5');
   });
 
   it('round-trips through the dialog form', () => {

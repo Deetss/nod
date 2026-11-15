@@ -47,7 +47,7 @@ export const INBOX_QUERY = `
 query InboxSync($q: String!, $after: String) {
   viewer { login }
   rateLimit { limit cost remaining resetAt }
-  search(query: $q, type: ISSUE, first: 100, after: $after) {
+  search(query: $q, type: ISSUE_ADVANCED, first: 100, after: $after) {
     issueCount
     pageInfo { hasNextPage endCursor }
     nodes { ... on PullRequest { ${PR_FIELDS} } }

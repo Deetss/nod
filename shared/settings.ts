@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { MAX_ORGS_WITH_INVOLVED } from './org-scope';
+import { MAX_ORGS, MAX_ORGS_WITH_INVOLVED } from './org-scope';
 
 /** A GitHub owner login: a user or an org. */
 const ownerLogin = z
@@ -115,6 +115,12 @@ export const SettingsSchema = z
         code: 'custom',
         path: ['orgs', MAX_ORGS_WITH_INVOLVED],
         message: `With the switch on, Nod can watch up to ${MAX_ORGS_WITH_INVOLVED} orgs. Turn it off or remove one.`,
+      });
+    } else if (s.orgs.length > MAX_ORGS) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['orgs', MAX_ORGS],
+        message: `Nod can watch up to ${MAX_ORGS} orgs. Remove one.`,
       });
     }
   });
