@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="870" viewBox="0 0 1660 870">
+<rect x="0" y="0" width="1660" height="870" rx="0" fill="#f6f8fa" stroke="none"/>
+<text x="16" y="26" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Resolve review threads - light, 1660x870. Timeline pane (958 wide) shown per state.</text>
+<rect x="10" y="40" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="11" y="41" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="11" y="68" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="22" y="60" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">1 Open (default for open threads)</text>
+<rect x="45" y="68" width="2" height="175" fill="#d1d9e0"/>
+<circle cx="47" cy="88" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="74" y="92" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="180.8" y="77" width="48.4" height="22" rx="11" fill="none" stroke="#818b98"/>
+<text x="205.0" y="92" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#59636e" text-anchor="middle">Open</text>
+<rect x="701.6" y="72" width="102.4" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="714.6" y="93" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Resolve</text>
+<rect x="773.0" y="79" width="18" height="18" rx="4" fill="#ffffff" stroke="#d1d9e0"/>
+<text x="782.0" y="92" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="middle">x</text>
+<rect x="74" y="128" width="730" height="115" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="75" y="168" width="728" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<circle cx="100" cy="148" r="12" fill="#f0f1f2" stroke="#d1d9e0" stroke-width="1"/>
+<text x="100" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">B</text>
+<text x="120" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">build-bot</text>
+<text x="194" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">commented 2 days ago</text>
+<rect x="746" y="136" width="44" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="768" y="152" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Fix</text>
+<text x="88" y="199" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Database query in a loop</text>
+<text x="88" y="221" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Each iteration issues one query. Batch the lookup.</text>
+<rect x="840" y="40" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="841" y="41" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="841" y="68" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="852" y="60" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">2 Busy: Resolve pressed</text>
+<rect x="875" y="68" width="2" height="175" fill="#d1d9e0"/>
+<circle cx="877" cy="88" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="904" y="92" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="1010.8" y="77" width="48.4" height="22" rx="11" fill="none" stroke="#818b98"/>
+<text x="1035.0" y="92" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#59636e" text-anchor="middle">Open</text>
+<rect x="1508" y="72" width="126" height="32" rx="6" fill="none" stroke="#818b98" stroke-dasharray="4 3"/>
+<circle cx="1528" cy="88" r="5" fill="none" stroke="#59636e" stroke-width="2"/>
+<text x="1542" y="93" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#59636e" text-anchor="start">Resolving...</text>
+<rect x="904" y="128" width="730" height="115" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="905" y="168" width="728" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<circle cx="930" cy="148" r="12" fill="#f0f1f2" stroke="#d1d9e0" stroke-width="1"/>
+<text x="930" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">B</text>
+<text x="950" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">build-bot</text>
+<text x="1024" y="153" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">commented 2 days ago</text>
+<rect x="1576" y="136" width="44" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1598" y="152" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Fix</text>
+<text x="918" y="199" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Database query in a loop</text>
+<text x="918" y="221" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Each iteration issues one query. Batch the lookup.</text>
+<rect x="10" y="312" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="11" y="313" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="11" y="340" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="22" y="332" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">3 Failed: Resolve returned 502</text>
+<rect x="45" y="340" width="2" height="205" fill="#d1d9e0"/>
+<circle cx="47" cy="360" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="74" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="180.8" y="349" width="48.4" height="22" rx="11" fill="none" stroke="#818b98"/>
+<text x="205.0" y="364" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#59636e" text-anchor="middle">Open</text>
+<rect x="701.6" y="344" width="102.4" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="714.6" y="365" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Resolve</text>
+<rect x="773.0" y="351" width="18" height="18" rx="4" fill="#ffffff" stroke="#d1d9e0"/>
+<text x="782.0" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="middle">x</text>
+<rect x="74" y="384" width="730" height="36" rx="6" fill="#ffebe9" stroke="#cf222e"/>
+<path d="M89 395.0 L96 408.0 L82 408.0 Z" fill="none" stroke="#d1242f" stroke-width="1.5" stroke-linejoin="round"/><rect x="88.25" y="399.0" width="1.5" height="5" fill="#d1242f"/>
+<text x="104" y="406.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#d1242f" text-anchor="start">Could not resolve thread: GitHub API error 502</text>
+<rect x="744" y="390.0" width="52" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="770" y="406.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Retry</text>
+<rect x="74" y="430" width="730" height="115" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="75" y="470" width="728" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<circle cx="100" cy="450" r="12" fill="#f0f1f2" stroke="#d1d9e0" stroke-width="1"/>
+<text x="100" y="455" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">B</text>
+<text x="120" y="455" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">build-bot</text>
+<text x="194" y="455" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">commented 2 days ago</text>
+<rect x="746" y="438" width="44" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="768" y="454" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Fix</text>
+<text x="88" y="501" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Database query in a loop</text>
+<text x="88" y="523" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Each iteration issues one query. Batch the lookup.</text>
+<rect x="840" y="312" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="841" y="313" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="841" y="340" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="852" y="332" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">4 Resolved, expanded (after Expand)</text>
+<rect x="875" y="340" width="2" height="175" fill="#d1d9e0"/>
+<circle cx="877" cy="360" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="904" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="1010.8" y="349" width="74.8" height="22" rx="11" fill="#dafbe1" stroke="#1f883d"/>
+<text x="1048.2" y="364" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1a7f37" text-anchor="middle">Resolved</text>
+<rect x="1517.2" y="344" width="116.8" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1530.2" y="365" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Unresolve</text>
+<rect x="1603.0" y="351" width="18" height="18" rx="4" fill="#ffffff" stroke="#d1d9e0"/>
+<text x="1612.0" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="middle">x</text>
+<rect x="904" y="400" width="730" height="115" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="905" y="440" width="728" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<circle cx="930" cy="420" r="12" fill="#f0f1f2" stroke="#d1d9e0" stroke-width="1"/>
+<text x="930" y="425" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">B</text>
+<text x="950" y="425" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">build-bot</text>
+<text x="1024" y="425" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">commented 2 days ago</text>
+<rect x="1576" y="408" width="44" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1598" y="424" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Fix</text>
+<text x="918" y="471" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Database query in a loop</text>
+<text x="918" y="493" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Each iteration issues one query. Batch the lookup.</text>
+<rect x="10" y="584" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="11" y="585" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="11" y="612" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="22" y="604" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">5 Resolved, collapsed (default for resolved)</text>
+<rect x="45" y="612" width="2" height="40" fill="#d1d9e0"/>
+<circle cx="47" cy="632" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="74" y="636" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="180.8" y="621" width="74.8" height="22" rx="11" fill="#dafbe1" stroke="#1f883d"/>
+<text x="218.20000000000002" y="636" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1a7f37" text-anchor="middle">Resolved</text>
+<text x="263.6" y="636" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">1 comment hidden</text>
+<rect x="734.8" y="616" width="69.2" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="747.8" y="637" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Expand</text>
+<rect x="840" y="584" width="810" height="268" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="841" y="585" width="808" height="27" rx="5" fill="#f6f8fa" stroke="none"/>
+<rect x="841" y="612" width="808" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<text x="852" y="604" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="start">6 Timeline, default view (open expanded, resolved collapsed)</text>
+<rect x="875" y="612" width="2" height="235" fill="#d1d9e0"/>
+<circle cx="877" cy="632" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="904" y="636" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="1010.8" y="621" width="48.4" height="22" rx="11" fill="none" stroke="#818b98"/>
+<text x="1035.0" y="636" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#59636e" text-anchor="middle">Open</text>
+<rect x="1531.6" y="616" width="102.4" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1544.6" y="637" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Resolve</text>
+<rect x="1603.0" y="623" width="18" height="18" rx="4" fill="#ffffff" stroke="#d1d9e0"/>
+<text x="1612.0" y="636" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="middle">x</text>
+<rect x="904" y="672" width="730" height="115" rx="6" fill="#ffffff" stroke="#d1d9e0"/>
+<rect x="905" y="712" width="728" height="1" rx="0" fill="#d1d9e0" stroke="none"/>
+<circle cx="930" cy="692" r="12" fill="#f0f1f2" stroke="#d1d9e0" stroke-width="1"/>
+<text x="930" y="697" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">B</text>
+<text x="950" y="697" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">build-bot</text>
+<text x="1024" y="697" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">commented 2 days ago</text>
+<rect x="1576" y="680" width="44" height="24" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1598" y="696" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1f2328" text-anchor="middle">Fix</text>
+<text x="918" y="743" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1f2328" text-anchor="start">Database query in a loop</text>
+<text x="918" y="765" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Each iteration issues one query. Batch the lookup.</text>
+<circle cx="877" cy="827" r="4.25" fill="#ffffff" stroke="#818b98" stroke-width="1.5"/>
+<text x="904" y="831" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">db/seeds.rb:22</text>
+<rect x="1010.8" y="816" width="74.8" height="22" rx="11" fill="#dafbe1" stroke="#1f883d"/>
+<text x="1048.2" y="831" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1a7f37" text-anchor="middle">Resolved</text>
+<text x="1093.6" y="831" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">1 comment hidden</text>
+<rect x="1564.8" y="811" width="69.2" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0"/>
+<text x="1577.8" y="832" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">Expand</text>
+<rect x="1641" y="620" width="5" height="160" rx="2" fill="#818b98" stroke="none"/>
+</svg>
