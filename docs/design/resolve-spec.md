@@ -27,6 +27,7 @@ Boxes are x, y, w, h at 1660 relative to the thread item inside the timeline pan
 | Resolve / Unresolve | `.btn`, `web/base.css` | right end of row, h 32, w 108 / 122 | h 32, w 76 / 90, no chip | `text-body-medium` 14/20 400, nowrap | `button-default-bgColor-rest`, `borderColor-default` |
 | Key chip `x` | `.kbd`, `web/base.css` | 18x18 inside button, right | removed | `text-codeInline` 12/18 mono | `fgColor-muted` on `bgColor-default`, `borderColor-default` |
 | Expand | `.btn`, `web/base.css` | h 32, w 76, no chip | same | `text-body-medium` | as Resolve |
+| Collapse | `.btn`, `web/base.css` | resolved expanded only, 8 left of Unresolve, h 32, w 84, no chip | same | `text-body-medium` | as Resolve |
 | Failed box | `.thread-error`, `web/diff.css` | x 48, 4 under row, w content-48 (730), h 36, radius 6 | w 340, h 50, text wraps to 2 lines | `text-caption` 12/18 400, wraps (`overflow-wrap: anywhere`) | `bgColor-danger-muted`, `borderColor-danger-emphasis`, `fgColor-danger` |
 | Failed icon | `WarningIcon`, `web/inline/icons.tsx` | 14px, left in box | same | none | `fgColor-danger` |
 | Retry | `.thread-btn` as used in the error row of `web/inline/ThreadView.tsx` | h 24, w 52, right in box | same | `text-caption` 12/18 | `button-default-bgColor-rest`, `borderColor-default` |
@@ -43,7 +44,7 @@ Gap from a path row to its card is 20 (`.tl-item` margin). In the failed state t
 - Busy: Resolve takes the `.btn[disabled]` look from `web/base.css` (dashed `borderColor-emphasis`, transparent fill, `fgColor-muted` text) with a 12px `.spinner` and the label `Resolving...`. Pill and card unchanged. The button ignores clicks and `x` while busy (matches `resolveBusy` in `ThreadView.tsx`).
 - Failed: the Failed box appears under the path row, Resolve returns to rest, Retry repeats the call. Text is `Could not resolve thread: GitHub API error 502`. It clears on the next attempt.
 - Resolved, collapsed (default for resolved): Resolved pill, `1 comment hidden`, `Expand`. Card not rendered.
-- Resolved, expanded: Resolved pill, `Unresolve [x]`, card shown with Fix. No Collapse control this round.
+- Resolved, expanded: Resolved pill, `Unresolve [x]`, `Collapse` 8 to its left, card shown with Fix. Collapse returns to the collapsed state.
 - Unresolve failure: same box, text `Could not unresolve thread: ...`.
 
 ## Constraints that forced a change from wireframe B
