@@ -1,6 +1,6 @@
 {
   "name": "nod",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "type": "module",
   "description": "Nod: local pull request review for the acme-co GitHub org",
