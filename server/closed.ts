@@ -60,9 +60,10 @@ export function closedSearch(
   orgs: readonly string[],
   window: ClosedWindow,
   now: number,
+  involved = false,
 ): string {
   const type = kind === 'prs' ? 'pr' : 'issue';
-  return `is:${type} is:closed ${orgScope(orgs)} closed:>=${searchTime(windowStart(now, window))} sort:updated-desc`;
+  return `is:${type} is:closed ${orgScope(orgs, involved)} closed:>=${searchTime(windowStart(now, window))} sort:updated-desc`;
 }
 
 export interface RawClosedPr {
@@ -170,13 +171,14 @@ export async function fetchClosedPage(
   args: {
     kind: ClosedKind;
     orgs: readonly string[];
+    includeInvolved?: boolean;
     window: ClosedWindow;
     after: string | undefined;
     now: number;
   },
 ): Promise<ClosedPage<ClosedPr> | ClosedPage<ClosedIssue>> {
   const { kind, window, after } = args;
-  const q = closedSearch(kind, args.orgs, window, args.now);
+  const q = closedSearch(kind, args.orgs, window, args.now, args.includeInvolved);
   const query = kind === 'prs' ? CLOSED_PR_QUERY : CLOSED_ISSUE_QUERY;
   const data = await client.graphql<ClosedResponse<RawClosedPr & RawClosedIssue>>(
     query,

@@ -13,6 +13,7 @@ import { loadSettings } from '../server/settings';
 
 const CUSTOM = {
   orgs: ['Acme-Builders'],
+  includeInvolved: false,
   releaseMerge: { base: 'trunk', head: 'release', titleContains: 'ship it' },
   project: {
     number: 7,

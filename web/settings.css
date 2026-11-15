@@ -382,3 +382,29 @@
   min-width: 176px;
   justify-content: center;
 }
+
+/* Locked switch: the setting has no effect, so it is shown dimmed. */
+.settings-switch-row.is-locked {
+  opacity: 0.55;
+}
+
+.settings-switch:disabled {
+  cursor: default;
+}
+
+/* The search the saved orgs produce, read-only. */
+.settings-query-label {
+  margin-top: 14px;
+}
+
+.settings-query {
+  display: block;
+  margin-top: 2px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bgColor-neutral-muted);
+  font: 400 12px/18px var(--fontStack-monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

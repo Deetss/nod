@@ -79,16 +79,19 @@ interface SwitchProps {
   label: string;
   on: boolean;
   onChange: (on: boolean) => void;
+  /** Locked: the value cannot change, as when a setting has no effect. */
+  disabled?: boolean;
 }
 
 /** The On/Off toggle. The word beside the knob carries the state, not the colour. */
-export function Switch({ label, on, onChange }: SwitchProps) {
+export function Switch({ label, on, onChange, disabled }: SwitchProps) {
   return (
-    <div className="settings-switch-row">
+    <div className={`settings-switch-row${disabled ? ' is-locked' : ''}`}>
       <button
         type="button"
         role="switch"
         aria-checked={on}
+        disabled={disabled}
         aria-labelledby="settings-switch-label"
         className="settings-switch"
         onClick={() => onChange(!on)}

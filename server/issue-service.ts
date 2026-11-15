@@ -184,13 +184,13 @@ export class IssueService {
   async full(start: number): Promise<void> {
     const issues = await this.pages<RawIssue>(
       ISSUE_INBOX_QUERY,
-      issueFullSearch(this.settings.orgs),
+      issueFullSearch(this.settings.orgs, this.settings.includeInvolved),
       'IssueSync:full',
       (d) => d.search as Page<RawIssue>,
     );
     const mentions = await this.pages<RawMention>(
       MENTION_QUERY,
-      mentionFullSearch(this.settings.orgs),
+      mentionFullSearch(this.settings.orgs, this.settings.includeInvolved),
       'IssueMentions:full',
       (d) => d.search as unknown as Page<RawMention>,
     );

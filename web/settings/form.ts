@@ -4,6 +4,7 @@ import type { SettingsSaveResult } from '../../shared/settings-save';
 /** The settings as the dialog edits them: the numeric and list fields are text until Save. */
 export interface FormState {
   orgs: string[];
+  includeInvolved: boolean;
   bot: Settings['bot'];
   projectNumber: string;
   statusField: string;
@@ -42,6 +43,7 @@ const SECTION_OF_KEY: Record<string, SectionId> = {
 export function toForm(s: Settings): FormState {
   return {
     orgs: [...s.orgs],
+    includeInvolved: s.includeInvolved,
     bot: { ...s.bot },
     projectNumber: String(s.project.number),
     statusField: s.project.statusField,
@@ -58,6 +60,7 @@ export function toRaw(f: FormState): unknown {
   const number = /^\d+$/.test(f.projectNumber.trim()) ? Number(f.projectNumber) : Number.NaN;
   return {
     orgs: f.orgs.map((o) => o.trim()).filter((o) => o !== ''),
+    includeInvolved: f.includeInvolved,
     bot: f.bot,
     project: { number, statusField: f.statusField, options: f.options },
     releaseMerge: f.releaseMerge,

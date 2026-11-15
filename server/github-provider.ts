@@ -431,7 +431,7 @@ export class GithubProvider implements Provider {
   }
 
   private async fullSweep(start: number): Promise<void> {
-    const { viewer, found } = await this.fetchPrs(fullSearch(this.settings.orgs), 'InboxSync:full');
+    const { viewer, found } = await this.fetchPrs(fullSearch(this.settings.orgs, this.settings.includeInvolved), 'InboxSync:full');
     if (start - this.metaAt >= META_MS) await this.refreshMeta(viewer, start);
     this.state = applyFull(this.state, viewer, found.map(toSummary), start);
     await this.issueSvc.full(start);
@@ -443,14 +443,14 @@ export class GithubProvider implements Provider {
    * the first page continues from its cursor, so a bulk change pages instead of sweeping.
    */
   private async pollCombined(start: number): Promise<void> {
-    const { orgs, project } = this.settings;
+    const { orgs, project, includeInvolved } = this.settings;
     const { viewer } = this.state;
     const vars = {
-      prs: deltaSearch(orgs, this.state.lastSync, DELTA_OVERLAP_MS),
-      own: ownOpenSearch(orgs, viewer),
+      prs: deltaSearch(orgs, this.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
+      own: ownOpenSearch(orgs, viewer, includeInvolved),
       watchOwn: Object.values(this.state.prs).some((p) => p.ci === 'running' && isOwnPr(p.author, viewer)),
-      issues: issueDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS),
-      mentions: mentionDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS),
+      issues: issueDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
+      mentions: mentionDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
       statusField: project.statusField,
     };
     const data = await this.client.graphql<PollResponse>(pollQuery(PR_FIELDS), vars, 'Poll:delta');
@@ -1327,6 +1327,7 @@ export class GithubProvider implements Provider {
     return fetchClosedPage(this.client, this.log, {
       kind,
       orgs: this.settings.orgs,
+      includeInvolved: this.settings.includeInvolved,
       window,
       after,
       now: this.now(),

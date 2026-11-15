@@ -1,3 +1,4 @@
+import { orgScope } from '../../shared/org-scope';
 import type { ReactNode } from 'react';
 import { STATUS_KEYS, type StatusOptionKey } from '../../shared/settings';
 import { Btn } from '../ui';
@@ -33,8 +34,17 @@ function Pane({ title, caption, children }: { title: string; caption: string; ch
 
 function GithubPane({ form, errors, patch, onEnter }: PaneProps) {
   const setOrg = (i: number, value: string) => patch({ orgs: form.orgs.map((o, j) => (j === i ? value : o)) });
+  const named = form.orgs.map((o) => o.trim()).filter((o) => o !== '');
   return (
-    <Pane title="GitHub" caption="Orgs Nod watches for PRs and issues. Leave the list empty to watch only your own repos.">
+    <Pane title="GitHub" caption="Orgs Nod watches for PRs and issues. Add your own login to include your personal repos.">
+      <p className="settings-caption">The first org also owns the project board and Status.</p>
+      <Switch
+        label="Also show things I'm involved in"
+        on={named.length === 0 || form.includeInvolved}
+        disabled={named.length === 0}
+        onChange={(includeInvolved) => patch({ includeInvolved })}
+      />
+      <p className="settings-help">Adds PRs and issues where you are author, assignee, reviewer or mentioned, in any repo.</p>
       <div className="field-label settings-orgs-label">Orgs</div>
       {form.orgs.map((org, i) => (
         <div className="settings-org-row" key={i}>
@@ -57,8 +67,9 @@ function GithubPane({ form, errors, patch, onEnter }: PaneProps) {
       <Btn className="settings-add" onClick={() => patch({ orgs: [...form.orgs, ''] })}>
         + Add org
       </Btn>
-      <p className="settings-help">No orgs is fine. Nod then shows only PRs and issues that involve you.</p>
       <PaneErrors errors={errors} roots={['orgs']} />
+      <p className="settings-help settings-query-label">Searching</p>
+      <code className="settings-query">{orgScope(named, form.includeInvolved)}</code>
     </Pane>
   );
 }

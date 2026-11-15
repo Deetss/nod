@@ -297,7 +297,7 @@ describe('incremental polling', () => {
     const quiet = await p.inbox(undefined, 'delta');
     expect(f.calls.inbox).toHaveLength(2);
     expect(f.calls.poll).toBe(1);
-    expect(f.calls.inbox[1]).toBe('is:pr org:acme-co updated:>=2026-11-06T11:59:00Z');
+    expect(f.calls.inbox[1]).toBe('is:pr (org:acme-co OR involves:@me) updated:>=2026-11-06T11:59:00Z');
     expect(quiet.prs).toHaveLength(1);
 
     f.setList([raw({ state: 'MERGED', closedAt: '2026-11-06T12:01:30Z' })]);

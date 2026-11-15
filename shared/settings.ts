@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MAX_ORGS_WITH_INVOLVED } from './org-scope';
 
 /** A GitHub owner login: a user or an org. */
 const ownerLogin = z
@@ -7,8 +8,11 @@ const ownerLogin = z
 
 const statusName = z.string().trim().min(1).max(60);
 
-export const SettingsSchema = z.object({
+export const SettingsSchema = z
+  .object({
   orgs: z.array(ownerLogin).default([]),
+  /** Also show everything the viewer is involved in, in any repo, beside the orgs. */
+  includeInvolved: z.boolean().default(true),
   releaseMerge: z
     .object({
       base: z.string().min(1).default('main'),
@@ -89,7 +93,16 @@ export const SettingsSchema = z.object({
         .default('io.github.reviewinbox'),
     })
     .default({ packageId: 'io.github.reviewinbox' }),
-});
+})
+  .superRefine((s, ctx) => {
+    if (s.includeInvolved && s.orgs.length > MAX_ORGS_WITH_INVOLVED) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['orgs', MAX_ORGS_WITH_INVOLVED],
+        message: `With the switch on, Nod can watch up to ${MAX_ORGS_WITH_INVOLVED} orgs. Turn it off or remove one.`,
+      });
+    }
+  });
 
 export type BotSettings = Settings['bot'];
 
