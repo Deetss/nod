@@ -1,0 +1,48 @@
+/* Copy link: a header button, and a 22px icon that appears on hover or focus. */
+
+.copy-link.ext-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.row:hover .copy-link,
+.row.is-selected .copy-link,
+.tl-card:hover .copy-link,
+.tl-card:focus-within .copy-link,
+.check-row:hover .copy-link,
+.check-row:focus-within .copy-link,
+.sub-row:hover .copy-link,
+.sub-row:focus .copy-link,
+.copy-link:focus-visible,
+.copy-link.is-copied {
+  opacity: 1;
+}
+
+.copy-link.is-copied {
+  color: var(--fgColor-success);
+}
+
+/* On a PR row the GitHub link sits at right 6; the copy icon sits left of it. */
+.row-copy {
+  right: 28px;
+}
+
+/* Header buttons are always shown. */
+.copy-link-header {
+  width: 28px;
+  padding: 0;
+  justify-content: center;
+}
+
+/* Beside Open on GitHub, which is 32 high. */
+.pr-title-row .copy-link-header {
+  width: 32px;
+  height: 32px;
+}
+
+.sub-copy {
+  margin-left: 8px;
+}

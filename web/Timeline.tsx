@@ -1,5 +1,6 @@
 import { useCallback, useState, type KeyboardEventHandler, type ReactNode } from 'react';
 import { minimizedPill, minimizedSentence } from '../shared/minimized';
+import { CopyLinkButton, useCopyUrl } from './copy-link';
 import { EyeIcon } from './ui';
 
 /** The thread's rail, events and cards (docs/design/timeline-spec.md section 4). The rail and icons are decorative. */
@@ -63,6 +64,8 @@ interface CardProps {
   age: string;
   /** A control at the right end of the header, after the age. */
   tools?: ReactNode;
+  /** The comment's GitHub link; adds Copy link at the right end of the header. */
+  url?: string;
   isNew?: boolean;
   /** Index for `]` and `[` stepping. */
   stepIndex?: number;
@@ -71,7 +74,8 @@ interface CardProps {
 }
 
 /** The bordered card: a muted header (author, verb, pill, age) and the body. */
-export function CardArticle({ id, author, verb, pill, age, tools, isNew, stepIndex, tabIndex, children }: CardProps) {
+export function CardArticle({ id, author, verb, pill, age, tools, url, isNew, stepIndex, tabIndex, children }: CardProps) {
+  const canCopy = useCopyUrl() !== undefined && url !== undefined;
   return (
     <article
       className={`tl-card${isNew ? ' is-new' : ''}`}
@@ -85,10 +89,11 @@ export function CardArticle({ id, author, verb, pill, age, tools, isNew, stepInd
         {verb === null ? null : <> <span>{verb}</span></>}
         {pill ? <TlPill pill={pill} /> : null}
         {isNew ? <span className="badge badge-new">NEW</span> : null}
-        {tools ? (
+        {tools || canCopy ? (
           <span className="tl-card-tools">
             <span className="tl-age">{age}</span>
             {tools}
+            <CopyLinkButton url={url} />
           </span>
         ) : (
           <span className="tl-age">{age}</span>

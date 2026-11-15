@@ -5,6 +5,7 @@ import { splitChips } from '../row-format';
 import { RowMeta } from '../RowMeta';
 import { BubbleIcon, formatAge } from '../ui';
 import { statusOption } from '../org-settings';
+import { CopyLinkButton } from '../copy-link';
 import { chipInputFor, useIssueSessions } from '../orca/OrcaContext';
 import { OrcaChip } from '../orca/orca-ui';
 import { commentsLabel } from './issue-utils';
@@ -93,6 +94,7 @@ export function IssueRow({ issue, selected, checked, stale, showStatus, orca, on
     return (
       <div {...rowProps}>
         {lead}
+      <CopyLinkButton url={issue.url} className="row-ext" />
         <div className="row-titleline">
           {title}
           {chip}
@@ -133,6 +135,7 @@ export function IssueRow({ issue, selected, checked, stale, showStatus, orca, on
   return (
     <div {...rowProps}>
       {lead}
+      <CopyLinkButton url={issue.url} className="row-ext" />
       <div className="row-l1 muted">
         <span className="ellipsis">
           {repoLabel(issue.repo)} <span className="row-num">#{issue.number}</span>

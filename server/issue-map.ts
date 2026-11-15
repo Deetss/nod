@@ -49,6 +49,8 @@ interface RawComment {
   bodyHTML: string;
   createdAt: string;
   updatedAt?: string;
+  /** The comment's page on GitHub. */
+  url?: string;
   author: { __typename?: string; login: string; avatarUrl?: string } | null;
   isMinimized?: boolean;
   minimizedReason?: string | null;
@@ -210,6 +212,7 @@ function toComment(c: RawComment, b: BotSettings): IssueComment {
     createdAt: c.createdAt,
     ...(c.updatedAt ? { updatedAt: c.updatedAt } : {}),
     bodyHtml: c.bodyHTML,
+    ...(c.url ? { url: c.url } : {}),
     ...(minimized ? { minimized } : {}),
     ...(bot ? { bot } : {}),
   };

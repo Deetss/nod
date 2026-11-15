@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode, type Ref } from '
 import type { IssueDetail, IssueSummary } from '../../shared/issue-types';
 import { retryCommand, splitCommand, splitHeld, type RetryState, type SplitState } from '../../shared/bot';
 import { bot } from '../org-settings';
+import { CopyLinkButton } from '../copy-link';
 import { useDensityValue } from '../density';
 import { Html } from '../Markdown';
 import { Btn, KeyCap, formatAge } from '../ui';
@@ -244,6 +245,7 @@ export function IssueDetailPane(p: IssueDetailPaneProps) {
               <Btn disabled={!d || p.disabled} onClick={p.onEditTitle}>
                 Edit title
               </Btn>
+              <CopyLinkButton url={d?.summary.url} variant="header" />
               <button type="button" className="btn icon-btn" aria-label="Previous comment" onClick={p.onPrevComment}>
                 <ArrowIcon up />
               </button>

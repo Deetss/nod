@@ -36,6 +36,8 @@ export interface IssueHotkeys {
   metadata: () => void;
   more: () => void;
   openGithub: () => void;
+  /** `Y`: copies the issue's link. */
+  copyLink: () => void;
   refresh: () => void;
   goPrs: () => void;
   /** `W`: cycles the closed section's window. */
@@ -130,6 +132,7 @@ export function useIssueHotkeys(handlers: IssueHotkeys, enabled: boolean): void 
         i: h.metadata,
         '.': h.more,
         O: h.openGithub,
+        Y: h.copyLink,
         R: h.refresh,
         P: h.pair,
         W: h.closedWindow,

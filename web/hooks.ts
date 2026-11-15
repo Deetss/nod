@@ -72,6 +72,8 @@ export interface HotkeyHandlers {
   /** `o`: Open the PR's Orca session. `O` still opens the PR on GitHub. */
   openOrca: () => void;
   openGithub: () => void;
+  /** `Y`: copies the selected PR's link. */
+  copyLink: () => void;
   filter: () => void;
   search: () => void;
   help: () => void;
@@ -148,6 +150,7 @@ export function useHotkeys(handlers: HotkeyHandlers, enabled: boolean): void {
         s: h.sendOrca,
         o: h.openOrca,
         O: h.openGithub,
+        Y: h.copyLink,
         f: h.filter,
         '/': h.search,
         '?': h.help,

@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import type { PrSummary } from '../shared/types';
+import { CopyLinkButton } from './copy-link';
 import { useDensityValue } from './density';
 import { useFollow } from './follow';
 import { RowOrcaChip } from './orca/OrcaContext';
@@ -47,6 +48,7 @@ export function PrRow({ pr, selected, onSelect, onOpen }: PrRowProps) {
     onDoubleClick: () => onOpen(pr),
   };
 
+  const copy = <CopyLinkButton url={pr.url} className="row-ext row-copy" />;
   const link = <ExtLink className="row-ext" href={pr.url} label="Open on GitHub" />;
   const draft = pr.isDraft ? <span className="draft-chip">Draft</span> : null;
 
@@ -56,6 +58,7 @@ export function PrRow({ pr, selected, onSelect, onOpen }: PrRowProps) {
       <div {...rowProps}>
         {unseen ? <span className="dot" aria-hidden="true" /> : null}
         {link}
+        {copy}
         <div className="row-titleline">
           <Title pr={pr} />
           {draft}

@@ -19,6 +19,7 @@ import { useRemote } from '../useRemote';
 import { BulkReport, CloseDialog, DispatchDialog, BotDialog, NewIssueDialog } from './IssueDialogs';
 import { IssueDetailPane } from './IssueDetailPane';
 import { IssueListPane } from './IssueListPane';
+import { useCopyUrl } from '../copy-link';
 import { ActionsPanel, MetadataCards } from './IssueSidebar';
 import {
   buildIssueSections,
@@ -124,6 +125,7 @@ interface BulkOutcome {
 const FIXTURE_BULK = ['acme-dev/tools#63', 'acme-dev/notes#17', 'acme-co/acme-web#288'];
 
 export function IssuesView(p: IssuesViewProps) {
+  const copyUrl = useCopyUrl();
   const { data } = p.state;
   const layout = p.layout;
 
@@ -918,6 +920,7 @@ export function IssuesView(p: IssuesViewProps) {
       metadata: () => layout !== 'three' && setSheet((s) => !s),
       more: () => composerRef.current?.closest('.composer')?.querySelector<HTMLButtonElement>('.more-btn')?.click(),
       openGithub: () => d && window.open(d.summary.url, '_blank', 'noopener,noreferrer'),
+      copyLink: () => d && void copyUrl?.(d.summary.url),
       refresh: p.onRefresh,
       closedWindow: closed.cycle,
       goPrs: p.onGoPrs,

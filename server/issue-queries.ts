@@ -89,7 +89,7 @@ query IssueDetail($owner: String!, $name: String!, $number: Int!, $statusField: 
       bodyHTML
       milestone { title }
       assignees(first: 10) { nodes { login avatarUrl } }
-      comments(first: 100) { pageInfo { hasNextPage endCursor } nodes { id body bodyHTML createdAt updatedAt isMinimized minimizedReason author { __typename login avatarUrl } } }
+      comments(first: 100) { pageInfo { hasNextPage endCursor } nodes { id body bodyHTML createdAt updatedAt url isMinimized minimizedReason author { __typename login avatarUrl } } }
       timelineItems(first: 100, itemTypes: [LABELED_EVENT, UNLABELED_EVENT, ASSIGNED_EVENT, UNASSIGNED_EVENT, CLOSED_EVENT]) {
         nodes {
           __typename
@@ -119,7 +119,7 @@ query IssueComments($owner: String!, $name: String!, $number: Int!, $after: Stri
     issue(number: $number) {
       comments(first: 100, after: $after) {
         pageInfo { hasNextPage endCursor }
-        nodes { id body bodyHTML createdAt updatedAt isMinimized minimizedReason author { __typename login avatarUrl } }
+        nodes { id body bodyHTML createdAt updatedAt url isMinimized minimizedReason author { __typename login avatarUrl } }
       }
     }
   }

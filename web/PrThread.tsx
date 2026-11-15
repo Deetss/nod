@@ -79,6 +79,7 @@ export function CommentItem({
         verb={verb}
         age={age}
         tools={tools}
+        url={comment.url}
         isNew={isNew}
         stepIndex={stepIndex}
         onKeyDown={onKeyDown}

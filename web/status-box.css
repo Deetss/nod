@@ -263,7 +263,7 @@
 html .merge-box .msb-checks .check-row {
   height: 34px;
   display: grid;
-  grid-template-columns: 16px minmax(0, 1fr) 76px 72px 18px 44px;
+  grid-template-columns: 16px minmax(0, 1fr) 76px 72px 22px 18px 44px;
   align-items: center;
   gap: 6px;
   padding: 0 0 0 16px;

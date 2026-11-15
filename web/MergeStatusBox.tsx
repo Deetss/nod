@@ -13,6 +13,7 @@ import {
 } from '../shared/status-box';
 import type { CheckItem, PrDetail } from '../shared/types';
 import { checkTime, isLive, useNow } from './ci';
+import { CopyLinkButton } from './copy-link';
 import { FixButton, FixStatusLine } from './FixMenu';
 import { openExternal } from './links';
 import { ALL_FAILING, RESOLVE_SCOPE, type FixControls, type MenuControls } from './useFixChecks';
@@ -173,6 +174,7 @@ export function ChecksList({ checks: raw, fix, id }: ChecksListProps) {
             </span>
             <span className={`check-word check-${c.status}`}>{c.status}</span>
             <span className="muted small check-time">{checkTime(c, now)}</span>
+            {c.url ? <CopyLinkButton url={c.url} /> : <span />}
             <ExtLink href={c.url} label={`Open ${c.name} on GitHub`} />
             {fix && c.status === 'fail' ? (
               <FixButton fix={fix} scope={c.name} label={`Fix ${c.name}`} className="fix-row">

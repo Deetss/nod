@@ -108,7 +108,7 @@ export interface IssueComment {
   bodyHtml: string;
   /** Markdown source. Only inline review comments carry it. */
   body?: string;
-  /** The comment's page on GitHub. Only inline review comments carry it. */
+  /** The comment's page on GitHub. */
   url?: string;
   /** Set when GitHub hides the comment. */
   minimized?: Minimized;

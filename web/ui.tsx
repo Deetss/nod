@@ -31,6 +31,17 @@ export function CopyIcon({ size = 16 }: IconProps) {
   );
 }
 
+/** Two chain links, drawn with the same stroke as the other icons. */
+export function LinkIcon({ size = 16 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6.75 9.25l2.5-2.5" />
+      <path d="M8.5 4.75l.9-.9a2.4 2.4 0 0 1 3.4 3.4l-.9.9" />
+      <path d="M7.5 11.25l-.9.9a2.4 2.4 0 0 1-3.4-3.4l.9-.9" />
+    </svg>
+  );
+}
+
 /** Leading glyph of a toast: a circled check on success, a circled cross on error. */
 export function ToastIcon({ ok }: { ok: boolean }) {
   return (
