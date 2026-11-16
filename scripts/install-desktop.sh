@@ -173,7 +173,7 @@ mkdir -p "$opt" "$(dirname "$bin")" "$(dirname "$desktop")"
 cp "$src" "$appimage"
 chmod +x "$appimage"
 
-# `nod serve` runs the headless service; anything else opens the app.
+# `nod serve` runs the headless service; `nod update` asks it to update now; anything else opens the app.
 cat > "$bin" <<EOF
 #!/usr/bin/env bash
 if [[ "\${1:-}" == serve ]]; then

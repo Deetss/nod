@@ -30,6 +30,8 @@ import { loadSettings } from '../server/settings';
 import { relaunchOptions, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
+import { requestErrorText, requestUpdate } from '../server/update-request';
+import { updateCheckText } from '../shared/app-update';
 import { startUpdater, type Updater } from './updater';
 import {
   detectTailnet,
@@ -58,6 +60,8 @@ const SMOKE = process.argv.includes('--smoke');
 const FIXTURES = process.argv.includes('--fixtures') || appEnv('FIXTURES') === '1';
 /** `nod serve`: the server only, no window, phone access on. */
 const SERVICE = process.argv.includes('--serve');
+/** `nod update`: asks the running server to update now, prints the answer and exits. Older wrappers pass a bare `update`. */
+const UPDATE = process.argv.includes('--update') || process.argv[1] === 'update';
 const DEFAULT_SIZE = { width: 1500, height: 900 };
 const DIST_DIR = join(__dirname, '..', 'web');
 
@@ -69,6 +73,9 @@ if (SERVICE) {
   // No display needed, and a profile of its own so it never fights the desktop app over files.
   app.commandLine.appendSwitch('ozone-platform', 'headless');
   app.setPath('userData', `${app.getPath('userData')}-service`);
+} else if (UPDATE) {
+  app.commandLine.appendSwitch('ozone-platform', 'headless');
+  app.setPath('userData', `${app.getPath('userData')}-update`);
 } else {
   app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 }
@@ -387,7 +394,19 @@ async function runService(): Promise<void> {
   updater = startUpdater({ service: true });
 }
 
+async function runUpdate(): Promise<void> {
+  try {
+    const result = await requestUpdate(await loadOrCreateSessionToken());
+    console.log(updateCheckText(result));
+    app.exit(result.state === 'failed' ? 1 : 0);
+  } catch (e) {
+    console.error(requestErrorText(e));
+    app.exit(1);
+  }
+}
+
 async function main(): Promise<void> {
+  if (UPDATE) return runUpdate();
   if (SERVICE) return runService();
   if (!SMOKE && !app.requestSingleInstanceLock()) {
     app.quit();
