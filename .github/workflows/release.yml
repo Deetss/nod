@@ -1,26 +1,48 @@
 name: Release
 
-# Bump package.json in a PR, then tag main with the same version: git tag v0.2.1 && git push origin v0.2.1
+# Every merge to main that changes the app ships a release. The version is the newest v* tag with
+# the patch bumped, unless package.json names a higher one (bump it there for a minor or major).
 on:
   push:
-    tags: ['v*']
+    branches: [main]
+    paths-ignore: ['docs/**', '**/*.md']
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+# One release at a time, so two quick merges never pick the same version.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   appimage:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-      - name: Tag matches package.json
+      - name: Version
+        id: version
         run: |
-          want="v$(node -p "require('./package.json').version")"
-          if [ "$GITHUB_REF_NAME" != "$want" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match package.json ($want)" >&2
-            exit 1
+          pkg=$(node -p "require('./package.json').version")
+          last=$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n 1)
+          last=${last#v}
+          if [ -z "$last" ]; then
+            next=$pkg
+          else
+            IFS=. read -r major minor patch <<< "$last"
+            next="$major.$minor.$((patch + 1))"
+            if [ "$(printf '%s\n%s\n' "$next" "$pkg" | sort -V | tail -n 1)" = "$pkg" ]; then
+              next=$pkg
+            fi
           fi
+          echo "version=$next" >> "$GITHUB_OUTPUT"
+          echo "Releasing $next (last tag ${last:-none}, package.json $pkg)"
 
       - uses: pnpm/action-setup@v4
         with:
@@ -34,6 +56,15 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm test
+
+      # The build reads its version from package.json; the repo copy is only the floor.
+      - name: Tag and release
+        run: |
+          npm pkg set version="$VERSION"
+          gh release create "v$VERSION" --target "$GITHUB_SHA" --title "v$VERSION" --generate-notes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Uploads nod-<version>.AppImage and latest-linux.yml, which the in-app updater reads.
       - name: Build and publish
@@ -53,14 +84,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # versionCode is major*10000 + minor*100 + patch, so every release installs over the last.
+      # versionCode is major*1000000 + minor*1000 + patch, so every release installs over the last
+      # and patch can pass 99 now that each merge bumps it.
       - name: Version
         id: version
         run: |
-          v=$(node -p "require('./package.json').version")
-          IFS=. read -r major minor patch <<< "$v"
-          echo "name=$v" >> "$GITHUB_OUTPUT"
-          echo "code=$((major * 10000 + minor * 100 + patch))" >> "$GITHUB_OUTPUT"
+          IFS=. read -r major minor patch <<< "$VERSION"
+          echo "name=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "code=$((major * 1000000 + minor * 1000 + patch))" >> "$GITHUB_OUTPUT"
+        env:
+          VERSION: ${{ needs.appimage.outputs.version }}
 
       - name: Signing key
         run: echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
@@ -82,6 +115,6 @@ jobs:
         run: |
           apk="nod-${{ steps.version.outputs.name }}.apk"
           cp android/app/build/outputs/apk/release/app-release.apk "$apk"
-          gh release upload "$GITHUB_REF_NAME" "$apk" --clobber
+          gh release upload "v${{ steps.version.outputs.name }}" "$apk" --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
