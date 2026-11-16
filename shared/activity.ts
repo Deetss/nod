@@ -65,13 +65,16 @@ export function eventSentence(e: ActivityEvent, item: Pick<ActivityItemRef, 'kin
 }
 
 /** Second line of a row: `PR · acme-api #1318 · Bot mentioned you`. The event part is the latest event. */
-export function rowMeta(item: ActivityItemRef, latest: ActivityEvent): string {
+/** The latest event in words: actor and verb, or the event sentence. */
+export function rowTail(item: ActivityItemRef, latest: ActivityEvent): string {
   const who = latest.actor ? `${latest.actor} ` : '';
-  const tail =
-    latest.kind === 'ci' || latest.kind === 'merged' || latest.kind === 'closed' || latest.kind.startsWith('label') || latest.kind === 'status'
-      ? eventSentence(latest, item)
-      : `${who}${latest.verb}`.trim();
-  return `${item.kind === 'pr' ? 'PR' : 'Issue'} · ${item.repo} #${item.number} · ${tail}`;
+  return latest.kind === 'ci' || latest.kind === 'merged' || latest.kind === 'closed' || latest.kind.startsWith('label') || latest.kind === 'status'
+    ? eventSentence(latest, item)
+    : `${who}${latest.verb}`.trim();
+}
+
+export function rowMeta(item: ActivityItemRef, latest: ActivityEvent): string {
+  return `${item.kind === 'pr' ? 'PR' : 'Issue'} · ${item.repo} #${item.number} · ${rowTail(item, latest)}`;
 }
 
 export interface ActivityRow {

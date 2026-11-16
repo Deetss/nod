@@ -55,35 +55,44 @@ describe('phone issue row labels', () => {
     expect(splitChips(labels, PHONE_CHIPS_MAX.compact)).toMatchObject({ extra: 4 });
   });
 
+  const shownMore = (el: HTMLElement) => el.querySelector('.ph-lrow-chips .chip-more:not([hidden])');
+
   it('renders at most the comfortable limit plus a +n chip with its title', () => {
     const el = render(issue(5));
-    expect(el.querySelectorAll('.ph-row-chips .chip:not(.chip-more)')).toHaveLength(2);
-    const more = el.querySelector('.chip-more');
-    expect(more?.textContent).toBe('+3');
-    expect(more?.getAttribute('title')).toBe('3 more labels');
+    expect(el.querySelectorAll('.ph-lrow-chips .label-chip')).toHaveLength(2);
+    expect(shownMore(el)?.textContent).toBe('+3');
+    expect(shownMore(el)?.getAttribute('title')).toBe('3 more labels');
   });
 
   it('renders one chip in compact density', () => {
     const el = render(issue(3), 'compact');
-    expect(el.querySelectorAll('.ph-row-chips .chip:not(.chip-more)')).toHaveLength(1);
-    expect(el.querySelector('.chip-more')?.textContent).toBe('+2');
+    expect(el.querySelectorAll('.ph-lrow-chips .label-chip')).toHaveLength(1);
+    expect(shownMore(el)?.textContent).toBe('+2');
   });
 
-  it('renders no +n chip when every label fits', () => {
+  it('shows no +n chip when every label fits', () => {
     const el = render(issue(2));
-    expect(el.querySelectorAll('.ph-row-chips .chip')).toHaveLength(2);
-    expect(el.querySelector('.chip-more')).toBeNull();
+    expect(el.querySelectorAll('.ph-lrow-chips .label-chip')).toHaveLength(2);
+    expect(shownMore(el)).toBeNull();
   });
 
   it('does not reuse the tab-bar chip class on the row container', () => {
     const el = render(issue(2));
     expect(el.querySelector('.ph-chips')).toBeNull();
-    expect(el.querySelector('.ph-row-chips')).not.toBeNull();
+    expect(el.querySelector('.ph-lrow-chips')).not.toBeNull();
   });
 
   it('renders no chip container without labels and keeps the comment count', () => {
     const el = render(issue(0));
-    expect(el.querySelector('.ph-row-chips')).toBeNull();
-    expect(el.querySelector('.ph-status')?.textContent).toContain('2');
+    expect(el.querySelector('.ph-lrow-chips')).toBeNull();
+    expect(el.querySelector('.ph-lrow-comments')?.textContent).toBe('2');
+  });
+
+  it('reads every label in the row label, and the dash status when there is none', () => {
+    const el = render(issue(3));
+    const label = el.querySelector('.ph-lrow')?.getAttribute('aria-label') ?? '';
+    expect(label).toContain('labels label-1, label-2, label-3');
+    expect(label).toContain('No project status');
+    expect(el.querySelector('.ph-lrow-glyph')?.className).toContain('is-none');
   });
 });

@@ -185,7 +185,7 @@ export class FixtureProvider implements Provider {
     if (state === 'ci-live' && sync === 'none') this.liveOrigin = Date.now();
     const s = fixtureSections(now);
     const empty = state === 'empty';
-    const needs = s.needs.map((p) => ({ ...p, requested: [VIEWER] }));
+    const needs = [...(state === 'long-rows' ? s.long : []), ...s.needs].map((p) => ({ ...p, requested: [VIEWER] }));
     const prs = await this.annotate([
       ...(empty ? [] : needs),
       ...(empty ? [] : s.mine),
@@ -242,7 +242,7 @@ export class FixtureProvider implements Provider {
 
   private find(ref: PrRef): PrSummary {
     const s = fixtureSections(this.born);
-    const all = [...s.needs, ...s.mine, ...s.org, ...s.dependabot, ...closedFixturePrs(this.born)];
+    const all = [...s.needs, ...s.mine, ...s.org, ...s.dependabot, ...s.long, ...closedFixturePrs(this.born)];
     const found = all.find((p) => p.repo === ref.repo && p.number === ref.number);
     if (!found) throw new Error(`No fixture for ${ref.repo}#${ref.number}`);
     const hit = this.readied.has(found.id) ? { ...found, isDraft: false } : found;

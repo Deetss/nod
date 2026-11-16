@@ -417,6 +417,14 @@ export function formatAge(iso: string, now = Date.now()): string {
   return `${Math.round(hours / 24)}d`;
 }
 
+/** `formatAge` for screen readers: `5 minutes ago`, `2 hours ago`, `3 days ago`. */
+export function ageWords(iso: string, now = Date.now()): string {
+  const short = formatAge(iso, now);
+  const n = Number(short.slice(0, -1));
+  const unit = { m: 'minute', h: 'hour', d: 'day' }[short.slice(-1)] ?? 'day';
+  return `${n} ${unit}${n === 1 ? '' : 's'} ago`;
+}
+
 export function formatNum(n: number): string {
   return n.toLocaleString('en-US');
 }

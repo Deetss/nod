@@ -1,4 +1,4 @@
-/* Phone lists: sync line, section headers, PR, issue and activity rows. */
+/* Phone lists: sync line, section headers, and the shared PR, issue and Activity row. */
 
 .ph-list {
   flex: 1;
@@ -144,29 +144,45 @@
 }
 
 /* The next header's top border is the break, so the last row drops its own. */
-.ph-section-group > .ph-row:last-child {
+.ph-section-group > .ph-lrow:last-child {
   border-bottom: 0;
 }
 
-/* PR and issue row: 12 + title + 6 + 22 + 6 + 18 + 12. */
-.ph-row {
+/*
+ * Shared PR, issue and Activity row: 12 + title 22 + 6 + status 20 + 6 + meta 20 + 12.
+ * `.phone button` resets font and colour, so every size sits on the child spans.
+ */
+.ph-lrow {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--gap-row-lines);
   width: 100%;
-  padding: 12px 16px 12px 32px;
+  padding: var(--row-pad-y) 16px var(--row-pad-y) 32px;
   box-sizing: border-box;
-  background: none;
+  background: var(--bgColor-default);
   border: 0;
   border-bottom: 1px solid var(--borderColor-hairline);
   text-align: left;
   cursor: pointer;
 }
 
-.ph-row:active,
-.ph-arow:active {
+.ph-lrow:active {
   background: var(--bgColor-neutral-muted);
+}
+
+.ph-lrow-wrap {
+  position: relative;
+  border-bottom: 1px solid var(--borderColor-hairline);
+}
+
+.ph-lrow-wrap > .ph-lrow {
+  border-bottom: 0;
+}
+
+.ph-lrow-wrap.is-open,
+.ph-lrow-wrap.is-open > .ph-lrow {
+  background: var(--bgColor-muted);
 }
 
 .ph-dot {
@@ -179,29 +195,33 @@
   background: var(--fgColor-accent);
 }
 
-.ph-titleline {
+.ph-lrow-top {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
 
-.ph-title {
+.ph-lrow-title {
   flex: 1;
   min-width: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: normal;
+  color: var(--fgColor-default);
   font-size: 15px;
   line-height: 22px;
+  font-weight: 400;
 }
 
-.is-unseen .ph-title {
+.is-unread .ph-lrow-title {
   font-weight: 600;
 }
 
 .ph-badge {
   flex: none;
+  margin-top: 1px;
   padding: 2px 6px;
   border-radius: 4px;
   color: var(--fgColor-onEmphasis);
@@ -217,149 +237,151 @@
   box-shadow: inset 0 0 0 1px var(--borderColor-default);
 }
 
-.ph-ci {
+.ph-lrow-time {
+  flex: none;
+  color: var(--fgColor-muted);
+  font-size: 12px;
+  line-height: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ph-lrow-status {
   display: flex;
   align-items: center;
-  gap: var(--gap-chips, 6px);
-  min-height: 22px;
-  font-size: 13px;
-  line-height: 18px;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ph-lrow-glyph {
+  flex: none;
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
   color: var(--fgColor-muted);
 }
 
-/* Label chips never shrink or clip; the status text after them truncates. */
-.ph-row-chips {
-  display: flex;
-  align-items: center;
-  gap: var(--gap-chips, 6px);
-  flex: none;
+.ph-lrow-glyph.is-ci-fail {
+  color: var(--fgColor-danger);
 }
 
-.ph-row-chips .chip {
-  flex-shrink: 0;
-  height: 20px;
+.ph-lrow-glyph.is-changes,
+.ph-lrow-glyph.is-progress {
+  color: var(--fgColor-attention);
+}
+
+.ph-lrow-glyph.is-running,
+.ph-lrow-glyph.is-ready {
+  color: var(--fgColor-accent);
+}
+
+.ph-lrow-glyph.is-review,
+.ph-lrow-glyph.is-in-review {
+  color: var(--fgColor-done);
+}
+
+.ph-lrow-glyph.is-approved,
+.ph-lrow-glyph.is-done {
+  color: var(--fgColor-success);
+}
+
+.ph-lrow-sentence {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fgColor-muted);
+  font-size: 13px;
   line-height: 20px;
 }
 
-.ph-row-chips .chip-more {
+/* Line 3. `row-squeeze.ts` drops items in order when the left group overflows. */
+.ph-lrow-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--fgColor-muted);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.ph-lrow-meta svg {
+  flex: none;
+}
+
+.ph-lrow-chips {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: -4px;
+}
+
+.ph-lrow-meta .chip {
+  height: 20px;
+  line-height: 18px;
+}
+
+.ph-lrow-meta .chip[hidden] {
+  display: none;
+}
+
+/* Neutral in both themes: the label colour is only on the dot. */
+.ph-lrow-meta .chip.label-chip,
+:root[data-theme='light'] .ph-lrow-meta .chip.label-chip {
+  border-color: var(--borderColor-default);
+  background: transparent;
+  color: var(--fgColor-default);
+}
+
+.ph-lrow-meta .chip-more,
+:root[data-theme='light'] .ph-lrow-meta .chip-more {
   border-color: transparent;
   background: var(--bgColor-neutral-muted);
   color: var(--fgColor-muted);
 }
 
-html[data-density='compact'] .ph-row-chips .chip {
-  padding: 0 8px;
-  font-size: 11px;
-}
-
-.ph-status,
-.ph-meta {
-  min-width: 0;
+.ph-lrow-repo-name {
+  flex: none;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.ph-meta {
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--fgColor-muted);
+/* The number sits 4 after the name. */
+.ph-lrow-meta .row-num {
+  flex: none;
+  margin-left: -8px;
 }
 
-/* Activity row, 72 high: icon, item title with its updates pill, then the meta line and age. */
-.ph-arow-wrap {
-  position: relative;
-  border-bottom: 1px solid var(--borderColor-hairline);
-}
-
-.ph-arow-wrap.is-open {
-  background: var(--bgColor-muted);
-}
-
-.ph-arow {
-  position: relative;
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) auto;
-  grid-template-rows: 22px 20px;
-  column-gap: 12px;
-  align-content: center;
-  width: 100%;
-  min-height: 72px;
-  padding: 10px 16px 10px 28px;
-  box-sizing: border-box;
-  background: none;
-  border: 0;
-  text-align: left;
-  cursor: pointer;
-}
-
-.ph-arow .ph-dot {
-  top: 32px;
-  left: 10px;
-}
-
-.ph-aicon {
-  grid-row: 1 / span 2;
-  align-self: center;
+.ph-lrow-author,
+.ph-lrow-files,
+.ph-lrow-comments {
+  flex: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--borderColor-default);
-  border-radius: 999px;
-  background: var(--bgColor-muted);
-  color: var(--fgColor-muted);
+  gap: 4px;
 }
 
-.ph-atitle {
-  grid-column: 2 / span 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-width: 0;
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.is-unread .ph-atitle {
-  font-weight: 600;
-}
-
-.ph-atext {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ph-updates {
+.ph-lrow-end {
   flex: none;
-  padding: 0 8px;
-  border-radius: 10px;
-  background: var(--bgColor-neutral-muted);
-  font-size: 12px;
-  line-height: 20px;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
 }
 
-.ph-ameta {
-  grid-column: 2;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--fgColor-muted);
+.ph-lrow-meta.is-no-author .ph-lrow-author,
+.ph-lrow-meta.is-no-files .ph-lrow-files {
+  display: none;
 }
 
-.ph-aage {
-  grid-column: 3;
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--fgColor-muted);
+.ph-lrow-meta.is-squeezed .ph-lrow-repo-name {
+  flex: 0 1 auto;
+  min-width: var(--repo-min, 64px);
 }
 
 .ph-atimeline {

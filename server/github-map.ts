@@ -30,6 +30,7 @@ export interface RawPr {
   approvals: { totalCount: number };
   anyReviews: { totalCount: number };
   commitCount: { totalCount: number };
+  commentCount?: { totalCount: number };
   lastCommit: { nodes: { commit: { statusCheckRollup: { state: string } | null } }[] };
 }
 
@@ -105,6 +106,7 @@ export function toSummary(raw: RawPr): PrSummary {
     deletions: raw.deletions,
     changedFiles: raw.changedFiles,
     commitCount: raw.commitCount.totalCount,
+    ...(raw.commentCount ? { commentCount: raw.commentCount.totalCount } : {}),
     ci: ciFromRollup(rollup),
     reviewStatus: reviewStatus(raw),
     seen: 'seen',

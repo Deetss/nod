@@ -1,104 +1,92 @@
-import { useRef, useState, type ReactNode, type TouchEvent } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react';
 import type { IssueSummary } from '../../shared/issue-types';
-import type { PrSummary } from '../../shared/types';
-import { commentsLabel } from '../issues/issue-utils';
-import { LabelChip, StatusChip } from '../issues/parts';
-import { useDensityValue } from '../density';
-import { PHONE_CHIPS_MAX, splitChips } from '../row-format';
-import { RowMeta } from '../RowMeta';
-import { CiPill, formatAge } from '../ui';
-import { statusOption } from '../org-settings';
+import type { PrSummary, SeenState } from '../../shared/types';
+import { repoLabel } from '../repo-label';
+import { issueGlyph, issueSentence, prGlyph, prSentence, StatusGlyph } from '../status-glyphs';
+import { ageWords, formatAge } from '../ui';
 import { ChevronIcon } from './PhoneIcons';
+import { ListRow } from './ListRow';
 import { pullOffset, shouldRefresh } from './phone-logic';
+import { squeezeAll } from './row-squeeze';
 
-function Badge({ seen }: { seen: 'new' | 'updated' | 'seen' }) {
-  if (seen === 'seen') return null;
-  return seen === 'new' ? (
-    <span className="ph-badge ph-badge-new">NEW</span>
-  ) : (
-    <span className="ph-badge ph-badge-updated">UPDATED</span>
-  );
+const SEEN_WORD: Record<SeenState, string | undefined> = { new: 'New', updated: 'Updated', seen: undefined };
+
+/** Spoken form of a row sentence: the dots become commas. */
+const spoken = (s: string): string => s.replace(/ · /g, ', ');
+
+const plural = (n: number, noun: string): string => `${n} ${noun}${n === 1 ? '' : 's'}`;
+
+export function prRowLabel(pr: PrSummary, now = Date.now()): string {
+  return [
+    pr.title,
+    SEEN_WORD[pr.seen],
+    spoken(prSentence(pr)),
+    `${repoLabel(pr.repo)} number ${pr.number} by ${pr.author}`,
+    plural(pr.changedFiles, 'file'),
+    `plus ${pr.additions} minus ${pr.deletions}`,
+    pr.commentCount ? plural(pr.commentCount, 'comment') : undefined,
+    ageWords(pr.updatedAt, now),
+  ]
+    .filter(Boolean)
+    .join(', ');
+}
+
+export function issueRowLabel(issue: IssueSummary, now = Date.now()): string {
+  return [
+    issue.title,
+    SEEN_WORD[issue.seen],
+    spoken(issueSentence(issue)),
+    issue.labels.length > 0 ? `labels ${issue.labels.map((l) => l.name).join(', ')}` : undefined,
+    `${repoLabel(issue.repo)} number ${issue.number} by ${issue.author}`,
+    issue.commentCount ? plural(issue.commentCount, 'comment') : undefined,
+    ageWords(issue.updatedAt, now),
+  ]
+    .filter(Boolean)
+    .join(', ');
 }
 
 export function PrRow({ pr, onOpen }: { pr: PrSummary; onOpen: (pr: PrSummary) => void }) {
-  const unseen = pr.seen !== 'seen';
-  const status = [pr.seen === 'updated' ? pr.updatedNote : undefined, pr.reviewStatus]
-    .filter(Boolean)
-    .join(' · ');
+  const kind = prGlyph(pr);
   return (
-    <button type="button" className={`ph-row${unseen ? ' is-unseen' : ''}`} onClick={() => onOpen(pr)}>
-      {unseen ? <span className="ph-dot" aria-hidden="true" /> : null}
-      <span className="ph-titleline">
-        <span className="ph-title">{pr.title}</span>
-        {pr.isDraft ? <span className="draft-chip">Draft</span> : null}
-        <Badge seen={pr.seen} />
-      </span>
-      <span className="ph-ci">
-        <CiPill state={pr.ci} />
-        <span className="ph-status">{status}</span>
-      </span>
-      <span className="ph-meta">
-        <RowMeta
-          repo={pr.repo}
-          number={pr.number}
-          author={pr.author}
-          age={formatAge(pr.updatedAt)}
-          additions={pr.additions}
-          deletions={pr.deletions}
-          changedFiles={pr.changedFiles}
-        />
-      </span>
-    </button>
+    <ListRow
+      title={pr.title}
+      unread={pr.seen !== 'seen'}
+      seen={pr.seen}
+      time={formatAge(pr.updatedAt)}
+      glyph={<StatusGlyph kind={kind} />}
+      glyphClass={`is-${kind}`}
+      sentence={prSentence(pr)}
+      repo={pr.repo}
+      number={pr.number}
+      author={pr.author}
+      files={pr.changedFiles}
+      diff={{ add: pr.additions, del: pr.deletions }}
+      comments={pr.commentCount}
+      label={prRowLabel(pr)}
+      onClick={() => onOpen(pr)}
+    />
   );
 }
 
-export function IssueRow({
-  issue,
-  showStatus = false,
-  onOpen,
-}: {
-  issue: IssueSummary;
-  /** Show the project status chip (when the project resolved). */
-  showStatus?: boolean;
-  onOpen: (i: IssueSummary) => void;
-}) {
-  const unseen = issue.seen !== 'seen';
-  const { shown, extra } = splitChips(issue.labels, PHONE_CHIPS_MAX[useDensityValue()]);
-  const status = [issue.seen === 'updated' ? issue.updatedNote : undefined, commentsLabel(issue.commentCount)]
-    .filter(Boolean)
-    .join(' · ');
+export function IssueRow({ issue, onOpen }: { issue: IssueSummary; onOpen: (i: IssueSummary) => void }) {
+  const kind = issueGlyph(issue.status);
   return (
-    <button type="button" className={`ph-row${unseen ? ' is-unseen' : ''}`} onClick={() => onOpen(issue)}>
-      {unseen ? <span className="ph-dot" aria-hidden="true" /> : null}
-      <span className="ph-titleline">
-        <span className="ph-title">{issue.title}</span>
-        <Badge seen={issue.seen} />
-      </span>
-      <span className="ph-ci">
-        {showStatus && issue.status && issue.status !== statusOption('backlog') ? <StatusChip status={issue.status} /> : null}
-        {shown.length > 0 ? (
-          <span className="ph-row-chips">
-            {shown.map((l) => (
-              <LabelChip key={l.name} label={l} />
-            ))}
-            {extra > 0 ? (
-              <span className="chip chip-more" title={`${extra} more labels`}>
-                +{extra}
-              </span>
-            ) : null}
-          </span>
-        ) : null}
-        <span className="ph-status">{status}</span>
-      </span>
-      <span className="ph-meta">
-        <RowMeta
-          repo={issue.repo}
-          number={issue.number}
-          author={issue.author}
-          age={formatAge(issue.updatedAt)}
-        />
-      </span>
-    </button>
+    <ListRow
+      title={issue.title}
+      unread={issue.seen !== 'seen'}
+      seen={issue.seen}
+      time={formatAge(issue.updatedAt)}
+      glyph={<StatusGlyph kind={kind} />}
+      glyphClass={`is-${kind}`}
+      sentence={issueSentence(issue)}
+      labels={issue.labels}
+      repo={issue.repo}
+      number={issue.number}
+      author={issue.author}
+      comments={issue.commentCount}
+      label={issueRowLabel(issue)}
+      onClick={() => onOpen(issue)}
+    />
   );
 }
 
@@ -154,6 +142,19 @@ export function PullList({ syncLine, refreshing, locked, short, chips, banner, o
   const [dy, setDy] = useState(0);
   const start = useRef<number | undefined>(undefined);
   const el = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const list = el.current;
+    if (!list || typeof ResizeObserver === 'undefined') return;
+    let width = list.clientWidth;
+    const ro = new ResizeObserver(() => {
+      if (list.clientWidth === width) return;
+      width = list.clientWidth;
+      squeezeAll(list);
+    });
+    ro.observe(list);
+    return () => ro.disconnect();
+  }, []);
 
   const onStart = (e: TouchEvent) => {
     const top = el.current?.scrollTop ?? 1;
