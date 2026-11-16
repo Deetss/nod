@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { buildActivityView, groupKey, rowMeta, type ActivityFilter, type ActivityRow } from '../../shared/activity';
+import { buildActivityView, groupKey, rowTail, type ActivityFilter, type ActivityRow } from '../../shared/activity';
 import {
   FILTER_HINTS,
   activityAge,
@@ -10,9 +10,13 @@ import {
   type ActivityHandle,
 } from '../activity-ui';
 import { ActivityTimeline } from '../ActivityTimeline';
+import { CircleDotIcon, PrIcon } from '../issues/parts';
+import { repoLabel } from '../repo-label';
+import { ageWords } from '../ui';
+import { ListRow } from './ListRow';
 import { Chips } from './PhoneBars';
 import { PullList } from './PhoneList';
-import { CrossCircleIcon, CheckCircleIcon, IssueIcon, PrIcon } from './PhoneIcons';
+import { CrossCircleIcon, CheckCircleIcon } from './PhoneIcons';
 import type { ActivityItemRef } from '../../shared/activity-types';
 
 interface PhoneActivityProps {
@@ -25,30 +29,42 @@ interface PhoneActivityProps {
   onExpand: (key: string | undefined) => void;
 }
 
-function RowIcon({ row }: { row: ActivityRow }) {
-  return <span className="ph-aicon">{row.item.kind === 'pr' ? <PrIcon size={18} /> : <IssueIcon size={18} />}</span>;
+/** `sam-lee requested changes · 3 updates`. */
+export function activitySentence(row: ActivityRow): string {
+  const tail = rowTail(row.item, row.latest);
+  return row.updates > 1 ? `${tail} · ${row.updates} updates` : tail;
+}
+
+export function activityRowLabel(row: ActivityRow, now = Date.now()): string {
+  const { item } = row;
+  return [
+    item.title,
+    row.unread ? 'unread' : undefined,
+    `${item.kind === 'pr' ? 'PR' : 'Issue'} ${repoLabel(item.repo)} number ${item.number}`,
+    activitySentence(row).replace(/ · /g, ', '),
+    ageWords(row.latest.at, now),
+  ]
+    .filter(Boolean)
+    .join(', ');
 }
 
 function Row({ row, open, onToggle, onOpen }: { row: ActivityRow; open: boolean; onToggle: () => void; onOpen: () => void }) {
   const { item, latest } = row;
   return (
-    <div className={`ph-arow-wrap${open ? ' is-open' : ''}${row.unread ? ' is-unread' : ''}`}>
-      <button
-        type="button"
-        className="ph-arow"
-        aria-expanded={open}
-        aria-label={`${row.unread ? 'unread, ' : ''}${item.title}, ${rowMeta(item, latest)}`}
+    <div className={`ph-lrow-wrap${open ? ' is-open' : ''}`}>
+      <ListRow
+        title={item.title}
+        unread={row.unread}
+        time={activityAge(latest.at)}
+        glyph={item.kind === 'pr' ? <PrIcon size={16} /> : <CircleDotIcon size={16} />}
+        glyphClass="is-kind"
+        sentence={activitySentence(row)}
+        repo={item.repo}
+        number={item.number}
+        label={activityRowLabel(row)}
+        expanded={open}
         onClick={onToggle}
-      >
-        {row.unread ? <span className="ph-dot" aria-hidden="true" /> : null}
-        <RowIcon row={row} />
-        <span className="ph-atitle">
-          <span className="ph-atext">{item.title}</span>
-          {row.updates > 1 ? <span className="ph-updates">{row.updates} updates</span> : null}
-        </span>
-        <span className="ph-ameta">{rowMeta(item, latest)}</span>
-        <span className="ph-aage">{activityAge(latest.at)}</span>
-      </button>
+      />
       {open ? (
         <div className="ph-atimeline">
           <ActivityTimeline item={item} events={row.events} />

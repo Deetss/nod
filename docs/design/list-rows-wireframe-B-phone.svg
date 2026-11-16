@@ -1,0 +1,887 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1412" height="3298" viewBox="0 0 1412 3298">
+<rect x="0" y="0" width="1412" height="3298" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="40.0" y="30.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="bold" fill="#222222" text-anchor="start">Layout B · three-line row: title and time; glyph and status sentence; chips</text>
+<text x="40.0" y="52.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Round 1, greyscale. Phone 412x915, synthetic data only. Issue #34: list rows with a leading status mark and right-aligned time.</text>
+<text x="40.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">1 · PRs list at rest</text>
+<text x="500.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">2 · Glyph legend</text>
+<text x="960.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3 · Worst case: long title, long repo, big diff</text>
+<rect x="42.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="40.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="fp"><rect x="40" y="92" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#fp)">
+<rect x="40.0" y="116.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="56.0" y="196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull requests</text>
+<circle cx="416.0" cy="152.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(404.0,140.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="40.0" y1="216.0" x2="452.0" y2="216.0" stroke="#dcdcde" stroke-width="1" />
+<rect x="40.0" y="216.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="56.0" y="233.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="40.0" y="242.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="242.0" x2="452.0" y2="242.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,256.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="269.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Needs my review</text>
+<text x="191.5" y="269.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">2</text>
+<rect x="40.0" y="286.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="378.0" x2="452.0" y2="378.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="56.0" cy="309.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="72.0" y="314.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="422.0" y="313.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2h</text>
+<rect x="344.9" y="300.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="350.9" y="313.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(72.0,326.0) scale(0.8)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="96.0" y="339.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI failing · needs review · 2 commits since you looked</text>
+<text x="72.0" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="179.4" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#372</text>
+<g transform="translate(216.1,351.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="231.1" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<g transform="translate(287.1,351.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="302.1" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">4</text>
+<text x="367.0" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+42 −8</text>
+<g transform="translate(414.3,351.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="362.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3</text>
+<rect x="40.0" y="378.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="470.0" x2="452.0" y2="470.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="56.0" cy="401.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="72.0" y="406.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: retry failed webhook</text>
+<text x="422.0" y="405.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">5h</text>
+<rect x="374.0" y="392.0" width="40.0" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="380.0" y="405.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEW</text>
+<g transform="translate(72.0,418.0) scale(0.8)"><path d="M10 2a8 8 0 1 1-8 8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/><path d="M10 2l-3-2.2M10 2l-2.6 2.8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<text x="96.0" y="431.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI running · no reviews yet</text>
+<text x="72.0" y="454.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="157.4" y="454.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#18</text>
+<g transform="translate(187.4,443.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="202.4" y="454.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(255.1,443.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="270.1" y="454.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6</text>
+<text x="392.0" y="454.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+89 −12</text>
+<rect x="40.0" y="470.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="470.0" x2="452.0" y2="470.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,484.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="497.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Mine</text>
+<text x="115.6" y="497.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">3</text>
+<rect x="40.0" y="514.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="606.0" x2="452.0" y2="606.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="542.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">chore: tidy swagger tags</text>
+<text x="422.0" y="541.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1d</text>
+<g transform="translate(72.0,554.0) scale(0.8)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="96.0" y="567.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 approval · CI passing</text>
+<text x="72.0" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="179.4" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#368</text>
+<g transform="translate(216.1,579.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="231.1" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev</text>
+<g transform="translate(293.8,579.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="308.8" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<text x="373.6" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+6 −6</text>
+<g transform="translate(414.3,579.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="590.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<rect x="40.0" y="606.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="698.0" x2="452.0" y2="698.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="634.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">docs: describe the API limits</text>
+<text x="415.3" y="633.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">20h</text>
+<g transform="translate(72.0,646.0) scale(0.8)"><path d="M10 1.2L19.2 18.4H0.8z" fill="#3a3a3a" stroke="#3a3a3a" stroke-linejoin="round"/><path d="M10 7.5v5" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="15.4" r="1.2" fill="#ffffff"/></g>
+<text x="96.0" y="659.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Changes requested · CI passing</text>
+<text x="72.0" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="157.4" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#10</text>
+<g transform="translate(187.4,671.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="202.4" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev</text>
+<g transform="translate(265.1,671.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="280.1" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<text x="367.0" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+48 −2</text>
+<g transform="translate(414.3,671.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="682.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">5</text>
+<rect x="40.0" y="698.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="790.0" x2="452.0" y2="790.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="726.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">test: cover token refresh</text>
+<text x="422.0" y="725.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2d</text>
+<g transform="translate(72.0,738.0) scale(0.8)"><path d="M10 1.4L18.6 10 10 18.6 1.4 10z" fill="#ffffff" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><circle cx="10" cy="10" r="2.2" fill="#3a3a3a"/></g>
+<text x="96.0" y="751.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Draft · no reviews yet · No CI</text>
+<text x="72.0" y="774.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="157.4" y="774.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#14</text>
+<g transform="translate(187.4,763.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="202.4" y="774.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev</text>
+<g transform="translate(265.1,763.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="280.1" y="774.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3</text>
+<text x="398.6" y="774.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+77 −3</text>
+<rect x="40.0" y="790.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="790.0" x2="452.0" y2="790.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,804.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="817.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Org open</text>
+<text x="143.8" y="817.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">8</text>
+<rect x="40.0" y="834.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="926.0" x2="452.0" y2="926.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="862.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">build: bump node to 22</text>
+<text x="422.0" y="861.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">4d</text>
+<g transform="translate(72.0,874.0) scale(0.8)"><path d="M10 1.4L18.6 10 10 18.6 1.4 10z" fill="#ffffff" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><circle cx="10" cy="10" r="2.2" fill="#3a3a3a"/></g>
+<text x="96.0" y="887.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Needs review · CI passing</text>
+<text x="72.0" y="910.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="179.4" y="910.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#358</text>
+<g transform="translate(216.1,899.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="231.1" y="910.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<g transform="translate(287.1,899.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="302.1" y="910.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<text x="405.3" y="910.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+3 −3</text>
+<rect x="40.0" y="926.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1018.0" x2="452.0" y2="1018.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="954.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">refactor: split order mapper</text>
+<text x="422.0" y="953.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">5d</text>
+<g transform="translate(72.0,966.0) scale(0.8)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="96.0" y="979.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 approval · CI passing</text>
+<text x="72.0" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="179.4" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#355</text>
+<g transform="translate(216.1,991.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="231.1" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(283.8,991.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="298.8" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">5</text>
+<text x="360.3" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+21 −18</text>
+<g transform="translate(414.3,991.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="1002.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<rect x="40.0" y="1018.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1110.0" x2="452.0" y2="1110.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="1046.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">ci: cache test fixtures</text>
+<text x="422.0" y="1045.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">6d</text>
+<g transform="translate(72.0,1058.0) scale(0.8)"><path d="M10 2a8 8 0 1 1-8 8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/><path d="M10 2l-3-2.2M10 2l-2.6 2.8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<text x="96.0" y="1071.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI running · 1 approval</text>
+<text x="72.0" y="1094.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="157.4" y="1094.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#16</text>
+<g transform="translate(187.4,1083.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="202.4" y="1094.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<g transform="translate(258.4,1083.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="273.4" y="1094.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<text x="398.6" y="1094.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+12 −1</text>
+<rect x="40.0" y="1110.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1202.0" x2="452.0" y2="1202.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="1138.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">fix: log missing vendor id</text>
+<text x="422.0" y="1137.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">6d</text>
+<g transform="translate(72.0,1150.0) scale(0.8)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="96.0" y="1163.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI failing · 1 approval</text>
+<text x="72.0" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="179.4" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#352</text>
+<g transform="translate(216.1,1175.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="231.1" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(283.8,1175.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="298.8" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<text x="373.6" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+4 −1</text>
+<g transform="translate(414.3,1175.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="1186.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">4</text>
+<rect x="40.0" y="859.0" width="412.0" height="76.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<rect x="56.0" y="873.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="56.0" y="871.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(71.0,884.0) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="102.0" y="900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search pull requests</text>
+<circle cx="412.0" cy="895.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(400.0,883.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="40.0" y="935.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="935.0" x2="452.0" y2="935.0" stroke="#cfcfd2" stroke-width="1" />
+<rect x="88.7" y="936.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="108.7" cy="961.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(98.5,950.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="118.7" y="941.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="130.7" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="108.7" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="246.0" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(235.8,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="256.0" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="265.0" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="246.0" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="383.3" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(373.1,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="393.3" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="402.3" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="383.3" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="40.0" y="92.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="54.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="400.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="412.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="424.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+</g>
+<rect x="40.0" y="92.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<rect x="500.0" y="92.0" width="412.0" height="915.0" rx="6" fill="#fafafa" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="516.0" y="122.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">PR glyph · the worst state leads (1 is worst)</text>
+<g transform="translate(516.0,137.0) scale(1.0)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="548.0" y="152.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1  CI failing</text>
+<text x="620.0" y="152.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">octagon with a cross</text>
+<g transform="translate(516.0,163.0) scale(1.0)"><path d="M10 1.2L19.2 18.4H0.8z" fill="#3a3a3a" stroke="#3a3a3a" stroke-linejoin="round"/><path d="M10 7.5v5" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="15.4" r="1.2" fill="#ffffff"/></g>
+<text x="548.0" y="178.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2  Changes requested</text>
+<text x="680.7" y="178.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">triangle with a bang</text>
+<g transform="translate(516.0,189.0) scale(1.0)"><path d="M10 2a8 8 0 1 1-8 8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/><path d="M10 2l-3-2.2M10 2l-2.6 2.8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<text x="548.0" y="204.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">3  CI running</text>
+<text x="629.3" y="204.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">open ring with an arrow</text>
+<g transform="translate(516.0,215.0) scale(1.0)"><path d="M10 1.4L18.6 10 10 18.6 1.4 10z" fill="#ffffff" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><circle cx="10" cy="10" r="2.2" fill="#3a3a3a"/></g>
+<text x="548.0" y="230.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">4  Needs review</text>
+<text x="646.0" y="230.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">diamond with a dot</text>
+<g transform="translate(516.0,241.0) scale(1.0)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="548.0" y="256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">5  Approved</text>
+<text x="624.9" y="256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">filled disc with a tick</text>
+<text x="516.0" y="292.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Never lead a PR row (sheet and filters only)</text>
+<g transform="translate(516.0,307.0) scale(1.0)"><path d="M3 10.6l4.4 4.4L17.2 5" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6"/></g>
+<text x="548.0" y="322.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">CI passing</text>
+<text x="616.7" y="322.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">bare tick</text>
+<g transform="translate(516.0,333.0) scale(1.0)"><path d="M5 10h10" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></g>
+<text x="548.0" y="348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">No CI</text>
+<text x="587.3" y="348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">dash</text>
+<text x="516.0" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Issue project status (Issues tab only)</text>
+<g transform="translate(516.0,399.0) scale(1.0)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" stroke-dasharray="2.2 2.6"/></g>
+<text x="548.0" y="414.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Backlog</text>
+<text x="602.7" y="414.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">dotted ring</text>
+<g transform="translate(516.0,425.0) scale(1.0)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></g>
+<text x="548.0" y="440.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Ready</text>
+<text x="592.0" y="440.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">empty ring</text>
+<g transform="translate(516.0,451.0) scale(1.0)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 3.6A6.4 6.4 0 0 0 10 16.4z" fill="#3a3a3a"/></g>
+<text x="548.0" y="466.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">In progress</text>
+<text x="621.3" y="466.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">ring, half filled</text>
+<g transform="translate(516.0,477.0) scale(1.0)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 10V3.6A6.4 6.4 0 1 0 16.4 10z" fill="#3a3a3a"/></g>
+<text x="548.0" y="492.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">In review</text>
+<text x="607.3" y="492.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">ring, three quarters filled</text>
+<g transform="translate(516.0,503.0) scale(1.0)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="548.0" y="518.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Done</text>
+<text x="586.0" y="518.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">filled disc with a tick</text>
+<g transform="translate(516.0,529.0) scale(1.0)"><path d="M5 10h10" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></g>
+<text x="548.0" y="544.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">No project status</text>
+<text x="654.0" y="544.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">dash</text>
+<text x="516.0" y="580.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Activity kind</text>
+<g transform="translate(516.0,595.0) scale(0.8333333333333334)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="548.0" y="610.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull request</text>
+<g transform="translate(516.0,621.0) scale(0.8333333333333334)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<text x="548.0" y="636.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Issue</text>
+<text x="516.0" y="672.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Chips and marks</text>
+<g transform="translate(520.0,691.5) scale(0.5)" stroke="#3a3a3a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="548.0" y="702.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Author</text>
+<g transform="translate(520.0,717.5) scale(0.5)" stroke="#3a3a3a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="548.0" y="728.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Files changed</text>
+<g transform="translate(520.0,743.5) scale(0.5)" stroke="#3a3a3a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="548.0" y="754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Comments</text>
+<circle cx="526.0" cy="776.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="548.0" y="780.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Unread</text>
+<text x="597.3" y="780.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">dot in the left gutter</text>
+<rect x="516.0" y="793.0" width="40.0" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="522.0" y="806.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEW</text>
+<text x="600.0" y="806.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">NEW</text>
+<text x="636.0" y="806.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">first time seen</text>
+<rect x="516.0" y="819.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="522.0" y="832.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<text x="600.0" y="832.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">UPDATED</text>
+<text x="665.1" y="832.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">changed since seen</text>
+<rect x="516.0" y="845.0" width="42.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="524.0" y="858.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">Draft</text>
+<text x="600.0" y="858.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Draft</text>
+<text x="636.0" y="858.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">dashed outline</text>
+<rect x="516.0" y="871.0" width="36.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="524.0" y="884.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">bug</text>
+<text x="600.0" y="884.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Label</text>
+<text x="639.3" y="884.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">solid outline</text>
+<text x="516.0" y="914.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">One glyph shows the worst state. The row answers "does this need</text>
+<text x="516.0" y="930.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">me?", and one shape in a fixed slot answers it at a glance. Two glyphs</text>
+<text x="516.0" y="946.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">would double the slot and the legend, and a split glyph stops reading</text>
+<text x="516.0" y="962.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">by shape at 20px. CI passing and No CI never lead, because every</text>
+<text x="516.0" y="978.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">open PR also has a review state that ranks above them.</text>
+<rect x="962.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="fw"><rect x="960" y="92" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#fw)">
+<rect x="960.0" y="116.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="976.0" y="196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull requests</text>
+<circle cx="1336.0" cy="152.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1324.0,140.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="960.0" y1="216.0" x2="1372.0" y2="216.0" stroke="#dcdcde" stroke-width="1" />
+<rect x="960.0" y="216.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="976.0" y="233.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="960.0" y="242.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="242.0" x2="1372.0" y2="242.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(974.0,256.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="998.0" y="269.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Needs my review</text>
+<text x="1111.5" y="269.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">2</text>
+<rect x="960.0" y="286.0" width="412.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="400.0" x2="1372.0" y2="400.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="309.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="314.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: keep the retry queue from</text>
+<text x="992.0" y="336.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">dropping vendor callbacks when t…</text>
+<text x="1340.0" y="313.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">3w</text>
+<rect x="1262.9" y="300.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="1268.9" y="313.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(992.0,348.0) scale(0.8)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="1016.0" y="361.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Draft · CI failing · changes requested · 14 commits since…</text>
+<text x="992.0" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/platform-int…</text>
+<text x="1124.0" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#10482</text>
+<g transform="translate(1174.1,373.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="1189.1" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">148</text>
+<text x="1226.9" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+12,480 −3,902</text>
+<g transform="translate(1321.0,373.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="1336.0" y="384.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">214</text>
+<rect x="960.0" y="400.0" width="412.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="514.0" x2="1372.0" y2="514.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="423.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="428.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore(deps): bump the github-actions</text>
+<text x="992.0" y="450.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">group across 3 directories with 9 up…</text>
+<text x="1325.3" y="427.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">11mo</text>
+<rect x="1277.3" y="414.0" width="40.0" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="1283.3" y="427.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEW</text>
+<g transform="translate(992.0,462.0) scale(0.8)"><path d="M10 2a8 8 0 1 1-8 8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/><path d="M10 2l-3-2.2M10 2l-2.6 2.8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></g>
+<text x="1016.0" y="475.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI running · needs review</text>
+<text x="992.0" y="498.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/platform-integration-tools</text>
+<text x="1184.7" y="498.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#10477</text>
+<g transform="translate(1234.8,487.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="1249.8" y="498.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">37</text>
+<text x="1288.6" y="498.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+1,204 −988</text>
+<rect x="960.0" y="514.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="514.0" x2="1372.0" y2="514.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(974.0,528.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="998.0" y="541.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Issues tab · In review</text>
+<text x="1136.8" y="541.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">1</text>
+<rect x="960.0" y="558.0" width="412.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="672.0" x2="1372.0" y2="672.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="581.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="586.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Phone list hides the age and the diff</text>
+<text x="992.0" y="608.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">size when the repository name is…</text>
+<text x="1340.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2w</text>
+<rect x="1262.9" y="572.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="1268.9" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(992.0,620.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 10V3.6A6.4 6.4 0 1 0 16.4 10z" fill="#3a3a3a"/></g>
+<text x="1016.0" y="633.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">In review · 38 new comments</text>
+<rect x="992.0" y="643.0" width="82.7" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="1000.0" y="656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">needs-triage</text>
+<rect x="1084.7" y="643.0" width="29.7" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="1092.7" y="656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">+4</text>
+<text x="1124.4" y="656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/p…</text>
+<text x="1203.1" y="656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#9931</text>
+<g transform="translate(1318.3,645.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="1333.3" y="656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1.2k</text>
+<rect x="960.0" y="672.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="672.0" x2="1372.0" y2="672.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(974.0,686.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="998.0" y="699.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Activity tab · Today</text>
+<text x="1124.9" y="699.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">1</text>
+<rect x="960.0" y="716.0" width="412.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="830.0" x2="1372.0" y2="830.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="739.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="744.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Phone list hides the age and the diff size when</text>
+<text x="992.0" y="766.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">the repository name is very long</text>
+<text x="1338.7" y="743.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1m</text>
+<g transform="translate(992.0,778.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<text x="1016.0" y="791.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee moved this to In review and assigned build-bot ·…</text>
+<text x="992.0" y="814.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/platform-integration-tools</text>
+<text x="1184.7" y="814.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#9931</text>
+<rect x="960.0" y="859.0" width="412.0" height="76.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<rect x="976.0" y="873.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="976.0" y="871.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(991.0,884.0) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="1022.0" y="900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search pull requests</text>
+<circle cx="1332.0" cy="895.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1320.0,883.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="960.0" y="935.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="935.0" x2="1372.0" y2="935.0" stroke="#cfcfd2" stroke-width="1" />
+<rect x="1008.7" y="936.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="1028.7" cy="961.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1018.5,950.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="1038.7" y="941.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1050.7" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="1028.7" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="1166.0" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1155.8,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="1176.0" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1185.0" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="1166.0" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="1303.3" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1293.1,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="1313.3" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1322.3" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="1303.3" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="960.0" y="92.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="974.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="1320.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1332.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1344.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+</g>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="40.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">92px row, three lines (114 when the title wraps). Line 1: bold title, up to 2</text>
+<text x="40.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">lines, then the NEW or UPDATED badge and the time at right.</text>
+<text x="40.0" y="1067.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Line 2: 16px glyph and a status sentence naming both states and</text>
+<text x="40.0" y="1083.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">updatedNote. Line 3: repo #number, author, files, then size and comment</text>
+<text x="40.0" y="1099.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">count pinned right.</text>
+<text x="500.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Every glyph has its own outline. Fill only repeats what the shape already</text>
+<text x="500.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">says.</text>
+<text x="960.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Title clamps at 2 lines. Time pins to line 1; size and comment count pin to line</text>
+<text x="960.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">3. The status sentence ellipsizes at its end.</text>
+<text x="960.0" y="1067.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Squeeze order on line 3: author drops, then the repo name ellipsizes (the</text>
+<text x="960.0" y="1083.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">#number stays), then files and labels drop into +N. Dropped items stay in the</text>
+<text x="960.0" y="1099.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">sheet.</text>
+<text x="960.0" y="1139.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Same rows at 360 wide (smallest common Android width)</text>
+<rect x="960.0" y="1151.0" width="360.0" height="1.0" rx="0" fill="#cfcfd2" stroke="none" stroke-width="1" />
+<rect x="960.0" y="1151.0" width="360.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="1265.0" x2="1320.0" y2="1265.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="1174.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="1179.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: keep the retry queue</text>
+<text x="992.0" y="1201.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">from dropping vendor call…</text>
+<text x="1288.0" y="1178.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">3w</text>
+<rect x="1210.9" y="1165.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="1216.9" y="1178.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(992.0,1213.0) scale(0.8)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="1016.0" y="1226.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Draft · CI failing · changes requested · 14 com…</text>
+<text x="992.0" y="1249.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/pl…</text>
+<text x="1073.4" y="1249.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#10482</text>
+<g transform="translate(1123.4,1238.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="1138.4" y="1249.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">148</text>
+<text x="1174.9" y="1249.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+12,480 −3,902</text>
+<g transform="translate(1269.0,1238.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="1284.0" y="1249.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">214</text>
+<rect x="960.0" y="1265.0" width="360.0" height="114.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="992.0" y1="1379.0" x2="1320.0" y2="1379.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="976.0" cy="1288.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="992.0" y="1293.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Phone list hides the age and</text>
+<text x="992.0" y="1315.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">the diff size when the repo…</text>
+<text x="1288.0" y="1292.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2w</text>
+<rect x="1210.9" y="1279.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="1216.9" y="1292.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(992.0,1327.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 10V3.6A6.4 6.4 0 1 0 16.4 10z" fill="#3a3a3a"/></g>
+<text x="1016.0" y="1340.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">In review · 38 new comments</text>
+<rect x="992.0" y="1350.0" width="82.7" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="1000.0" y="1363.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">needs-triage</text>
+<rect x="1084.7" y="1350.0" width="29.7" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="1092.7" y="1363.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">+4</text>
+<text x="1124.4" y="1363.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/p…</text>
+<text x="1203.1" y="1363.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#9931</text>
+<g transform="translate(1266.3,1352.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="1281.3" y="1363.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1.2k</text>
+<text x="40.0" y="1427.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">4 · Issues list</text>
+<text x="500.0" y="1427.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">5 · Activity list</text>
+<text x="960.0" y="1427.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Today on main (read from web/phone/)</text>
+<rect x="42.0" y="1442.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="40.0" y="1439.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="fi"><rect x="40" y="1439" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#fi)">
+<rect x="40.0" y="1463.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="56.0" y="1543.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Issues</text>
+<circle cx="416.0" cy="1499.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(404.0,1487.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="40.0" y1="1563.0" x2="452.0" y2="1563.0" stroke="#dcdcde" stroke-width="1" />
+<rect x="40.0" y="1563.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="56.0" y="1580.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="40.0" y="1589.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="1589.0" x2="452.0" y2="1589.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,1603.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="1616.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">In progress</text>
+<text x="156.8" y="1616.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">2</text>
+<rect x="40.0" y="1633.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1725.0" x2="452.0" y2="1725.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="56.0" cy="1656.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="72.0" y="1661.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Status filter ignores closed items</text>
+<text x="422.0" y="1660.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">3h</text>
+<rect x="344.9" y="1647.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="350.9" y="1660.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(72.0,1673.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 3.6A6.4 6.4 0 0 0 10 16.4z" fill="#3a3a3a"/></g>
+<text x="96.0" y="1686.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">In progress · 1 new comment</text>
+<rect x="72.0" y="1696.0" width="36.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">bug</text>
+<text x="118.0" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="225.4" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#412</text>
+<g transform="translate(262.1,1698.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="277.1" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(414.3,1698.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">4</text>
+<rect x="40.0" y="1725.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1817.0" x2="452.0" y2="1817.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="1753.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Rotate agent token on restart</text>
+<text x="422.0" y="1752.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1d</text>
+<g transform="translate(72.0,1765.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M10 10V3.6A6.4 6.4 0 1 0 16.4 10z" fill="#3a3a3a"/></g>
+<text x="96.0" y="1778.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">In review</text>
+<rect x="72.0" y="1788.0" width="57.3" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">security</text>
+<rect x="139.3" y="1788.0" width="39.3" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="147.3" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">infra</text>
+<text x="188.7" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="274.0" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#9</text>
+<g transform="translate(297.4,1790.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="312.4" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev</text>
+<g transform="translate(414.3,1790.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<rect x="40.0" y="1817.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="1817.0" x2="452.0" y2="1817.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,1831.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="1844.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Assigned to me</text>
+<text x="182.8" y="1844.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">4</text>
+<rect x="40.0" y="1861.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="1953.0" x2="452.0" y2="1953.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="56.0" cy="1884.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="72.0" y="1889.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Retry webhook deliveries after 5xx</text>
+<text x="422.0" y="1888.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">6h</text>
+<rect x="374.0" y="1875.0" width="40.0" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="380.0" y="1888.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEW</text>
+<g transform="translate(72.0,1901.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></g>
+<text x="96.0" y="1914.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Ready</text>
+<rect x="72.0" y="1924.0" width="57.3" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="1937.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">security</text>
+<text x="139.3" y="1937.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="246.7" y="1937.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#402</text>
+<g transform="translate(283.4,1926.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="298.4" y="1937.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<rect x="40.0" y="1953.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="2045.0" x2="452.0" y2="2045.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="1981.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Worker report omits the branch</text>
+<text x="422.0" y="1980.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2d</text>
+<g transform="translate(72.0,1993.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" stroke-dasharray="2.2 2.6"/></g>
+<text x="96.0" y="2006.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Backlog</text>
+<text x="72.0" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="157.4" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#63</text>
+<g transform="translate(187.4,2018.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="202.4" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(414.3,2018.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<rect x="40.0" y="2045.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="2137.0" x2="452.0" y2="2137.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="2073.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Sync line shows stale API count</text>
+<text x="422.0" y="2072.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">3d</text>
+<g transform="translate(72.0,2085.0) scale(0.8)"><path d="M5 10h10" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></g>
+<text x="96.0" y="2098.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">No project status</text>
+<rect x="72.0" y="2108.0" width="36.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">bug</text>
+<rect x="118.0" y="2108.0" width="25.3" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="126.0" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">ui</text>
+<rect x="153.4" y="2108.0" width="29.7" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="161.4" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">+2</text>
+<text x="193.0" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="300.4" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#398</text>
+<g transform="translate(414.3,2110.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<rect x="40.0" y="2137.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="2229.0" x2="452.0" y2="2229.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="2165.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Order export drops the vendor id</text>
+<text x="422.0" y="2164.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">4d</text>
+<g transform="translate(72.0,2177.0) scale(0.8)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="96.0" y="2190.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Done</text>
+<rect x="72.0" y="2200.0" width="36.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">bug</text>
+<text x="118.0" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="225.4" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#395</text>
+<g transform="translate(262.1,2202.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="277.1" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee</text>
+<g transform="translate(414.3,2202.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6</text>
+<rect x="40.0" y="2229.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="2229.0" x2="452.0" y2="2229.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(54.0,2243.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="78.0" y="2256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Mentioned</text>
+<text x="151.0" y="2256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">1</text>
+<rect x="40.0" y="2273.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="72.0" y1="2365.0" x2="452.0" y2="2365.0" stroke="#dcdcde" stroke-width="1" />
+<text x="72.0" y="2301.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Crash when the token is revoked</text>
+<text x="422.0" y="2300.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">5d</text>
+<g transform="translate(72.0,2313.0) scale(0.8)"><circle cx="10" cy="10" r="8" fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></g>
+<text x="96.0" y="2326.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">Ready</text>
+<rect x="72.0" y="2336.0" width="36.0" height="18.0" rx="9" fill="#ffffff" stroke="#8c8c8c" stroke-width="1" />
+<text x="80.0" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">bug</text>
+<text x="118.0" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="203.4" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#58</text>
+<g transform="translate(233.4,2338.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="248.4" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<g transform="translate(414.3,2338.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="429.3" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<rect x="40.0" y="2206.0" width="412.0" height="76.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<rect x="56.0" y="2220.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="56.0" y="2218.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(71.0,2231.0) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="102.0" y="2247.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search issues</text>
+<circle cx="412.0" cy="2242.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(400.0,2230.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="40.0" y="2282.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="2282.0" x2="452.0" y2="2282.0" stroke="#cfcfd2" stroke-width="1" />
+<circle cx="108.7" cy="2308.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(98.5,2297.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="118.7" y="2288.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="130.7" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="108.7" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">PRs</text>
+<rect x="226.0" y="2283.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="246.0" cy="2308.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(235.8,2297.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="256.0" y="2288.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="265.0" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="246.0" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">Issues</text>
+<circle cx="383.3" cy="2308.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(373.1,2297.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="393.3" y="2288.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="402.3" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="383.3" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="40.0" y="1439.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="54.0" y="1456.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="400.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="412.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="424.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+</g>
+<rect x="40.0" y="1439.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<rect x="502.0" y="1442.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="500.0" y="1439.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="fa"><rect x="500" y="1439" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#fa)">
+<rect x="500.0" y="1463.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="516.0" y="1543.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Activity</text>
+<circle cx="876.0" cy="1499.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(864.0,1487.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="500.0" y1="1563.0" x2="912.0" y2="1563.0" stroke="#dcdcde" stroke-width="1" />
+<rect x="500.0" y="1563.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="516.0" y="1580.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="500.0" y="1589.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="500.0" y1="1589.0" x2="912.0" y2="1589.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(514.0,1603.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="538.0" y="1616.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Today</text>
+<text x="583.3" y="1616.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">3</text>
+<rect x="500.0" y="1633.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="1725.0" x2="912.0" y2="1725.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="516.0" cy="1656.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="532.0" y="1661.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="872.0" y="1660.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">12m</text>
+<g transform="translate(532.0,1673.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="556.0" y="1686.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee requested changes · 3 updates</text>
+<text x="532.0" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="639.4" y="1709.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#372</text>
+<rect x="500.0" y="1725.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="1817.0" x2="912.0" y2="1817.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="516.0" cy="1748.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="532.0" y="1753.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Status filter ignores closed items</text>
+<text x="872.0" y="1752.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">40m</text>
+<g transform="translate(532.0,1765.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<text x="556.0" y="1778.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee commented</text>
+<text x="532.0" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="639.4" y="1801.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#412</text>
+<rect x="500.0" y="1817.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="1909.0" x2="912.0" y2="1909.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="1845.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">feat: retry failed webhook</text>
+<text x="882.0" y="1844.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2h</text>
+<g transform="translate(532.0,1857.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="556.0" y="1870.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI failed on build · 2 updates</text>
+<text x="532.0" y="1893.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="617.4" y="1893.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#18</text>
+<rect x="500.0" y="1909.0" width="412.0" height="44.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="500.0" y1="1909.0" x2="912.0" y2="1909.0" stroke="#cfcfd2" stroke-width="1" />
+<g transform="translate(514.0,1923.0) scale(1.0)" stroke="#6a6a6a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></g>
+<text x="538.0" y="1936.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#555555" text-anchor="start">Earlier</text>
+<text x="586.5" y="1936.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#8c8c8c" text-anchor="start">4</text>
+<rect x="500.0" y="1953.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="2045.0" x2="912.0" y2="2045.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="1981.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">chore: tidy swagger tags</text>
+<text x="882.0" y="1980.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1d</text>
+<g transform="translate(532.0,1993.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="556.0" y="2006.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev approved</text>
+<text x="532.0" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="639.4" y="2029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#368</text>
+<rect x="500.0" y="2045.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="2137.0" x2="912.0" y2="2137.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="2073.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Rotate agent token on restart</text>
+<text x="882.0" y="2072.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1d</text>
+<g transform="translate(532.0,2085.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<text x="556.0" y="2098.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">moved to In review · 2 updates</text>
+<text x="532.0" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="617.4" y="2121.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#9</text>
+<rect x="500.0" y="2137.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="2229.0" x2="912.0" y2="2229.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="2165.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">build: bump node to 22</text>
+<text x="882.0" y="2164.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">4d</text>
+<g transform="translate(532.0,2177.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="556.0" y="2190.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot pushed 2 commits</text>
+<text x="532.0" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="639.4" y="2213.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#358</text>
+<rect x="500.0" y="2229.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="2321.0" x2="912.0" y2="2321.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="2257.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">Order export drops the vendor id</text>
+<text x="882.0" y="2256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">4d</text>
+<g transform="translate(532.0,2269.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<text x="556.0" y="2282.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">closed as completed</text>
+<text x="532.0" y="2305.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="639.4" y="2305.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#395</text>
+<rect x="500.0" y="2321.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="532.0" y1="2413.0" x2="912.0" y2="2413.0" stroke="#dcdcde" stroke-width="1" />
+<text x="532.0" y="2349.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">ci: cache test fixtures</text>
+<text x="882.0" y="2348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">6d</text>
+<g transform="translate(532.0,2361.0) scale(0.6666666666666667)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<text x="556.0" y="2374.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">merged</text>
+<text x="532.0" y="2397.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev/tools</text>
+<text x="617.4" y="2397.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#16</text>
+<rect x="500.0" y="2206.0" width="412.0" height="76.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<rect x="516.0" y="2220.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="516.0" y="2218.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(531.0,2231.0) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="562.0" y="2247.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search activity</text>
+<circle cx="872.0" cy="2242.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(860.0,2230.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="500.0" y="2282.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="500.0" y1="2282.0" x2="912.0" y2="2282.0" stroke="#cfcfd2" stroke-width="1" />
+<circle cx="568.7" cy="2308.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(558.5,2297.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="578.7" y="2288.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="590.7" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="568.7" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">PRs</text>
+<circle cx="706.0" cy="2308.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(695.8,2297.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="716.0" y="2288.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="725.0" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="706.0" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<rect x="823.3" y="2283.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="843.3" cy="2308.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(833.1,2297.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="853.3" y="2288.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="862.3" y="2301.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="843.3" y="2344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">Activity</text>
+<rect x="500.0" y="1439.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="514.0" y="1456.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="860.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="872.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="884.0" y="1446.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+</g>
+<rect x="500.0" y="1439.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<rect x="960.0" y="1439.0" width="412.0" height="915.0" rx="6" fill="#fafafa" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="974.0" y="1467.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">PrRow (PhoneList.tsx, .ph-row): unread dot, title (bold when unseen,</text>
+<text x="974.0" y="1483.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">2-line clamp), Draft chip, NEW or UPDATED badge, CI pill, status text</text>
+<text x="974.0" y="1499.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">(updatedNote · reviewStatus, e.g. "2 commits since you looked · needs</text>
+<text x="974.0" y="1515.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">review"), one meta line: repo #number · author · age · +a −d · n files.</text>
+<text x="974.0" y="1539.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">IssueRow (.ph-row): dot, title, badge, project StatusChip (hidden for</text>
+<text x="974.0" y="1555.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Backlog), up to 2 label chips plus +N, status text (updatedNote · N</text>
+<text x="974.0" y="1571.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">comments), meta: repo #number · author · age.</text>
+<text x="974.0" y="1595.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Activity Row (PhoneActivity.tsx, .ph-arow): dot, PR or issue icon in a</text>
+<text x="974.0" y="1611.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">32px ring, title, "N updates" pill, meta "PR · repo #number · event", age</text>
+<text x="974.0" y="1627.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">in its own right column. Tap expands the timeline.</text>
+<text x="974.0" y="1651.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Today's bug: the PR meta is one ellipsized line with the age third and</text>
+<text x="974.0" y="1667.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">the size last, so a long repo cuts files and size first, then the age.</text>
+<text x="974.0" y="1691.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Clash: .ph-arow is the Activity row in phone-list.css (grid, 72px) and the</text>
+<text x="974.0" y="1707.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">action-sheet row in phone-actions.css (flex, 56px, padding 0). main.tsx</text>
+<text x="974.0" y="1723.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">imports phone-actions.css later, so its rules win on Activity rows too.</text>
+<text x="974.0" y="1747.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">New row: one ListRow component with .ph-lrow, .ph-lrow-glyph,</text>
+<text x="974.0" y="1763.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">.ph-lrow-title and .ph-lrow-meta for PR, issue and Activity rows. Activity</text>
+<text x="974.0" y="1779.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">drops .ph-arow and .ph-arow-wrap; .ph-arow stays the action-sheet row</text>
+<text x="974.0" y="1795.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">only.</text>
+<text x="974.0" y="1819.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">PrSummary has no comment count, so the PR trailing count needs a</text>
+<text x="974.0" y="1835.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">new server field. Issues already carry commentCount.</text>
+<text x="40.0" y="2378.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Glyph is the project status, named again in the sentence with updatedNote.</text>
+<text x="40.0" y="2394.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Labels lead line 3 as outlined chips, at most 2 plus +N. Comment count pins</text>
+<text x="40.0" y="2410.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">right on line 3.</text>
+<text x="500.0" y="2378.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Activity uses the same row: kind icon in the glyph slot, latest event and</text>
+<text x="500.0" y="2394.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">update count as the sentence, repo #number on line 3. Line 3 runs short</text>
+<text x="500.0" y="2410.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">here, the price of one shared row.</text>
+<text x="40.0" y="2490.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">6 · Row anatomy, 2x (unread, then read)</text>
+<text x="40.0" y="2510.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">Unread PR, UPDATED · numbers above mark line 1, below mark the lower lines</text>
+<g transform="translate(40,2550) scale(2)">
+<rect x="0.0" y="0.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="32.0" y1="92.0" x2="412.0" y2="92.0" stroke="#dcdcde" stroke-width="1" />
+<circle cx="16.0" cy="23.0" r="4.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="32.0" y="28.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="382.0" y="27.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">2h</text>
+<rect x="304.9" y="14.0" width="69.1" height="18.0" rx="4" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" />
+<text x="310.9" y="27.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UPDATED</text>
+<g transform="translate(32.0,40.0) scale(0.8)"><path d="M6 1h8l5 5v8l-5 5H6l-5-5V6z" fill="#3a3a3a"/><path d="M7 7l6 6M13 7l-6 6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="56.0" y="53.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">CI failing · needs review · 2 commits since you looked</text>
+<text x="32.0" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="139.4" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#372</text>
+<g transform="translate(176.1,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="191.1" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot</text>
+<g transform="translate(247.1,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="262.1" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">4</text>
+<text x="327.0" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+42 −8</text>
+<g transform="translate(374.3,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="389.3" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3</text>
+</g>
+<rect x="40.0" y="2550.0" width="824.0" height="184.0" rx="0" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<line x1="72.0" y1="2543.0" x2="72.0" y2="2550.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="72.0" cy="2534.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="72.0" y="2538.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">1</text>
+<line x1="112.0" y1="2543.0" x2="112.0" y2="2550.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="112.0" cy="2534.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="112.0" y="2538.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">2</text>
+<line x1="657.8" y1="2543.0" x2="657.8" y2="2550.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="657.8" cy="2534.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="657.8" y="2538.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">3</text>
+<line x1="812.0" y1="2543.0" x2="812.0" y2="2550.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="812.0" cy="2534.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="812.0" y="2538.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">4</text>
+<line x1="112.0" y1="2734.0" x2="112.0" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="112.0" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="112.0" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">5</text>
+<line x1="112.0" y1="2734.0" x2="112.0" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<line x1="112.0" y1="2741.0" x2="134.0" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="134.0" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="134.0" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">6</text>
+<line x1="160.0" y1="2734.0" x2="160.0" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="160.0" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="160.0" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">7</text>
+<line x1="400.1" y1="2734.0" x2="400.1" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="400.1" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="400.1" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">8</text>
+<line x1="542.2" y1="2734.0" x2="542.2" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="542.2" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="542.2" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">9</text>
+<line x1="701.9" y1="2734.0" x2="701.9" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="701.9" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="701.9" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">10</text>
+<line x1="796.7" y1="2734.0" x2="796.7" y2="2741.0" stroke="#3a3a3a" stroke-width="1" />
+<circle cx="796.7" cy="2750.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="796.7" y="2754.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">11</text>
+<text x="40.0" y="2796.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">Read PR, approved · same row without dot or badge</text>
+<g transform="translate(40,2804) scale(2)">
+<rect x="0.0" y="0.0" width="412.0" height="92.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="32.0" y1="92.0" x2="412.0" y2="92.0" stroke="#dcdcde" stroke-width="1" />
+<text x="32.0" y="28.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#555555" text-anchor="start">chore: tidy swagger tags</text>
+<text x="382.0" y="27.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">1d</text>
+<g transform="translate(32.0,40.0) scale(0.8)"><circle cx="10" cy="10" r="9" fill="#3a3a3a"/><path d="M5.8 10.4l2.8 2.8 5.6-6" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="56.0" y="53.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 approval · CI passing</text>
+<text x="32.0" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-co/orders-api</text>
+<text x="139.4" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555555" text-anchor="start">#368</text>
+<g transform="translate(176.1,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></g>
+<text x="191.1" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev</text>
+<g transform="translate(253.8,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></g>
+<text x="268.8" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<text x="333.6" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">+6 −6</text>
+<g transform="translate(374.3,65.5) scale(0.5)" stroke="#6a6a6a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/></g>
+<text x="389.3" y="76.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+</g>
+<rect x="40.0" y="2804.0" width="824.0" height="184.0" rx="0" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<circle cx="909.0" cy="2510.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2514.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">1</text>
+<text x="926.0" y="2514.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Unread dot, 9px, in the left gutter. Shape carries unread, not colour.</text>
+<circle cx="909.0" cy="2532.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2536.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">2</text>
+<text x="926.0" y="2536.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Title, 15/22 bold, up to 2 lines. Starts at x 32 as today.</text>
+<circle cx="909.0" cy="2554.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2558.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">3</text>
+<text x="926.0" y="2558.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">NEW or UPDATED, 12px bold, outlined, left of the time.</text>
+<circle cx="909.0" cy="2576.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2580.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">4</text>
+<text x="926.0" y="2580.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Relative time, bold 12px, pinned right on line 1.</text>
+<circle cx="909.0" cy="2598.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2602.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">5</text>
+<text x="926.0" y="2602.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Status glyph, 16px, leads line 2. Worst of CI and review.</text>
+<circle cx="909.0" cy="2620.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2624.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">6</text>
+<text x="926.0" y="2624.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Repo #number, 12px. The #number is bold and never cut.</text>
+<circle cx="909.0" cy="2642.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2646.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">7</text>
+<text x="926.0" y="2646.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Status sentence, 13px muted: lead state, other state, updatedNote. Ellipsizes at</text>
+<text x="926.0" y="2662.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">the end.</text>
+<circle cx="909.0" cy="2680.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2684.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">8</text>
+<text x="926.0" y="2684.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Author chip with person icon. Drops first when space runs out.</text>
+<circle cx="909.0" cy="2702.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2706.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">9</text>
+<text x="926.0" y="2706.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Files chip with file icon. Drops after the repo name is cut.</text>
+<circle cx="909.0" cy="2724.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2728.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">10</text>
+<text x="926.0" y="2728.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Diff size, pinned right on line 3. Never shrinks or drops.</text>
+<circle cx="909.0" cy="2746.0" r="9" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<text x="909.0" y="2750.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="middle">11</text>
+<text x="926.0" y="2750.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Comment count, icon and number, at the far right of line 3.</text>
+<text x="40.0" y="3038.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Where each piece of today's data goes</text>
+<text x="740.0" y="3038.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Decisions</text>
+<text x="40.0" y="3062.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Unread dot: kept. Title: kept, bold, 2-line clamp as today. NEW / UPDATED badge: kept, left of the time.</text>
+<text x="40.0" y="3082.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Draft: leads the status sentence ("Draft · no reviews yet · No CI").</text>
+<text x="40.0" y="3102.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">CI pill and review status: the glyph shows the worst; the sentence names both.</text>
+<text x="40.0" y="3122.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">updatedNote: kept, at the end of the sentence.</text>
+<text x="40.0" y="3142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Repo #number, author, files: line 3 chips. Size pinned right on line 3. Age moves to line 1, right.</text>
+<text x="40.0" y="3162.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Issue status: glyph plus its name in the sentence. Labels: line 3 chips, 2 plus +N. Comment count: line 3, right.</text>
+<text x="40.0" y="3182.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Activity kind icon, event, N updates, age: kept (event and count in the sentence).</text>
+<text x="40.0" y="3202.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">New data: PR comment count.</text>
+<text x="740.0" y="3062.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Layout B stays closest to today. Nothing leaves the row: the glyph is added, the time moves to line 1 and size pins</text>
+<text x="740.0" y="3078.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">right. About 6 PR rows fit, as today.</text>
+<text x="740.0" y="3100.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Cost: 92px rows, and a third line that runs short on Activity.</text>
+<text x="740.0" y="3122.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Glyph rule, both layouts: one glyph, worst state wins. Order: CI failing, changes requested, CI running, needs review,</text>
+<text x="740.0" y="3138.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">approved. Why is in the legend.</text>
+<text x="740.0" y="3160.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Context drawn plainly: #31 large-title header, #33 Layout A section headers (44px, chevron, sentence-case label,</text>
+<text x="740.0" y="3176.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">muted count, hairline above), #32 search pill and filter above the nav.</text>
+<text x="740.0" y="3198.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Frame 3 mixes the three row types under one header to show each worst case side by side.</text>
+<text x="740.0" y="3220.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Sample data only: acme-co/orders-api, acme-dev/tools, acme-dev/platform-integration-tools; authors acme-dev,</text>
+<text x="740.0" y="3236.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">build-bot, sam-lee. Greyscale labelled boxes, minimum 12px text.</text>
+</svg>

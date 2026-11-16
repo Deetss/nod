@@ -24,6 +24,8 @@ interface PrSeed {
   seen: PrSummary['seen'];
   note?: string;
   commits?: number;
+  /** Conversation comments. */
+  comments?: number;
   draft?: boolean;
   conflicting?: boolean;
 }
@@ -53,6 +55,7 @@ function summary(s: PrSeed, now: number): PrSummary {
     deletions: s.del,
     changedFiles: s.files,
     commitCount: s.commits ?? 1,
+    ...(s.comments !== undefined ? { commentCount: s.comments } : {}),
     ci: s.ci,
     reviewStatus: s.review,
     seen: s.seen,
@@ -69,17 +72,17 @@ const bot = 'dependabot[bot]';
 
 const NEEDS: PrSeed[] = [
   { repo: 'acme-co/orders-api', number: 365, title: 'fix: resolve duplicate migration version', author: 'sam-lee', ageH: 3, add: 18, del: 4, files: 2, ci: 'pass', review: 'needs review', seen: 'seen' },
-  { repo: 'acme-co/acme-api', number: 310, title: 'fix: hide sale bonus from data:read', author: 'build-bot', ageH: 2, add: 42, del: 8, files: 4, ci: 'pass', review: 'needs review', seen: 'updated', note: '2 commits since you looked', commits: 5, conflicting: true },
+  { repo: 'acme-co/acme-api', number: 310, title: 'fix: hide sale bonus from data:read', author: 'build-bot', ageH: 2, add: 42, del: 8, files: 4, ci: 'pass', review: 'needs review', seen: 'updated', note: '2 commits since you looked', commits: 5, comments: 3, conflicting: true },
 ];
 const MINE: PrSeed[] = [
-  { repo: 'acme-co/acme-web', number: 1343, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 1284, del: 312, files: 38, ci: 'running', review: 'no reviews yet', seen: 'new', conflicting: true },
-  { repo: 'acme-co/acme-api', number: 307, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 96, del: 14, files: 11, ci: 'pass', review: '1 approval', seen: 'seen' },
+  { repo: 'acme-co/acme-web', number: 1343, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 1284, del: 312, files: 38, ci: 'running', review: 'no reviews yet', seen: 'new', comments: 2, conflicting: true },
+  { repo: 'acme-co/acme-api', number: 307, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 96, del: 14, files: 11, ci: 'pass', review: '1 approval', seen: 'seen', comments: 1 },
   { repo: 'acme-co/acme-web', number: 1352, title: 'feat: color sheet print layout', author: FIXTURE_VIEWER, ageH: 3, add: 214, del: 38, files: 9, ci: 'pass', review: 'no reviews yet', seen: 'seen', draft: true },
 ];
 const ORG: PrSeed[] = [
   { repo: 'acme-co/acme-api', number: 309, title: 'chore: tidy swagger tags', author: 'build-bot', ageH: 8, add: 12, del: 12, files: 2, ci: 'pass', review: 'no reviews yet', seen: 'seen' },
   { repo: 'acme-co/acme-web', number: 1341, title: 'fix: unit filter keeps scroll position', author: 'mlopez', ageH: 9, add: 31, del: 10, files: 3, ci: 'pass', review: '1 approval', seen: 'seen' },
-  { repo: 'acme-co/acme-web', number: 1340, title: 'feat: color sheet export button', author: 'build-bot', ageH: 12, add: 88, del: 4, files: 5, ci: 'fail', review: 'needs review', seen: 'seen', conflicting: true },
+  { repo: 'acme-co/acme-web', number: 1340, title: 'feat: color sheet export button', author: 'build-bot', ageH: 12, add: 88, del: 4, files: 5, ci: 'fail', review: 'needs review', seen: 'seen', comments: 5, conflicting: true },
   { repo: 'acme-dev/notes', number: 41, title: 'fix: keep selections when the form re-renders', author: 'mlopez', ageH: 20, add: 22, del: 9, files: 2, ci: 'pass', review: 'no reviews yet', seen: 'seen' },
   { repo: 'acme-co/acme-api', number: 305, title: 'perf: index unit_sales on community_id', author: 'build-bot', ageH: 26, add: 18, del: 0, files: 2, ci: 'pass', review: 'needs review', seen: 'seen' },
   { repo: 'acme-dev/tools', number: 12, title: 'feat: log inbound vendor calls', author: 'mlopez', ageH: 30, add: 140, del: 21, files: 6, ci: 'pass', review: 'no reviews yet', seen: 'seen' },
@@ -93,16 +96,23 @@ const DEPENDABOT: PrSeed[] = [
   { repo: 'acme-dev/notes', number: 38, title: 'chore(deps): bump solid_cable from 3.0.12 to 4.1.0', author: bot, ageH: 72, add: 7, del: 5, files: 2, ci: 'pass', review: 'no reviews yet', seen: 'seen' },
 ];
 
+/** `?state=long-rows`: the phone row's worst case, long titles and a long repo name. */
+const LONG: PrSeed[] = [
+  { repo: 'acme-dev/platform-integration-tools', number: 10482, title: 'fix: keep the retry queue from dropping vendor callbacks when the worker restarts mid-batch', author: 'build-bot', ageH: 500, add: 12480, del: 3902, files: 148, ci: 'fail', review: 'changes requested', seen: 'updated', note: '14 commits since you looked', commits: 20, comments: 214, draft: true },
+  { repo: 'acme-dev/platform-integration-tools', number: 10477, title: 'chore(deps): bump the github-actions group across 3 directories with 9 updates', author: bot, ageH: 288, add: 1204, del: 988, files: 37, ci: 'running', review: 'needs review', seen: 'new' },
+];
+
 export interface FixtureSections {
   needs: PrSummary[];
   mine: PrSummary[];
   org: PrSummary[];
   dependabot: PrSummary[];
+  long: PrSummary[];
 }
 
 export function fixtureSections(now: number): FixtureSections {
   const map = (seeds: PrSeed[]) => seeds.map((s) => summary(s, now));
-  return { needs: map(NEEDS), mine: map(MINE), org: map(ORG), dependabot: map(DEPENDABOT) };
+  return { needs: map(NEEDS), mine: map(MINE), org: map(ORG), dependabot: map(DEPENDABOT), long: map(LONG) };
 }
 
 type Row = [DiffLine['kind'], number | null, number | null, string];

@@ -20,6 +20,8 @@ export interface PrSummary {
   deletions: number;
   changedFiles: number;
   commitCount: number;
+  /** Conversation comments, review threads excluded. Absent on rows cached before the field existed. */
+  commentCount?: number;
   ci: CiState;
   reviewStatus: string;
   seen: SeenState;

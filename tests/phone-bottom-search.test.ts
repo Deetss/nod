@@ -123,7 +123,7 @@ describe('filter sheet', () => {
     click(checkbox('Mine'));
     expect(checkbox('Mine')?.getAttribute('aria-checked')).toBe('true');
     expect(sections().map((s) => s?.replace(/\d+$/, ''))).toEqual(['Needs my review', 'Mine']);
-    expect(host.querySelectorAll('.ph-pane.is-active .ph-row').length).toBe(4);
+    expect(host.querySelectorAll('.ph-pane.is-active .ph-lrow').length).toBe(4);
     expect(q('.ph-actionbar .is-primary')?.textContent).toBe('Done · 2 filters');
 
     click(q('.ph-actionbar .is-primary'));
@@ -161,7 +161,7 @@ describe('search', () => {
     type('webhook');
     expect(q('.ph-results-line')?.textContent).toBe('2 results for “webhook”');
     expect(host.querySelectorAll('.ph-list.is-results .ph-section').length).toBe(0);
-    expect(host.querySelectorAll('.ph-list.is-results .ph-row').length).toBe(2);
+    expect(host.querySelectorAll('.ph-list.is-results .ph-lrow').length).toBe(2);
 
     click([...host.querySelectorAll('button')].find((b) => b.textContent === 'Cancel'));
     expect(q('.phone')?.classList.contains('is-searching')).toBe(false);

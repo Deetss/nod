@@ -19,7 +19,7 @@ pnpm start --fixtures        # or NOD_FIXTURES=1
 
 Fixture mode serves synthetic data, makes no GitHub calls, and turns every action (review, merge, viewed) into a logged no-op. It logs each call it would make (`[fixtures] would call InboxSync:full`, `Detail`, `Diff`).
 
-- For the PR views, add `?state=<empty|loading|error|ratelimit|allviewed|interdiff|error422|ci-live>` to the URL.
+- For the PR views, add `?state=<empty|loading|error|ratelimit|allviewed|interdiff|error422|ci-live|long-rows>` to the URL. `long-rows` adds two PRs with long titles and a long repo name to Needs my review.
 - For the Issues view, use `?state=issues-empty|issues-loading|issues-error|issues-bulk|issues-new|issues-close|issues-labels|issues-sub-create|issues-sub-add|issues-sub-remove`.
 - acme-banner #12 is a parent with five children (open, completed and not planned, one in acme-api). #17 is one of its children. acme-banner #23 has long titles and a parent. acme-api #412 has no sub-issues.
 - `?open=issue/acme-banner/17` opens one issue directly.

@@ -15,7 +15,7 @@ const view = (over: Partial<InboxSectionView>): InboxSectionView => ({
   count: 2,
   open: true,
   empty: false,
-  rows: createElement('div', { className: 'ph-row' }, 'row'),
+  rows: createElement('div', { className: 'ph-lrow' }, 'row'),
   ...over,
 });
 
@@ -66,13 +66,13 @@ describe('phone section header', () => {
     expect(h?.getAttribute('aria-expanded')).toBe('false');
     expect(h?.getAttribute('aria-label')).toBe('Needs my review, 0 pull requests');
     expect(host?.querySelector('.ph-section-empty')).toBeNull();
-    expect(host?.querySelector('.ph-row')).toBeNull();
+    expect(host?.querySelector('.ph-lrow')).toBeNull();
   });
 
   it('shows the empty line, not rows, when an empty section is opened', () => {
     mount([view({ count: 0, empty: true, open: true })]);
     expect(host?.querySelector('.ph-section-empty')?.textContent).toBe('No PRs here');
-    expect(host?.querySelector('.ph-row')).toBeNull();
+    expect(host?.querySelector('.ph-lrow')).toBeNull();
   });
 
   it('hands the tapped section to the toggle, so an empty one can skip saving', () => {

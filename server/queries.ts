@@ -38,6 +38,7 @@ export const PR_FIELDS = `
   approvals: reviews(states: APPROVED) { totalCount }
   anyReviews: reviews { totalCount }
   commitCount: commits { totalCount }
+  commentCount: comments { totalCount }
   lastCommit: commits(last: 1) { nodes { commit { statusCheckRollup { state } } } }
   assignees(first: 10) { nodes { login } }
   mergeable mergeStateStatus

@@ -136,7 +136,7 @@ function mount(over: Partial<ActivityHandle> = {}) {
 const text = () => (host.textContent ?? '').replace(/(All|Needs me|Mentions|CI|Merged)(\d+|--)/g, '$1 $2');
 const click = (el: Element | null | undefined) => act(() => (el as HTMLElement).click());
 const button = (label: string) => [...host.querySelectorAll('button')].find((b) => b.textContent?.trim().startsWith(label));
-const rows = () => [...host.querySelectorAll('.ph-arow')];
+const rows = () => [...host.querySelectorAll('.ph-lrow')];
 const back = () => {
   act(() => fake.back());
   act(() => fake.settle());
@@ -157,7 +157,7 @@ afterEach(() => {
 describe('B1 default', () => {
   it('lists items newest first with chip counts and hides the viewer own events', () => {
     mount();
-    expect(rows().map((r) => r.querySelector('.ph-atext')?.textContent)).toEqual(['Item 1354', 'Item 1348']);
+    expect(rows().map((r) => r.querySelector('.ph-lrow-title')?.textContent)).toEqual(['Item 1354', 'Item 1348']);
     expect(text()).toContain('All 2');
     expect(text()).toContain('Needs me 1');
     expect(text()).toContain('Mentions 1');
@@ -167,9 +167,10 @@ describe('B1 default', () => {
     expect(text()).toContain('3 updates');
   });
 
-  it('shows the latest event on the meta line and an unread dot only for new events', () => {
+  it('shows the latest event as the sentence and an unread dot only for new events', () => {
     mount({ lastVisit: NOW - 15 * MIN });
-    expect(rows()[0]?.textContent).toContain('PR · acme-web #1354 · CI failed on #1354');
+    expect(rows()[0]?.querySelector('.ph-lrow-sentence')?.textContent).toBe('CI failed on #1354 · 3 updates');
+    expect(rows()[0]?.getAttribute('aria-label')).toContain('Item 1354, unread, PR acme-web number 1354, CI failed on #1354, 3 updates');
     expect(rows()[0]?.querySelector('.ph-dot')).not.toBeNull();
     expect(rows()[1]?.querySelector('.ph-dot')).not.toBeNull();
     mount({ lastVisit: NOW });
