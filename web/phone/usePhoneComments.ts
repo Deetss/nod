@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import type { ComposerState, ComposerTarget } from '../inline/composer-state';
-import type { FileThreads } from '../inline/group-threads';
+import type { GroupedThread } from '../inline/group-threads';
 import type { LineRef } from '../inline/line-target';
 import { useInlineComposer } from '../inline/useInlineComposer';
 import { splitPath } from '../FilesTree';
@@ -52,15 +52,11 @@ export function usePhoneComments(pr: { repo: string; number: number } | undefine
   };
 }
 
-/** Only the viewer's drafts, for the diff. Other threads are read on the Thread tab. */
-export function draftsOnly(files: readonly FileThreads[]): FileThreads[] {
-  return files
-    .map((f) => ({
-      path: f.path,
-      fileLevel: f.fileLevel.filter((g) => g.draft),
-      lines: f.lines.map((l) => ({ ...l, threads: l.threads.filter((g) => g.draft) })).filter((l) => l.threads.length > 0),
-    }))
-    .filter((f) => f.fileLevel.length > 0 || f.lines.length > 0);
+/** The diff pill for a thread: `2 comments · riley-k`, or `1 comment · Resolved`. */
+export function threadPillLabel(g: GroupedThread): string {
+  const n = g.thread.comments.length;
+  const who = g.resolved ? 'Resolved' : (g.thread.comments[0]?.author ?? '');
+  return `${n} ${n === 1 ? 'comment' : 'comments'} · ${who}`;
 }
 
 /** `Comment on line 13`, `Comment on lines 13–14`, or `Comment on add_amounts.rb`. */

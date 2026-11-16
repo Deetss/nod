@@ -5,11 +5,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { DiffLine } from '../shared/types';
 import { HunkLines } from '../web/DiffFileView';
 import type { ComposerState } from '../web/inline/composer-state';
-import type { FileThreads, GroupedThread } from '../web/inline/group-threads';
+import type { GroupedThread } from '../web/inline/group-threads';
 import { actionItems, type ActionContext } from '../web/phone/action-items';
 import { PhoneCommentSheet } from '../web/phone/PhoneCommentSheet';
 import { PhoneFinishReview } from '../web/phone/PhoneFinishReview';
-import { commentTitle, draftsOnly, usePhoneComments, type PhoneComments } from '../web/phone/usePhoneComments';
+import { commentTitle, threadPillLabel, usePhoneComments, type PhoneComments } from '../web/phone/usePhoneComments';
 
 const review = vi.hoisted(() => vi.fn(async () => ({ ok: true, message: 'ok' })));
 vi.mock('../web/api', () => ({ api: { review } }));
@@ -70,17 +70,17 @@ describe('usePhoneComments', () => {
   });
 });
 
-describe('draftsOnly', () => {
-  const g = (draft: boolean): GroupedThread => ({ thread: {} as GroupedThread['thread'], draft, resolved: false, outdated: false });
-  it('keeps only the viewer drafts and drops empty files', () => {
-    const files: FileThreads[] = [
-      { path: 'a.rb', fileLevel: [g(false)], lines: [{ line: 2, side: 'RIGHT', threads: [g(true), g(false)] }] },
-      { path: 'b.rb', fileLevel: [g(false)], lines: [] },
-    ];
-    const out = draftsOnly(files);
-    expect(out.map((f) => f.path)).toEqual(['a.rb']);
-    expect(out[0]?.lines[0]?.threads).toHaveLength(1);
-    expect(out[0]?.fileLevel).toHaveLength(0);
+describe('threadPillLabel', () => {
+  const g = (authors: string[], resolved = false): GroupedThread => ({
+    thread: { comments: authors.map((author) => ({ author })) } as unknown as GroupedThread['thread'],
+    draft: false,
+    resolved,
+    outdated: false,
+  });
+  it('counts comments and names the first author, or says Resolved', () => {
+    expect(threadPillLabel(g(['riley-k', 'sam-lee']))).toBe('2 comments · riley-k');
+    expect(threadPillLabel(g(['build-bot']))).toBe('1 comment · build-bot');
+    expect(threadPillLabel(g(['riley-k'], true))).toBe('1 comment · Resolved');
   });
 });
 

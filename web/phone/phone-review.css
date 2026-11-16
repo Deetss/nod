@@ -177,3 +177,48 @@
   font-size: 15px;
   resize: none;
 }
+
+/* Since my review: the Files tab toggle. */
+.ph-since {
+  margin: 12px 12px 4px;
+}
+
+/* A thread in the diff: one pill per thread under its line; Open shows the thread sheet. */
+.ph-thread-pill {
+  position: sticky;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  box-sizing: border-box;
+  width: calc(100cqw - 24px);
+  height: 32px;
+  margin: 6px 12px;
+  padding: 0 14px;
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 16px;
+  color: var(--fgColor-default);
+  font: 600 13px/1 var(--fontStack-sansSerif);
+}
+
+.ph-thread-pill.is-resolved {
+  color: var(--fgColor-muted);
+}
+
+.ph-thread-open {
+  color: var(--fgColor-accent);
+}
+
+.ph-file-threads {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default));
+}
+
+/* The thread sheet shows the desktop card at the sheet's width. */
+.ph-thread-sheet .thread-card {
+  position: static;
+  width: auto;
+  margin: 0;
+}
