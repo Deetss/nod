@@ -75,7 +75,7 @@ export function useOrca(o: Options): OrcaController {
   const [dialog, setDialog] = useState<{ prId: string; session: SessionView; initialText?: string; tag?: string }>();
   /** A finding waiting for the picker to name its session. */
   const [pending, setPending] = useState<{ text: string; tag: string }>();
-  const [dispatch, setDispatch] = useState<{ prId: string; text: string }>();
+  const [dispatch, setDispatch] = useState<{ prId: string; text: string; name?: string }>();
   const [dispatchBusy, setDispatchBusy] = useState(false);
   const [dispatchError, setDispatchError] = useState<string>();
 
@@ -325,7 +325,7 @@ export function useOrca(o: Options): OrcaController {
           agents={orca?.agents ?? []}
           busy={dispatchBusy}
           error={dispatchError}
-          pr={{ headRef: detail.headRef, name: `pr-${detail.summary.number}-message`, prompt: dispatch.text }}
+          pr={{ headRef: detail.headRef, name: dispatch.name ?? `pr-${detail.summary.number}-message`, prompt: dispatch.text }}
           onCancel={() => !dispatchBusy && setDispatch(undefined)}
           onConfirm={(v) => {
             setDispatchBusy(true);
@@ -358,7 +358,10 @@ export function useOrca(o: Options): OrcaController {
             setPicker(prId);
             return true;
           }
-          return false;
+
+          // No session to send to, so offer a fresh worktree on the PR branch instead.
+          setDispatch({ prId, text, name: `pr-${summary?.number ?? 0}-finding` });
+          return true;
         },
       }
     : undefined;
