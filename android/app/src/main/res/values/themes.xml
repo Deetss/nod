@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Nod.Setup" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorSurface">@color/bg_default</item>
+        <item name="colorOnSurface">@color/fg_default</item>
+        <item name="colorPrimary">@color/btn_primary_bg</item>
+        <item name="colorOnPrimary">@color/fg_on_emphasis</item>
+        <item name="colorOutline">@color/border_emphasis</item>
+        <item name="colorError">@color/fg_danger</item>
+        <item name="colorControlActivated">@color/fg_accent</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:windowBackground">@color/bg_default</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Type, from the spec's type table. Letter spacing 0 to match the web scale. -->
+    <style name="Text" parent="">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/fg_default</item>
+    </style>
+    <style name="Text.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="Text.TitleSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="Text.Value">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+    </style>
+    <style name="Text.Body">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:textColor">@color/fg_muted</item>
+    </style>
+    <style name="Text.Label">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="Text.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:textColor">@color/fg_muted</item>
+    </style>
+    <style name="Text.CaptionSemibold" parent="Text.Caption">
+        <item name="android:textColor">@color/fg_default</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="Text.Mono">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="backgroundTint">@color/btn_primary_tint</item>
+        <item name="android:textColor">@color/btn_primary_text</item>
+    </style>
+    <style name="Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/fg_default</item>
+        <item name="strokeColor">@color/border_emphasis</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+</resources>

@@ -1,18 +1,25 @@
-<!--
-    Copyright 2020 Google Inc. All Rights Reserved.
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nod dark tokens (Primer), as named in docs/design/apk-setup-spec.md. -->
 <resources>
     <color name="shortcut_background">#F5F5F5</color>
+
+    <color name="bg_default">#0d1117</color>
+    <color name="bg_muted">#151b23</color>
+    <color name="bg_inset">#010409</color>
+    <color name="fg_default">#f0f6fc</color>
+    <color name="fg_muted">#9198a1</color>
+    <color name="fg_on_emphasis">#ffffff</color>
+    <color name="fg_accent">#4493f8</color>
+    <color name="fg_success">#3fb950</color>
+    <color name="fg_danger">#f85149</color>
+    <color name="bg_accent_emphasis">#1f6feb</color>
+    <color name="bg_accent_muted">#111d2e</color>
+    <color name="bg_danger_muted">#25181c</color>
+    <color name="btn_primary_bg">#238636</color>
+    <color name="btn_default_bg">#212830</color>
+    <color name="border_default">#3d444d</color>
+    <color name="border_muted">#2f353d</color>
+    <color name="border_emphasis">#656c76</color>
+    <color name="border_accent">#1f6feb</color>
+    <color name="border_danger">#da3633</color>
 </resources>

@@ -15,40 +15,45 @@
  */
 package dev.example.nod;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
-
-
+/** Opens the stored server in the TWA, or the setup screen when none is stored yet. */
 public class LauncherActivity
         extends com.google.androidbrowserhelper.trusted.LauncherActivity {
-    
 
-    
+    /** A full URL on the stored server to open instead of the start page, such as the pair page. */
+    static final String EXTRA_URL = "dev.example.nod.URL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Setting an orientation crashes the app due to the transparent background on Android 8.0
-        // Oreo and below. We only set the orientation on Oreo and above. This only affects the
-        // splash screen and Chrome will still respect the orientation.
-        // See https://github.com/GoogleChromeLabs/bubblewrap/issues/496 for details.
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        if (!isFinishing() && HostStore.get(this) == null) {
+            startActivity(new Intent(this, SetupActivity.class));
+            finish();
         }
     }
 
     @Override
+    protected boolean shouldLaunchImmediately() {
+        return HostStore.get(this) != null;
+    }
+
+    @Override
     protected Uri getLaunchingUrl() {
-        // Get the original launch Url.
-        Uri uri = super.getLaunchingUrl();
+        String host = HostStore.get(this);
+        String url = getIntent().getStringExtra(EXTRA_URL);
 
-        
+        // The activity is exported, so another app could pass any URL. Only the stored server opens.
+        if (url != null && url.startsWith("https://" + host + "/")) return Uri.parse(url);
+        return Uri.parse(startUrl(host));
+    }
 
-        return uri;
+    /** `apk` tells the phone page which build it runs in, for the update banner. */
+    static String startUrl(String host) {
+        return "https://" + host + "/?apk=" + BuildConfig.VERSION_CODE;
     }
 }
