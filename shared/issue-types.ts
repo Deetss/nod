@@ -28,6 +28,8 @@ export interface IssueSummary {
   labels: IssueLabel[];
   assignees: string[];
   commentCount: number;
+  /** The newest comment. `author` is absent for a deleted user. Absent on rows cached before the field existed. */
+  lastComment?: { author?: string; createdAt: string };
   /** Status on the org project; absent when the issue is not on it or the feature is off. */
   status?: ProjectStatus;
   /** Node id of the issue's item on the org project. */

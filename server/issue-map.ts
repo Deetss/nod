@@ -30,7 +30,8 @@ export interface RawIssue {
   author: { login: string } | null;
   labels: { nodes: { name: string; color: string }[] };
   assignees: { nodes: { login: string; avatarUrl?: string }[] };
-  commentCount: { totalCount: number };
+  /** The count plus the newest comment, from one `comments(last: 1)` connection. */
+  commentCount: { totalCount: number; nodes?: { author: { login: string } | null; createdAt: string }[] };
   subIssuesSummary?: { total: number; completed: number };
   parent?: { number: number; url: string; repository: { name: string } } | null;
   projectItems?: {
@@ -129,6 +130,12 @@ export function projectFields(
   return { projectItemId: item.id, ...(isProjectStatus(name, statusNames(settings)) ? { status: name } : {}) };
 }
 
+function lastCommentOf(raw: RawIssue): Pick<IssueSummary, 'lastComment'> {
+  const c = raw.commentCount.nodes?.[0];
+  if (!c) return {};
+  return { lastComment: { createdAt: c.createdAt, ...(c.author ? { author: c.author.login } : {}) } };
+}
+
 export function toIssueSummary(raw: RawIssue, settings: Settings = DEFAULT_SETTINGS): IssueSummary {
   return {
     ...projectFields(raw, settings),
@@ -145,6 +152,7 @@ export function toIssueSummary(raw: RawIssue, settings: Settings = DEFAULT_SETTI
     labels: raw.labels.nodes.map((l) => ({ name: l.name, color: l.color })),
     assignees: raw.assignees.nodes.map((a) => a.login),
     commentCount: raw.commentCount.totalCount,
+    ...lastCommentOf(raw),
     seen: 'seen',
     ...(raw.subIssuesSummary && raw.subIssuesSummary.total > 0
       ? { subIssues: { total: raw.subIssuesSummary.total, completed: raw.subIssuesSummary.completed } }

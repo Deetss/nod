@@ -19,7 +19,7 @@ const BASE_ISSUE_FIELDS = `
   author { login }
   labels(first: 20) { nodes { name color } }
   assignees(first: 10) { nodes { login } }
-  commentCount: comments { totalCount }
+  commentCount: comments(last: 1) { totalCount nodes { author { login } createdAt } }
   subIssuesSummary { total completed }
   parent { number url repository { name } }`;
 
