@@ -48,6 +48,7 @@ import { usePhonePr } from './usePhonePr';
 import { useFindings, type FindingControls } from '../useFindings';
 import { useOrca } from '../orca/useOrca';
 import { usePhoneWrites } from './usePhoneWrites';
+import { BUZZ, buzz } from './haptics';
 import { PhoneCreateSubIssue, PhoneRemoveSub, PhoneSubRowSheet } from './PhoneSubIssues';
 import { openExternal } from '../links';
 import { repoLabel } from '../repo-label';
@@ -363,7 +364,8 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
             { type: 'assignees', ...ref, add: [viewer], remove: [] },
             `Dispatched to ${res.worktree}. Assigned to you.`,
           );
-      if (!started) writes.notify(`Dispatched to ${res.worktree}, but Start work failed`, false);
+      if (started) buzz(BUZZ.success);
+      else writes.notify(`Dispatched to ${res.worktree}, but Start work failed`, false);
     } catch (e) {
       writes.notify(e instanceof Error ? e.message : 'Dispatch failed', false);
     } finally {
@@ -378,6 +380,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     try {
       const res = await api.orcaDispatch({ repo: pr.repo, number: pr.number, ...v });
       setPrDispatch({ busy: false });
+      buzz(BUZZ.success);
       writes.notify(`Dispatched to ${res.worktree}`);
       pop();
     } catch (e) {
@@ -416,6 +419,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     try {
       const res = await api.orcaDispatch(mode === 'conflicts' ? conflictsDispatch(detail, agent) : checksDispatch(detail, agent));
       setFixDone(`Dispatched to ${res.worktree}`);
+      buzz(BUZZ.success);
       writes.notify(`Dispatched to ${res.worktree}`);
     } catch (e) {
       writes.notify(`Could not dispatch: ${e instanceof Error ? e.message : 'Dispatch failed'}`, false);

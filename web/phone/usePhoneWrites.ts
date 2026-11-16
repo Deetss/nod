@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { CloseReason, IssueAction } from '../../shared/issue-types';
 import type { PrSummary, ReviewEvent } from '../../shared/types';
 import { api } from '../api';
+import { BUZZ, buzz } from './haptics';
 
 /** How long a result toast stays up. */
 export const TOAST_MS = 5000;
@@ -60,8 +61,11 @@ export function usePhoneWrites(onChanged: () => void): PhoneWrites {
   );
 
   const review = useCallback(
-    (pr: PrSummary, event: ReviewEvent, body: string) =>
-      run(() => api.review(pr.repo, pr.number, event, body), event === 'APPROVE' ? 'Approved' : undefined),
+    async (pr: PrSummary, event: ReviewEvent, body: string) => {
+      const ok = await run(() => api.review(pr.repo, pr.number, event, body), event === 'APPROVE' ? 'Approved' : undefined);
+      if (ok && event === 'APPROVE') buzz(BUZZ.success);
+      return ok;
+    },
     [run],
   );
   const autoMerge = useCallback((pr: PrSummary) => run(() => api.merge(pr.repo, pr.number)), [run]);

@@ -24,8 +24,8 @@ export interface Inbox {
   loading: boolean;
   /** True once the first list has arrived. */
   ready: boolean;
-  /** Asks the server to sweep every open PR now. */
-  reload: (user?: boolean) => void;
+  /** Asks the server to sweep every open PR now. Resolves false when the sync failed or came back stale. */
+  reload: (user?: boolean) => Promise<boolean>;
   /** True while a refresh the user asked for runs. */
   refreshing: boolean;
   /** True while the server runs any sync, background or asked for. */
@@ -46,15 +46,20 @@ export function useInbox(): Inbox {
   const [ready, setReady] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [syncing, setSyncing] = useState(false);
-  const refreshingRef = useRef(false);
+  /** The refresh the user asked for, while it runs; a second ask joins it. */
+  const userRun = useRef<Promise<boolean> | undefined>(undefined);
   const started = useRef(false);
 
-  const fetchList = useCallback(async () => {
+  /** True when the list arrived without a stale marker. */
+  const fetchList = useCallback(async (): Promise<boolean> => {
     try {
-      setRaw(await api.inbox());
+      const next = await api.inbox();
+      setRaw(next);
       setError(undefined);
+      return !next.stale;
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Request failed');
+      return false;
     } finally {
       setLoading(false);
     }
@@ -91,24 +96,24 @@ export function useInbox(): Inbox {
   );
 
   const reload = useCallback(
-    (user = false) => {
-      if (user) {
-        if (refreshingRef.current) return;
-        refreshingRef.current = true;
-        setRefreshing(true);
-      }
+    (user = false): Promise<boolean> => {
+      if (user && userRun.current) return userRun.current;
       setLoading(true);
-      api
+      if (user) setRefreshing(true);
+      const run = api
         .refresh()
         .then(fetchList, (e: unknown) => {
           setError(e instanceof Error ? e.message : 'Request failed');
           setLoading(false);
+          return false;
         })
         .finally(() => {
           if (!user) return;
-          refreshingRef.current = false;
+          userRun.current = undefined;
           setRefreshing(false);
         });
+      if (user) userRun.current = run;
+      return run;
     },
     [fetchList],
   );

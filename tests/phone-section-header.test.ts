@@ -38,7 +38,7 @@ function mount(sections: InboxSectionView[], onToggle = vi.fn()) {
         emptyLine: 'No PRs here',
         noun: 'pull request',
         onToggle,
-        onRefresh: () => undefined,
+        onRefresh: () => Promise.resolve(true),
       }),
     ),
   );

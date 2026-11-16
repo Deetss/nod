@@ -9,6 +9,7 @@ import {
 import { api } from '../api';
 import { useFocusTrap } from '../useFocusTrap';
 import type { PushState } from './usePush';
+import { useSwipeClose } from './useSwipeClose';
 
 /** This phone's switches from the server. Undefined until loaded or when the server refuses. */
 export function usePushPrefs(): { prefs: TriggerSwitches | undefined; set: (key: TriggerKey, on: boolean) => void } {
@@ -73,8 +74,9 @@ export function PhoneNotifySheet(p: PhoneNotifySheetProps) {
   const trap = useFocusTrap(p.onClose);
   const { prefs, set } = usePushPrefs();
   const on = p.push.state === 'on';
+  const swipe = useSwipeClose(p.onClose);
   return (
-    <div className="ph-scrim" style={{ zIndex: 60 }} onClick={p.onClose}>
+    <div className="ph-scrim" style={{ ...swipe.scrimStyle, zIndex: 60 }} onClick={p.onClose}>
       <div
         ref={trap}
         className="ph-asheet"
@@ -82,9 +84,12 @@ export function PhoneNotifySheet(p: PhoneNotifySheetProps) {
         aria-modal="true"
         aria-label="Notifications on this phone"
         onClick={(e) => e.stopPropagation()}
+        {...swipe.sheet}
       >
-        <span className="ph-handle" aria-hidden="true" />
-        <h2 className="ph-asheet-title">Notifications on this phone</h2>
+        <div className="ph-strip" {...swipe.bind}>
+          <span className="ph-handle" aria-hidden="true" />
+          <h2 className="ph-asheet-title">Notifications on this phone</h2>
+        </div>
         <div className="ph-asheet-body">
           <SwitchRow
             title="Notifications"

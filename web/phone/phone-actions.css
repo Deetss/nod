@@ -1,15 +1,32 @@
 /* B5 action sheet, S4 confirm dialog, S5 composer. */
 
+/* A sheet drag fades the scrim through `--ph-scrim-k` (useSwipeClose), leaving the sheet opaque. */
+@property --ph-scrim-k {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+.ph-scrim,
+.ph-sheet-scrim {
+  background: rgb(1 4 9 / calc(60% * var(--ph-scrim-k)));
+}
+
+[data-theme='light'] :is(.ph-scrim, .ph-sheet-scrim) {
+  background: rgb(31 35 40 / calc(45% * var(--ph-scrim-k)));
+}
+
 .ph-scrim {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: flex-end;
-  background: rgb(1 4 9 / 60%);
 }
 
-[data-theme='light'] .ph-scrim {
-  background: rgb(31 35 40 / 45%);
+/* Behind a full sheet, from its top edge down, so it shows only while the sheet is dragged. */
+.ph-sheet-scrim {
+  position: absolute;
+  inset: var(--ph-top) 0 0;
 }
 
 .ph-scrim.is-center {

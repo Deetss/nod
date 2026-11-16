@@ -380,3 +380,36 @@ describe('case 8: a sheet whose request is running', () => {
     expect(sheets?.stack).toEqual([pr('P1')]);
   });
 });
+
+describe('case 9: the full chain, with swipe close and Back agreeing', () => {
+  it('closes dispatch, PR, search and tab one at a time, then sits at depth 0', () => {
+    mount();
+    const tab = vi.fn();
+    const search = vi.fn();
+    run((s) => s.openLayer('tab', tab));
+    run((s) => s.openLayer('search', search));
+    run((s) => s.push(pr('P1')));
+    run((s) => s.push({ kind: 'pr-dispatch' }));
+    expect(fake.length).toBe(5);
+
+    // A swipe close goes through the same pop as Close.
+    run((s) => s.pop());
+    act(() => fake.settle());
+    expect(sheets?.stack).toEqual([pr('P1')]);
+    expectDepthMatchesStack();
+
+    back();
+    expect(sheets?.stack).toEqual([]);
+    expect(search).not.toHaveBeenCalled();
+
+    back();
+    expect(search).toHaveBeenCalledTimes(1);
+    expect(tab).not.toHaveBeenCalled();
+
+    back();
+    expect(tab).toHaveBeenCalledTimes(1);
+    expect(fake.index).toBe(0);
+    expect(fake.length).toBe(5);
+    expect(fake.state).toEqual({ phDepth: 0, phLayers: 0 });
+  });
+});

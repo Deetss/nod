@@ -35,7 +35,10 @@ interface PhoneInboxProps {
   /** Singular item noun for the header's accessible count. */
   noun: string;
   onToggle: (s: InboxSectionView) => void;
-  onRefresh: () => void;
+  /** Resolves false when the sync failed. */
+  onRefresh: () => Promise<boolean>;
+  /** GitHub's rate limit holds, so a pull sends no request. */
+  limited?: boolean;
 }
 
 /** B1 for one list tab, with the S1 empty, S2 loading and S3 error states. */
@@ -62,6 +65,7 @@ export function PhoneInbox(p: PhoneInboxProps) {
       banner={p.status === 'error' ? (p.banner ?? <ReachBanner detail={p.errorDetail} onRetry={p.onRefresh} />) : (p.notice ?? null)}
       refreshing={p.refreshing && !loading}
       onRefresh={p.onRefresh}
+      limited={p.limited}
       syncLine={loading ? <LoadingLine /> : p.status === 'error' ? p.cachedLine : p.syncLine}
     >
       {loading ? (

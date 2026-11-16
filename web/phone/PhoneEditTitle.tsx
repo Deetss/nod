@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFocusTrap } from '../useFocusTrap';
 import { useKeyboardInset } from './useKeyboardInset';
+import { useSwipeClose } from './useSwipeClose';
 
 interface EditTitleProps {
   /** The title now on GitHub. */
@@ -39,14 +40,17 @@ export function PhoneEditTitle(p: EditTitleProps) {
     if (can && !p.busy) p.onSave(draft.trim());
   };
   const trap = useFocusTrap(close);
+  const swipe = useSwipeClose(close, { disabled: p.busy });
 
   return (
-    <div className="ph-scrim" style={{ zIndex: 60, height: height ? height : undefined }} onClick={close}>
-      <div ref={trap} className="ph-etitle" role="dialog" aria-modal="true" aria-label="Edit title" onClick={(e) => e.stopPropagation()}>
-        <span className="ph-handle" aria-hidden="true" />
-        <div className="ph-etitle-head">
-          <h2>Edit title</h2>
-          <span className="ph-muted">{p.issueRef}</span>
+    <div className="ph-scrim" style={{ ...swipe.scrimStyle, zIndex: 60, height: height ? height : undefined }} onClick={close}>
+      <div ref={trap} className="ph-etitle" role="dialog" aria-modal="true" aria-label="Edit title" onClick={(e) => e.stopPropagation()} {...swipe.sheet}>
+        <div className="ph-strip" {...swipe.bind}>
+          <span className="ph-handle" aria-hidden="true" />
+          <div className="ph-etitle-head">
+            <h2>Edit title</h2>
+            <span className="ph-muted">{p.issueRef}</span>
+          </div>
         </div>
         <input
           ref={input}
