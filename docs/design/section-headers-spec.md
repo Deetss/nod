@@ -6,7 +6,7 @@ Colour tokens are CSS custom properties from `web/tokens.css` (dark and light bl
 
 ## Behaviour
 
-- The header is a 44px text row (Dylan, round 3: matches the app's phone tap targets; the mockup draws 40) on the row colour, with no band. Chevron at left, label in sentence case, muted count right after the label, hairline above.
+- The header is a 44px text row (round 3: matches the app's phone tap targets; the mockup draws 40) on the row colour, with no band. Chevron at left, label in sentence case, muted count right after the label, hairline above.
 - Tapping anywhere on the header toggles the section, as today.
 - A section with 0 rows renders closed, whatever was saved. Tapping it opens one muted line, `No PRs here` or `No issues here`. That choice is not saved.
 - A saved choice applies again once the section has rows.
