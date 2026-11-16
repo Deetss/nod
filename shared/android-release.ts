@@ -6,17 +6,22 @@ export interface AndroidRelease {
   sha256: string;
   /** ISO time of the build. */
   builtAt: string;
+  /** The package the APK was built as, so assetlinks.json vouches for it whatever settings say later. */
+  packageId?: string;
 }
+
+const PACKAGE_RE = /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/;
 
 const isVersionCode = (n: unknown): n is number => typeof n === 'number' && Number.isInteger(n) && n > 0;
 
 export function parseRelease(raw: unknown): AndroidRelease | undefined {
   if (typeof raw !== 'object' || raw === null) return undefined;
-  const { versionCode, versionName, sha256, builtAt } = raw as Record<string, unknown>;
+  const { versionCode, versionName, sha256, builtAt, packageId } = raw as Record<string, unknown>;
   if (!isVersionCode(versionCode)) return undefined;
   if (typeof versionName !== 'string' || typeof builtAt !== 'string') return undefined;
   if (typeof sha256 !== 'string' || !/^[0-9a-f]{64}$/.test(sha256)) return undefined;
-  return { versionCode, versionName, sha256, builtAt };
+  const release: AndroidRelease = { versionCode, versionName, sha256, builtAt };
+  return typeof packageId === 'string' && PACKAGE_RE.test(packageId) ? { ...release, packageId } : release;
 }
 
 /** The version code the TWA bakes into its start URL as `?apk=<code>`, or undefined. */
