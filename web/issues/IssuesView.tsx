@@ -15,6 +15,7 @@ import { STATE_PARAM, api } from '../api';
 import type { Layout } from '../hooks';
 import { PaneHandle } from '../PaneHandle';
 import { usePaneWidths } from '../usePaneWidths';
+import { useOrcaInfo } from '../orca/useOrcaInfo';
 import { useRemote } from '../useRemote';
 import { BulkReport, CloseDialog, DispatchDialog, BotDialog, NewIssueDialog } from './IssueDialogs';
 import { IssueDetailPane } from './IssueDetailPane';
@@ -155,7 +156,7 @@ export function IssuesView(p: IssuesViewProps) {
   const [dispatched, setDispatched] = useState<ReadonlyMap<string, number>>(new Map());
   /** Issue id to the worktree a dispatch created, shown as pending until Orca reports the session. */
   const [pendingDispatch, setPendingDispatch] = useState<ReadonlyMap<string, PendingDispatch>>(new Map());
-  const orca = useRemote('orca', () => api.orca());
+  const orca = useOrcaInfo();
 
   const filterRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);

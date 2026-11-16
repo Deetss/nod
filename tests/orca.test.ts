@@ -181,6 +181,26 @@ describe('Orca', () => {
     expect(spawn?.args).toContain(withWrapUp('$(touch x) `y` ; z'));
   });
 
+  it('retries a failed repo list instead of caching it as empty', async () => {
+    let listFails = true;
+    const logs: string[] = [];
+    const exec: OrcaExec = async (bin, args) => {
+      if (bin === 'git') return 'git@github.com:acme-co/acme-api.git';
+      if (args[0] === 'repo') {
+        if (listFails) throw new Error('Orca is not responding');
+        return JSON.stringify({ result: { repos: [{ id: 'r1', path: '/r/api' }] } });
+      }
+      return '';
+    };
+    const orca = new Orca({ exec, candidates: ['orca-ide'], now: () => 0, log: (l) => logs.push(l) });
+
+    expect(await orca.mappedRepos()).toEqual([]);
+    expect(logs).toEqual(['[orca] repo list failed: Orca is not responding']);
+
+    listFails = false;
+    expect(await orca.mappedRepos()).toEqual(['acme-api']);
+  });
+
   it('reports a repo that Orca does not have', async () => {
     const { orca } = fakeOrca();
     const res = await orca.dispatch(dispatchBody.parse({ ...good, repo: 'acme-co/other' }));
