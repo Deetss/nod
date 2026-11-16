@@ -1,0 +1,603 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2252" height="2146" viewBox="0 0 2252 2146">
+<defs><clipPath id="fc"><rect width="412" height="915" rx="24"/></clipPath></defs>
+<rect x="0" y="0" width="2252" height="2146" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="32" y="36" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="22" font-weight="bold" fill="#222" text-anchor="start">Layout B (phone 412x915): two steps</text>
+<text x="32" y="60" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">Welcome step lists the three methods as rows, then one focused step per method.</text>
+<text x="32" y="82" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Greyscale labelled boxes. Dark fill = primary action, heavy border = error, dashed = disabled or pending. Sample host only.</text>
+<text x="32" y="150" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">1. First launch, empty (welcome)</text>
+<text x="32" y="170" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Three methods as large rows</text>
+<g id="f1" transform="translate(32,184)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="20" y="92" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" fill="#222" text-anchor="start">Set up Nod</text>
+<text x="392" y="92" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 1 of 2</text>
+<text x="20" y="122" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">Nod needs the tailnet address of the desktop running it.</text>
+<text x="20" y="178" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Choose how to add your desktop</text>
+<rect x="20" y="196" width="372" height="120" rx="16" fill="#ddd" stroke="#333" stroke-width="2"/>
+<circle cx="64" cy="256" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,256) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><path d="M-9 -4V-9H-4M4 -9H9V-4M9 4V9H4M-4 9H-9V4"/><rect x="-3" y="-3" width="6" height="6" fill="#222" stroke="none"/></g>
+<text x="108" y="248" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Scan pair code</text>
+<text x="108" y="270" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">Use the camera on the QR in Settings &gt;</text>
+<text x="108" y="287" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">Pair phone</text>
+<g transform="translate(368,256) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<rect x="20" y="328" width="372" height="120" rx="16" fill="#f2f2f2" stroke="#555" stroke-width="1.5"/>
+<circle cx="64" cy="388" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,388) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><rect x="-7" y="-6" width="14" height="16" rx="2"/><rect x="-3" y="-9" width="6" height="5" rx="1"/></g>
+<text x="108" y="380" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Paste pair link</text>
+<text x="108" y="402" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">Paste the nod://pair link from your desktop</text>
+<g transform="translate(368,388) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<rect x="20" y="460" width="372" height="120" rx="16" fill="#f2f2f2" stroke="#555" stroke-width="1.5"/>
+<circle cx="64" cy="520" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,520) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><rect x="-10" y="-6" width="20" height="12" rx="2"/><path d="M-6 -2H-5M-2 -2H-1M2 -2H3M-6 2H6"/></g>
+<text x="108" y="512" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Type the address</text>
+<text x="108" y="534" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">For example desk.example-tailnet.ts.net</text>
+<g transform="translate(368,520) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<circle cx="32" cy="632" r="11" fill="#fff" stroke="#777" stroke-width="1.5"/>
+<g transform="translate(32,632) scale(0.65)" fill="none" stroke="#222" stroke-width="3.07692" stroke-linecap="round" stroke-linejoin="round"><path d="M0 -1V7"/><circle cx="0" cy="-6" r="1.3" fill="#222"/></g>
+<text x="52" y="637" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#444" text-anchor="start">We check the desktop answers before saving.</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="476" y="150" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">2. Camera scanning</text>
+<text x="476" y="170" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Focused step, sheet offers the others</text>
+<g id="f2" transform="translate(476,184)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#4d4d4d" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#f2f2f2" stroke="#f2f2f2" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<circle cx="372" cy="60" r="24" fill="#f2f2f2" stroke="#f2f2f2" stroke-width="1.5"/>
+<g transform="translate(372,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><polygon points="2,-10 -6,2 -1,2 -3,10 6,-3 1,-3" fill="#222"/></g>
+<text x="206" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#e0e0e0" text-anchor="middle">Step 2 of 2</text>
+<path d="M86 214 v-44 h44 M282 170 h44 v44 M326 366 v-44 h-44 M130 410 h-44 v-44" fill="none" stroke="#f2f2f2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="148" y="232" width="38" height="38" rx="0" fill="none" stroke="#ddd" stroke-width="4"/>
+<rect x="160" y="244" width="14" height="14" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="226" y="232" width="38" height="38" rx="0" fill="none" stroke="#ddd" stroke-width="4"/>
+<rect x="238" y="244" width="14" height="14" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="148" y="310" width="38" height="38" rx="0" fill="none" stroke="#ddd" stroke-width="4"/>
+<rect x="160" y="322" width="14" height="14" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="146" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="146" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="146" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="146" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="152" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="152" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="158" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="158" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="164" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="164" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="164" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="164" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="170" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="170" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="176" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="176" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="182" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="182" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="182" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="182" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="188" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="188" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="242" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="260" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="194" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="230" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="236" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="242" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="248" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="254" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="260" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="266" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="272" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="302" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="308" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="320" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="326" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="338" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="200" y="344" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="242" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="260" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="206" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="242" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="260" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="212" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="302" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="308" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="320" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="326" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="338" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="218" y="344" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="224" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="224" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="224" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="224" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="230" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="230" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="230" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="230" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="302" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="308" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="320" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="326" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="338" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="236" y="344" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="242" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="242" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="242" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="242" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="248" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="248" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="248" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="248" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="284" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="290" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="302" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="308" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="320" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="326" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="338" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="254" y="344" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="260" y="278" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="260" y="296" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="260" y="314" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="260" y="332" width="5" height="5" rx="0" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="0" y="540" width="412" height="327" rx="28" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="0" y="580" width="412" height="287" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<rect x="186" y="552" width="40" height="4" rx="2" fill="#bbb" stroke="none" stroke-width="0"/>
+<text x="20" y="604" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="22" font-weight="bold" fill="#222" text-anchor="start">Scan pair code</text>
+<text x="20" y="632" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">Point the camera at the QR in Settings &gt; Pair phone on</text>
+<text x="20" y="652" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">your desktop.</text>
+<rect x="20" y="700" width="372" height="52" rx="26" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="206" y="731.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Paste link instead</text>
+<rect x="20" y="764" width="372" height="52" rx="26" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="206" y="795.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Type address instead</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="920" y="150" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">3. Host typed</text>
+<text x="920" y="170" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Focused step, keyboard open</text>
+<g id="f3" transform="translate(920,184)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Type the address</text>
+<text x="20" y="160" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">Your desktop's name on the tailnet. No pairing code is</text>
+<text x="20" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">needed.</text>
+<rect x="20" y="214" width="372" height="56" rx="4" fill="#fff" stroke="#222" stroke-width="3"/>
+<rect x="30" y="208" width="94.7031" height="12" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="34" y="218" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Server address</text>
+<text x="36" y="248" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<line x1="228.484" y1="232" x2="228.484" y2="254" stroke="#222" stroke-width="2"/>
+<rect x="297.297" y="226" width="82.7031" height="32" rx="8" fill="#eee" stroke="#555" stroke-width="1"/>
+<g transform="translate(318.297,242) scale(0.75)" fill="none" stroke="#222" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><rect x="-7" y="-6" width="14" height="16" rx="2"/><rect x="-3" y="-9" width="6" height="5" rx="1"/></g>
+<text x="333.297" y="247" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">Paste</text>
+<text x="20" y="292" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">For example desk.example-tailnet.ts.net</text>
+<rect x="20" y="330" width="372" height="56" rx="28" fill="#444" stroke="#444" stroke-width="1"/>
+<text x="206" y="363.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">Check server</text>
+<rect x="0" y="577" width="412" height="290" rx="0" fill="#e6e6e6" stroke="none" stroke-width="1"/>
+<text x="16" y="603" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">On-screen keyboard (blank keys)</text>
+<rect x="8.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="48.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="88.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="128.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="168.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="208.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="248.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="288.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="328.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="368.5" y="625" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="28.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="68.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="108.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="148.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="188.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="228.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="268.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="308.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="348.5" y="681" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="11.5" y="737" width="52" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="68.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="108.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="148.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="188.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="228.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="268.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="308.5" y="737" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="348.5" y="737" width="52" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="10" y="793" width="52" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="822" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">?123</text>
+<rect x="67" y="793" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="107" y="793" width="190" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="302" y="793" width="35" height="48" rx="8" fill="#fff" stroke="#aaa" stroke-width="1"/>
+<rect x="342" y="793" width="60" height="48" rx="8" fill="#444" stroke="#aaa" stroke-width="1"/>
+<text x="372" y="822" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">Go</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="1364" y="150" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">4. Checking</text>
+<text x="1364" y="170" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Checklist shows the running check</text>
+<g id="f4" transform="translate(1364,184)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Checking the desktop</text>
+<rect x="20" y="150" width="372" height="48" rx="8" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="222" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="254" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,254) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="250" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Reach your tailnet</text>
+<text x="80" y="270" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Phone can reach the tailnet</text>
+<rect x="20" y="294" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="326" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,326) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="322" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Find the desktop</text>
+<text x="80" y="342" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="366" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="398" r="15" fill="#fff" stroke="#444" stroke-width="2"/>
+<g transform="translate(52,398) scale(0.8)" fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M0 -8A8 8 0 1 1 -8 0"/></g>
+<text x="80" y="394" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Confirm Nod</text>
+<text x="80" y="414" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">GET /api/health returns app "nod"</text>
+<text x="20" y="470" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">This takes a few seconds.</text>
+<rect x="20" y="780" width="372" height="52" rx="26" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="206" y="811.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Cancel</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="1808" y="150" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">5. Failed: not on the tailnet</text>
+<text x="1808" y="170" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">First check row fails</text>
+<g id="f5" transform="translate(1808,184)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Can't connect</text>
+<rect x="20" y="150" width="372" height="48" rx="8" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="222" width="372" height="64" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<circle cx="52" cy="254" r="15" fill="#fff" stroke="#222" stroke-width="3"/>
+<g transform="translate(52,254) scale(0.7)" fill="none" stroke="#222" stroke-width="2.85714" stroke-linecap="round" stroke-linejoin="round"><path d="M-6 -6L6 6M6 -6L-6 6"/></g>
+<text x="80" y="250" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Reach your tailnet</text>
+<text x="80" y="270" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Phone can reach the tailnet</text>
+<rect x="20" y="294" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="52" cy="326" r="15" fill="#fff" stroke="#777" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="80" y="322" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#777" text-anchor="start">Find the desktop</text>
+<text x="80" y="342" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="366" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="52" cy="398" r="15" fill="#fff" stroke="#777" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="80" y="394" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#777" text-anchor="start">Confirm Nod</text>
+<text x="80" y="414" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">GET /api/health returns app "nod"</text>
+<rect x="20" y="450" width="372" height="120" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<text x="36" y="480" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Not on the tailnet</text>
+<text x="36" y="504" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">This phone cannot reach your tailnet. Connect it to the</text>
+<text x="36" y="524" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">tailnet, then retry.</text>
+<text x="36" y="548" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">GET /api/health: timed out after 5 s</text>
+<rect x="20" y="590" width="150" height="56" rx="28" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="95" y="623.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Edit address</text>
+<rect x="182" y="590" width="210" height="56" rx="28" fill="#444" stroke="#444" stroke-width="1"/>
+<text x="287" y="623.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">Retry</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="32" y="1157" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">6. Failed: wrong host</text>
+<text x="32" y="1177" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Second check row fails</text>
+<g id="f6" transform="translate(32,1191)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Can't connect</text>
+<rect x="20" y="150" width="372" height="48" rx="8" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="222" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="254" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,254) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="250" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Reach your tailnet</text>
+<text x="80" y="270" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Phone can reach the tailnet</text>
+<rect x="20" y="294" width="372" height="64" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<circle cx="52" cy="326" r="15" fill="#fff" stroke="#222" stroke-width="3"/>
+<g transform="translate(52,326) scale(0.7)" fill="none" stroke="#222" stroke-width="2.85714" stroke-linecap="round" stroke-linejoin="round"><path d="M-6 -6L6 6M6 -6L-6 6"/></g>
+<text x="80" y="322" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Find the desktop</text>
+<text x="80" y="342" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="366" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="52" cy="398" r="15" fill="#fff" stroke="#777" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="80" y="394" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#777" text-anchor="start">Confirm Nod</text>
+<text x="80" y="414" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">GET /api/health returns app "nod"</text>
+<rect x="20" y="450" width="372" height="120" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<text x="36" y="480" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Wrong host</text>
+<text x="36" y="504" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">No desktop answers at that address. Check it for</text>
+<text x="36" y="524" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">typos, then retry.</text>
+<text x="36" y="548" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">GET /api/health: host not found</text>
+<rect x="20" y="590" width="150" height="56" rx="28" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="95" y="623.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Edit address</text>
+<rect x="182" y="590" width="210" height="56" rx="28" fill="#444" stroke="#444" stroke-width="1"/>
+<text x="287" y="623.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">Retry</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="476" y="1157" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">7. Failed: Nod not running</text>
+<text x="476" y="1177" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Third check row fails</text>
+<g id="f7" transform="translate(476,1191)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Can't connect</text>
+<rect x="20" y="150" width="372" height="48" rx="8" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="222" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="254" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,254) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="250" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Reach your tailnet</text>
+<text x="80" y="270" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Phone can reach the tailnet</text>
+<rect x="20" y="294" width="372" height="64" rx="12" fill="#fff" stroke="#bbb" stroke-width="1"/>
+<circle cx="52" cy="326" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,326) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="322" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Find the desktop</text>
+<text x="80" y="342" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="366" width="372" height="64" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<circle cx="52" cy="398" r="15" fill="#fff" stroke="#222" stroke-width="3"/>
+<g transform="translate(52,398) scale(0.7)" fill="none" stroke="#222" stroke-width="2.85714" stroke-linecap="round" stroke-linejoin="round"><path d="M-6 -6L6 6M6 -6L-6 6"/></g>
+<text x="80" y="394" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">Confirm Nod</text>
+<text x="80" y="414" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">GET /api/health returns app "nod"</text>
+<rect x="20" y="450" width="372" height="120" rx="12" fill="#fff" stroke="#222" stroke-width="3"/>
+<text x="36" y="480" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Nod is not running</text>
+<text x="36" y="504" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">The desktop answered, but Nod is not running. Start</text>
+<text x="36" y="524" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#333" text-anchor="start">Nod on it, then retry.</text>
+<text x="36" y="548" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">GET /api/health: refused, or app is not "nod"</text>
+<rect x="20" y="590" width="150" height="56" rx="28" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="95" y="623.25" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Edit address</text>
+<rect x="182" y="590" width="210" height="56" rx="28" fill="#444" stroke="#444" stroke-width="1"/>
+<text x="287" y="623.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">Retry</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="920" y="1157" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">8. Success handoff</text>
+<text x="920" y="1177" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Saved, then opens the web app</text>
+<g id="f8" transform="translate(920,1191)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="206" cy="220" r="56" fill="#444" stroke="#444" stroke-width="1"/>
+<g transform="translate(206,220) scale(2.6)" fill="none" stroke="#fff" stroke-width="2.30769" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="206" y="340" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" fill="#222" text-anchor="middle">Connected</text>
+<text x="206" y="372" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="normal" fill="#333" text-anchor="middle">desk.example-tailnet.ts.net</text>
+<text x="20" y="430" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Opening Nod</text>
+<rect x="20" y="442" width="372" height="6" rx="3" fill="#ddd" stroke="none" stroke-width="0"/>
+<rect x="20" y="442" width="250" height="6" rx="3" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="20" y="468" width="372" height="40" rx="8" fill="#f0f0f0" stroke="#aaa" stroke-width="1"/>
+<text x="32" y="493" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#222" text-anchor="start">https://desk.example-tailnet.ts.net/?apk=&lt;versionCode&gt;</text>
+<text x="20" y="540" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">apk is this app's build number, not a pairing code. Pairing the</text>
+<text x="20" y="558" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">device key happens inside Nod next.</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="1364" y="1157" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">9. Change-server variant</text>
+<text x="1364" y="1177" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Welcome step, current host and Cancel</text>
+<g id="f9" transform="translate(1364,1191)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="20" y="92" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" fill="#222" text-anchor="start">Change server</text>
+<text x="392" y="92" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 1 of 2</text>
+<rect x="20" y="120" width="372" height="76" rx="12" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<text x="36" y="146" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Current server</text>
+<text x="36" y="176" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<text x="20" y="232" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Replace it by</text>
+<rect x="20" y="246" width="372" height="104" rx="16" fill="#f2f2f2" stroke="#555" stroke-width="1.5"/>
+<circle cx="64" cy="298" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,298) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><path d="M-9 -4V-9H-4M4 -9H9V-4M9 4V9H4M-4 9H-9V4"/><rect x="-3" y="-3" width="6" height="6" fill="#222" stroke="none"/></g>
+<text x="108" y="290" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Scan new pair code</text>
+<text x="108" y="312" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">Camera on the QR</text>
+<g transform="translate(368,298) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<rect x="20" y="362" width="372" height="104" rx="16" fill="#f2f2f2" stroke="#555" stroke-width="1.5"/>
+<circle cx="64" cy="414" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,414) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><rect x="-7" y="-6" width="14" height="16" rx="2"/><rect x="-3" y="-9" width="6" height="5" rx="1"/></g>
+<text x="108" y="406" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Paste pair link</text>
+<text x="108" y="428" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">From the clipboard</text>
+<g transform="translate(368,414) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<rect x="20" y="478" width="372" height="104" rx="16" fill="#f2f2f2" stroke="#555" stroke-width="1.5"/>
+<circle cx="64" cy="530" r="28" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<g transform="translate(64,530) scale(1.3)" fill="none" stroke="#222" stroke-width="1.53846" stroke-linecap="round" stroke-linejoin="round"><rect x="-10" y="-6" width="20" height="12" rx="2"/><path d="M-6 -2H-5M-2 -2H-1M2 -2H3M-6 2H6"/></g>
+<text x="108" y="522" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Edit address</text>
+<text x="108" y="544" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#555" text-anchor="start">Opens with the current host</text>
+<g transform="translate(368,530) scale(1)" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M-3 -6L3 0L-3 6"/></g>
+<rect x="20" y="620" width="372" height="56" rx="28" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<text x="206" y="653.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">Cancel</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+<text x="1808" y="1157" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">10. Paste pair link step</text>
+<text x="1808" y="1177" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Also the landing for a nod://pair link</text>
+<g id="f10" transform="translate(1808,1191)">
+<g clip-path="url(#fc)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<circle cx="40" cy="60" r="24" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(40,60) scale(1.2)" fill="none" stroke="#222" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M7 0H-7M-1 -6L-7 0L-1 6"/></g>
+<text x="392" y="66" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Step 2 of 2</text>
+<text x="20" y="130" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="24" font-weight="bold" fill="#222" text-anchor="start">Paste pair link</text>
+<text x="20" y="160" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">Copy the link from Settings &gt; Pair phone on your desktop,</text>
+<text x="20" y="180" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#444" text-anchor="start">then paste it here.</text>
+<rect x="20" y="214" width="372" height="84" rx="4" fill="#fff" stroke="#555" stroke-width="1.5"/>
+<rect x="30" y="208" width="54.6562" height="12" rx="0" fill="#fff" stroke="none" stroke-width="1"/>
+<text x="34" y="218" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">Pair link</text>
+<text x="36" y="248" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#222" text-anchor="start">nod://pair?host=desk.example-tailnet.ts.net</text>
+<text x="36" y="272" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" font-weight="normal" fill="#222" text-anchor="start">&amp;code=&lt;code&gt;</text>
+<rect x="214.688" y="314" width="177.312" height="32" rx="8" fill="#eee" stroke="#555" stroke-width="1"/>
+<g transform="translate(235.688,330) scale(0.75)" fill="none" stroke="#222" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><rect x="-7" y="-6" width="14" height="16" rx="2"/><rect x="-3" y="-9" width="6" height="5" rx="1"/></g>
+<text x="250.688" y="335" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">Paste from clipboard</text>
+<rect x="20" y="372" width="372" height="64" rx="12" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+<circle cx="52" cy="404" r="15" fill="#444" stroke="#444" stroke-width="1.5"/>
+<g transform="translate(52,404) scale(0.75)" fill="none" stroke="#fff" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"><path d="M-7 0L-2 5L7 -5"/></g>
+<text x="80" y="399" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Host found</text>
+<text x="80" y="420" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#222" text-anchor="start">desk.example-tailnet.ts.net</text>
+<rect x="20" y="460" width="372" height="56" rx="28" fill="#444" stroke="#444" stroke-width="1"/>
+<text x="206" y="493.6" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">Check server</text>
+<rect x="0" y="0" width="412" height="24" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<text x="16" y="17" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">9:41</text>
+<rect x="326" y="14" width="4" height="3" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="332" y="12" width="4" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="338" y="10" width="4" height="7" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="344" y="8" width="4" height="9" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="366" y="7" width="22" height="11" rx="2" fill="none" stroke="#444" stroke-width="1.5"/>
+<rect x="368.5" y="9.5" width="12" height="6" rx="1" fill="#444" stroke="none" stroke-width="0"/>
+<rect x="389" y="10" width="2" height="5" rx="0" fill="#444" stroke="none" stroke-width="1"/>
+<rect x="0" y="867" width="412" height="48" rx="0" fill="#e3e3e3" stroke="none" stroke-width="1"/>
+<polygon points="132,881 132,901 116,891" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="206" cy="891" r="10" fill="none" stroke="#444" stroke-width="2"/>
+<rect x="277" y="882" width="18" height="18" rx="4" fill="none" stroke="#444" stroke-width="2"/>
+</g>
+<rect x="0" y="0" width="412" height="915" rx="24" fill="none" stroke="#777" stroke-width="2"/>
+</g>
+</svg>

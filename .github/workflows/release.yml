@@ -40,3 +40,48 @@ jobs:
         run: pnpm build && node scripts/build-electron.mjs && pnpm exec electron-builder --linux AppImage --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # One APK for every server: the app asks for its server on first launch.
+  android:
+    needs: appimage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # versionCode is major*10000 + minor*100 + patch, so every release installs over the last.
+      - name: Version
+        id: version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          IFS=. read -r major minor patch <<< "$v"
+          echo "name=$v" >> "$GITHUB_OUTPUT"
+          echo "code=$((major * 10000 + minor * 100 + patch))" >> "$GITHUB_OUTPUT"
+
+      - name: Signing key
+        run: echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+
+      - name: Build APK
+        working-directory: android
+        run: >
+          ./gradlew assembleRelease
+          -PnodPackage=${{ vars.ANDROID_PACKAGE_ID }}
+          -PnodVersionCode=${{ steps.version.outputs.code }}
+          -PnodVersionName=${{ steps.version.outputs.name }}
+        env:
+          NOD_KEYSTORE: ${{ runner.temp }}/release.keystore
+          NOD_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+
+      - name: Attach to the release
+        run: |
+          apk="nod-${{ steps.version.outputs.name }}.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk "$apk"
+          gh release upload "$GITHUB_REF_NAME" "$apk" --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

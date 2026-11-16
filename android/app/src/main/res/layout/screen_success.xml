@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <ImageView
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/bg_badge"
+        android:importantForAccessibility="no"
+        android:padding="22dp"
+        android:src="@drawable/ic_check"
+        app:tint="@color/fg_on_emphasis" />
+
+    <TextView
+        style="@style/Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:accessibilityLiveRegion="polite"
+        android:gravity="center_horizontal"
+        android:text="@string/connected_title" />
+
+    <TextView
+        android:id="@+id/host"
+        style="@style/Text.Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="middle"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
+        android:textColor="@color/fg_muted" />
+
+    <TextView
+        style="@style/Text.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/opening_nod" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        app:indicatorColor="@color/bg_accent_emphasis"
+        app:trackColor="@color/btn_default_bg"
+        app:trackCornerRadius="2dp"
+        app:trackThickness="4dp"
+        app:trackStopIndicatorSize="0dp"
+        app:indicatorTrackGapSize="0dp" />
+
+    <TextView
+        android:id="@+id/url"
+        style="@style/Text.Mono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_box"
+        android:minHeight="58dp"
+        android:paddingStart="12dp"
+        android:paddingTop="11dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="11dp" />
+
+    <TextView
+        style="@style/Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/apk_note" />
+</LinearLayout>

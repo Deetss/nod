@@ -1,42 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright 2021 Google Inc. All Rights Reserved.
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 <resources>
-  
+    <string name="setup_title">Set up Nod</string>
+    <string name="setup_explain">Nod needs the tailnet address of the desktop running it.</string>
+    <string name="step_1_of_2">Step 1 of 2</string>
+    <string name="step_2_of_2">Step 2 of 2</string>
+    <string name="setup_choose">Choose how to add your desktop</string>
+    <string name="method_scan_title">Scan pair code</string>
+    <string name="method_scan_desc">Use the camera on the QR in Settings &gt; Pair phone</string>
+    <string name="method_paste_title">Paste pair link</string>
+    <string name="method_paste_desc">Paste the nod://pair link from your desktop</string>
+    <string name="method_type_title">Type the address</string>
+    <string name="method_type_desc">For example desk.example-tailnet.ts.net</string>
+    <string name="setup_footer">We check the desktop answers before saving.</string>
+    <string name="scan_body">Point the camera at the QR in Settings &gt; Pair phone on your desktop.</string>
+    <string name="scan_paste_instead">Paste link instead</string>
+    <string name="scan_type_instead">Type address instead</string>
+    <string name="type_body">Your desktop\'s name on the tailnet. No pairing code is needed.</string>
+    <string name="field_label">Server address</string>
+    <string name="field_example">For example desk.example-tailnet.ts.net</string>
+    <string name="paste">Paste</string>
+    <string name="check_server">Check server</string>
+    <string name="checking_title">Checking the desktop</string>
+    <string name="checking_note">This takes a few seconds.</string>
+    <string name="cancel">Cancel</string>
+    <string name="check_tailnet">Reach your tailnet</string>
+    <string name="check_tailnet_sub">Phone can reach the tailnet</string>
+    <string name="check_desktop">Find the desktop</string>
+    <string name="check_nod">Confirm Nod</string>
+    <string name="check_nod_sub">GET /api/health returns app \"nod\"</string>
+    <string name="fail_title">Can\'t connect</string>
+    <string name="err_tailnet_title">Not on the tailnet</string>
+    <string name="err_tailnet_body">This phone cannot reach your tailnet. Connect it to the tailnet, then retry.</string>
+    <string name="err_host_title">Can\'t find the desktop</string>
+    <string name="err_host_body">Check the address for typos, and that this phone is on your tailnet, then retry.</string>
+    <string name="err_nod_title">Nod is not running</string>
+    <string name="err_nod_body">The desktop answered, but Nod is not running. Start Nod on it, then retry.</string>
+    <string name="detail_timeout">GET /api/health: timed out after 5 s</string>
+    <string name="detail_dns">GET /api/health: host not found</string>
+    <string name="detail_not_nod">GET /api/health: HTTP %1$d, app is not \"nod\"</string>
+    <string name="edit_address">Edit address</string>
+    <string name="retry">Retry</string>
+    <string name="connected_title">Connected</string>
+    <string name="opening_nod">Opening Nod</string>
+    <string name="apk_note">apk is this app\'s build number, not a pairing code. Pairing the device key happens inside Nod next.</string>
+    <string name="change_title">Change server</string>
+    <string name="current_server">Current server</string>
+    <string name="replace_by">Replace it by</string>
+    <string name="method_scan_new_title">Scan new pair code</string>
+    <string name="method_scan_new_desc">Camera on the QR</string>
+    <string name="method_paste_new_desc">From the clipboard</string>
+    <string name="method_edit_desc">Opens with the current host</string>
+    <string name="paste_body">Copy the link from Settings &gt; Pair phone on your desktop, then paste it here.</string>
+    <string name="link_label">Pair link</string>
+    <string name="paste_clipboard">Paste from clipboard</string>
+    <string name="host_found">Host found</string>
+    <string name="camera_denied">Camera access is off. Use another method.</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_flash">Flash</string>
 
-  <!--
-    The "fullscreen" and "fullscreen-sticky" TWA manifest values correspond to "immersive" and "sticky-immersive"
-    AndroidManifest values.
-  -->
-  
-
-  <!--
-    This variable below expresses the relationship between the app and the site,
-    as documented in the TWA documentation at
-    https://developers.google.com/web/updates/2017/10/using-twa#set_up_digital_asset_links_in_an_android_app
-    and is injected into the AndroidManifest.xml
-  -->
-  <string name="assetStatements">
-    [{
-        \"relation\": [\"delegate_permission/common.handle_all_urls\"],
-        \"target\": {
-            \"namespace\": \"web\",
-            \"site\": \"https://nod.example.invalid\"
-        }
-    }]
-    
-  </string>  
+    <!-- The spec's alternative detail lines, one per failure the client can tell apart. -->
+    <string name="detail_no_route">GET /api/health: no route to host</string>
+    <string name="detail_refused">GET /api/health: connection refused</string>
+    <string name="detail_tls">GET /api/health: TLS handshake failed</string>
+    <string name="detail_other">GET /api/health: %1$s</string>
+    <string name="not_a_pair_code">That code is not a Nod pair link.</string>
+    <string name="address_invalid">Enter a host name, such as desk.example-tailnet.ts.net</string>
 </resources>
