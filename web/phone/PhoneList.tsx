@@ -127,12 +127,18 @@ interface PullListProps {
   syncLine: ReactNode;
   refreshing: boolean;
   locked?: boolean;
+  /** The header stays expanded: no spare scroll distance for the collapse. */
+  short?: boolean;
+  /** The chip row, the first thing in the scroll. */
+  chips?: ReactNode;
+  /** Sits between the chip row and the sync line. */
+  banner?: ReactNode;
   onRefresh: () => void;
   children: ReactNode;
 }
 
 /** The one vertical scroller on a tab. A touch drag from the top past 72px refreshes. */
-export function PullList({ syncLine, refreshing, locked, onRefresh, children }: PullListProps) {
+export function PullList({ syncLine, refreshing, locked, short, chips, banner, onRefresh, children }: PullListProps) {
   const [dy, setDy] = useState(0);
   const start = useRef<number | undefined>(undefined);
   const el = useRef<HTMLDivElement>(null);
@@ -154,17 +160,21 @@ export function PullList({ syncLine, refreshing, locked, onRefresh, children }: 
   return (
     <div
       ref={el}
-      className={`ph-list${locked ? ' is-locked' : ''}`}
+      className={`ph-list${locked ? ' is-locked' : ''}${locked || short ? ' is-short' : ''}`}
       onTouchStart={onStart}
       onTouchMove={onMove}
       onTouchEnd={onEnd}
       onTouchCancel={onEnd}
     >
-      <div className="ph-syncline" style={{ marginTop: pullOffset(dy) }} role="status">
-        {refreshing ? <span className="ph-spinner" aria-hidden="true" /> : null}
-        {refreshing ? 'Refreshing…' : dy > 0 && shouldRefresh(dy) ? 'Release to refresh' : syncLine}
+      <div className="ph-list-body">
+        {chips}
+        {banner}
+        <div className="ph-syncline" style={{ marginTop: pullOffset(dy) }} role="status">
+          {refreshing ? <span className="ph-spinner" aria-hidden="true" /> : null}
+          {refreshing ? 'Refreshing…' : dy > 0 && shouldRefresh(dy) ? 'Release to refresh' : syncLine}
+        </div>
+        {children}
       </div>
-      {children}
     </div>
   );
 }

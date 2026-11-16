@@ -3,7 +3,6 @@ import type { Density } from '../density';
 import { ActivityIcon, CloseIcon, IssueIcon, MoreIcon, PrIcon, SearchIcon } from './PhoneIcons';
 import { orgUrl } from '../org-settings';
 import type { PhoneTab } from './phone-logic';
-import { Logo } from '../Logo';
 import { PhoneNotifySheet } from './PhoneNotifySheet';
 import { usePush } from './usePush';
 
@@ -33,7 +32,7 @@ export function AppBar(p: AppBarProps) {
   };
   if (p.searching) {
     return (
-      <header className="ph-appbar">
+      <header className="ph-appbar is-searching">
         <input
           className="ph-search"
           type="search"
@@ -61,7 +60,6 @@ export function AppBar(p: AppBarProps) {
     <>
       {notifySheet ? <PhoneNotifySheet push={push} onClose={() => setNotifySheet(false)} /> : null}
       <header className="ph-appbar">
-        <Logo size={24} />
         <h1 className="ph-apptitle">{p.title}</h1>
         <button type="button" className="ph-iconbtn" aria-label="Search" onClick={() => p.onSearching(true)}>
           <SearchIcon />

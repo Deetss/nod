@@ -33,46 +33,41 @@ interface PhoneInboxProps {
 /** B1 for one list tab, with the S1 empty, S2 loading and S3 error states. */
 export function PhoneInbox(p: PhoneInboxProps) {
   const loading = p.status === 'loading';
-  return (
-    <>
-      <Chips chips={p.chips} value={p.chip} onChange={p.onChip} showCounts={!loading} />
-      {p.status === 'error' ? <ErrorBanner detail={p.errorDetail} onRetry={p.onRefresh} /> : null}
-      {p.status === 'empty' ? (
-        <div className="ph-list">
-          <EmptyBlock
-            title={p.emptyTitle}
-            body={p.emptyBody}
-            syncLine={p.syncLine}
-            refreshing={p.refreshing}
-            onRefresh={p.onRefresh}
-          />
-        </div>
-      ) : (
-        <PullList
-          locked={loading}
-          refreshing={p.refreshing && !loading}
+  const chips = <Chips chips={p.chips} value={p.chip} onChange={p.onChip} showCounts={!loading} />;
+  if (p.status === 'empty') {
+    return (
+      <div className="ph-list is-short">
+        {chips}
+        <EmptyBlock
+          title={p.emptyTitle}
+          body={p.emptyBody}
+          syncLine={p.syncLine}
+          refreshing={p.refreshing}
           onRefresh={p.onRefresh}
-          syncLine={
-            loading ? <LoadingLine /> : p.status === 'error' ? p.cachedLine : p.syncLine
-          }
-        >
-          {loading ? (
-            <SkeletonSections titles={p.skeletonTitles} />
-          ) : (
-            p.sections.map((s) => (
-              <div key={s.key}>
-                <SectionHeader
-                  title={s.title}
-                  count={s.count}
-                  open={s.open}
-                  onToggle={() => p.onToggle(s.key)}
-                />
-                {s.open ? s.rows : null}
-              </div>
-            ))
-          )}
-        </PullList>
+        />
+      </div>
+    );
+  }
+  return (
+    <PullList
+      locked={loading}
+      short={p.status === 'error'}
+      chips={chips}
+      banner={p.status === 'error' ? <ErrorBanner detail={p.errorDetail} onRetry={p.onRefresh} /> : null}
+      refreshing={p.refreshing && !loading}
+      onRefresh={p.onRefresh}
+      syncLine={loading ? <LoadingLine /> : p.status === 'error' ? p.cachedLine : p.syncLine}
+    >
+      {loading ? (
+        <SkeletonSections titles={p.skeletonTitles} />
+      ) : (
+        p.sections.map((s) => (
+          <div key={s.key}>
+            <SectionHeader title={s.title} count={s.count} open={s.open} onToggle={() => p.onToggle(s.key)} />
+            {s.open ? s.rows : null}
+          </div>
+        ))
       )}
-    </>
+    </PullList>
   );
 }

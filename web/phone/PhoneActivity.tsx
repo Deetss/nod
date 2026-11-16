@@ -191,8 +191,13 @@ export function PhoneActivity({ activity, refreshing, onRefresh, onOpen, expande
 
   return (
     <>
-      <Chips chips={chips} value={filter} onChange={pick} />
-      <PullList syncLine={syncLine} refreshing={refreshing} onRefresh={onRefresh}>
+      <PullList
+        chips={<Chips chips={chips} value={filter} onChange={pick} />}
+        short={status !== 'ready'}
+        syncLine={syncLine}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      >
         {status === 'ready' || status === 'empty' ? (
           <div className="ph-afilter" role="status">
             {filter !== 'all' ? (

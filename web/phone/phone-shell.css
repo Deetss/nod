@@ -4,6 +4,9 @@
   /* The real inset only: in the TWA, Android draws the status bar outside the page and reports 0. */
   --ph-top: env(safe-area-inset-top, 0px);
   --ph-bottom: max(24px, env(safe-area-inset-bottom));
+  --ph-p: 0;
+  --text-title-large-size: 28px;
+  --text-title-large-line: 36px;
   position: fixed;
   inset: 0;
   display: flex;
@@ -27,26 +30,39 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* App bar: 56px under the top safe-area inset. */
+/*
+ * Large-title app bar over the top of .ph-main. --ph-p is 0 expanded, 1 collapsed and follows the
+ * active list's scroll over 56px. Expanded 112 + 1 border, collapsed 56 + 1.
+ */
 .ph-appbar {
-  position: relative;
-  flex: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   gap: 8px;
   box-sizing: content-box;
-  height: 56px;
+  height: calc(112px - 56px * var(--ph-p));
   padding: var(--ph-top) 8px 0 16px;
   background: var(--bgColor-inset);
   border-bottom: 1px solid var(--borderColor-default);
 }
 
+.ph-appbar.is-searching {
+  height: 56px;
+}
+
 .ph-apptitle {
-  flex: 1;
-  min-width: 0;
-  margin: 0 8px 0 0;
-  font-size: 17px;
-  line-height: 24px;
+  position: absolute;
+  left: 16px;
+  right: calc(16px + 96px * var(--ph-p));
+  bottom: 16px;
+  margin: 0;
+  font-size: calc(var(--text-title-large-size) - 11px * var(--ph-p));
+  line-height: calc(var(--text-title-large-line) - 12px * var(--ph-p));
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -60,10 +76,11 @@
   justify-content: center;
   width: 44px;
   height: 44px;
+  margin-top: 6px;
   padding: 0;
   background: var(--button-default-bgColor-rest);
   border: 1px solid var(--borderColor-default);
-  border-radius: 10px;
+  border-radius: 22px;
   color: var(--fgColor-default);
   cursor: pointer;
 }
@@ -76,6 +93,7 @@
   flex: 1;
   min-width: 0;
   height: 44px;
+  margin-top: 6px;
   padding: 0 12px;
   background: var(--bgColor-default);
   border: 1px solid var(--borderColor-accent-emphasis);
@@ -117,6 +135,7 @@
 }
 
 .ph-main {
+  position: relative;
   flex: 1;
   min-height: 0;
   display: flex;

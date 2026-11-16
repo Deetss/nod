@@ -8,10 +8,14 @@ import {
   issueChips,
   phoneStatus,
   prAllTotal,
+  collapseProgress,
   prChips,
   pullOffset,
   resolveOpen,
   shouldRefresh,
+  snapTarget,
+  steppedProgress,
+  tabTitle,
 } from '../web/phone/phone-logic';
 
 const pr = (n: number, over: Partial<PrSummary> = {}): PrSummary => ({
@@ -172,5 +176,34 @@ describe('resolveOpen', () => {
   it('keeps a section the user closed explicitly closed', () => {
     const out = resolveOpen([sec('needs', 0), sec('org', 1), sec('dependabot', 1)], { org: false }, closed);
     expect(out).toMatchObject({ org: false, dependabot: true });
+  });
+});
+
+describe('large title collapse', () => {
+  it('maps scroll distance to progress over 56px, clamped', () => {
+    expect(collapseProgress(-20)).toBe(0);
+    expect(collapseProgress(0)).toBe(0);
+    expect(collapseProgress(28)).toBe(0.5);
+    expect(collapseProgress(56)).toBe(1);
+    expect(collapseProgress(376)).toBe(1);
+  });
+
+  it('steps to the nearer state under reduced motion', () => {
+    expect(steppedProgress(0.49)).toBe(0);
+    expect(steppedProgress(0.5)).toBe(1);
+  });
+
+  it('settles a list resting inside the range to the nearer end', () => {
+    expect(snapTarget(0)).toBeUndefined();
+    expect(snapTarget(56)).toBeUndefined();
+    expect(snapTarget(120)).toBeUndefined();
+    expect(snapTarget(27)).toBe(0);
+    expect(snapTarget(28)).toBe(56);
+  });
+
+  it('titles each tab', () => {
+    expect(tabTitle('prs')).toBe('Pull requests');
+    expect(tabTitle('issues')).toBe('Issues');
+    expect(tabTitle('activity')).toBe('Activity');
   });
 });
