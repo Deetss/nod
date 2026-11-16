@@ -26,7 +26,7 @@ export const HELP_KEYS: KeyDef[] = [
   { keys: 'x', label: 'resolve or reopen thread (on a thread or finding card)' },
   { keys: 'Ctrl+Enter', label: 'post reply (in a thread reply box)' },
   { keys: 'Ctrl+Enter', label: 'submit review (in Finish review body)' },
-  { keys: 'Up / Down / Enter / Esc', label: 'move, choose or close the Finish review menu' },
+  { keys: '↑ / ↓ / Enter / Esc', label: 'move, choose or close the Finish review menu' },
   { keys: 'm', label: 'auto-merge (in Issues, m is milestone)' },
   { keys: 'M', label: 'admin merge' },
   { keys: 'y', label: 'ready for review' },
