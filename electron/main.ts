@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process';
 import { join } from 'node:path';
 import { serve } from '@hono/node-server';
 import {
@@ -27,7 +28,7 @@ import { appEnv } from '../server/env';
 import { migrateLegacyDirs } from '../server/migrate';
 import { consoleSink } from '../server/request-log';
 import { loadSettings } from '../server/settings';
-import { relaunchOptions, relaunchRestarter } from '../server/restart';
+import { appImageRelaunch, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
 import { requestErrorText, requestUpdate } from '../server/update-request';
@@ -120,7 +121,13 @@ function showWindow(): void {
 
 /** Starts this command line again once this instance exits. */
 function relaunch(): void {
-  app.relaunch(relaunchOptions(process.env.APPIMAGE, process.argv));
+  const appImage = process.env.APPIMAGE;
+  if (!appImage) {
+    app.relaunch();
+    return;
+  }
+  const { command, args } = appImageRelaunch(appImage, process.argv, process.pid);
+  spawn(command, args, { detached: true, stdio: 'ignore' }).unref();
 }
 
 function quit(): void {

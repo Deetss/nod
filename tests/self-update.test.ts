@@ -1,9 +1,11 @@
+import { execFile, spawn } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { promisify } from 'node:util';
 import { describe, expect, it, vi } from 'vitest';
 import { createApp } from '../server/app';
 import { DeviceStore } from '../server/devices';
 import { FixtureProvider } from '../server/fixture-provider';
-import { relaunchOptions } from '../server/restart';
+import { appImageRelaunch } from '../server/restart';
 import type { PhoneAccess } from '../server/security';
 import { updateCheckText, type UpdateCheckResult } from '../shared/app-update';
 import { DEV_BUILD, shellNotice } from '../shared/build-update';
@@ -84,16 +86,19 @@ describe('shellNotice', () => {
   });
 });
 
-describe('relaunchOptions', () => {
-  it('relaunches the AppImage file, not the binary on its mount', () => {
-    expect(relaunchOptions('/home/u/.local/opt/nod/nod.AppImage', ['/tmp/.mount_nod.x/nod', '--serve'])).toEqual({
-      execPath: '/home/u/.local/opt/nod/nod.AppImage',
-      args: ['--serve'],
-    });
+describe('appImageRelaunch', () => {
+  it('relaunches the AppImage file with the same arguments, not the binary on its mount', () => {
+    const { command, args } = appImageRelaunch('/home/u/.local/opt/nod/nod.AppImage', ['/tmp/.mount_nod.x/nod', '--fixtures'], 4242);
+    expect(command).toBe('/bin/sh');
+    expect(args.slice(2)).toEqual(['4242', '/home/u/.local/opt/nod/nod.AppImage', '--fixtures']);
   });
 
-  it("leaves Electron's default outside an AppImage", () => {
-    expect(relaunchOptions(undefined, ['/usr/bin/electron', '.'])).toBeUndefined();
+  it('starts the new instance only after the old one exits', async () => {
+    const old = spawn('sleep', ['0.4']);
+    const exited = new Promise<number>((resolve) => old.on('exit', () => resolve(Date.now())));
+    const { command, args } = appImageRelaunch(process.execPath, ['nod', '-e', 'process.stdout.write(String(Date.now()))'], old.pid!);
+    const { stdout } = await promisify(execFile)(command, args);
+    expect(Number(stdout)).toBeGreaterThanOrEqual(await exited);
   });
 });
 
