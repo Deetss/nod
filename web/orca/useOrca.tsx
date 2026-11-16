@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { prefillOptions } from '../../shared/orca-message';
 import { orcaEnabledFor, type OrcaPrefs, type RepoMode } from '../../shared/orca-prefs';
-import type { NoticeResult, PrSessions, SessionView } from '../../shared/orca-sessions';
-import { repoInOrca, type OrcaInfo } from '../../shared/orca';
+import { SEND_MAX, type NoticeResult, type PrSessions, type SessionView } from '../../shared/orca-sessions';
+import { prWorktreeName, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../../shared/orca';
 import type { PrDetail } from '../../shared/types';
 import { api } from '../api';
 import { DispatchDialog } from '../issues/IssueDialogs';
@@ -13,7 +13,10 @@ import { OrcaSection, type SendOutcome, type SentNote } from './OrcaSection';
 import type { OrcaSessionsValue } from './OrcaContext';
 import { SendDialog } from './SendDialog';
 import { SessionPicker } from './SessionPicker';
-import type { FindingSender } from '../useFindings';
+import { sendFailure, type FindingSender } from '../useFindings';
+import { PhoneFixDispatch } from '../phone/PhoneFix';
+import { PhoneSendSheet } from '../phone/PhoneSendSheet';
+import { PhoneSessionPicker } from '../phone/PhoneSessionPicker';
 
 /** The poll cost is two CLI calls on the server, shared by every row. */
 export const SESSIONS_POLL_MS = 20_000;
@@ -58,13 +61,17 @@ interface Options {
   onDetails: () => void;
   /** Called with the tag a finding was sent under, once its Send result is in. */
   onFindingResult?: (tag: string, outcome: SendOutcome) => void;
+  /** Phone layout: the Send, picker and dispatch flows open as bottom sheets. */
+  phone?: boolean;
+  /** Called with the tag a finding was dispatched under and the new worktree's name. */
+  onFindingDispatched?: (tag: string, worktree: string) => void;
 }
 
 const msg = (e: unknown, fallback: string): string => (e instanceof Error ? e.message : fallback);
 
 /** Everything behind the Orca session surfaces: polling, the card, the picker, the dialog, results and toasts. */
 export function useOrca(o: Options): OrcaController {
-  const { detail, orca, active, syncedAt, toast, onFindingResult } = o;
+  const { detail, orca, active, syncedAt, toast, onFindingResult, onFindingDispatched, phone = false } = o;
   const remote = useRemote(active ? 'orca-sessions' : null, () => api.orcaSessions());
   const { reload } = remote;
   const [localPrefs, setLocalPrefs] = useState<Prefs>();
@@ -72,10 +79,21 @@ export function useOrca(o: Options): OrcaController {
   const [sent, setSent] = useState<SentNote>();
   const [busy, setBusy] = useState(false);
   const [picker, setPicker] = useState<string>();
-  const [dialog, setDialog] = useState<{ prId: string; session: SessionView; initialText?: string; tag?: string }>();
+  const [dialog, setDialog] = useState<{
+    prId: string;
+    session: SessionView;
+    initialText?: string;
+    tag?: string;
+    /** Phone: the finding's `file:line` for the sheet header. */
+    where?: string;
+    /** Phone: a possible session picked for this one send. */
+    once?: boolean;
+    /** Phone: why the last send did not land. The sheet stays open. */
+    error?: string;
+  }>();
   /** A finding waiting for the picker to name its session. */
-  const [pending, setPending] = useState<{ text: string; tag: string }>();
-  const [dispatch, setDispatch] = useState<{ prId: string; text: string; name?: string }>();
+  const [pending, setPending] = useState<{ text: string; tag: string; where?: string }>();
+  const [dispatch, setDispatch] = useState<{ prId: string; text: string; name?: string; tag?: string }>();
   const [dispatchBusy, setDispatchBusy] = useState(false);
   const [dispatchError, setDispatchError] = useState<string>();
 
@@ -131,21 +149,28 @@ export function useOrca(o: Options): OrcaController {
   const doSend = useCallback(
     (prIdFor: string, session: SessionView, text: string, requestId?: string, tag?: string) => {
       setBusy(true);
+      if (phone) setDialog((d) => (d ? { ...d, error: undefined } : d));
       api
         .orcaSend(session.id, text, requestId)
         .then((r) => {
           const out = { ...r, prId: prIdFor, session, text };
           setOutcome(out);
-          setDialog(undefined);
+          const failure = phone ? sendFailure(r.status, session.name) : undefined;
+          if (failure) setDialog((d) => (d ? { ...d, error: `${failure}. Your text is kept.` } : d));
+          else setDialog(undefined);
           if (tag) onFindingResult?.(tag, out);
         })
-        .catch((e: unknown) => toast({ kind: 'err', message: `Could not send: ${msg(e, 'Request failed')}` }))
+        .catch((e: unknown) => {
+          const message = `Could not send: ${msg(e, 'Request failed')}`;
+          if (phone) setDialog((d) => (d ? { ...d, error: `${message}. Your text is kept.` } : d));
+          else toast({ kind: 'err', message });
+        })
         .finally(() => {
           setBusy(false);
           reload();
         });
     },
-    [toast, reload, onFindingResult],
+    [toast, reload, onFindingResult, phone],
   );
 
   const doCheck = useCallback(
@@ -165,10 +190,19 @@ export function useOrca(o: Options): OrcaController {
   );
 
   const openSend = useCallback(
-    (session?: SessionView, initialText?: string, tag?: string) => {
+    (session?: SessionView, initialText?: string, tag?: string, where?: string, once?: boolean) => {
       if (!prId) return;
       const target = session ?? single;
-      if (target) setDialog({ prId, session: target, ...(initialText === undefined ? {} : { initialText }), ...(tag === undefined ? {} : { tag }) });
+      if (target) {
+        setDialog({
+          prId,
+          session: target,
+          ...(initialText === undefined ? {} : { initialText }),
+          ...(tag === undefined ? {} : { tag }),
+          ...(where === undefined ? {} : { where }),
+          ...(once ? { once } : {}),
+        });
+      }
       else if ((sessions?.possible.length ?? 0) > 0) setPicker(prId);
     },
     [prId, single, sessions?.possible.length],
@@ -285,22 +319,42 @@ export function useOrca(o: Options): OrcaController {
     ) : null;
 
   const pickerSessions = picker && picker === prId ? sessions : undefined;
+  const Picker = phone ? PhoneSessionPicker : SessionPicker;
+  const dispatchOpen = dispatch && detail && dispatch.prId === prId ? { dispatch, detail } : undefined;
+
+  const confirmDispatch = (v: Omit<OrcaDispatchRequest, 'repo' | 'number'>) => {
+    if (!dispatchOpen) return;
+    const { dispatch: d, detail: pr } = dispatchOpen;
+    setDispatchBusy(true);
+    setDispatchError(undefined);
+    api
+      .orcaDispatch({ repo: pr.summary.repo, number: pr.summary.number, ...v })
+      .then((res) => {
+        toast({ kind: 'ok', message: `Dispatched to ${res.worktree}` });
+        if (phone && d.tag) onFindingDispatched?.(d.tag, res.worktree);
+        setDispatch(undefined);
+        setOutcome(undefined);
+      })
+      .catch((e: unknown) => setDispatchError(msg(e, 'Dispatch failed')))
+      .finally(() => setDispatchBusy(false));
+  };
+
   const overlays: ReactNode = (
     <>
       {picker && pickerSessions && summary ? (
-        <SessionPicker
+        <Picker
           number={summary.number}
           related={pickerSessions.related}
           possible={pickerSessions.possible}
           title={pending && pickerSessions.related.length === 0 ? `No Orca session linked to PR #${summary.number}` : undefined}
           onChoose={(s) => {
             choose(picker, s);
-            if (pending) openSend(s, pending.text, pending.tag);
+            if (pending) openSend(s, pending.text, pending.tag, pending.where);
             setPending(undefined);
           }}
           onSendOnce={(s) => {
             setPicker(undefined);
-            openSend(s, pending?.text, pending?.tag);
+            openSend(s, pending?.text, pending?.tag, pending?.where, true);
             setPending(undefined);
           }}
           onClose={() => {
@@ -310,57 +364,82 @@ export function useOrca(o: Options): OrcaController {
         />
       ) : null}
       {dialog && detail && dialog.prId === prId ? (
-        <SendDialog
-          session={dialog.session}
-          options={prefillOptions(prefillFactsOf(detail))}
-          initialText={dialog.initialText}
-          busy={busy}
-          onSend={(text) => doSend(dialog.prId, dialog.session, text, undefined, dialog.tag)}
-          onCancel={() => setDialog(undefined)}
-        />
+        phone ? (
+          <PhoneSendSheet
+            session={dialog.session}
+            options={prefillOptions(prefillFactsOf(detail))}
+            sub={dialog.where ?? `${detail.summary.repo} #${detail.summary.number}`}
+            initialText={dialog.initialText}
+            once={dialog.once}
+            busy={busy}
+            error={dialog.error}
+            onSend={(text) => doSend(dialog.prId, dialog.session, text, undefined, dialog.tag)}
+            onCancel={() => setDialog(undefined)}
+          />
+        ) : (
+          <SendDialog
+            session={dialog.session}
+            options={prefillOptions(prefillFactsOf(detail))}
+            initialText={dialog.initialText}
+            busy={busy}
+            onSend={(text) => doSend(dialog.prId, dialog.session, text, undefined, dialog.tag)}
+            onCancel={() => setDialog(undefined)}
+          />
+        )
       ) : null}
-      {dispatch && detail && dispatch.prId === prId ? (
-        <DispatchDialog
-          issue={{ repo: detail.summary.repo, number: detail.summary.number, title: '', url: '' }}
-          agents={orca?.agents ?? []}
-          busy={dispatchBusy}
-          error={dispatchError}
-          pr={{ headRef: detail.headRef, name: dispatch.name ?? `pr-${detail.summary.number}-message`, prompt: dispatch.text }}
-          onCancel={() => !dispatchBusy && setDispatch(undefined)}
-          onConfirm={(v) => {
-            setDispatchBusy(true);
-            setDispatchError(undefined);
-            api
-              .orcaDispatch({ repo: detail.summary.repo, number: detail.summary.number, ...v })
-              .then((res) => {
-                toast({ kind: 'ok', message: `Dispatched to ${res.worktree}` });
-                setDispatch(undefined);
-                setOutcome(undefined);
-              })
-              .catch((e: unknown) => setDispatchError(msg(e, 'Dispatch failed')))
-              .finally(() => setDispatchBusy(false));
-          }}
-        />
+      {dispatchOpen ? (
+        phone ? (
+          <PhoneFixDispatch
+            subject={`${dispatchOpen.detail.summary.repo} #${dispatchOpen.detail.summary.number}`}
+            agents={orca?.agents ?? []}
+            headRef={dispatchOpen.detail.headRef}
+            name={dispatchOpen.dispatch.name ?? prWorktreeName(dispatchOpen.detail.summary.number)}
+            prompt={dispatchOpen.dispatch.text}
+            max={SEND_MAX}
+            busy={dispatchBusy}
+            error={dispatchError}
+            onDispatch={confirmDispatch}
+            onCancel={() => {
+              setDispatchError(undefined);
+              setDispatch(undefined);
+            }}
+          />
+        ) : (
+          <DispatchDialog
+            issue={{ repo: dispatchOpen.detail.summary.repo, number: dispatchOpen.detail.summary.number, title: '', url: '' }}
+            agents={orca?.agents ?? []}
+            busy={dispatchBusy}
+            error={dispatchError}
+            pr={{
+              headRef: dispatchOpen.detail.headRef,
+              name: dispatchOpen.dispatch.name ?? `pr-${dispatchOpen.detail.summary.number}-message`,
+              prompt: dispatchOpen.dispatch.text,
+            }}
+            onCancel={() => !dispatchBusy && setDispatch(undefined)}
+            onConfirm={confirmDispatch}
+          />
+        )
       ) : null}
     </>
   );
 
   const findingSender: FindingSender | undefined = shown
     ? {
-        send: (text, tag) => {
+        send: (text, tag, where) => {
           if (!prId) return false;
           if (single) {
-            openSend(single, text, tag);
+            openSend(single, text, tag, where);
             return true;
           }
           if (sessions && sessions.related.length + sessions.possible.length > 0) {
-            setPending({ text, tag });
+            setPending({ text, tag, ...(where === undefined ? {} : { where }) });
             setPicker(prId);
             return true;
           }
 
           // No session to send to, so offer a fresh worktree on the PR branch instead.
-          setDispatch({ prId, text, name: `pr-${summary?.number ?? 0}-finding` });
+          // The phone sheet uses the PR worktree name from the spec.
+          setDispatch({ prId, text, tag, ...(phone ? {} : { name: `pr-${summary?.number ?? 0}-finding` }) });
           return true;
         },
       }
