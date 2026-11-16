@@ -124,35 +124,31 @@ describe('android.mjs in a temporary HOME', () => {
     vi.resetModules();
     const path = SCRIPT;
     return (await import(path)) as {
-      twaManifest: (host: string, iconBase: string, version: number) => Record<string, unknown>;
+      gradleArgs: (version: number, pkg: string) => string[];
       finishBuild: (signed: string, version: number, pkg: string, releaseApk?: string) => Promise<AndroidRelease>;
     };
   }
 
-  it('bakes the version code into the start URL', async () => {
+  it('passes the package and version to Gradle the way the release workflow does', async () => {
     const mod = await load(await mkdtemp(join(tmpdir(), 'nod-home-')));
-    const m = mod.twaManifest(PHONE.host, 'http://127.0.0.1:1', 12);
-    expect(m.startUrl).toBe('/?apk=12');
-    expect(m.appVersionCode).toBe(12);
+    expect(mod.gradleArgs(12, 'example.acme.nod')).toEqual([
+      'assembleRelease',
+      '-PnodPackage=example.acme.nod',
+      '-PnodVersionCode=12',
+      '-PnodVersionName=1.0.12',
+    ]);
   });
 
-  it('points Bubblewrap at the monochrome icon for the status bar, served like the others', async () => {
-    const mod = await load(await mkdtemp(join(tmpdir(), 'nod-home-')));
-    const m = mod.twaManifest(PHONE.host, 'http://127.0.0.1:1', 12);
-    expect(m.monochromeIconUrl).toBe('http://127.0.0.1:1/icons/icon-monochrome-512.png');
-    expect(m.iconUrl).toBe('http://127.0.0.1:1/icons/icon-512.png');
-    expect(existsSync(join(process.cwd(), 'web/public/icons/icon-monochrome-512.png'))).toBe(true);
-  });
-
-  // Bubblewrap turns `host` into the autoVerify intent filter (`https`, `@string/hostName`, no
-  // port or path), so the app claims every URL on the default origin, `/pair` included.
-  it('claims the whole tailnet origin on the default port', async () => {
-    const mod = await load(await mkdtemp(join(tmpdir(), 'nod-home-')));
-    const m = mod.twaManifest(PHONE.host, 'http://127.0.0.1:1', 12);
-    expect(m.host).toBe(PHONE.host);
-    expect(m.webManifestUrl).toBe(`https://${PHONE.host}/manifest.webmanifest`);
-    expect(m).not.toHaveProperty('additionalTrustedOrigins');
-    expect(m).not.toHaveProperty('shareTarget');
+  // One APK serves every server, so neither the manifest nor the build may name a host.
+  it('bakes no server host into the Android project', async () => {
+    const manifest = await readFile(join(ROOT, 'android/app/src/main/AndroidManifest.xml'), 'utf8');
+    const gradle = await readFile(join(ROOT, 'android/app/build.gradle'), 'utf8');
+    expect(manifest).not.toContain('android:scheme="https"');
+    expect(manifest).not.toContain('hostName');
+    expect(manifest).not.toContain('web_manifest_url');
+    expect(manifest).toContain('<data android:scheme="nod" />');
+    expect(gradle).not.toContain('nodHost');
+    expect(existsSync(join(ROOT, 'android/app/src/main/java/dev/example/nod/SetupActivity.java'))).toBe(true);
   });
 
   it('publishes the APK and its metadata to the state dir and counts the version', async () => {

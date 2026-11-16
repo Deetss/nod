@@ -28,7 +28,6 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@bubblewrap/cli": "1.27.0",
     "@primer/primitives": "^11.10.0",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
