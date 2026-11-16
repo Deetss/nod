@@ -12,6 +12,7 @@ export function allDocuments(): Record<string, string> {
     }
   }
   docs.pollQuery = issueQueries.pollQuery(prQueries.PR_FIELDS);
+  docs.pollQueryNoProject = issueQueries.pollQuery(prQueries.PR_FIELDS, false);
 
   return docs;
 }

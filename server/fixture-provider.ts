@@ -41,6 +41,8 @@ import { FINDINGS_PR, FINDINGS_REPO, FIXTURE_FINDING_THREADS } from './fixture-f
 import { FIXTURE_INLINE_THREADS } from './fixture-threads';
 import { FixtureReview } from './fixture-review';
 import { FixtureIssues } from './issue-fixtures';
+import { FixtureConnection } from './fixture-connection';
+import { connectionFeatures, type Connection, type ConnectionCheck } from '../shared/connection';
 import type { MentionablePage } from '../shared/mentions';
 
 /** Synthetic people and team for `NOD_FIXTURES=1`, under owner `acme-co`. */
@@ -135,6 +137,7 @@ export class FixtureProvider implements Provider {
   private readonly issueData: FixtureIssues;
   /** Inline review state for the fixture PR. Mutated in memory by the comment actions. */
   private readonly inline = new FixtureReview();
+  private readonly conn = new FixtureConnection();
 
   constructor(private readonly settings: Settings = DEFAULT_SETTINGS) {
     this.issueData = new FixtureIssues(settings);
@@ -162,11 +165,22 @@ export class FixtureProvider implements Provider {
     return { prs: 0, issues: 0 };
   }
 
+  connection(state?: StateQuery): Connection {
+    return this.conn.get(state);
+  }
+
+  async checkConnection(state?: StateQuery): Promise<ConnectionCheck> {
+    console.log('[fixtures] would run gh auth token and GET /user');
+    return this.conn.check(state);
+  }
+
   async inbox(state: StateQuery, sync: SyncMode = 'full'): Promise<InboxData> {
     console.log(`[fixtures] would call InboxSync:${sync}`);
     const now = this.born;
-    const base: InboxData = { viewer: VIEWER, teams: ['sam-leads'], prs: [], syncedAt: Date.now() - 14_000, follows: {} };
+    const connection = this.conn.get(state);
+    const base: InboxData = { viewer: VIEWER, teams: ['sam-leads'], prs: [], syncedAt: Date.now() - 14_000, follows: {}, connection };
     if (state === 'loading') return { ...base, syncing: { done: 38, total: 61 } };
+    if (connection.state === 'none') return { ...base, viewer: '', teams: [], syncedAt: 0 };
 
     if (state === 'ci-live' && sync === 'none') this.liveOrigin = Date.now();
     const s = fixtureSections(now);
@@ -187,7 +201,11 @@ export class FixtureProvider implements Provider {
       out.stale = {
         kind: 'error',
         cachedAt: '14:52',
-        message: 'GitHub API error 502 while loading acme-co/acme-api',
+        message:
+          'Something went wrong while executing your query. This may be the result of a timeout, or it could be a GitHub bug.',
+        status: 200,
+        operation: 'InboxSync:full',
+        at: '14:58',
       };
     }
     if (state === 'ratelimit') {
@@ -576,8 +594,12 @@ export class FixtureProvider implements Provider {
     this.openedIds.add(mark.id);
   }
 
-  issues(state: StateQuery): Promise<IssueInboxData> {
-    return this.issueData.list(state);
+  async issues(state: StateQuery): Promise<IssueInboxData> {
+    const connection = this.conn.get(state);
+    if (connection.state === 'none') return { viewer: '', issues: [], mentionedIds: [], syncedAt: 0, connection };
+    const data = await this.issueData.list(state);
+    const projectStatus = data.projectStatus === true && connectionFeatures(connection).project;
+    return { ...data, projectStatus, connection };
   }
 
   async closed(

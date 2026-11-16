@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type KeyboardEvent } from 'react';
+import { attentionTone, projectOff } from '../../shared/connection';
 import type { Settings } from '../../shared/settings';
 import { Btn, CheckIcon } from '../ui';
 import { useFocusTrap } from '../useFocusTrap';
@@ -17,6 +18,7 @@ import {
 import { ErrorIcon } from './SettingsFields';
 import { SettingsPane } from './SettingsPanes';
 import { useSaveSettings } from './useSaveSettings';
+import type { ConnectionView } from './useConnection';
 
 const DEFAULT_STATUS = 'Saved to app-settings.json. The service restarts to apply.';
 
@@ -38,7 +40,27 @@ function Status({ tone, children }: StatusProps) {
 }
 
 /** The Settings dialog: a section list, the open section's fields, and Cancel / Save. Opened by `,`. */
-export function SettingsDialog({ initial, onClose, initialSection }: { initial: Settings; onClose: () => void; initialSection?: SectionId }) {
+interface SettingsDialogProps {
+  initial: Settings;
+  onClose: () => void;
+  initialSection?: SectionId;
+  /** The GitHub token's state, shown on the GitHub pane and marked in the section list. */
+  connection?: ConnectionView;
+  /** Opened from a token banner: focus lands on Check again. */
+  focusCheck?: boolean;
+}
+
+/** The `!` on a section, for the token. Shown on the active section too. */
+function NavMark({ tone }: { tone: 'danger' | 'attention' }) {
+  return (
+    <span className={`settings-nav-alert nav-mark is-${tone}`}>
+      <span aria-hidden="true">!</span>
+      <span className="sr-only">needs attention</span>
+    </span>
+  );
+}
+
+export function SettingsDialog({ initial, onClose, initialSection, connection, focusCheck }: SettingsDialogProps) {
   const baseline = useMemo(() => toForm(initial), [initial]);
   const [form, setForm] = useState<FormState>(baseline);
   const [section, setSection] = useState<SectionId>(initialSection ?? 'github');
@@ -57,7 +79,12 @@ export function SettingsDialog({ initial, onClose, initialSection }: { initial: 
   const dirty = isDirty(baseline, form);
   const canSave = invalid === 0 && !busy && !done;
 
+  const tone = attentionTone(connection?.connection);
+  const statusOff = projectOff(connection?.connection);
+
   useEffect(() => {
+    // Opened from a token banner: the Connection card focuses Check again itself.
+    if (focusCheck) return;
     // Opened to a section: land on its first control. Otherwise focus the list.
     const first = initialSection
       ? document.querySelector<HTMLElement>('.settings-pane-body [role="switch"], .settings-pane-body input')
@@ -126,7 +153,11 @@ export function SettingsDialog({ initial, onClose, initialSection }: { initial: 
                 onClick={() => setSection(s.id)}
               >
                 {s.label}
-                {failing.has(s.id) && s.id !== section ? (
+                {s.id === 'github' && tone ? (
+                  <NavMark tone={tone} />
+                ) : s.id === 'project' && statusOff ? (
+                  <span className="settings-nav-note">Status off</span>
+                ) : failing.has(s.id) && s.id !== section ? (
                   <span className="settings-nav-alert">
                     <ErrorIcon size={12} />
                     <span className="sr-only">has an invalid field</span>
@@ -136,7 +167,15 @@ export function SettingsDialog({ initial, onClose, initialSection }: { initial: 
             ))}
           </nav>
           <div className="settings-pane">
-            <SettingsPane section={section} form={form} errors={errors} patch={patch} onEnter={submit} />
+            <SettingsPane
+              section={section}
+              form={form}
+              errors={errors}
+              patch={patch}
+              onEnter={submit}
+              connection={connection}
+              focusCheck={focusCheck}
+            />
           </div>
         </div>
         <div className="settings-foot">

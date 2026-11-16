@@ -59,6 +59,8 @@ export function resolveProject(
 /** The resolved project, cached on disk and refreshed on each full sweep. */
 export class ProjectConfig {
   resolved: ResolvedProject | undefined;
+  /** False when the token lacks the `project` scope: no lookup, and Status stays off. */
+  available = true;
   private loaded = false;
 
   constructor(
@@ -72,7 +74,7 @@ export class ProjectConfig {
   }
 
   get enabled(): boolean {
-    return this.resolved !== undefined;
+    return this.available && this.resolved !== undefined;
   }
 
   /** Reads the saved ids so the first render needs no request. */
@@ -90,6 +92,7 @@ export class ProjectConfig {
   /** Looks the ids up again. A request failure keeps the last good ids. */
   async refresh(client: GithubClient): Promise<void> {
     await this.load();
+    if (!this.available) return;
     const org = this.settings.orgs[0];
     if (!org) return;
     let data: ProjectMetaResponse;

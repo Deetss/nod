@@ -9,6 +9,14 @@ import type {
 } from '../shared/issue-types';
 import type { ClosedIssue, ClosedKind, ClosedPage, ClosedPr, ClosedWindow } from '../shared/closed';
 import { fetchClosedPage } from './closed';
+import {
+  connectionFeatures,
+  improved,
+  type Connection,
+  type ConnectionCheck,
+  type ConnectionFeatures,
+} from '../shared/connection';
+import { GithubConnection, isProjectScopeError } from './connection';
 import { parsePatch } from '../shared/patch';
 import { repoName, repoOwner } from '../shared/repo-name';
 import { adminMergeArgs, adminMergeState, DRAFT_HINT, isOwnPr, mergeFlags, sameLogin } from '../shared/pr-actions';
@@ -350,9 +358,33 @@ export class GithubProvider implements Provider {
     private readonly now: () => number = Date.now,
     issueStore: IssueCache = new IssueCache(),
     project: ProjectConfig = new ProjectConfig(undefined, undefined, log),
+    private readonly conn: GithubConnection = new GithubConnection(client, undefined, undefined, log),
   ) {
     this.issueSvc = new IssueService(client, seen, issueStore, now, project);
     this.attachments = AttachmentImages.over(client, log, now);
+  }
+
+  /** What the token allows right now. The project switch follows it before every sync. */
+  private features(): ConnectionFeatures {
+    const f = connectionFeatures(this.conn.current());
+    this.issueSvc.project.available = f.project;
+    return f;
+  }
+
+  connection(): Connection {
+    return this.conn.current();
+  }
+
+  async checkConnection(): Promise<ConnectionCheck> {
+    const { before, connection, result } = await this.conn.check();
+    if (improved(before, connection)) {
+      // Teams and project ids are looked up again on the next sync.
+      this.metaAt = 0;
+      this.backoffUntil = 0;
+      this.features();
+      void this.refresh().catch((e: unknown) => this.log(`[gh] sync after check failed (${e instanceof Error ? e.message : 'error'})`));
+    }
+    return { connection, ...(result ? { result } : {}) };
   }
 
   private get settings(): Settings {
@@ -407,6 +439,7 @@ export class GithubProvider implements Provider {
 
   /** The viewer's team slugs. Without permission it logs once and matches users only. */
   private async fetchTeams(viewer: string): Promise<string[]> {
+    if (!this.features().teams) return [];
     try {
       const slugs: string[] = [];
       for (const org of this.settings.orgs) {
@@ -447,15 +480,16 @@ export class GithubProvider implements Provider {
   private async pollCombined(start: number): Promise<void> {
     const { orgs, project, includeInvolved } = this.settings;
     const { viewer } = this.state;
+    const withProject = this.issueSvc.project.available;
     const vars = {
       prs: deltaSearch(orgs, this.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
       own: ownOpenSearch(orgs, viewer, includeInvolved),
       watchOwn: Object.values(this.state.prs).some((p) => p.ci === 'running' && isOwnPr(p.author, viewer)),
       issues: issueDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
       mentions: mentionDeltaSearch(orgs, this.issueSvc.state.lastSync, DELTA_OVERLAP_MS, includeInvolved),
-      statusField: project.statusField,
+      ...(withProject ? { statusField: project.statusField } : {}),
     };
-    const data = await this.client.graphql<PollResponse>(pollQuery(PR_FIELDS), vars, 'Poll:delta');
+    const data = await this.client.graphql<PollResponse>(pollQuery(PR_FIELDS, withProject), vars, 'Poll:delta');
     this.issueSvc.viewerId = data.viewer.id ?? this.issueSvc.viewerId;
     const prs = data.prs.nodes.filter((n): n is RawPr => 'id' in n);
     if (data.prs.pageInfo.hasNextPage) {
@@ -484,8 +518,24 @@ export class GithubProvider implements Provider {
     return JSON.stringify([prs, closed, issues, mentioned, issuesClosed]);
   }
 
-  /** Runs one sync and says whether the saved PR, issue or mention lists changed. */
+  /**
+   * Runs one sync and says whether the saved PR, issue or mention lists changed. A token with
+   * unknown scopes learns from GitHub: a refused `projectItems` turns Status off and syncs again.
+   */
   private async runSync(mode: Exclude<SyncMode, 'none'>): Promise<boolean> {
+    this.features();
+    try {
+      return await this.syncOnce(mode);
+    } catch (e) {
+      if (!(e instanceof ApiError) || !this.issueSvc.project.available || !isProjectScopeError(e.message)) throw e;
+      this.log('[gh] token cannot read projects; issue Status off');
+      this.conn.projectDenied = true;
+      this.features();
+      return this.syncOnce(mode);
+    }
+  }
+
+  private async syncOnce(mode: Exclude<SyncMode, 'none'>): Promise<boolean> {
     const start = this.now();
     await this.issueSvc.load();
     const before = this.listsKey();
@@ -668,6 +718,8 @@ export class GithubProvider implements Provider {
   async poll(mode: Exclude<SyncMode, 'none'>): Promise<PollResult> {
     await this.load();
     if (this.now() < this.backoffUntil) return { changed: false };
+    // No token, or one without `repo`: sync pauses and the saved lists stay as they are.
+    if (!this.features().sync) return { changed: false };
     let changed = false;
     try {
       changed = await this.sync(mode);
@@ -678,10 +730,8 @@ export class GithubProvider implements Provider {
       if (e.kind === 'ratelimit') this.backoffUntil = this.backoffEnd(e);
       if (this.state.lastSync === 0) throw e;
       this.stale = {
-        kind: e.kind === 'ratelimit' ? 'ratelimit' : 'error',
+        ...this.staleFrom(e),
         cachedAt: hhmm(new Date(this.state.lastSync)),
-        message: e.message,
-        resetAt: e.resetAt ?? this.client.lastRate?.resetAt,
       };
     }
     this.emit();
@@ -705,14 +755,20 @@ export class GithubProvider implements Provider {
     } catch (e) {
       const hit = this.cache.get(key);
       if (!hit || !(e instanceof ApiError)) throw e;
-      const stale: Stale = {
-        kind: e.kind === 'ratelimit' ? 'ratelimit' : 'error',
-        cachedAt: hhmm(hit.at),
-        message: e.message,
-        resetAt: e.resetAt ?? this.client.lastRate?.resetAt,
-      };
-      return { ...(hit.value as T), stale };
+      return { ...(hit.value as T), stale: { ...this.staleFrom(e), cachedAt: hhmm(hit.at) } };
     }
+  }
+
+  /** The failure half of a stale marker; the caller adds when the cache is from. */
+  private staleFrom(e: ApiError): Omit<Stale, 'cachedAt'> {
+    return {
+      kind: e.kind === 'ratelimit' ? 'ratelimit' : 'error',
+      message: e.message,
+      at: hhmm(new Date(this.now())),
+      ...(e.status !== undefined ? { status: e.status } : {}),
+      ...(e.operation ? { operation: e.operation } : {}),
+      ...((e.resetAt ?? this.client.lastRate?.resetAt) ? { resetAt: e.resetAt ?? this.client.lastRate?.resetAt } : {}),
+    };
   }
 
   /**
@@ -740,6 +796,7 @@ export class GithubProvider implements Provider {
       syncedAt: this.state.lastSync,
       rate: this.rate(),
       ...(stale ? { stale } : {}),
+      connection: this.conn.current(),
     };
   }
 
@@ -1310,7 +1367,8 @@ export class GithubProvider implements Provider {
   }
 
   async issues(_state?: StateQuery): Promise<IssueInboxData> {
-    return this.issueSvc.snapshot(this.stale);
+    this.features();
+    return { ...(await this.issueSvc.snapshot(this.stale)), connection: this.conn.current() };
   }
 
   async issueDetail(ref: PrRef, _state?: StateQuery): Promise<IssueDetail> {

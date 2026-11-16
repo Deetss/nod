@@ -61,6 +61,7 @@ const mergeState = {
 
 async function seeded(follow: () => unknown) {
   const client = {
+    hasToken: true,
     lastRate: undefined,
     graphqlRate: rate,
     rest: async () => ({}),

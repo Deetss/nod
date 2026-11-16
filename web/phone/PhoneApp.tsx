@@ -32,6 +32,11 @@ import {
   type PhoneTab,
 } from './phone-logic';
 import { useLargeTitle } from './useLargeTitle';
+import { projectOff } from '../../shared/connection';
+import { clockOf, tokenBlocks } from '../Banner';
+import type { ConnectionView } from '../settings/useConnection';
+import { PhoneConnectionSheet } from './PhoneConnectionSheet';
+import { PhoneQuietNote, SyncFailedBanner, TokenBannerPhone } from './PhoneStates';
 
 interface PhoneAppProps {
   tab: PhoneTab;
@@ -54,6 +59,8 @@ interface PhoneAppProps {
   onDensity: (d: Density) => void;
   /** The update toast, drawn over the sheets. */
   overlay?: ReactNode;
+  /** The GitHub token's state, for the banners and the How to fix sheet. */
+  connection: ConnectionView;
 }
 
 const CLOSED_BY_DEFAULT = new Set(['org', 'dependabot', 'all']);
@@ -120,17 +127,40 @@ export function PhoneApp(p: PhoneAppProps) {
   const now = Date.now();
   const rate = inbox.data?.rate ?? issues.data?.rate;
   const stale = inbox.data?.stale ?? issues.data?.stale;
+  const conn = p.connection.connection;
+  // No token, or no `repo`: sync is paused, the token banner shows, and writes are off.
+  const blocked = tokenBlocks(conn);
   const syncLine = syncText(inbox.data?.syncedAt, rate?.remaining, now);
-  const cachedLine = `Cached ${stale?.cachedAt ?? ''} · actions off`.replace('  ', ' ');
+  const cachedAt = stale && !blocked ? stale.cachedAt : clockOf(inbox.data?.syncedAt ?? 0);
+  const cachedLine = conn?.state === 'none' ? 'Nothing synced yet.' : `Cached ${cachedAt} · actions off`;
   const errorDetail = inbox.error ?? issues.error ?? stale?.message ?? '';
   const refreshing = inbox.loading && inbox.data !== undefined;
+
+  const [connSheet, setConnSheet] = useState(false);
+  const setConnLayer = (on: boolean) => {
+    if (on) {
+      sheets.openLayer('connection', () => setConnSheet(false));
+      setConnSheet(true);
+    } else {
+      sheets.closeLayer('connection');
+      setConnSheet(false);
+      p.connection.clearResult();
+    }
+  };
+  const listBanner =
+    blocked && conn ? (
+      <TokenBannerPhone connection={conn} cachedAt={cachedAt} onFix={() => setConnLayer(true)} />
+    ) : stale && !inbox.error && !issues.error ? (
+      <SyncFailedBanner stale={stale} onRetry={p.onRefresh} />
+    ) : undefined;
+  const issueNotice = projectOff(conn) && !blocked ? <PhoneQuietNote onTurnOn={() => setConnLayer(true)} /> : undefined;
 
   const statusFor = (hasData: boolean, total: number) =>
     phoneStatus({
       hasData,
       syncing: !!inbox.data?.syncing,
       error: inbox.error ?? issues.error,
-      stale: !!stale,
+      stale: !!stale || blocked,
       total,
     });
 
@@ -290,6 +320,7 @@ export function PhoneApp(p: PhoneAppProps) {
               syncLine={syncLine}
               cachedLine={cachedLine}
               errorDetail={errorDetail}
+              banner={listBanner}
               refreshing={refreshing}
               emptyTitle="Nothing needs you"
               emptyBody="No PRs need your attention."
@@ -306,6 +337,8 @@ export function PhoneApp(p: PhoneAppProps) {
               syncLine={syncLine}
               cachedLine={cachedLine}
               errorDetail={errorDetail}
+              banner={listBanner}
+              notice={issueNotice}
               refreshing={refreshing}
               emptyTitle="Nothing needs you"
               emptyBody="No issues need your attention."
@@ -331,13 +364,14 @@ export function PhoneApp(p: PhoneAppProps) {
         issues={issues.data?.issues ?? []}
         viewer={inbox.data?.viewer ?? ''}
         projectStatus={issues.data?.projectStatus === true}
-        writesOff={!!stale || !navigator.onLine}
+        writesOff={!!stale || blocked || !navigator.onLine}
         onChanged={() => {
           inbox.reload();
           issues.reload();
         }}
       />
       </LinkRouterContext.Provider>
+      {connSheet ? <PhoneConnectionSheet view={p.connection} onClose={() => setConnLayer(false)} /> : null}
       {p.overlay}
     </div>
   );

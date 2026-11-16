@@ -1,0 +1,801 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2800" height="3180" viewBox="0 0 2800 3180"><rect width="2800" height="3180" fill="#fff"/>
+<text x="40" y="36" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="bold" fill="#222" text-anchor="start">Layout A: inline setup in the list banner slot</text>
+<text x="40" y="60" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">Every token state uses the slot where web/Banner.tsx sits today, at the top of the PR or Issues list pane. Notices expand in place to show the fix.</text>
+<text x="40" y="78" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">Required scope or token missing: alert card, sync paused, cached list dimmed. Project scope missing: one quiet line on the Issues list, the rest works.</text>
+<text x="40" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">Check again re-reads the token with gh auth token and re-checks X-OAuth-Scopes, no restart. Nothing new in Settings.</text>
+<text x="40" y="150" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A1 Desktop 1660x870: required scope missing (PRs)</text>
+<text x="40" y="168" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Card replaces the old error banner. Copy and Check again sit next to the command. Detail panes unchanged.</text>
+<clipPath id="c1"><rect x="0" y="0" width="1660" height="870" rx="0"/></clipPath>
+<g transform="translate(40,180)"><g clip-path="url(#c1)">
+<rect x="0" y="0" width="1660" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="1660" height="48" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="30" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Nod</text>
+<rect x="64" y="10" width="59.4" height="28" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="93.7" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">PRs 3</text>
+<rect x="129.4" y="10" width="80.64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="169.72" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Issues 2</text>
+<rect x="216.04000000000002" y="10" width="80.64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="256.36" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="318.68" y="10" width="360" height="28" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="330.68" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Search or jump to a PR, repo or author</text>
+<rect x="1616" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="1630" y="29" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#222" text-anchor="middle">⚙</text>
+<rect x="1582" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="1596" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">☾</text>
+<rect x="1548" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="1562" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">↻</text>
+<text x="1536" y="29" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="end">Synced 10:26 · API 4,812 / 5,000</text>
+<rect x="0" y="48" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="71" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">INBOX</text>
+<rect x="12" y="94" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="114" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="136" width="396" height="260" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="150" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="165" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="165" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">GitHub token is missing read:org</text>
+<text x="24" y="186" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Sync is paused. Nod needs read:org to list org</text>
+<text x="24" y="204" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">repos. Showing cached data from 10:26.</text>
+<text x="24" y="222" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Token has: repo, gist.</text>
+<text x="24" y="254" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run in a terminal on this computer</text>
+<rect x="332" y="236" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="364.0" y="254.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="272" width="372" height="50" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="292" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s</text>
+<text x="34" y="310" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">read:org,project</text>
+<text x="24" y="342" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Also adds project, which turns on issue Status.</text>
+<rect x="24" y="352" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="372.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="359.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="372.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="172" y="352" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="214.0" y="372.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="12" y="422" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="450" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="460" x2="420" y2="460" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="482" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="502" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="408" y="482" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="516" x2="420" y2="516" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="538" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="558" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="408" y="538" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="572" x2="420" y2="572" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="594" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="614" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="408" y="594" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="656" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="666" x2="420" y2="666" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="688" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="708" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="408" y="688" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="722" x2="420" y2="722" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="744" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="764" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="408" y="744" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="420" y="48" width="958" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="432" y="71" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">PR DETAIL + FILES</text>
+<rect x="436" y="100" width="926" height="28" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+<rect x="436" y="144" width="833.4" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="436" y="170" width="722.28" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="436" y="196" width="611.1600000000001" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="436" y="222" width="833.4" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="436" y="248" width="722.28" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<text x="899.0" y="459.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="middle">PR detail from cache (unchanged)</text>
+<rect x="1378" y="48" width="280" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="1390" y="71" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">DIFF</text>
+<rect x="1394" y="100" width="248" height="28" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+<rect x="1394" y="144" width="223.20000000000002" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="1394" y="170" width="193.44" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="1394" y="196" width="163.68" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="1394" y="222" width="223.20000000000002" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="1394" y="248" width="193.44" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<text x="1518.0" y="459.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="middle">Diff (unchanged)</text>
+<line x1="420" y1="48" x2="420" y2="870" stroke="#999" stroke-width="1"/>
+<line x1="1378" y1="48" x2="1378" y2="870" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="1660" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="1740" y="150" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A2 Narrow 960x870: project scope missing, steps open (Issues)</text>
+<text x="1740" y="168" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Two panes. The notice keeps the list pane width. Status pills are absent.</text>
+<clipPath id="c2"><rect x="0" y="0" width="960" height="870" rx="0"/></clipPath>
+<g transform="translate(1740,180)"><g clip-path="url(#c2)">
+<rect x="0" y="0" width="960" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="960" height="48" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="30" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Nod</text>
+<rect x="64" y="10" width="59.4" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="93.7" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">PRs 3</text>
+<rect x="129.4" y="10" width="80.64" height="28" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="169.72" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">Issues 2</text>
+<rect x="216.04000000000002" y="10" width="80.64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="256.36" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="318.68" y="10" width="220" height="28" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="330.68" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Search or jump</text>
+<rect x="916" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="930" y="29" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#222" text-anchor="middle">⚙</text>
+<rect x="882" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="896" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">☾</text>
+<rect x="848" y="10" width="28" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="862" y="28" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">↻</text>
+<text x="836" y="29" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="end">Synced 10:26</text>
+<rect x="0" y="48" width="380" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="71" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">ISSUES</text>
+<rect x="12" y="94" width="356" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="114" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="136" width="356" height="202" rx="8" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<circle cx="34" cy="160" r="9" fill="#fff" stroke="#555" stroke-width="1"/>
+<text x="34" y="164" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">i</text>
+<text x="54" y="165" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">Project Status is off</text>
+<rect x="286" y="148" width="70" height="26" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="321.0" y="165.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Hide ▴</text>
+<text x="24" y="186" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Issues load without Status, and Move to In</text>
+<text x="24" y="204" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">progress is hidden. Everything else works.</text>
+<text x="24" y="234" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run in a terminal on this computer</text>
+<rect x="292" y="216" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="324.0" y="234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="252" width="332" height="32" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="272" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s project</text>
+<rect x="24" y="294" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="314.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="301.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="314.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<text x="12" y="370" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">ASSIGNED TO ME 4</text>
+<line x1="0" y1="380" x2="380" y2="380" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="405" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Webhook retries stop after a deploy</text>
+<text x="12" y="424" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/orders-api #402</text>
+<line x1="0" y1="436" x2="380" y2="436" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="461" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Tax rounding differs from the invoice PDF</text>
+<text x="12" y="480" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #219</text>
+<line x1="0" y1="492" x2="380" y2="492" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="517" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Move staging database to the new region</text>
+<text x="12" y="536" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/infra #81</text>
+<line x1="0" y1="548" x2="380" y2="548" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="573" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Invoice CSV drops the currency column</text>
+<text x="12" y="592" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #223</text>
+<rect x="380" y="48" width="580" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="392" y="71" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">ISSUE</text>
+<rect x="396" y="100" width="548" height="28" rx="4" fill="#eee" stroke="#ccc" stroke-width="1"/>
+<rect x="396" y="144" width="493.2" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="396" y="170" width="427.44" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="396" y="196" width="361.68" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="396" y="222" width="493.2" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<rect x="396" y="248" width="427.44" height="12" rx="3" fill="#eee" stroke="#ddd" stroke-width="1"/>
+<text x="670.0" y="459.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="middle">Issue detail, no Status field</text>
+<line x1="380" y1="48" x2="380" y2="870" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="960" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="40" y="1096" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">List pane at 1660 (420 wide, real size). Topbar and other panes as in A1.</text>
+<text x="40" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A3 First run, no token</text>
+<text x="40" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">No list yet. The card holds all three steps.</text>
+<clipPath id="c3"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(40,1160)"><g clip-path="url(#c3)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">INBOX</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="354" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="102" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Connect Nod to GitHub</text>
+<text x="24" y="138" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Nod reads your token from the GitHub CLI. No token</text>
+<text x="24" y="156" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">was found: gh is not installed, or not logged in.</text>
+<text x="24" y="178" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">1. Install gh from cli.github.com if needed.</text>
+<text x="24" y="196" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">2. Log in with the scopes Nod uses.</text>
+<text x="24" y="220" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run in a terminal on this computer</text>
+<rect x="332" y="202" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="364.0" y="220.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="238" width="372" height="32" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="258" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth login -s project</text>
+<text x="24" y="292" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">3. Check again. No restart needed.</text>
+<rect x="24" y="300" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="320.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="307.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="320.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<text x="24" y="350" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">What each scope turns on</text>
+<text x="24" y="376" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">repo (required): PRs, issues, checks, replies</text>
+<text x="24" y="394" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">read:org (required): Org repos and teams</text>
+<text x="24" y="412" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">project (optional): Issue Status, move to In</text>
+<text x="24" y="430" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">progress</text>
+<rect x="12" y="458" width="396" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="518" width="396" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="578" width="396" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="638" width="396" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="210.0" y="718" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="middle">Nothing synced yet</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="500" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A4 Project scope missing, notice</text>
+<text x="500" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Quiet line, not an alert. List keeps working.</text>
+<clipPath id="c4"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(500,1160)"><g clip-path="url(#c4)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">ISSUES</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="57" rx="8" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<circle cx="34" cy="110" r="9" fill="#fff" stroke="#555" stroke-width="1"/>
+<text x="34" y="114" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">i</text>
+<text x="52" y="115" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Project Status is off.</text>
+<rect x="304" y="98" width="92" height="26" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="350.0" y="115.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Turn on ▾</text>
+<text x="52" y="133" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Token has no project scope.</text>
+<text x="12" y="177" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">ASSIGNED TO ME 4</text>
+<line x1="0" y1="187" x2="420" y2="187" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="212" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Webhook retries stop after a deploy</text>
+<text x="12" y="231" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/orders-api #402</text>
+<line x1="0" y1="243" x2="420" y2="243" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="268" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Tax rounding differs from the invoice PDF</text>
+<text x="12" y="287" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #219</text>
+<line x1="0" y1="299" x2="420" y2="299" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="324" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Move staging database to the new region</text>
+<text x="12" y="343" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/infra #81</text>
+<line x1="0" y1="355" x2="420" y2="355" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="380" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Invoice CSV drops the currency column</text>
+<text x="12" y="399" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #223</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="960" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A5 Check again succeeded</text>
+<text x="960" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Card turns into a confirmation, then hides.</text>
+<clipPath id="c5"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(960,1160)"><g clip-path="url(#c5)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">ISSUES</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="64" rx="8" fill="#fff" stroke="#999" stroke-width="1"/>
+<circle cx="34" cy="112" r="9" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="116" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">✓</text>
+<text x="54" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">GitHub token updated</text>
+<text x="396" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Hides in 5 s</text>
+<text x="24" y="138" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Project Status is on. Syncing issues now.</text>
+<text x="12" y="184" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">ASSIGNED TO ME 4</text>
+<line x1="0" y1="194" x2="420" y2="194" stroke="#ddd" stroke-width="1"/>
+<rect x="308.12" y="204" width="99.88" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="358.06" y="219" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">In progress</text>
+<text x="12" y="219" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Webhook retries stop after a deploy</text>
+<text x="12" y="238" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/orders-api #402</text>
+<line x1="0" y1="250" x2="420" y2="250" stroke="#ddd" stroke-width="1"/>
+<rect x="350.6" y="260" width="57.4" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="379.3" y="275" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Ready</text>
+<text x="12" y="275" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Tax rounding differs from the invoice PDF</text>
+<text x="12" y="294" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #219</text>
+<line x1="0" y1="306" x2="420" y2="306" stroke="#ddd" stroke-width="1"/>
+<rect x="336.44" y="316" width="71.56" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="372.22" y="331" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Backlog</text>
+<text x="12" y="331" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Move staging database to the new region</text>
+<text x="12" y="350" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/infra #81</text>
+<line x1="0" y1="362" x2="420" y2="362" stroke="#ddd" stroke-width="1"/>
+<rect x="350.6" y="372" width="57.4" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="379.3" y="387" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Ready</text>
+<text x="12" y="387" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Invoice CSV drops the currency column</text>
+<text x="12" y="406" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #223</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="1420" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A6 Check again still failing</text>
+<text x="1420" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Steps stay. A dashed result box says why.</text>
+<clipPath id="c6"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(1420,1160)"><g clip-path="url(#c6)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">INBOX</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="350" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="102" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Still missing read:org</text>
+<text x="24" y="138" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Sync is paused. Nod needs read:org to list org</text>
+<text x="24" y="156" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">repos. Showing cached data from 10:26.</text>
+<text x="24" y="174" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Token has: repo, gist.</text>
+<rect x="24" y="190" width="372" height="80" rx="6" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="5 4"/>
+<rect x="34" y="200" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="44" y="215" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="60" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Checked 10:42. gh still gives Nod the same</text>
+<text x="60" y="228" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">token. Finish the command and approve in the</text>
+<text x="60" y="246" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">browser, then check again.</text>
+<text x="24" y="296" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run in a terminal on this computer</text>
+<rect x="332" y="278" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="364.0" y="296.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="314" width="372" height="50" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="334" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s</text>
+<text x="34" y="352" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">read:org,project</text>
+<text x="24" y="384" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Also adds project, which turns on issue Status.</text>
+<rect x="24" y="394" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="414.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="401.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="414.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="172" y="394" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="214.0" y="414.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="12" y="464" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="492" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="502" x2="420" y2="502" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="524" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="544" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="408" y="524" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="558" x2="420" y2="558" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="580" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="600" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="408" y="580" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="614" x2="420" y2="614" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="636" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="656" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="408" y="636" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="698" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="708" x2="420" y2="708" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="730" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="750" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="408" y="730" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="764" x2="420" y2="764" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="786" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="806" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="408" y="786" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="1880" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A7 Generic sync error</text>
+<text x="1880" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Short title. GitHub's message once, body size.</text>
+<clipPath id="c7"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(1880,1160)"><g clip-path="url(#c7)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">INBOX</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="168" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="102" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Sync failed</text>
+<text x="24" y="138" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">GitHub did not answer (502 Bad Gateway). Showing</text>
+<text x="24" y="156" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">cached data from 10:26. Nothing was lost.</text>
+<rect x="24" y="174" width="92" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="37.8" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Retry</text>
+<rect x="84.19999999999999" y="181.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="93.19999999999999" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="124" y="174" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="166.0" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="24" y="222" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Reads work from cache. Actions retry once the API</text>
+<text x="24" y="240" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">answers.</text>
+<text x="12" y="282" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="310" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="320" x2="420" y2="320" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="342" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="362" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="408" y="342" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="376" x2="420" y2="376" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="398" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="418" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="408" y="398" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="432" x2="420" y2="432" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="454" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="474" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="408" y="454" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="516" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="526" x2="420" y2="526" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="548" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="568" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="408" y="548" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="582" x2="420" y2="582" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="604" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="624" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="408" y="604" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="2340" y="1130" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A8 Generic error, details open</text>
+<text x="2340" y="1148" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Details shows the raw response, once.</text>
+<clipPath id="c8"><rect x="0" y="0" width="420" height="870" rx="0"/></clipPath>
+<g transform="translate(2340,1160)"><g clip-path="url(#c8)">
+<rect x="0" y="0" width="420" height="870" rx="0" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="420" height="36" rx="0" fill="#f0f0f0" stroke="#bbb" stroke-width="1"/>
+<text x="12" y="23" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444" text-anchor="start">INBOX</text>
+<rect x="12" y="46" width="396" height="30" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+<text x="22" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#777" text-anchor="start">Filter  /</text>
+<rect x="12" y="88" width="396" height="240" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="102" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="117" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Sync failed</text>
+<text x="24" y="138" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">GitHub did not answer (502 Bad Gateway). Showing</text>
+<text x="24" y="156" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">cached data from 10:26. Nothing was lost.</text>
+<rect x="24" y="174" width="92" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="37.8" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Retry</text>
+<rect x="84.19999999999999" y="181.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="93.19999999999999" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="124" y="174" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="166.0" y="194.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<rect x="24" y="218" width="372" height="50" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="238" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">HTTP 502 from api.github.com/graphql at 10:41.</text>
+<text x="34" y="256" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">Request id 0F3A:2B7C.</text>
+<text x="24" y="294" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Reads work from cache. Actions retry once the API</text>
+<text x="24" y="312" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">answers.</text>
+<text x="12" y="354" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="382" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="392" x2="420" y2="392" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="414" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="434" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="408" y="414" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="448" x2="420" y2="448" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="470" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="490" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="408" y="470" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="504" x2="420" y2="504" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="526" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="546" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="408" y="526" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="588" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="598" x2="420" y2="598" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="620" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="640" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="408" y="620" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="654" x2="420" y2="654" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="676" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="696" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="408" y="676" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="420" height="870" rx="0" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="40" y="2076" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Phone 412x915 (paired). Same card at the top of the list. Commands run on the computer running Nod.</text>
+<text x="40" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A9 First run, no token</text>
+<text x="40" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Server has no token. Steps as on desktop.</text>
+<clipPath id="c9"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(40,2140)"><g clip-path="url(#c9)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Inbox</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="354" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="126" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Connect Nod to GitHub</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Nod reads your token from the GitHub CLI. No token</text>
+<text x="24" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">was found: gh is not installed, or not logged in.</text>
+<text x="24" y="202" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">1. Install gh from cli.github.com if needed.</text>
+<text x="24" y="220" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">2. Log in with the scopes Nod uses.</text>
+<text x="24" y="244" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run on the computer running Nod</text>
+<rect x="324" y="226" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="356.0" y="244.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="262" width="364" height="32" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="282" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth login -s project</text>
+<text x="24" y="316" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">3. Check again. No restart needed.</text>
+<rect x="24" y="324" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="331.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<text x="24" y="374" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">What each scope turns on</text>
+<text x="24" y="400" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">repo (required): PRs, issues, checks, replies</text>
+<text x="24" y="418" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">read:org (required): Org repos and teams</text>
+<text x="24" y="436" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">project (optional): Issue Status, move to In</text>
+<text x="24" y="454" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444" text-anchor="start">progress</text>
+<rect x="12" y="482" width="388" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="542" width="388" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="602" width="388" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="12" y="662" width="388" height="48" rx="6" fill="#f0f0f0" stroke="#ccc" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="206.0" y="742" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="middle">Nothing synced yet</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="492" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A10 Required scope missing</text>
+<text x="492" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Command wraps. Copy copies the whole line.</text>
+<clipPath id="c10"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(492,2140)"><g clip-path="url(#c10)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Inbox</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="260" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="126" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">GitHub token is missing read:org</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Sync is paused. Nod needs read:org to list org</text>
+<text x="24" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">repos. Showing cached data from 10:26.</text>
+<text x="24" y="198" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Token has: repo, gist.</text>
+<text x="24" y="230" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run on the computer running Nod</text>
+<rect x="324" y="212" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="356.0" y="230.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="248" width="364" height="50" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="268" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s</text>
+<text x="34" y="286" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">read:org,project</text>
+<text x="24" y="318" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Also adds project, which turns on issue Status.</text>
+<rect x="24" y="328" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="335.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="172" y="328" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="214.0" y="348.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="12" y="398" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="426" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="436" x2="412" y2="436" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="458" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="478" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="400" y="458" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="492" x2="412" y2="492" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="514" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="534" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="400" y="514" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="548" x2="412" y2="548" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="570" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="590" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="400" y="570" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="632" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="642" x2="412" y2="642" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="664" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="684" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="400" y="664" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="698" x2="412" y2="698" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="720" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="740" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="400" y="720" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="944" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A11 Project scope missing, steps open</text>
+<text x="944" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Notice opened from Turn on.</text>
+<clipPath id="c11"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(944,2140)"><g clip-path="url(#c11)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Issues</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="202" rx="8" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+<circle cx="34" cy="136" r="9" fill="#fff" stroke="#555" stroke-width="1"/>
+<text x="34" y="140" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">i</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">Project Status is off</text>
+<rect x="318" y="124" width="70" height="26" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="353.0" y="141.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Hide ▴</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Issues load without Status, and Move to In progress</text>
+<text x="24" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">is hidden. Everything else works.</text>
+<text x="24" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run on the computer running Nod</text>
+<rect x="324" y="192" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="356.0" y="210.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="228" width="364" height="32" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="248" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s project</text>
+<rect x="24" y="270" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="290.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="277.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="290.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<text x="12" y="346" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">ASSIGNED TO ME 4</text>
+<line x1="0" y1="356" x2="412" y2="356" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="381" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Webhook retries stop after a deploy</text>
+<text x="12" y="400" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/orders-api #402</text>
+<line x1="0" y1="412" x2="412" y2="412" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="437" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Tax rounding differs from the invoice PDF</text>
+<text x="12" y="456" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #219</text>
+<line x1="0" y1="468" x2="412" y2="468" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="493" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Move staging database to the new region</text>
+<text x="12" y="512" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/infra #81</text>
+<line x1="0" y1="524" x2="412" y2="524" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="549" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Invoice CSV drops the currency column</text>
+<text x="12" y="568" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #223</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="1396" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A12 Check again succeeded</text>
+<text x="1396" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Status pills return after the sync.</text>
+<clipPath id="c12"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(1396,2140)"><g clip-path="url(#c12)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Issues</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="64" rx="8" fill="#fff" stroke="#999" stroke-width="1"/>
+<circle cx="34" cy="136" r="9" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="140" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">✓</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#222" text-anchor="start">GitHub token updated</text>
+<text x="388" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="end">Hides in 5 s</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Project Status is on. Syncing issues now.</text>
+<text x="12" y="208" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#555" text-anchor="start">ASSIGNED TO ME 4</text>
+<line x1="0" y1="218" x2="412" y2="218" stroke="#ddd" stroke-width="1"/>
+<rect x="300.12" y="228" width="99.88" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="350.06" y="243" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">In progress</text>
+<text x="12" y="243" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Webhook retries stop after a deploy</text>
+<text x="12" y="262" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/orders-api #402</text>
+<line x1="0" y1="274" x2="412" y2="274" stroke="#ddd" stroke-width="1"/>
+<rect x="342.6" y="284" width="57.4" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="371.3" y="299" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Ready</text>
+<text x="12" y="299" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Tax rounding differs from the invoice PDF</text>
+<text x="12" y="318" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #219</text>
+<line x1="0" y1="330" x2="412" y2="330" stroke="#ddd" stroke-width="1"/>
+<rect x="328.44" y="340" width="71.56" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="364.22" y="355" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Backlog</text>
+<text x="12" y="355" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Move staging database to the new region</text>
+<text x="12" y="374" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/infra #81</text>
+<line x1="0" y1="386" x2="412" y2="386" stroke="#ddd" stroke-width="1"/>
+<rect x="342.6" y="396" width="57.4" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="371.3" y="411" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Ready</text>
+<text x="12" y="411" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Invoice CSV drops the currency column</text>
+<text x="12" y="430" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">acme-co/billing-web #223</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="1848" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A13 Check again still failing</text>
+<text x="1848" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Result box above the command.</text>
+<clipPath id="c13"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(1848,2140)"><g clip-path="url(#c13)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Inbox</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="350" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="126" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Still missing read:org</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Sync is paused. Nod needs read:org to list org</text>
+<text x="24" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">repos. Showing cached data from 10:26.</text>
+<text x="24" y="198" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Token has: repo, gist.</text>
+<rect x="24" y="214" width="364" height="80" rx="6" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="5 4"/>
+<rect x="34" y="224" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="44" y="239" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="60" y="234" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Checked 10:42. gh still gives Nod the same</text>
+<text x="60" y="252" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">token. Finish the command and approve in the</text>
+<text x="60" y="270" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">browser, then check again.</text>
+<text x="24" y="320" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="start">Run on the computer running Nod</text>
+<rect x="324" y="302" width="64" height="28" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="356.0" y="320.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Copy</text>
+<rect x="24" y="338" width="364" height="50" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+<text x="34" y="358" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">gh auth refresh -h github.com -s</text>
+<text x="34" y="376" font-family="DejaVu Sans Mono, monospace" font-size="12" font-weight="normal" fill="#222" text-anchor="start">read:org,project</text>
+<text x="24" y="408" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Also adds project, which turns on issue Status.</text>
+<rect x="24" y="418" width="140" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="38.76" y="438.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Check again</text>
+<rect x="131.24" y="425.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="140.24" y="438.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="172" y="418" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="214.0" y="438.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="12" y="488" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="516" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="526" x2="412" y2="526" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="548" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="568" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="400" y="548" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="582" x2="412" y2="582" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="604" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="624" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="400" y="604" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="638" x2="412" y2="638" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="660" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="680" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="400" y="660" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="722" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="732" x2="412" y2="732" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="754" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="774" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="400" y="754" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="788" x2="412" y2="788" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="810" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="830" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="400" y="810" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<text x="2300" y="2110" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">A14 Generic sync error</text>
+<text x="2300" y="2128" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Replaces the long GitHub text.</text>
+<clipPath id="c14"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(2300,2140)"><g clip-path="url(#c14)">
+<rect x="0" y="0" width="412" height="915" rx="14" fill="#fafafa" stroke="#999" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="56" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<text x="16" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="start">Inbox</text>
+<text x="348" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" fill="#222" text-anchor="middle">⌕</text>
+<text x="388" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#222" text-anchor="middle">⋮</text>
+<rect x="12" y="66" width="57.4" height="26" rx="13" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="40.7" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">All 5</text>
+<rect x="77.4" y="66" width="78.64" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="116.72" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Review 3</text>
+<rect x="164.04000000000002" y="66" width="64.47999999999999" height="26" rx="13" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="196.28000000000003" y="83" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Mine 2</text>
+<line x1="0" y1="102" x2="412" y2="102" stroke="#bbb" stroke-width="1"/>
+<rect x="0" y="851" width="412" height="64" rx="0" fill="#eee" stroke="#999" stroke-width="1"/>
+<rect x="52.66666666666667" y="861" width="32" height="22" rx="11" fill="#333" stroke="#999" stroke-width="1"/>
+<text x="68.66666666666667" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#222" text-anchor="middle">PRs</text>
+<rect x="190.0" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="206.0" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Issues</text>
+<rect x="327.33333333333337" y="861" width="32" height="22" rx="11" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="343.33333333333337" y="899" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Activity</text>
+<rect x="12" y="112" width="388" height="168" rx="8" fill="#fff" stroke="#333" stroke-width="1.5"/>
+<rect x="24" y="126" width="20" height="20" rx="4" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="34" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">!</text>
+<text x="54" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222" text-anchor="start">Sync failed</text>
+<text x="24" y="162" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">GitHub did not answer (502 Bad Gateway). Showing</text>
+<text x="24" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#333" text-anchor="start">cached data from 10:26. Nothing was lost.</text>
+<rect x="24" y="198" width="92" height="32" rx="6" fill="#333" stroke="#333" stroke-width="1"/>
+<text x="37.8" y="218.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="start">Retry</text>
+<rect x="84.19999999999999" y="205.0" width="18" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1"/>
+<text x="93.19999999999999" y="218.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#fff" text-anchor="middle">R</text>
+<rect x="124" y="198" width="84" height="32" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1"/>
+<text x="166.0" y="218.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Details</text>
+<text x="24" y="246" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Reads work from cache. Actions retry once the API</text>
+<text x="24" y="264" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">answers.</text>
+<text x="12" y="306" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555" text-anchor="start">Cached 10:26 · actions off</text>
+<text x="12" y="334" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">NEEDS MY REVIEW 3</text>
+<line x1="0" y1="344" x2="412" y2="344" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="366" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: retry failed webhook deliveries</text>
+<text x="12" y="386" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #365 · acme-dev</text>
+<text x="400" y="366" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2h</text>
+<line x1="0" y1="400" x2="412" y2="400" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="422" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">fix: round tax per line item</text>
+<text x="12" y="442" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #212 · build-bot</text>
+<text x="400" y="422" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">5h</text>
+<line x1="0" y1="456" x2="412" y2="456" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="478" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">chore(deps): bump pg from 8.11.3 to 8.12.0</text>
+<text x="12" y="498" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/orders-api #361 · dependabot[bot]</text>
+<text x="400" y="478" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">1d</text>
+<text x="12" y="540" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#999" text-anchor="start">MY PRS 2</text>
+<line x1="0" y1="550" x2="412" y2="550" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="572" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">feat: export invoices as CSV</text>
+<text x="12" y="592" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/billing-web #208 · acme-dev</text>
+<text x="400" y="572" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">3h</text>
+<line x1="0" y1="606" x2="412" y2="606" stroke="#ddd" stroke-width="1"/>
+<text x="12" y="628" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#888" text-anchor="start">ci: cache the pnpm store</text>
+<text x="12" y="648" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="start">acme-co/infra #77 · acme-dev</text>
+<text x="400" y="628" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#999" text-anchor="end">2d</text>
+<rect x="0" y="0" width="412" height="915" rx="14" fill="none" stroke="#999" stroke-width="1"/>
+</g></g>
+<rect x="40" y="3085" width="1100" height="52" rx="6" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="52" y="3109" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="start">Scope rules: repo and read:org required (sync pauses without them). project optional (issue Status, Move to In progress).</text>
+<text x="52" y="3127" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#222" text-anchor="start">Check again (R) re-runs gh auth token and reads X-OAuth-Scopes. No Nod restart. A5 shows success, A6 the still-failing case.</text>
+</svg>

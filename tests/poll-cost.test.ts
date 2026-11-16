@@ -54,6 +54,7 @@ interface Vars {
 function mockClient(over: { poll?: () => unknown; inbox?: (v: Vars) => unknown } = {}) {
   const calls: { name: string; vars: Vars }[] = [];
   const client = {
+    hasToken: true,
     lastRate: undefined,
     graphqlRate: rate,
     graphql: async (query: string, vars: Vars) => {

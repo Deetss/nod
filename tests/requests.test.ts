@@ -120,6 +120,7 @@ function fakeClient() {
   let list = [raw()];
   let detail = detailPr();
   const client = {
+    hasToken: true,
     lastRate: undefined,
     graphqlRate: rate,
     graphql: async (query: string, vars: { q?: string; prs?: string }) => {

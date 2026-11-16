@@ -29,6 +29,7 @@ import './findings.css';
 import './pair.css';
 import './mentions/mentions.css';
 import './settings.css';
+import './connection.css';
 import './phone/phone-shell.css';
 import './phone/phone-list.css';
 import './phone/phone-states.css';

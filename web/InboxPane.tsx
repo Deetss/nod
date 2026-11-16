@@ -1,7 +1,7 @@
 import type { ReactNode, Ref } from 'react';
 import type { PrSummary, SectionKey } from '../shared/types';
 import type { InboxView } from './useInbox';
-import { Banner } from './Banner';
+import { ListBanner } from './Banner';
 import type { VisibleSection } from './inbox-utils';
 import { orgLogin } from './org-settings';
 import { PrRow } from './PrRow';
@@ -22,6 +22,8 @@ interface InboxPaneProps {
   onSelect: (pr: PrSummary) => void;
   onOpen: (pr: PrSummary) => void;
   onRetry: () => void;
+  /** Opens Settings on GitHub, focused on Check again. */
+  onFixConnection: () => void;
   onShowOrg: () => void;
   /** The closed section, shown under the open sections. */
   closed?: ReactNode;
@@ -117,6 +119,13 @@ export function InboxPane(p: InboxPaneProps) {
     ) : (
       <LoadingPanel />
     );
+  } else if (data.connection?.state === 'none' && data.prs.length === 0) {
+    body = (
+      <>
+        <ListBanner connection={data.connection} stale={undefined} rate={undefined} syncedAt={0} onRetry={p.onRetry} onFix={p.onFixConnection} />
+        <p className="nothing-synced">Nothing synced yet.</p>
+      </>
+    );
   } else if (data.syncing && data.prs.length === 0) {
     body = <LoadingPanel done={data.syncing.done} total={data.syncing.total} />;
   } else if (quiet) {
@@ -124,7 +133,14 @@ export function InboxPane(p: InboxPaneProps) {
   } else {
     body = (
       <>
-        {data.stale ? <Banner stale={data.stale} rate={data.rate} onRetry={p.onRetry} /> : null}
+        <ListBanner
+          connection={data.connection}
+          stale={data.stale}
+          rate={data.rate}
+          syncedAt={data.syncedAt}
+          onRetry={p.onRetry}
+          onFix={p.onFixConnection}
+        />
         <div className={data.stale ? 'is-stale' : undefined}>
           {p.sections.map(({ section, prs, open }) => (
             <section key={section.key}>
@@ -179,7 +195,7 @@ export function InboxPane(p: InboxPaneProps) {
       </div>
       <div className="scroll inbox-list" role="listbox" tabIndex={0} ref={p.listRef}>
         {body}
-        {data && !(data.syncing && data.prs.length === 0) ? p.closed : null}
+        {data && !(data.syncing && data.prs.length === 0) && data.connection?.state !== 'none' ? p.closed : null}
       </div>
       <Legend />
     </aside>

@@ -12,6 +12,9 @@ import { PairDialog } from './PairDialog';
 import { ACTIVITY_HELP_KEYS, FOOTER_FINDINGS, issueHelpKeys, type KeyDef } from './keys';
 import { bot, isFirstRun, loadedSettings } from './org-settings';
 import { SettingsDialog } from './settings/SettingsDialog';
+import { useConnection } from './settings/useConnection';
+import { attentionTone } from '../shared/connection';
+import { tokenBlocks } from './Banner';
 import type { SectionId } from './settings/form';
 import { useSettingsKey } from './settings/useSettingsKey';
 import { Welcome } from './settings/Welcome';
@@ -170,6 +173,19 @@ export function App() {
   }, [firstClosedId]);
   // Issues ride on the PR poll: each sync updates the server's saved issue list, and this reads it.
   const issues = useIssues(inbox.data?.syncedAt);
+  const reloadInbox = inbox.reload;
+  const reloadIssues = issues.reload;
+  const reloadLists = useCallback(() => {
+    reloadInbox();
+    reloadIssues();
+  }, [reloadInbox, reloadIssues]);
+  const connection = useConnection(inbox.data?.connection ?? issues.data?.connection, reloadLists);
+  const [focusCheck, setFocusCheck] = useState(false);
+  const openConnection = useCallback(() => {
+    setSettingsSection('github');
+    setFocusCheck(true);
+    setSettingsOpen(true);
+  }, []);
   const activity = useActivity(inbox.data?.syncedAt, listView === 'activity' || (phone && phoneActivity));
   const issueUnseen = (issues.data?.issues ?? []).filter((i) => i.seen !== 'seen' && !issueSeen.has(i.id)).length;
   const prUnseen = inbox.data ? allPrs(inbox.data).filter((p) => p.seen !== 'seen' && !seenLocal.has(p.id)).length : 0;
@@ -229,10 +245,12 @@ export function App() {
     api.diff(selected?.repo ?? '', selected?.number ?? 0, mode),
   );
 
+  // A paused sync (no token, or no `repo`) turns actions off too.
   const limited =
     inbox.data?.stale?.kind === 'ratelimit' ||
     detail.data?.stale?.kind === 'ratelimit' ||
-    inbox.data?.rate?.remaining === 0;
+    inbox.data?.rate?.remaining === 0 ||
+    tokenBlocks(connection.connection);
 
   const reloadAll = useCallback(() => {
     inbox.reload();
@@ -808,6 +826,7 @@ export function App() {
         density={density}
         onDensity={setDensity}
         overlay={updateToast}
+        connection={connection}
       />
     );
   }
@@ -848,6 +867,7 @@ export function App() {
         pairOpen={pairing}
         onPairPhone={() => setPairing(true)}
         onSettings={() => setSettingsOpen(true)}
+        settingsMark={attentionTone(connection.connection)}
       />
       {listView === 'activity' ? (
         <ActivityView
@@ -873,6 +893,7 @@ export function App() {
             setSettingsSection('bot');
             setSettingsOpen(true);
           }}
+          onFixConnection={openConnection}
           searchRef={searchRef}
           onOpenPr={openPrFromIssue}
           onHelp={() => setHelp(true)}
@@ -904,6 +925,7 @@ export function App() {
             onSelect={select}
             onOpen={openPr}
             onRetry={reloadAll}
+            onFixConnection={openConnection}
             onShowOrg={showOrg}
             closed={
               <ClosedSection
@@ -1010,9 +1032,13 @@ export function App() {
         <SettingsDialog
           initial={loadedSettings()}
           initialSection={settingsSection}
+          connection={connection}
+          focusCheck={focusCheck}
           onClose={() => {
             setSettingsOpen(false);
             setSettingsSection(undefined);
+            setFocusCheck(false);
+            connection.clearResult();
           }}
         />
       ) : null}

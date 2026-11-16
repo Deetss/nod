@@ -12,6 +12,7 @@ import type {
 import { repoInOrca, type OrcaDispatchRequest } from '../../shared/orca';
 import type { ProjectStatus } from '../../shared/project-status';
 import { STATE_PARAM, api } from '../api';
+import { tokenBlocks } from '../Banner';
 import type { Layout } from '../hooks';
 import { PaneHandle } from '../PaneHandle';
 import { usePaneWidths } from '../usePaneWidths';
@@ -82,6 +83,8 @@ interface IssuesViewProps {
   onPair: () => void;
   /** Opens Settings on the Bot pane. */
   onSetupBot: () => void;
+  /** Opens Settings on GitHub, focused on Check again. */
+  onFixConnection: () => void;
   onRefresh: () => void;
   /** Called with a successful write's response, so the app can show an Orca notification result. */
   onNotice?: (res: { noticeId?: string }) => void;
@@ -217,7 +220,8 @@ export function IssuesView(p: IssuesViewProps) {
   pinnedId.current = effectiveRef?.id;
   // Same ref values keep the same identity so memo deps stay quiet.
   const effective = useMemo(() => effectiveRef, [effectiveRef?.id, effectiveRef?.repo, effectiveRef?.number]); // eslint-disable-line react-hooks/exhaustive-deps
-  const stale = data?.stale !== undefined;
+  // A paused sync (no token, or no `repo`) turns writes off like a stale list does.
+  const stale = data?.stale !== undefined || tokenBlocks(data?.connection);
 
   const detail = useRemote(effective ? `idetail:${effective.id}` : null, () =>
     api.issueDetail(effective?.repo ?? '', effective?.number ?? 0),
@@ -978,6 +982,7 @@ export function IssuesView(p: IssuesViewProps) {
       onBulk={(k) => (k === 'close' ? startClose('COMPLETED') : k === 'assignMe' ? assignViewer() : openPicker(k))}
       onClear={() => setChecked(new Set())}
       onRetry={p.onRefresh}
+      onFixConnection={p.onFixConnection}
       onNew={startNew}
       closed={
         <ClosedSection
