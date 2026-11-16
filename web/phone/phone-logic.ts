@@ -55,23 +55,58 @@ export function prChips(sections: readonly Section[]): ChipCount<Section['key']>
 }
 
 /**
- * Open state per section on the All chip. A saved choice wins, then the
- * default. When no non-empty section ends up open, the first non-empty
- * section without a saved choice opens, so the list never shows only
- * closed headers.
+ * Open state per section on the All chip. An empty section is closed unless
+ * it was tapped open this page load, and its saved choice waits until it has
+ * rows again. Otherwise a saved choice wins, then the default. When no
+ * non-empty section ends up open, the first non-empty section without a
+ * saved choice opens, so the list never shows only closed headers.
  */
 export function resolveOpen(
-  sections: readonly { key: string; prs: readonly unknown[] }[],
+  sections: readonly { key: string; rows: number }[],
   saved: Readonly<Record<string, boolean>>,
   closedByDefault: ReadonlySet<string>,
+  peeked: ReadonlySet<string> = new Set(),
 ): Record<string, boolean> {
   const out: Record<string, boolean> = {};
-  for (const s of sections) out[s.key] = saved[s.key] ?? !closedByDefault.has(s.key);
-  const nonEmpty = sections.filter((s) => s.prs.length > 0);
+  for (const s of sections) {
+    out[s.key] = s.rows === 0 ? peeked.has(s.key) : (saved[s.key] ?? !closedByDefault.has(s.key));
+  }
+  const nonEmpty = sections.filter((s) => s.rows > 0);
   if (nonEmpty.some((s) => out[s.key])) return out;
   const first = nonEmpty.find((s) => saved[s.key] === undefined);
   if (first) out[first.key] = true;
   return out;
+}
+
+export interface SectionState {
+  /** Rows shown now, after search and filters. The header count. */
+  rows: number;
+  empty: boolean;
+  open: boolean;
+}
+
+export interface SectionStateInput {
+  saved: Readonly<Record<string, boolean>>;
+  closedByDefault: ReadonlySet<string>;
+  /** Empty sections tapped open this page load. Never saved. */
+  peeked: ReadonlySet<string>;
+  /** A filter narrows the list to one section, which then shows open. */
+  filtered: boolean;
+}
+
+/** Each section with its shown row count and open state. */
+export function sectionStates<T extends { key: string }>(
+  sections: readonly T[],
+  rowsOf: (s: T) => number,
+  i: SectionStateInput,
+): (T & SectionState)[] {
+  const counted = sections.map((s) => ({ ...s, rows: rowsOf(s) }));
+  const open = resolveOpen(counted, i.saved, i.closedByDefault, i.peeked);
+  return counted.map((s) => ({
+    ...s,
+    empty: s.rows === 0,
+    open: (i.filtered && s.rows > 0) || (open[s.key] ?? false),
+  }));
 }
 
 /** The bot section, when present, comes last. */

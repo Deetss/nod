@@ -26,7 +26,7 @@ import {
   phoneStatus,
   prAllTotal,
   prChips,
-  resolveOpen,
+  sectionStates,
   syncText,
   tabTitle,
   type PhoneTab,
@@ -91,9 +91,20 @@ export function PhoneApp(p: PhoneAppProps) {
     return () => clearInterval(t);
   }, []);
 
-  const toggle = useCallback((key: string, current: boolean) => {
+  const [peeked, setPeeked] = useState<ReadonlySet<string>>(() => new Set());
+
+  // An empty section opens for this page load only, so its saved choice survives.
+  const toggle = useCallback((s: InboxSectionView) => {
+    if (s.empty) {
+      setPeeked((p) => {
+        const next = new Set(p);
+        if (!next.delete(s.key)) next.add(s.key);
+        return next;
+      });
+      return;
+    }
     setOpen((o) => {
-      const next = { ...o, [key]: !current };
+      const next = { ...o, [s.key]: !s.open };
       saveOpen(next);
       return next;
     });
@@ -183,30 +194,18 @@ export function PhoneApp(p: PhoneAppProps) {
   const prStatus = statusFor(inbox.data !== undefined, prTotal);
   const issueStatus = statusFor(issues.data !== undefined, issueTotal);
 
-  const prOpen = resolveOpen(prSections, open, CLOSED_BY_DEFAULT);
-  const isPrOpen = (key: string) => prFilters.size > 0 || (prOpen[key] ?? true);
-  const isIssueOpen = (key: string) =>
-    issueFilters.size > 0 || (open[key] ?? !CLOSED_BY_DEFAULT.has(key));
-
   const prRow = (pr: PrSummary) => <PrRow key={pr.id} pr={pr} onOpen={(x) => openRoot({ kind: 'pr', id: x.id })} />;
   const issueRow = (i: IssueSummary) => (
     <IssueRow key={i.id} issue={i} showStatus={issues.data?.projectStatus === true} onOpen={(x) => openRoot({ kind: 'issue', id: x.id })} />
   );
 
-  const prViews: InboxSectionView[] = prShown.map((s) => ({
-    key: s.key,
-    title: s.title,
-    count: s.count,
-    open: isPrOpen(s.key),
-    rows: s.prs.map(prRow),
-  }));
-  const issueViews: InboxSectionView[] = issueShown.map((s) => ({
-    key: s.key,
-    title: s.title,
-    count: s.count,
-    open: isIssueOpen(s.key),
-    rows: s.issues.map(issueRow),
-  }));
+  const sectionInput = { saved: open, closedByDefault: CLOSED_BY_DEFAULT, peeked };
+  const prViews: InboxSectionView[] = sectionStates(prSections, (s) => s.prs.length, { ...sectionInput, filtered: prFilters.size > 0 })
+    .filter((s) => sectionShown(prFilters, s.key))
+    .map((s) => ({ key: s.key, title: s.title, count: s.rows, open: s.open, empty: s.empty, rows: s.prs.map(prRow) }));
+  const issueViews: InboxSectionView[] = sectionStates(issueSections, (s) => s.issues.length, { ...sectionInput, filtered: issueFilters.size > 0 })
+    .filter((s) => sectionShown(issueFilters, s.key))
+    .map((s) => ({ key: s.key, title: s.title, count: s.rows, open: s.open, empty: s.empty, rows: s.issues.map(issueRow) }));
 
   const prFilterRows = prChips(inbox.data?.sections ?? []).filter((c) => c.key !== 'all');
   const issueFilterRows = issueChips(issues.data?.sections ?? []).filter((c) => c.key !== 'all');
@@ -374,7 +373,9 @@ export function PhoneApp(p: PhoneAppProps) {
               refreshing={refreshing}
               emptyTitle="Nothing needs you"
               emptyBody="No PRs need your attention."
-              onToggle={(k) => toggle(k, isPrOpen(k))}
+              emptyLine="No PRs here"
+              noun="pull request"
+              onToggle={toggle}
               onRefresh={p.onRefresh}
             />,
             <PhoneInbox
@@ -390,7 +391,9 @@ export function PhoneApp(p: PhoneAppProps) {
               refreshing={refreshing}
               emptyTitle="Nothing needs you"
               emptyBody="No issues need your attention."
-              onToggle={(k) => toggle(k, isIssueOpen(k))}
+              emptyLine="No issues here"
+              noun="issue"
+              onToggle={toggle}
               onRefresh={p.onRefresh}
             />,
             <PhoneActivity

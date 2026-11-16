@@ -1,0 +1,573 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1364" height="2106" viewBox="0 0 1364 2106">
+<rect x="0" y="0" width="1364" height="2106" rx="0" fill="#ffffff"/>
+<text x="24" y="32" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="18" font-weight="700" fill="#24292f">Lighter section headers, phone mockup (dark, 412x915, layout A)</text>
+<text x="24" y="54" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Round 2. Issue #33. Synthetic data. Tokens from web/tokens.css. Spec: section-headers-spec.md.</text>
+<text x="24" y="98" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">1 · PRs at rest</text>
+<clipPath id="c24_112"><rect x="24" y="112" width="412" height="915"/></clipPath>
+<g clip-path="url(#c24_112)">
+<rect x="24" y="112" width="412" height="915" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="40" y="244" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="24" y="252" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="253" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="253" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(40,265) scale(0.6667) rotate(-90 12 12)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="64" y="278" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Needs my review</text>
+<text x="180.671875" y="278" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">0</text>
+<rect x="24" y="292" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="293" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="293" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(40,305) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="64" y="318" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mine</text>
+<text x="102.375" y="318" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">5</text>
+<rect x="24" y="333" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="40.5" cy="355.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="56" y="361" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">fix: reject unsigned vendor calls</text>
+<rect x="380.421875" y="346.5" width="39.078125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="399.9609375" y="360" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">NEW</text>
+<rect x="56" y="373.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,377) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="388" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="388" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">needs review</text>
+<text x="56" y="414" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #11 · acme-dev · 12h · +54 -9 · 3 files</text>
+<rect x="24" y="431" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="432" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="460" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">chore: tidy swagger tags</text>
+<rect x="56" y="472.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,476) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="487" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="487" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="56" y="513" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #368 · acme-dev · 1d · +6 -6 · 2 files</text>
+<rect x="24" y="530" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="531" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="559" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">docs: describe the API limits</text>
+<rect x="56" y="571.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,575) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="586" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="586" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="56" y="612" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #10 · acme-dev · 20h · +48 -2 · 1 file</text>
+<rect x="24" y="629" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="630" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="40.5" cy="652.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="56" y="658" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: retry failed webhook</text>
+<rect x="353.546875" y="643.5" width="65.953125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="386.5234375" y="657" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">UPDATED</text>
+<rect x="56" y="670.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,674) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="685" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="685" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2 commits since you looked</text>
+<text x="56" y="711" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #371 · acme-dev · 2d · +89 -12 · 4 files</text>
+<rect x="24" y="728" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="729" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="757" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">test: cover token refresh</text>
+<rect x="56" y="769.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,773) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="784" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="784" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="56" y="810" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #14 · acme-dev · 2d · +77 -3 · 2 files</text>
+<rect x="24" y="827" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="827" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="828" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="828" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(40,840) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="64" y="853" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Org open</text>
+<text x="130.125" y="853" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">8</text>
+<rect x="24" y="868" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="40.5" cy="890.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="56" y="896" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: log inbound vendor calls</text>
+<rect x="56" y="908.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,912) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="923" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="923" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="56" y="949" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #12 · build-bot · 3d · +140 -7 · 5 files</text>
+<rect x="24" y="966" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="112" width="412" height="112" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="24" y="224" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<text x="40" y="199" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Pull requests</text>
+<circle cx="406" cy="140" r="22" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(396,130) scale(0.8333)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></g>
+<rect x="40" y="876" width="324" height="48" rx="24" fill="#151b23" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(56,890) scale(0.8333)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M21 21l-4.3-4.3"/></g>
+<text x="86" y="905" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Search pull requests</text>
+<circle cx="396" cy="900" r="24" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(384,888) scale(1.0000)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="24" y="938" width="412" height="89" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="24" y="938" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<rect x="60.66666666666667" y="945" width="64" height="32" rx="16" fill="#388bfd" fill-opacity="0.102"/>
+<g transform="translate(81.66666666666667,950) scale(0.9167)" fill="none" stroke="#4493f8" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9v12M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15V8a2 2 0 0 0-2-2h-3"/></g>
+<rect x="92.94791666666667" y="941" width="27.71875" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="94.94791666666667" y="943" width="23.71875" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="106.80729166666667" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">12</text>
+<text x="92.66666666666667" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="middle">PRs</text>
+<g transform="translate(219.0,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2"/></g>
+<rect x="236.0" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="238.0" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="247.0" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">7</text>
+<text x="230.0" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Issues</text>
+<g transform="translate(356.33333333333337,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></g>
+<rect x="373.33333333333337" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="375.33333333333337" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="384.33333333333337" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">4</text>
+<text x="367.33333333333337" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Activity</text>
+</g>
+<rect x="23.5" y="111.5" width="413" height="916" rx="0" fill="none" stroke="#8c959f" stroke-width="1"/>
+<text x="24" y="1047" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Needs my review has 0 rows, so it renders closed.</text>
+<text x="476" y="98" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">2 · Mine collapsed by tap</text>
+<clipPath id="c476_112"><rect x="476" y="112" width="412" height="915"/></clipPath>
+<g clip-path="url(#c476_112)">
+<rect x="476" y="112" width="412" height="915" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="492" y="244" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="476" y="252" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="253" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="253" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,265) scale(0.6667) rotate(-90 12 12)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="278" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Needs my review</text>
+<text x="632.671875" y="278" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">0</text>
+<rect x="476" y="292" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="293" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="293" width="412" height="40" rx="0" fill="#656c76" fill-opacity="0.200"/>
+<rect x="476" y="293" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,305) scale(0.6667) rotate(-90 12 12)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="318" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mine</text>
+<text x="554.375" y="318" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">5</text>
+<rect x="476" y="332" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="333" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="333" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,345) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="358" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Org open</text>
+<text x="582.125" y="358" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">8</text>
+<rect x="476" y="373" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="492.5" cy="395.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="508" y="401" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: log inbound vendor calls</text>
+<rect x="508" y="413.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,417) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="428" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="428" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="508" y="454" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #12 · build-bot · 3d · +140 -7 · 5 files</text>
+<rect x="476" y="471" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="472" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="500" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">chore: remove unused icons</text>
+<rect x="508" y="512.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,516) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="527" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="527" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="508" y="553" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #360 · sam-lee · 2d · +2 -64 · 6 files</text>
+<rect x="476" y="570" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="571" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="599" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">build: bump node to 22</text>
+<rect x="508" y="611.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,615) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="626" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="626" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="508" y="652" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #358 · build-bot · 4d · +3 -3 · 2 files</text>
+<rect x="476" y="669" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="670" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="698" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">fix: trim queue retry delay</text>
+<rect x="508" y="710.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,714) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="725" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="725" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">needs review</text>
+<text x="508" y="751" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #15 · sam-lee · 4d · +9 -5 · 1 file</text>
+<rect x="476" y="768" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="769" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="797" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">refactor: split order mapper</text>
+<rect x="508" y="809.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,813) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="824" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="824" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="508" y="850" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #355 · sam-lee · 5d · +21 -18 · 3 files</text>
+<rect x="476" y="867" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="868" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="896" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">ci: cache test fixtures</text>
+<rect x="508" y="908.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(516,912) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="534" y="923" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="588.375" y="923" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="508" y="949" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #16 · build-bot · 6d · +12 -1 · 1 file</text>
+<rect x="476" y="966" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="112" width="412" height="112" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="476" y="224" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<text x="492" y="199" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Pull requests</text>
+<circle cx="858" cy="140" r="22" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(848,130) scale(0.8333)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></g>
+<rect x="492" y="876" width="324" height="48" rx="24" fill="#151b23" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(508,890) scale(0.8333)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M21 21l-4.3-4.3"/></g>
+<text x="538" y="905" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Search pull requests</text>
+<circle cx="848" cy="900" r="24" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(836,888) scale(1.0000)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="476" y="938" width="412" height="89" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="476" y="938" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<rect x="512.6666666666666" y="945" width="64" height="32" rx="16" fill="#388bfd" fill-opacity="0.102"/>
+<g transform="translate(533.6666666666666,950) scale(0.9167)" fill="none" stroke="#4493f8" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9v12M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15V8a2 2 0 0 0-2-2h-3"/></g>
+<rect x="544.9479166666666" y="941" width="27.71875" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="546.9479166666666" y="943" width="23.71875" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="558.8072916666666" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">12</text>
+<text x="544.6666666666666" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="middle">PRs</text>
+<g transform="translate(671.0,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2"/></g>
+<rect x="688.0" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="690.0" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="699.0" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">7</text>
+<text x="682.0" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Issues</text>
+<g transform="translate(808.3333333333334,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></g>
+<rect x="825.3333333333334" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="827.3333333333334" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="836.3333333333334" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">4</text>
+<text x="819.3333333333334" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Activity</text>
+<circle cx="856" cy="313" r="11" fill="#bf3989"/>
+<text x="856" y="317" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+</g>
+<rect x="475.5" y="111.5" width="413" height="916" rx="0" fill="none" stroke="#8c959f" stroke-width="1"/>
+<text x="476" y="1047" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Pressed fill while the finger is down; chevron points right.</text>
+<text x="476" y="1063" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Org open moves up under Mine.</text>
+<text x="928" y="98" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">3 · Scrolled, Mine pinned</text>
+<clipPath id="c928_112"><rect x="928" y="112" width="412" height="915"/></clipPath>
+<g clip-path="url(#c928_112)">
+<rect x="928" y="112" width="412" height="915" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="928" y="142" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="170" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">docs: describe the API limits</text>
+<rect x="960" y="182.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,186) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="197" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="197" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="960" y="223" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #10 · acme-dev · 20h · +48 -2 · 1 file</text>
+<rect x="928" y="240" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="241" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="944.5" cy="263.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="960" y="269" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: retry failed webhook</text>
+<rect x="1257.546875" y="254.5" width="65.953125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="1290.5234375" y="268" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">UPDATED</text>
+<rect x="960" y="281.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,285) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="296" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="296" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2 commits since you looked</text>
+<text x="960" y="322" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #371 · acme-dev · 2d · +89 -12 · 4 files</text>
+<rect x="928" y="339" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="340" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="368" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">test: cover token refresh</text>
+<rect x="960" y="380.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,384) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="395" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="395" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="960" y="421" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #14 · acme-dev · 2d · +77 -3 · 2 files</text>
+<rect x="928" y="438" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="438" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="928" y="439" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="928" y="439" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(944,451) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="968" y="464" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Org open</text>
+<text x="1034.125" y="464" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">8</text>
+<rect x="928" y="479" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="944.5" cy="501.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="960" y="507" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: log inbound vendor calls</text>
+<rect x="960" y="519.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,523) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="534" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="534" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="960" y="560" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #12 · build-bot · 3d · +140 -7 · 5 files</text>
+<rect x="928" y="577" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="578" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="606" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">chore: remove unused icons</text>
+<rect x="960" y="618.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,622) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="633" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="633" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="960" y="659" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #360 · sam-lee · 2d · +2 -64 · 6 files</text>
+<rect x="928" y="676" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="677" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="705" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">build: bump node to 22</text>
+<rect x="960" y="717.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,721) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="732" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="732" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="960" y="758" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #358 · build-bot · 4d · +3 -3 · 2 files</text>
+<rect x="928" y="775" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="776" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="804" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">fix: trim queue retry delay</text>
+<rect x="960" y="816.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,820) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="831" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="831" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">needs review</text>
+<text x="960" y="857" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #15 · sam-lee · 4d · +9 -5 · 1 file</text>
+<rect x="928" y="874" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="875" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="960" y="903" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">refactor: split order mapper</text>
+<rect x="960" y="915.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(968,919) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="986" y="930" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="1040.375" y="930" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="960" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #355 · sam-lee · 5d · +21 -18 · 3 files</text>
+<rect x="928" y="973" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="169" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="928" y="169" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="928" y="208" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(944,181) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="968" y="194" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mine</text>
+<text x="1006.375" y="194" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">5</text>
+<rect x="928" y="112" width="412" height="56" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="928" y="168" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<text x="944" y="146" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="17" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Pull requests</text>
+<circle cx="1310" cy="140" r="22" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(1300,130) scale(0.8333)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></g>
+<rect x="928" y="938" width="412" height="89" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="928" y="938" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<rect x="964.6666666666666" y="945" width="64" height="32" rx="16" fill="#388bfd" fill-opacity="0.102"/>
+<g transform="translate(985.6666666666666,950) scale(0.9167)" fill="none" stroke="#4493f8" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9v12M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15V8a2 2 0 0 0-2-2h-3"/></g>
+<rect x="996.9479166666665" y="941" width="27.71875" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="998.9479166666665" y="943" width="23.71875" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="1010.8072916666665" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">12</text>
+<text x="996.6666666666666" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="middle">PRs</text>
+<g transform="translate(1123.0,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2"/></g>
+<rect x="1140.0" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="1142.0" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="1151.0" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">7</text>
+<text x="1134.0" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Issues</text>
+<g transform="translate(1260.3333333333335,950) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></g>
+<rect x="1277.3333333333335" y="941" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="1279.3333333333335" y="943" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="1288.3333333333335" y="956" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">4</text>
+<text x="1271.3333333333335" y="994" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Activity</text>
+<circle cx="1308" cy="189" r="11" fill="#bf3989"/>
+<text x="1308" y="193" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+</g>
+<rect x="927.5" y="111.5" width="413" height="916" rx="0" fill="none" stroke="#8c959f" stroke-width="1"/>
+<text x="928" y="1047" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Mine sticks under the 57px bar. Hairline appears below it.</text>
+<text x="928" y="1063" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Search pill has slid away (#32).</text>
+<text x="24" y="1109" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">4 · Empty header tapped open</text>
+<clipPath id="c24_1123"><rect x="24" y="1123" width="412" height="915"/></clipPath>
+<g clip-path="url(#c24_1123)">
+<rect x="24" y="1123" width="412" height="915" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="40" y="1255" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="24" y="1263" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="1264" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="1264" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(40,1276) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="64" y="1289" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Needs my review</text>
+<text x="180.671875" y="1289" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">0</text>
+<rect x="24" y="1304" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="64" y="1329" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">No PRs here</text>
+<rect x="24" y="1343" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="1344" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="24" y="1344" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(40,1356) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="64" y="1369" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mine</text>
+<text x="102.375" y="1369" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">5</text>
+<rect x="24" y="1384" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="40.5" cy="1406.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="56" y="1412" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">fix: reject unsigned vendor calls</text>
+<rect x="380.421875" y="1397.5" width="39.078125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="399.9609375" y="1411" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">NEW</text>
+<rect x="56" y="1424.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,1428) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="1439" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="1439" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">needs review</text>
+<text x="56" y="1465" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #11 · acme-dev · 12h · +54 -9 · 3 files</text>
+<rect x="24" y="1482" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="1483" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="1511" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">chore: tidy swagger tags</text>
+<rect x="56" y="1523.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,1527) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="1538" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="1538" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="56" y="1564" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #368 · acme-dev · 1d · +6 -6 · 2 files</text>
+<rect x="24" y="1581" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="1582" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="1610" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">docs: describe the API limits</text>
+<rect x="56" y="1622.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,1626) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="1637" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="1637" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no reviews yet</text>
+<text x="56" y="1663" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #10 · acme-dev · 20h · +48 -2 · 1 file</text>
+<rect x="24" y="1680" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="1681" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="40.5" cy="1703.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="56" y="1709" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">feat: retry failed webhook</text>
+<rect x="353.546875" y="1694.5" width="65.953125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="386.5234375" y="1708" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">UPDATED</text>
+<rect x="56" y="1721.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,1725) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="1736" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="1736" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2 commits since you looked</text>
+<text x="56" y="1762" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #371 · acme-dev · 2d · +89 -12 · 4 files</text>
+<rect x="24" y="1779" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="1780" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="56" y="1808" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">test: cover token refresh</text>
+<rect x="56" y="1820.5" width="74.375" height="21" rx="11" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(64,1824) scale(0.5833)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+<text x="82" y="1835" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">CI pass</text>
+<text x="136.375" y="1835" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 approval</text>
+<text x="56" y="1861" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #14 · acme-dev · 2d · +77 -3 · 2 files</text>
+<rect x="24" y="1878" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="24" y="1123" width="412" height="112" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="24" y="1235" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<text x="40" y="1210" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Pull requests</text>
+<circle cx="406" cy="1151" r="22" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(396,1141) scale(0.8333)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></g>
+<rect x="40" y="1887" width="324" height="48" rx="24" fill="#151b23" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(56,1901) scale(0.8333)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M21 21l-4.3-4.3"/></g>
+<text x="86" y="1916" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Search pull requests</text>
+<circle cx="396" cy="1911" r="24" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(384,1899) scale(1.0000)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="24" y="1949" width="412" height="89" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="24" y="1949" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<rect x="60.66666666666667" y="1956" width="64" height="32" rx="16" fill="#388bfd" fill-opacity="0.102"/>
+<g transform="translate(81.66666666666667,1961) scale(0.9167)" fill="none" stroke="#4493f8" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9v12M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15V8a2 2 0 0 0-2-2h-3"/></g>
+<rect x="92.94791666666667" y="1952" width="27.71875" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="94.94791666666667" y="1954" width="23.71875" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="106.80729166666667" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">12</text>
+<text x="92.66666666666667" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="middle">PRs</text>
+<g transform="translate(219.0,1961) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2"/></g>
+<rect x="236.0" y="1952" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="238.0" y="1954" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="247.0" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">7</text>
+<text x="230.0" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Issues</text>
+<g transform="translate(356.33333333333337,1961) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></g>
+<rect x="373.33333333333337" y="1952" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="375.33333333333337" y="1954" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="384.33333333333337" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">4</text>
+<text x="367.33333333333337" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Activity</text>
+<circle cx="404" cy="1324" r="11" fill="#bf3989"/>
+<text x="404" y="1328" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+</g>
+<rect x="23.5" y="1122.5" width="413" height="916" rx="0" fill="none" stroke="#8c959f" stroke-width="1"/>
+<text x="24" y="2058" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">One muted line. Not saved: the section closes again</text>
+<text x="24" y="2074" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">on reload while it has 0 rows.</text>
+<text x="476" y="1109" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">5 · Issues tab at rest</text>
+<clipPath id="c476_1123"><rect x="476" y="1123" width="412" height="915"/></clipPath>
+<g clip-path="url(#c476_1123)">
+<rect x="476" y="1123" width="412" height="915" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="492" y="1255" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="476" y="1263" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1264" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1264" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,1276) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="1289" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">In progress</text>
+<text x="595.375" y="1289" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2</text>
+<rect x="476" y="1304" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="492.5" cy="1326.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="508" y="1332" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Status filter ignores closed items</text>
+<rect x="832.421875" y="1317.5" width="39.078125" height="19" rx="4" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<text x="851.9609375" y="1331" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">NEW</text>
+<rect x="508.5" y="1345.5" width="93.328125" height="19" rx="10" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<circle cx="520" cy="1355" r="4" fill="#d29922" fill-opacity="1.000"/>
+<text x="530" y="1359" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">In progress</text>
+<text x="608.328125" y="1359" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">3 comments</text>
+<text x="508" y="1385" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #412 · acme-dev · 2h</text>
+<rect x="476" y="1402" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="1403" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="1431" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Rotate agent token on restart</text>
+<rect x="508.5" y="1444.5" width="93.328125" height="19" rx="10" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<circle cx="520" cy="1454" r="4" fill="#d29922" fill-opacity="1.000"/>
+<text x="530" y="1458" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">In progress</text>
+<text x="608.328125" y="1458" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">no comments</text>
+<text x="508" y="1484" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #9 · acme-dev · 2d</text>
+<rect x="476" y="1501" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="1501" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1502" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1502" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,1514) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="1527" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Assigned to me</text>
+<text x="621.5625" y="1527" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2</text>
+<rect x="476" y="1542" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="1570" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Retry webhook deliveries after 5xx</text>
+<rect x="508.5" y="1583.5" width="73.203125" height="19" rx="10" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<circle cx="520" cy="1593" r="4" fill="#f85149" fill-opacity="1.000"/>
+<text x="530" y="1597" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">security</text>
+<text x="588.203125" y="1597" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 comment</text>
+<text x="508" y="1623" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-co/orders-api #402 · sam-lee · 1d</text>
+<rect x="476" y="1640" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="1641" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<circle cx="492.5" cy="1663.5" r="4.5" fill="#4493f8" fill-opacity="1.000"/>
+<text x="508" y="1669" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Worker report omits the branch</text>
+<rect x="508.5" y="1682.5" width="51.171875" height="19" rx="10" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<circle cx="520" cy="1692" r="4" fill="#f85149" fill-opacity="1.000"/>
+<text x="530" y="1696" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">bug</text>
+<text x="566.171875" y="1696" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1 new comment · 3 comments</text>
+<text x="508" y="1722" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #63 · build-bot · 3h</text>
+<rect x="476" y="1739" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="1739" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1740" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1740" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,1752) scale(0.6667) rotate(-90 12 12)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="1765" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Created by me</text>
+<text x="615.625" y="1765" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">0</text>
+<rect x="476" y="1779" width="412" height="1" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1780" width="412" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="476" y="1780" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(492,1792) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="516" y="1805" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mentioned</text>
+<text x="592.578125" y="1805" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">1</text>
+<rect x="476" y="1820" width="412" height="99" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="508" y="1848" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Crash when the token is revoked</text>
+<rect x="508.5" y="1861.5" width="51.171875" height="19" rx="10" fill="none" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<circle cx="520" cy="1871" r="4" fill="#f85149" fill-opacity="1.000"/>
+<text x="530" y="1875" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">bug</text>
+<text x="566.171875" y="1875" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">2 comments</text>
+<text x="508" y="1901" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">acme-dev/tools #58 · sam-lee · 5h</text>
+<rect x="476" y="1918" width="412" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<rect x="476" y="1123" width="412" height="112" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="476" y="1235" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<text x="492" y="1210" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Issues</text>
+<circle cx="858" cy="1151" r="22" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(848,1141) scale(0.8333)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></g>
+<rect x="492" y="1887" width="324" height="48" rx="24" fill="#151b23" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(508,1901) scale(0.8333)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M21 21l-4.3-4.3"/></g>
+<text x="538" y="1916" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">Search issues</text>
+<circle cx="848" cy="1911" r="24" fill="#212830" fill-opacity="1.000" stroke="#3d444d" stroke-opacity="1.000" stroke-width="1"/>
+<g transform="translate(836,1899) scale(1.0000)" fill="none" stroke="#f0f6fc" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="476" y="1949" width="412" height="89" rx="0" fill="#010409" fill-opacity="1.000"/>
+<rect x="476" y="1949" width="412" height="1" fill="#3d444d" fill-opacity="1.000"/>
+<g transform="translate(533.6666666666666,1961) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 9v12M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15V8a2 2 0 0 0-2-2h-3"/></g>
+<rect x="544.9479166666666" y="1952" width="27.71875" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="546.9479166666666" y="1954" width="23.71875" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="558.8072916666666" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">12</text>
+<text x="544.6666666666666" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">PRs</text>
+<rect x="650.0" y="1956" width="64" height="32" rx="16" fill="#388bfd" fill-opacity="0.102"/>
+<g transform="translate(671.0,1961) scale(0.9167)" fill="none" stroke="#4493f8" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2"/></g>
+<rect x="688.0" y="1952" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="690.0" y="1954" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="699.0" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">7</text>
+<text x="682.0" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="middle">Issues</text>
+<g transform="translate(808.3333333333334,1961) scale(0.9167)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></g>
+<rect x="825.3333333333334" y="1952" width="22" height="22" rx="11" fill="#010409" fill-opacity="1.000"/>
+<rect x="827.3333333333334" y="1954" width="18" height="18" rx="9" fill="#1f6feb" fill-opacity="1.000"/>
+<text x="836.3333333333334" y="1967" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#ffffff" fill-opacity="1.000" text-anchor="middle">4</text>
+<text x="819.3333333333334" y="2005" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="middle">Activity</text>
+</g>
+<rect x="475.5" y="1122.5" width="413" height="916" rx="0" fill="none" stroke="#8c959f" stroke-width="1"/>
+<text x="476" y="2058" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Created by me has 0 rows, so it renders closed.</text>
+<text x="476" y="2074" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">All open is below, closed by default.</text>
+<text x="928" y="1109" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#24292f">Header anatomy at 2x (open state). Values in CSS px.</text>
+<g transform="translate(928,1155) scale(2)">
+<rect x="0" y="0" width="190" height="40" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<rect x="0" y="0" width="190" height="1" fill="#3d444d" fill-opacity="0.502"/>
+<g transform="translate(16,12) scale(0.6667)" fill="none" stroke="#9198a1" stroke-opacity="1.000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<text x="40" y="25" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">Mine</text>
+<text x="78.375" y="25" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="13" font-weight="400" fill="#9198a1" fill-opacity="1.000" text-anchor="start">5</text>
+<rect x="0" y="40" width="190" height="30" rx="0" fill="#0d1117" fill-opacity="1.000"/>
+<text x="32" y="62" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="15" font-weight="400" fill="#f0f6fc" fill-opacity="1.000" text-anchor="start">fix: reject…</text>
+</g>
+<rect x="927.5" y="1154.5" width="381" height="141" rx="0" fill="none" stroke="#8c959f" stroke-width="1" stroke-dasharray="4 3"/>
+<path d="M914 1155V1235M909 1155h10M909 1235h10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="906" y="1199.0" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="end">40</text>
+<path d="M928 1147H960M928 1142v10M960 1142v10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="944.0" y="1141" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="middle">16</text>
+<path d="M960 1147H992M960 1142v10M992 1142v10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="976.0" y="1141" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="middle">16</text>
+<path d="M992 1147H1008M992 1142v10M1008 1142v10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="1000.0" y="1141" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="middle">8</text>
+<path d="M1072.75 1221H1084.75M1072.75 1216v10M1084.75 1216v10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="1078.75" y="1237" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="middle">6</text>
+<path d="M1322 1179V1211M1317 1179h10M1317 1211h10" stroke="#bf3989" stroke-width="1" fill="none"/>
+<text x="1330" y="1199.0" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" fill="#bf3989" text-anchor="start">16</text>
+<text x="928" y="1345" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">1px hairline above: borderColor-hairline (border-top).</text>
+<text x="928" y="1365" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Fill: bgColor-default, the row colour. No band.</text>
+<text x="928" y="1385" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Chevron: ChevronIcon 16, fgColor-muted, stroke 2 (24 grid).</text>
+<text x="928" y="1405" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Label: 13/18, weight 600, fgColor-default, sentence case.</text>
+<text x="928" y="1425" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Count: 13/18, weight 400, fgColor-muted, 6 after label.</text>
+<text x="928" y="1445" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Rows below start text at x 32; label sits at x 40.</text>
+<text x="928" y="1465" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a"></text>
+<text x="928" y="1485" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">Callouts on the frames:</text>
+<text x="928" y="1505" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">1  Pressed: bgColor-neutral-muted (as .ph-row:active).</text>
+<text x="928" y="1525" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">    Chevron turns to point right (rotate -90deg).</text>
+<text x="928" y="1545" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">2  Pinned at y 57: hairline below, borderColor-hairline.</text>
+<text x="928" y="1565" font-family="Noto Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="400" fill="#57606a">3  Empty opened: 40px muted line, 13/18 fgColor-muted.</text>
+</svg>

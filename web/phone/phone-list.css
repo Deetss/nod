@@ -45,36 +45,107 @@
   white-space: nowrap;
 }
 
-.ph-section {
+/* Beats `.phone button { font: inherit; color: inherit }`. */
+.phone .ph-section {
   position: sticky;
   /* Sticky offsets start below the list's padding: 57 under the top edge is 56 above the padding edge. */
   top: -56px;
   z-index: 2;
+  /* Lets the pinned hairline below show only while the header is stuck. */
+  container-type: scroll-state;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
   min-height: 44px;
   padding: 0 16px;
-  background: var(--bgColor-muted);
+  box-sizing: border-box;
+  background: var(--bgColor-default);
   border: 0;
   border-top: 1px solid var(--borderColor-hairline);
-  border-bottom: 1px solid var(--borderColor-hairline);
-  color: var(--fgColor-muted);
-  font-size: 12px;
-  line-height: 16px;
+  color: var(--fgColor-default);
+  font-size: 13px;
+  line-height: 18px;
   font-weight: 600;
-  text-transform: uppercase;
   text-align: left;
   cursor: pointer;
+}
+
+.ph-section:active {
+  background: var(--bgColor-neutral-muted);
 }
 
 .ph-section.is-static {
   cursor: default;
 }
 
+.ph-section.is-static:active {
+  background: var(--bgColor-default);
+}
+
+.ph-section-chev {
+  display: inline-flex;
+  color: var(--fgColor-muted);
+  transition: transform 150ms ease-out;
+}
+
+.ph-section[aria-expanded='false'] .ph-section-chev {
+  transform: rotate(-90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-section-chev {
+    transition: none;
+  }
+}
+
+.ph-section-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The 8px flex gap less 2 puts the count 6 after the label. */
 .ph-section-count {
-  margin-left: auto;
+  flex-shrink: 0;
+  margin-left: -2px;
+  color: var(--fgColor-muted);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.ph-section-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--borderColor-hairline);
+  opacity: 0;
+}
+
+@container scroll-state(stuck: top) {
+  .ph-section-rule {
+    opacity: 1;
+  }
+}
+
+/* An empty section tapped open: one muted line, text under the label. */
+.ph-section-empty {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px 0 40px;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+/* The next header's top border is the break, so the last row drops its own. */
+.ph-section-group > .ph-row:last-child {
+  border-bottom: 0;
 }
 
 /* PR and issue row: 12 + title + 6 + 22 + 6 + 18 + 12. */
