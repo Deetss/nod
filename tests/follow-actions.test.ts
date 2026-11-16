@@ -49,6 +49,7 @@ function setup(follow: Follow) {
   const followCalls: number[] = [];
   let now = START;
   const client = {
+    hasToken: true,
     lastRate: undefined,
     graphqlRate: rate,
     rest: async () => ({}),

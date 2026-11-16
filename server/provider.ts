@@ -1,3 +1,4 @@
+import type { Connection, ConnectionCheck } from '../shared/connection';
 import type { ClosedIssue, ClosedKind, ClosedPage, ClosedPr, ClosedWindow } from '../shared/closed';
 import type { FetchedImage, ImageTarget } from '../shared/image-url';
 import type { UploadResult, UploadType } from '../shared/image-upload';
@@ -126,6 +127,10 @@ export interface Provider {
     query: StateQuery,
   ): Promise<ClosedPage<ClosedPr> | ClosedPage<ClosedIssue>>;
   markIssueSeen(mark: IssueSeenMark): Promise<void>;
+  /** What the GitHub token allows. */
+  connection(query?: StateQuery): Connection;
+  /** Check again: re-reads the token, swaps it in, reads its scopes, and resyncs when it improved. */
+  checkConnection(query?: StateQuery): Promise<ConnectionCheck>;
 }
 
 /** Fixture-only `?state=` value; ignored by the real provider. */

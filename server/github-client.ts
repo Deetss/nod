@@ -1,5 +1,6 @@
 import { contentsPath, REDIRECT_HOSTS, sniffImageType, type FetchedImage, type ImageTarget } from '../shared/image-url';
 import { githubErrorText } from '../shared/pr-actions';
+import { parseScopes } from '../shared/connection';
 import type { RateInfo } from '../shared/types';
 import { consoleSink, formatCall, operationName, type LogSink } from './request-log';
 
@@ -11,6 +12,8 @@ export class ApiError extends Error {
     readonly kind: ApiErrorKind,
     readonly status?: number,
     readonly resetAt?: string,
+    /** GraphQL operation or REST path, for the error's Details. */
+    readonly operation?: string,
   ) {
     super(message);
     this.name = 'ApiError';
@@ -76,14 +79,42 @@ export class GithubClient {
   /** Newest numbers from a GraphQL query, the pool the top bar shows. */
   graphqlRate: RateInfo | undefined;
 
+  /**
+   * The newest `X-OAuth-Scopes` list. Undefined before any response, and when GitHub sends no
+   * header (fine-grained and app tokens).
+   */
+  scopes: string[] | undefined;
+
   /** Calls in flight, so identical concurrent reads share one request. */
   private readonly flights = new Map<string, Promise<unknown>>();
 
+  /** An empty token means none: the client exists, but nothing should call GitHub. */
   constructor(
-    private readonly token: string,
+    private token: string,
     private readonly fetchImpl: FetchLike = fetch,
     private readonly log: LogSink = consoleSink,
   ) {}
+
+  get hasToken(): boolean {
+    return this.token !== '';
+  }
+
+  isToken(token: string): boolean {
+    return token === this.token;
+  }
+
+  /** Requests already in flight finish on the old token. */
+  setToken(token: string): void {
+    if (token === this.token) return;
+    this.token = token;
+    this.scopes = undefined;
+  }
+
+  /** `GET /user`: the login. The response header updates `scopes`. */
+  async whoami(): Promise<string> {
+    const user = await this.rest<{ login: string }>('/user');
+    return user.login;
+  }
 
   private headers(): Record<string, string> {
     return {
@@ -117,6 +148,8 @@ export class GithubClient {
       throw new ApiError(e instanceof Error ? e.message : 'Network error', 'network');
     }
     this.noteRate(res);
+    // A 5xx from GitHub's edge carries no scope header, so it says nothing about the token.
+    if (res.status < 500) this.scopes = parseScopes(res.headers.get('x-oauth-scopes'));
     const limited =
       res.status === 429 ||
       (res.status === 403 && res.headers.get('x-ratelimit-remaining') === '0');
@@ -160,16 +193,16 @@ export class GithubClient {
       await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
       res = await post();
     }
-    if (!res.ok) throw new ApiError(`GitHub API error ${res.status}`, 'http', res.status);
+    if (!res.ok) throw new ApiError(`GitHub API error ${res.status}`, 'http', res.status, undefined, name);
     const json = (await res.json()) as GraphqlResponse<T>;
     const first = json.errors?.[0];
     if (first) {
       if (first.type === 'RATE_LIMITED') {
-        throw new ApiError('GitHub rate limit reached', 'ratelimit', 200, this.lastRate?.resetAt);
+        throw new ApiError('GitHub rate limit reached', 'ratelimit', 200, this.lastRate?.resetAt, name);
       }
-      throw new ApiError(first.message, 'http', 200);
+      throw new ApiError(first.message, 'http', 200, undefined, name);
     }
-    if (!json.data) throw new ApiError('Empty GraphQL response', 'http', 200);
+    if (!json.data) throw new ApiError('Empty GraphQL response', 'http', 200, undefined, name);
     const rate = json.data.rateLimit;
     if (rate) this.graphqlRate = rate;
     this.log(formatCall({ method: 'POST', target: name, cost: rate?.cost ?? 1, cache: 'miss' }));
@@ -180,7 +213,7 @@ export class GithubClient {
     const res = await this.send(path, init);
     const method = init.method ?? 'GET';
     if (!res.ok) {
-      throw new ApiError(githubErrorText(res.status, await res.text().catch(() => '')), 'http', res.status);
+      throw new ApiError(githubErrorText(res.status, await res.text().catch(() => '')), 'http', res.status, undefined, path);
     }
     this.log(formatCall({ method, target: path, cost: 1, cache: 'miss' }));
     // Some writes (the re-run endpoints) answer with an empty body.

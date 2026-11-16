@@ -2,7 +2,19 @@
 
 ## Token
 
-The server reads your GitHub token once at startup by running `gh auth token`. The token stays in server memory and never reaches the browser, logs or disk. Run `gh auth login` first if needed.
+The server reads your GitHub token by running `gh auth token`, at startup and again on Check again (Settings > GitHub, `POST /api/connection/check`, a mutating route). Check again swaps the token in memory without a restart; requests in flight finish on the old one. The token stays in server memory and never reaches the browser, logs or disk. The web app only gets the connection state, the login, the scope list and the check time.
+
+Without a token (gh missing or not logged in) the server still starts, syncs nothing, and Settings > GitHub shows how to connect. When `GH_TOKEN` or `GITHUB_TOKEN` is set, `gh auth token` prints that value, and Settings says so.
+
+Scopes come from GitHub's `X-OAuth-Scopes` response header:
+
+| Scope | Need | Without it |
+|---|---|---|
+| `repo` | Required | Sync pauses and actions are off; the saved lists stay. |
+| `read:org` | Optional | Team review requests are missed; user requests still match. |
+| `project` | Optional | Issue queries leave out `projectItems`; Status and Move to In progress are hidden. |
+
+Fine-grained and app tokens send no scope header. Nod then syncs and turns Status off on the first refused `projectItems`. Log in with `gh auth login -s project`; `gh` adds `repo`, `read:org` and `gist` itself.
 
 ## Binding and host guard
 

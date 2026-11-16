@@ -571,6 +571,9 @@ export function createApp(opts: AppOptions): Hono {
     return switches ? c.json(switches) : c.json({ error: 'Not paired' }, 401);
   });
 
+  // Check again: re-reads `gh auth token`. The token itself never reaches the response.
+  mutating.post('/connection/check', async (c) => c.json(await provider.checkConnection(state(c))));
+
   mutating.post('/refresh', async (c) => {
     await provider.refresh();
     return c.json({ ok: true });

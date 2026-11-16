@@ -27,8 +27,8 @@ import {
   CREATE_ISSUE,
   CREATE_LABEL,
   ISSUE_COMMENTS_QUERY,
-  ISSUE_DETAIL_QUERY,
-  ISSUE_INBOX_QUERY,
+  issueDetailQuery,
+  issueInboxQuery,
   issueFullSearch,
   mentionFullSearch,
   MENTION_QUERY,
@@ -167,7 +167,7 @@ export class IssueService {
     for (;;) {
       const data: SyncResponse & MentionResponse = await this.client.graphql(
         query,
-        query === ISSUE_INBOX_QUERY ? { q: search, after, statusField: this.settings.project.statusField } : { q: search, after },
+        /\$statusField\b/.test(query) ? { q: search, after, statusField: this.settings.project.statusField } : { q: search, after },
         label,
       );
       viewer = data.viewer?.login ?? viewer;
@@ -183,7 +183,7 @@ export class IssueService {
   /** Sweeps every open issue and every open mention. */
   async full(start: number): Promise<void> {
     const issues = await this.pages<RawIssue>(
-      ISSUE_INBOX_QUERY,
+      issueInboxQuery(this.project.available),
       issueFullSearch(this.settings.orgs, this.settings.includeInvolved),
       'IssueSync:full',
       (d) => d.search as Page<RawIssue>,
@@ -207,7 +207,7 @@ export class IssueService {
   /** Delta hits past the poll's first page, continuing from its cursor. */
   async moreIssues(search: string, after: string | null): Promise<RawIssue[]> {
     const r = await this.pages<RawIssue>(
-      ISSUE_INBOX_QUERY,
+      issueInboxQuery(this.project.available),
       search,
       'Poll:issues',
       (d) => d.search as Page<RawIssue>,
@@ -279,11 +279,12 @@ export class IssueService {
       hit(`issue ${key}`);
       detail = entry.detail;
     } else {
-      const data = await this.client.graphql<DetailResponse>(ISSUE_DETAIL_QUERY, {
+      const project = this.project.available;
+      const data = await this.client.graphql<DetailResponse>(issueDetailQuery(project), {
         owner: repoOwner(ref.repo),
         name: repoName(ref.repo),
         number: ref.number,
-        statusField: this.settings.project.statusField,
+        ...(project ? { statusField: this.settings.project.statusField } : {}),
       });
       const raw = data.repository?.issue;
       if (!raw) throw new ApiError('Issue not found', 'http', 404);

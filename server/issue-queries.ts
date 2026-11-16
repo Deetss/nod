@@ -13,7 +13,7 @@ export function mentionDeltaSearch(orgs: readonly string[], lastSync: number, ov
   return `${issueDeltaSearch(orgs, lastSync, overlapMs, involved)} mentions:@me`;
 }
 
-export const ISSUE_FIELDS = `
+const BASE_ISSUE_FIELDS = `
   id number title url state stateReason createdAt updatedAt closedAt
   repository { name }
   author { login }
@@ -21,27 +21,40 @@ export const ISSUE_FIELDS = `
   assignees(first: 10) { nodes { login } }
   commentCount: comments { totalCount }
   subIssuesSummary { total completed }
-  parent { number url repository { name } }
+  parent { number url repository { name } }`;
+
+const PROJECT_ITEMS = `
   projectItems(first: 5) {
     nodes {
       id
       project { number }
       fieldValueByName(name: $statusField) { ... on ProjectV2ItemFieldSingleSelectValue { name optionId } }
     }
-  }
+  }`;
+
+/** Issue row fields. Without the `project` scope, `projectItems` and its `$statusField` are left out. */
+export const issueFields = (project: boolean): string => `${BASE_ISSUE_FIELDS}${project ? PROJECT_ITEMS : ''}
 `;
+
+export const ISSUE_FIELDS = issueFields(true);
+
+/** `, $statusField: String!` when the document reads project items. */
+const statusVar = (project: boolean) => (project ? ', $statusField: String!' : '');
 
 const RATE = 'rateLimit { limit cost remaining resetAt }';
 
-export const ISSUE_INBOX_QUERY = `
-query IssueSync($q: String!, $after: String, $statusField: String!) {
+export const issueInboxQuery = (project: boolean): string => `
+query IssueSync($q: String!, $after: String${statusVar(project)}) {
   viewer { login id }
   ${RATE}
   search(query: $q, type: ISSUE_ADVANCED, first: 100, after: $after) {
     pageInfo { hasNextPage endCursor }
-    nodes { ... on Issue { ${ISSUE_FIELDS} } }
+    nodes { ... on Issue { ${issueFields(project)} } }
   }
 }`;
+
+export const ISSUE_INBOX_QUERY = issueInboxQuery(true);
+export const ISSUE_INBOX_NO_PROJECT_QUERY = issueInboxQuery(false);
 
 export const MENTION_QUERY = `
 query IssueMentions($q: String!, $after: String) {
@@ -56,9 +69,9 @@ query IssueMentions($q: String!, $after: String) {
  * One request for a quiet poll: changed PRs, changed issues and changed mentions.
  * `first: 10` keeps a quiet poll near 1 point; a busy search continues from its cursor.
  */
-export function pollQuery(prFields: string): string {
+export function pollQuery(prFields: string, project = true): string {
   return `
-query Poll($prs: String!, $own: String!, $watchOwn: Boolean!, $issues: String!, $mentions: String!, $statusField: String!) {
+query Poll($prs: String!, $own: String!, $watchOwn: Boolean!, $issues: String!, $mentions: String!${statusVar(project)}) {
   viewer { login id }
   ${RATE}
   prs: search(query: $prs, type: ISSUE_ADVANCED, first: 10) {
@@ -70,7 +83,7 @@ query Poll($prs: String!, $own: String!, $watchOwn: Boolean!, $issues: String!, 
   }
   issues: search(query: $issues, type: ISSUE_ADVANCED, first: 10) {
     pageInfo { hasNextPage endCursor }
-    nodes { ... on Issue { ${ISSUE_FIELDS} } }
+    nodes { ... on Issue { ${issueFields(project)} } }
   }
   mentions: search(query: $mentions, type: ISSUE_ADVANCED, first: 10) {
     pageInfo { hasNextPage endCursor }
@@ -79,13 +92,13 @@ query Poll($prs: String!, $own: String!, $watchOwn: Boolean!, $issues: String!, 
 }`;
 }
 
-export const ISSUE_DETAIL_QUERY = `
-query IssueDetail($owner: String!, $name: String!, $number: Int!, $statusField: String!) {
+export const issueDetailQuery = (project: boolean): string => `
+query IssueDetail($owner: String!, $name: String!, $number: Int!${statusVar(project)}) {
   viewer { login }
   ${RATE}
   repository(owner: $owner, name: $name) {
     issue(number: $number) {
-      ${ISSUE_FIELDS}
+      ${issueFields(project)}
       bodyHTML
       milestone { title }
       assignees(first: 10) { nodes { login avatarUrl } }
@@ -111,6 +124,9 @@ query IssueDetail($owner: String!, $name: String!, $number: Int!, $statusField: 
     }
   }
 }`;
+
+export const ISSUE_DETAIL_QUERY = issueDetailQuery(true);
+export const ISSUE_DETAIL_NO_PROJECT_QUERY = issueDetailQuery(false);
 
 /** Comments past the first 100, fetched page by page. */
 export const ISSUE_COMMENTS_QUERY = `

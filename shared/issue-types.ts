@@ -1,3 +1,4 @@
+import type { Connection } from './connection';
 import type { Minimized } from './minimized';
 import type { ProjectStatus } from './project-status';
 import type { ActionResult, RateInfo, SeenState, Stale, SyncProgress } from './types';
@@ -89,6 +90,8 @@ export interface IssueInboxData {
   syncedAt: number;
   rate?: RateInfo;
   stale?: Stale;
+  /** What the GitHub token allows. Absent from servers older than the field. */
+  connection?: Connection;
   syncing?: SyncProgress;
 }
 

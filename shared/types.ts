@@ -1,3 +1,4 @@
+import type { Connection } from './connection';
 import type { IssueComment } from './issue-types';
 import type { Minimized } from './minimized';
 import { DEFAULT_SETTINGS, isReleaseTitle, type Settings } from './settings';
@@ -68,6 +69,12 @@ export interface Stale {
   cachedAt: string;
   message: string;
   resetAt?: string;
+  /** HTTP status of the failed call. */
+  status?: number;
+  /** GraphQL operation or REST path of the failed call. */
+  operation?: string;
+  /** Local HH:MM of the failure. */
+  at?: string;
 }
 
 export interface SyncProgress {
@@ -95,6 +102,8 @@ export interface InboxData {
   syncedAt: number;
   rate?: RateInfo;
   stale?: Stale;
+  /** What the GitHub token allows. Absent from servers older than the field. */
+  connection?: Connection;
   syncing?: SyncProgress;
   /** Followed PRs by id. */
   follows: Record<string, FollowState>;
