@@ -24,7 +24,7 @@ After the first install, Nod updates itself from [GitHub releases](https://githu
 
 The unit's `ExecStop` stops Nod before the AppImage's FUSE daemon. Stopping both at once crashes Nod with SIGBUS and leaves a dead `/tmp/.mount_nod.*` mount. Rerunning the install script refreshes an installed unit. Dead mounts from older units clear with `fusermount -u` or a reboot.
 
-To cut a release, bump `version` in `package.json` in a PR. After it merges, tag `main` (`git tag v0.2.1 && git push origin v0.2.1`). The tag must match the version. It runs `.github/workflows/release.yml`, which tests, builds and publishes the AppImage and `latest-linux.yml`.
+Every merge to `main` that changes more than docs and Markdown ships a release. `.github/workflows/release.yml` bumps the patch of the newest `v*` tag, tests, tags, then publishes the AppImage, `latest-linux.yml` and the APK. For a minor or major release, raise `version` in `package.json` in the PR; the workflow uses it when it is higher. Actions > Release > Run workflow releases by hand.
 
 The window class is `nod`, so Hyprland window rules can match it. Fixtures work too: `NOD_FIXTURES=1 nod`.
 
