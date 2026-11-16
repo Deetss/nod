@@ -27,6 +27,10 @@ interface PhoneSheetProps {
   covered?: boolean;
   /** Visual viewport height while the keyboard is up, so the sheet ends on top of it. */
   keyboardHeight?: number;
+  /** Content-height bottom sheet over a scrim: Close on the right, height set by its content. */
+  fit?: boolean;
+  /** Disables the Close button, such as while a request runs. */
+  closeDisabled?: boolean;
   children: ReactNode;
 }
 
@@ -59,17 +63,23 @@ export function PhoneSheet(p: PhoneSheetProps) {
     if (shouldCloseSwipe(dist, e.timeStamp - d.t)) p.onClose();
   };
 
+  const closeButton = (
+    <button type="button" className="ph-iconbtn" aria-label="Close" disabled={p.closeDisabled} onClick={p.onClose}>
+      <CloseIcon />
+    </button>
+  );
+
   return (
     <div
       ref={trap}
-      className={`ph-sheet${p.covered ? ' is-covered' : ''}`}
+      className={`ph-sheet${p.covered ? ' is-covered' : ''}${p.fit ? ' is-fit' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label={p.title}
       style={{
         zIndex: 20 + (p.depth ?? 0),
         transform: dy ? `translateY(${dy}px)` : undefined,
-        height: p.keyboardHeight ? `calc(${p.keyboardHeight}px - var(--ph-top))` : undefined,
+        height: p.keyboardHeight && !p.fit ? `calc(${p.keyboardHeight}px - var(--ph-top))` : undefined,
       }}
     >
       <div
@@ -84,13 +94,12 @@ export function PhoneSheet(p: PhoneSheetProps) {
       >
         <span className="ph-handle" aria-hidden="true" />
         <header className="ph-sheet-head">
-          <button type="button" className="ph-iconbtn" aria-label="Close" onClick={p.onClose}>
-            <CloseIcon />
-          </button>
+          {p.fit ? null : closeButton}
           <div className="ph-sheet-titles">
             <h2 className="ph-sheet-title">{p.title}</h2>
             <p className="ph-sheet-sub">{p.sub}</p>
           </div>
+          {p.fit ? closeButton : null}
           {p.onMore ? (
             <button type="button" className="ph-iconbtn" aria-label="More actions" onClick={p.onMore}>
               <MoreIcon />

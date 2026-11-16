@@ -1,0 +1,284 @@
+/* Finding dispatch bottom sheets. Spec: docs/design/finding-dispatch-spec.md (A1 to A7). */
+
+.ph-fit-wrap {
+  display: contents;
+}
+
+/* Content height, bottom on the scrim (which ends on the keyboard). The body scrolls past the cap. */
+.ph-sheet.is-fit {
+  inset: auto 0 0;
+  max-height: calc(100% - var(--ph-top));
+}
+
+.is-fit .ph-sheet-body {
+  flex: 0 1 auto;
+}
+
+.is-fit .ph-sheet-head {
+  padding: 0 14px 0 16px;
+}
+
+.is-fit .ph-iconbtn {
+  border-radius: 50%;
+}
+
+.is-fit .ph-iconbtn:disabled {
+  border-style: dashed;
+  color: var(--fgColor-muted);
+}
+
+.is-fit .ph-actionbar .ph-btn:disabled:not(.is-primary) {
+  background: transparent;
+  border-style: dashed;
+}
+
+.ph-fit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+}
+
+.ph-fit-form.is-tall {
+  padding-bottom: 24px;
+}
+
+.ph-fit-form .ph-fix-label:not(:first-child) {
+  margin-top: 8px;
+}
+
+.ph-fit-form .ph-fix-field {
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--fgColor-default);
+}
+
+.ph-fit-form .ph-fix-field.ph-mono {
+  font-family: var(--fontStack-monospace);
+}
+
+.ph-fit-form .ph-fix-field:focus {
+  outline: none;
+  border-color: var(--borderColor-accent-emphasis);
+  box-shadow: 0 0 0 1px var(--borderColor-accent-emphasis);
+}
+
+.ph-fit-form .ph-fix-field[aria-invalid='true'] {
+  border-color: var(--borderColor-danger-emphasis);
+  box-shadow: 0 0 0 1px var(--borderColor-danger-emphasis);
+}
+
+.ph-fit-form .ph-fit-select {
+  height: 44px;
+  padding: 0 40px 0 12px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 16 16' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 6 4.5 4.5L12.5 6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.ph-fit-form .ph-fit-input {
+  height: 44px;
+  padding: 0 12px;
+}
+
+/* Locked, busy and read-only fields: dashed border and muted text, plus a note. */
+.ph-fit-form .ph-fix-locked,
+.ph-fit-form.is-locked .ph-fix-field,
+.ph-fit-form.is-locked .ph-fix-field:focus,
+.ph-fit-form.is-locked .ph-fit-session {
+  color: var(--fgColor-muted);
+  background-color: transparent;
+  border-style: dashed;
+  border-color: var(--borderColor-default);
+  box-shadow: none;
+}
+
+.ph-fit-form .ph-fit-area {
+  display: block;
+  height: 200px;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  resize: none;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+
+.ph-fit-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-fit-note-up {
+  margin-top: -4px;
+}
+
+.ph-fit-note + .ph-fix-label {
+  margin-top: 4px;
+}
+
+.ph-fit-counter {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-fit-counter .is-over {
+  color: var(--fgColor-danger);
+  font-weight: 600;
+}
+
+.ph-fit-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-danger);
+  background: var(--bgColor-danger-muted);
+  border: 1px dashed var(--borderColor-danger-emphasis);
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.ph-fit-error svg {
+  flex: none;
+}
+
+/* Send sheet: the one session the message goes to. */
+.ph-fit-session {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 8px;
+}
+
+.ph-fit-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fgColor-accent);
+}
+
+.ph-fit-session-name {
+  min-width: 0;
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-fit-form.is-locked .ph-fit-session-name {
+  font-weight: 400;
+}
+
+.ph-fit-pill {
+  flex: none;
+  padding: 2px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-muted);
+  border-radius: 11px;
+}
+
+/* Picker sheet rows. Radio, name and state, then reason and hint. */
+.ph-ses-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fgColor-muted);
+  background: var(--bgColor-muted);
+}
+
+.ph-ses-count {
+  font-weight: 400;
+}
+
+.ph-ses-row {
+  box-sizing: border-box;
+  width: calc(100% - 16px);
+  min-height: 64px;
+  margin: 0 8px;
+  padding: 0 14px;
+  border: 2px solid transparent;
+  border-bottom: 1px solid var(--borderColor-muted);
+  border-radius: 0;
+}
+
+.ph-ses-row.is-on {
+  border: 2px solid var(--borderColor-accent-emphasis);
+  border-radius: 8px;
+  background: var(--bgColor-accent-muted);
+}
+
+.ph-ses-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.ph-ses-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ph-ses-name {
+  max-width: 190px;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-ses-state,
+.ph-ses-reason {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-ses-state {
+  flex: none;
+}
+
+.ph-ses-reason {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-ses-hint {
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fgColor-accent);
+}

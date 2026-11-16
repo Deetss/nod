@@ -65,7 +65,7 @@ function Statuses({ c, f, cell }: { c: FindingControls; f: Finding; cell: Cell }
         <StatusLine tone="wait">{`Handed to ${b.name} ${clock(handedAt)}, waiting for reply`}</StatusLine>
       ) : null}
       {cell.dispatch.s === 'done' ? (
-        <StatusLine tone="ok">{`Sent to ${cell.dispatch.note ?? 'the session'}, confirmed ${clock(cell.dispatch.at)}`}</StatusLine>
+        <StatusLine tone="ok">{`${cell.dispatch.worktree ? 'Dispatched to' : 'Sent to'} ${cell.dispatch.note ?? 'the session'}, confirmed ${clock(cell.dispatch.at)}`}</StatusLine>
       ) : null}
       {reply ? (
         <div className="finding-botreply">

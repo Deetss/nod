@@ -87,6 +87,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const prData = usePhonePr(pr, (m) => writes.notify(m, false));
   const orca = useOrcaInfo();
   const findingResult = useRef<FindingControls['onSendResult']>(undefined);
+  const findingDispatched = useRef<FindingControls['onDispatched']>(undefined);
   const orcaUi = useOrca({
     detail: prData.detail.data,
     orca: orca.data,
@@ -96,6 +97,8 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     toast: (t) => writes.notify(t.message, t.kind !== 'err'),
     onDetails: () => undefined,
     onFindingResult: (tag, outcome) => findingResult.current?.(tag, outcome),
+    onFindingDispatched: (tag, worktree) => findingDispatched.current?.(tag, worktree),
+    phone: true,
   });
   const findings = useFindings({
     detail: prData.detail.data,
@@ -129,6 +132,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const botTrim = useBotTrim(issueDetail.data, viewer, postTrim, () => issueDetail.reload());
   const botView = phoneBotState(botCheck.state, botTrim.state, issueDetail.data?.comments ?? []);
   findingResult.current = findings?.onSendResult;
+  findingDispatched.current = findings?.onDispatched;
   reload.current = () => {
     prData.reload();
     issueDetail.reload();

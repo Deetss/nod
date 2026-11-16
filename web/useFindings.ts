@@ -22,7 +22,7 @@ import { bot, reviewer } from './org-settings';
 export type Step =
   | { s: 'idle' }
   | { s: 'busy' }
-  | { s: 'done'; at: number; note?: string }
+  | { s: 'done'; at: number; note?: string; /** The note names a new worktree, not a session. */ worktree?: boolean }
   | { s: 'failed'; message: string };
 
 const IDLE: Step = { s: 'idle' };
@@ -39,8 +39,8 @@ const EMPTY: Cell = { hand: IDLE, dispatch: IDLE, resolve: IDLE, reply: { open: 
 
 /** What the Orca Send flow offers the findings. Absent when Orca or the repo is not available. */
 export interface FindingSender {
-  /** Opens the Send flow with this text. False when no session could take it. */
-  send: (text: string, tag: string) => boolean;
+  /** Opens the Send flow with this text. False when no session could take it. `where` is the `file:line` the phone sheet shows. */
+  send: (text: string, tag: string, where?: string) => boolean;
 }
 
 export interface BulkRow {
@@ -73,6 +73,8 @@ export interface FindingControls {
   confirmBulk: () => void;
   /** A Send flow result for a dispatched finding. */
   onSendResult: (tag: string, r: SendResult & { session: { name: string } }) => void;
+  /** A finding was dispatched to a new worktree. */
+  onDispatched: (tag: string, worktree: string) => void;
 }
 
 interface Options {
@@ -88,6 +90,22 @@ interface Options {
 const msg = (e: unknown, fallback: string): string => (e instanceof Error ? e.message : fallback);
 /** `09:42`, the local time of a moment. */
 export const clock = (ms: number): string => new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+/** Why a send did not land, or undefined when it did. */
+export function sendFailure(status: SendResult['status'], name: string): string | undefined {
+  switch (status) {
+    case 'sent':
+      return undefined;
+    case 'unconfirmed':
+      return `Not confirmed: ${name} may not have the message`;
+    case 'unreachable':
+      return 'Not confirmed: Orca is down';
+    case 'blocked':
+      return `Not sent: ${name} is showing a prompt`;
+    default:
+      return `Not sent: ${name} has exited`;
+  }
+}
 
 /** The tag that ties a Send flow result back to its finding. */
 export const tagOf = (prId: string, threadId: string): string => `${prId}|${threadId}`;
@@ -155,7 +173,8 @@ export function useFindings(o: Options): FindingControls | undefined {
     (f: Finding) => {
       if (!detail || !sender || !writable) return;
       const { repo, number } = detail.summary;
-      const started = sender.send(dispatchText(f, repo, number), tagOf(detail.summary.id, f.thread.id));
+      const where = `${f.thread.path}${f.thread.line ? `:${f.thread.line}` : ''}`;
+      const started = sender.send(dispatchText(f, repo, number), tagOf(detail.summary.id, f.thread.id), where);
       if (started) patch(f.thread.id, { dispatch: IDLE });
       else patch(f.thread.id, { dispatch: { s: 'failed', message: `No Orca session linked to PR #${number}` } });
     },
@@ -167,25 +186,24 @@ export function useFindings(o: Options): FindingControls | undefined {
       const [forPr, id] = tagged.split('|');
       if (forPr !== prId || !id) return;
       const name = res.session.name;
-      switch (res.status) {
-        case 'sent':
-          patch(id, { dispatch: { s: 'done', at: Date.now(), note: name } });
-          notify(true, `Dispatched finding to ${name}`);
-          break;
-        case 'unconfirmed':
-          patch(id, { dispatch: { s: 'failed', message: `Not confirmed: ${name} may not have the message` } });
-          break;
-        case 'unreachable':
-          patch(id, { dispatch: { s: 'failed', message: 'Not confirmed: Orca is down' } });
-          break;
-        case 'blocked':
-          patch(id, { dispatch: { s: 'failed', message: `Not sent: ${name} is showing a prompt` } });
-          break;
-        default:
-          patch(id, { dispatch: { s: 'failed', message: `Not sent: ${name} has exited` } });
+      const failure = sendFailure(res.status, name);
+      if (failure === undefined) {
+        patch(id, { dispatch: { s: 'done', at: Date.now(), note: name } });
+        notify(true, `Dispatched finding to ${name}`);
+      } else {
+        patch(id, { dispatch: { s: 'failed', message: failure } });
       }
     },
     [prId, patch, notify],
+  );
+
+  const onDispatched = useCallback<FindingControls['onDispatched']>(
+    (tagged, worktree) => {
+      const [forPr, id] = tagged.split('|');
+      if (forPr !== prId || !id) return;
+      patch(id, { dispatch: { s: 'done', at: Date.now(), note: worktree, worktree: true } });
+    },
+    [prId, patch],
   );
 
   const openReply = useCallback((id: string, openIt: boolean) => patch(id, (c) => ({ reply: { ...c.reply, open: openIt } })), [patch]);
@@ -292,5 +310,6 @@ export function useFindings(o: Options): FindingControls | undefined {
     toggleBulk,
     confirmBulk,
     onSendResult,
+    onDispatched,
   };
 }

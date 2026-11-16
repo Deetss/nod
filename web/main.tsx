@@ -38,6 +38,7 @@ import './phone/phone-diff.css';
 import './phone/phone-issue.css';
 import './phone/phone-actions.css';
 import './phone/phone-picker.css';
+import './phone/phone-fit.css';
 import './phone/phone-swipe.css';
 
 migrateStorageKeys();
