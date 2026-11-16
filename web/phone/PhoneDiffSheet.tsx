@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import type { DiffData, FileItem } from '../../shared/types';
 import { HunkLines, type InlineCommentProps } from '../DiffFileView';
-import type { FileThreads } from '../inline/group-threads';
-import type { ThreadHost } from '../inline/ThreadView';
-import { commentTitle, type PhoneComments } from './usePhoneComments';
+import type { FileThreads, GroupedThread } from '../inline/group-threads';
+import { ThreadView, type ThreadHost } from '../inline/ThreadView';
+import { commentTitle, threadPillLabel, type PhoneComments } from './usePhoneComments';
 import { splitPath } from '../FilesTree';
 import { CheckIcon } from '../ui';
 import type { Remote } from '../useRemote';
@@ -28,8 +28,10 @@ interface DiffSheetProps {
   comments?: {
     flow: PhoneComments;
     host: ThreadHost;
-    /** The viewer's drafts in this PR, grouped by file. */
-    drafts: readonly FileThreads[];
+    /** Every review thread in this PR, grouped by file. Drafts show in full, the rest as pills. */
+    threads: readonly FileThreads[];
+    /** Opens one thread in its own sheet. */
+    onOpenThread: (id: string) => void;
     pendingCount: number;
     /** Opens the composer sheet for the current selection. */
     onCompose: () => void;
@@ -62,15 +64,35 @@ export function PhoneDiffSheet(p: DiffSheetProps) {
   const c = p.comments;
   const target = c?.flow.state.target;
   const selection = c && c.flow.state.status === 'open' && target?.subject === 'line' && target.path === p.path ? target : undefined;
+  const fileThreads = c?.threads.find((f) => f.path === p.path) ?? { path: p.path, fileLevel: [], lines: [] };
+  const renderThreads = (list: readonly GroupedThread[]) =>
+    c
+      ? list.map((g) =>
+          g.draft ? (
+            <ThreadView key={g.thread.id} g={g} host={c.host} />
+          ) : (
+            <button
+              key={g.thread.id}
+              type="button"
+              className={`ph-thread-pill${g.resolved ? ' is-resolved' : ''}`}
+              onClick={() => c.onOpenThread(g.thread.id)}
+            >
+              <span>{threadPillLabel(g)}</span>
+              <span className="ph-thread-open">Open</span>
+            </button>
+          ),
+        )
+      : null;
   const inline: InlineCommentProps | undefined = c
     ? {
         state: target?.path === p.path ? c.flow.state : { ...c.flow.state, target: undefined, status: 'closed' },
         onOpenLine: (ref) => c.flow.tap(p.path, ref),
         onOpenFile: () => c.flow.openFile(p.path),
         renderComposer: () => null,
-        threads: c.drafts.find((f) => f.path === p.path) ?? { path: p.path, fileLevel: [], lines: [] },
+        threads: fileThreads,
         host: c.host,
         showRange: true,
+        renderThreads,
       }
     : undefined;
 
@@ -143,6 +165,7 @@ export function PhoneDiffSheet(p: DiffSheetProps) {
           </p>
         ) : (
           <div className="dl-table">
+            {fileThreads.fileLevel.length > 0 ? <div className="ph-file-threads">{renderThreads(fileThreads.fileLevel)}</div> : null}
             {data?.hunks.map((h, hi) => (
               <div key={hi}>
                 <div className="dl-hunk mono">

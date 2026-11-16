@@ -203,12 +203,14 @@ function InlineThread({
   fix,
   host,
   phone,
+  onReply,
 }: {
   item: InlineThreadItem;
   shown: Shown;
   fix?: CommentControls | undefined;
   host?: ThreadHost | undefined;
   phone?: boolean | undefined;
+  onReply?: ((item: InlineThreadItem) => void) | undefined;
 }) {
   const [expanded, setExpanded] = useState(false);
   const { state, toggle } = useResolveThread(host ?? NO_HOST, item.threadId, item.resolved, () => {
@@ -251,6 +253,7 @@ function InlineThread({
           Collapse
         </Btn>
       ) : null}
+      {canWrite && onReply ? <Btn onClick={() => onReply(item)}>Reply</Btn> : null}
       {toggleButton}
     </>
   );
@@ -300,16 +303,18 @@ export function PrThreadRow({
   fix,
   host,
   phone,
+  onReply,
 }: {
   item: PrThreadItem;
   shown: Shown;
   fix?: CommentControls | undefined;
   host?: ThreadHost | undefined;
   phone?: boolean | undefined;
+  onReply?: ((item: InlineThreadItem) => void) | undefined;
 }) {
   if (item.kind === 'comment') return <CommentItem comment={item.comment} shown={shown} />;
   if (item.kind === 'review') return <ReviewEntry item={item} shown={shown} />;
-  return <InlineThread item={item} shown={shown} fix={fix} host={host} phone={phone} />;
+  return <InlineThread item={item} shown={shown} fix={fix} host={host} phone={phone} onReply={onReply} />;
 }
 
 export function PrThreadList({
@@ -317,12 +322,15 @@ export function PrThreadList({
   fix,
   host,
   phone,
+  onReply,
 }: {
   items: PrThreadItem[];
   fix?: CommentControls | undefined;
   host?: ThreadHost | undefined;
   /** Phone layout: no key chips and no hidden-comment count. */
   phone?: boolean | undefined;
+  /** Shows Reply on each open thread. The phone answers in a sheet. */
+  onReply?: ((item: InlineThreadItem) => void) | undefined;
 }) {
   const shown = useShown();
   return (
@@ -335,6 +343,7 @@ export function PrThreadList({
           fix={fix}
           host={host}
           phone={phone}
+          onReply={onReply}
         />
       ))}
     </TimelineList>

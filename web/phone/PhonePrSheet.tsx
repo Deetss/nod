@@ -12,6 +12,7 @@ import { approveDisabled } from './action-items';
 import { PhoneSheet } from './PhoneSheet';
 import { SheetTabs, SwipePager, useTabPager } from './SwipePager';
 import type { PhonePr } from './usePhonePr';
+import type { ThreadItem } from '../inline/group-threads';
 import { repoLabel } from '../repo-label';
 
 type PrTab = 'overview' | 'files' | 'thread' | 'checks';
@@ -32,6 +33,8 @@ interface PrSheetProps {
   onMore: () => void;
   onApprove: () => void;
   onComment: () => void;
+  /** Reply on a review thread from the Thread tab. Absent while writes are off. */
+  onReply?: ((thread: ThreadItem) => void) | undefined;
   /** The viewer's pending review on this PR. Absent while there are no drafts. */
   pending?: { drafts: number; onFinish: () => void; onDiscard: () => void } | undefined;
   /** Set when the checks can be fixed: the checks row opens the fix sheet instead of the Checks tab. */
@@ -138,7 +141,17 @@ function Checks({ data }: { data: PhonePr }) {
   );
 }
 
-function Thread({ data, pr, findings }: { data: PhonePr; pr: PrSummary; findings?: FindingControls | undefined }) {
+function Thread({
+  data,
+  pr,
+  findings,
+  onReply,
+}: {
+  data: PhonePr;
+  pr: PrSummary;
+  findings?: FindingControls | undefined;
+  onReply?: ((thread: ThreadItem) => void) | undefined;
+}) {
   if (!data.detail.data) return <p className="ph-pad ph-muted">{data.detail.error ?? 'Loading…'}</p>;
   const items = data.detail.data.thread ?? [];
   if (items.length === 0) return <p className="ph-pad ph-muted">No conversation yet.</p>;
@@ -147,7 +160,7 @@ function Thread({ data, pr, findings }: { data: PhonePr; pr: PrSummary; findings
       {findings ? (
         <FindingList c={findings} phone />
       ) : (
-        <PrThreadList items={items} phone host={{ repo: pr.repo, number: pr.number, onChanged: data.reload }} />
+        <PrThreadList items={items} phone host={{ repo: pr.repo, number: pr.number, onChanged: data.reload }} onReply={onReply} />
       )}
     </div>
   );
@@ -230,15 +243,32 @@ export function PhonePrSheet(p: PrSheetProps) {
             fix={{ onFixChecks: p.onFixChecks, onFixConflicts: p.onFixConflicts }}
           />,
           <Fragment key="files">
+            {data.detail.data?.lastReviewedSha ? (
+              <div className="ph-seg ph-since" role="group" aria-label="Diff mode">
+                {(['all', 'since'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    className={data.mode === m ? 'is-neutral' : undefined}
+                    aria-pressed={data.mode === m}
+                    onClick={() => data.setMode(m)}
+                  >
+                    {m === 'all' ? 'All changes' : 'Since my review'}
+                  </button>
+                ))}
+              </div>
+            ) : null}
             <div className="ph-progress" aria-label="Viewed progress">
               <div style={{ width: total ? `${(viewed / total) * 100}%` : 0 }} />
             </div>
             {data.files.map((f) => (
               <FileRow key={f.path} file={f} onOpen={() => p.onFile(f.path)} onViewed={(v) => void data.toggleViewed(f.path, v)} />
             ))}
-            {total === 0 ? <p className="ph-pad ph-muted">{data.detail.error ?? 'No files.'}</p> : null}
+            {total === 0 ? (
+              <p className="ph-pad ph-muted">{data.detail.error ?? (data.mode === 'since' ? 'No changes since your review.' : 'No files.')}</p>
+            ) : null}
           </Fragment>,
-          <Thread key="thread" data={data} pr={pr} findings={p.findings} />,
+          <Thread key="thread" data={data} pr={pr} findings={p.findings} onReply={p.onReply} />,
           <Checks key="checks" data={data} />,
         ]}
       />

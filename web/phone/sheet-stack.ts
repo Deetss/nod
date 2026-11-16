@@ -5,6 +5,8 @@ export type Level =
   | { kind: 'diff'; path: string }
   | { kind: 'actions' }
   | { kind: 'comment' }
+  | { kind: 'thread'; id: string }
+  | { kind: 'reply'; id: string }
   | { kind: 'finish-review' }
   | { kind: 'confirm'; action: ConfirmKind }
   | { kind: 'composer'; mode: ComposerMode }

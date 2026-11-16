@@ -53,6 +53,8 @@ export interface InlineCommentProps {
   host?: ThreadHost;
   /** Marks every row of the open line range, not only the cursor row. The phone has no cursor. */
   showRange?: boolean;
+  /** Draws a line's threads in place of the full thread cards. The phone shows pills. */
+  renderThreads?: (threads: readonly GroupedThread[]) => ReactNode;
 }
 
 const MARKER: Record<DiffLine['kind'], string> = { add: '+', del: '-', ctx: ' ' };
@@ -161,9 +163,11 @@ function LineRow({
     <div>
       <Line line={line} yaml={yaml} marks={marks} gutter={gutter} cursor={!!cursor} />
       {target && comment && comment.state.target && composerAfter(comment.state, target) ? comment.renderComposer() : null}
-      {threadsOpen && comment?.host
-        ? threads.map((g) => <ThreadView key={g.thread.id} g={g} host={comment.host!} />)
-        : null}
+      {threads.length > 0 && comment?.renderThreads
+        ? comment.renderThreads(threads)
+        : threadsOpen && comment?.host
+          ? threads.map((g) => <ThreadView key={g.thread.id} g={g} host={comment.host!} />)
+          : null}
     </div>
   );
 }

@@ -30,8 +30,10 @@ import { PhoneActionSheet, PhoneConfirm } from './PhoneActionSheet';
 import { PhoneComposer, clearDraft } from './PhoneComposer';
 import { PhoneCommentSheet } from './PhoneCommentSheet';
 import { PhoneFinishReview } from './PhoneFinishReview';
-import { draftsOnly, usePhoneComments } from './usePhoneComments';
-import { groupThreads } from '../inline/group-threads';
+import { usePhoneComments } from './usePhoneComments';
+import { PhoneReplySheet } from './PhoneReplySheet';
+import { PhoneThreadSheet } from './PhoneThreadSheet';
+import { groupThreads, type ThreadItem } from '../inline/group-threads';
 import { splitPath } from '../FilesTree';
 import { PhoneDiffSheet } from './PhoneDiffSheet';
 import { PhoneEditTitle } from './PhoneEditTitle';
@@ -91,7 +93,8 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const { notify } = writes;
   const prData = usePhonePr(pr, (m) => writes.notify(m, false));
   const comments = usePhoneComments(pr, prData.reload);
-  const drafts = useMemo(() => draftsOnly(groupThreads(prData.detail.data?.thread)), [prData.detail.data?.thread]);
+  const threads = useMemo(() => groupThreads(prData.detail.data?.thread), [prData.detail.data?.thread]);
+  const threadById = (id: string) => (prData.detail.data?.thread ?? []).find((t): t is ThreadItem => t.kind === 'thread' && t.id === id);
   const pendingCount = prData.detail.data?.pendingReview?.drafts ?? 0;
 
   // A comment that posts closes its sheet; a failed one keeps it open with the text.
@@ -527,6 +530,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 onMore={() => push({ kind: 'actions' })}
                 onApprove={() => void writes.review(pr, 'APPROVE', '')}
                 onComment={() => push({ kind: 'composer', mode: 'comment' })}
+                {...(!writesOff ? { onReply: (t: ThreadItem) => push({ kind: 'reply', id: t.id }) } : {})}
                 pending={
                   pendingCount > 0
                     ? {
@@ -708,7 +712,8 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                       comments: {
                         flow: comments,
                         host: { repo: pr.repo, number: pr.number, onPosted: prData.reload },
-                        drafts,
+                        threads,
+                        onOpenThread: (id: string) => push({ kind: 'thread', id }),
                         pendingCount,
                         onCompose: () => push({ kind: 'comment' }),
                         onPending: () => {
@@ -734,6 +739,29 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 }}
               />
             ) : null;
+          case 'thread': {
+            const g = threads.flatMap((f) => [...f.fileLevel, ...f.lines.flatMap((l) => l.threads)]).find((t) => t.thread.id === level.id);
+            return pr && g ? (
+              <PhoneThreadSheet key="thread" g={g} host={{ repo: pr.repo, number: pr.number, onPosted: prData.reload }} onClose={pop} />
+            ) : null;
+          }
+          case 'reply': {
+            const thread = threadById(level.id);
+            return pr && thread ? (
+              <PhoneReplySheet
+                key="reply"
+                repo={pr.repo}
+                number={pr.number}
+                thread={thread}
+                onDone={() => {
+                  pop();
+                  prData.reload();
+                  notify('Reply posted');
+                }}
+                onCancel={pop}
+              />
+            ) : null;
+          }
           case 'finish-review':
             return pr ? (
               <PhoneFinishReview
