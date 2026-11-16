@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
-import { Chips } from './PhoneBars';
 import { PullList, SectionHeader } from './PhoneList';
 import { EmptyBlock, LoadingLine, ReachBanner, SkeletonSections } from './PhoneStates';
-import type { ChipCount, PhoneStatus } from './phone-logic';
+import type { PhoneStatus } from './phone-logic';
 
 export interface InboxSectionView {
   key: string;
@@ -13,9 +12,8 @@ export interface InboxSectionView {
 }
 
 interface PhoneInboxProps {
-  chips: ChipCount<string>[];
-  chip: string;
-  onChip: (k: string) => void;
+  /** Search results, which replace the list while a query is typed. */
+  results?: ReactNode;
   sections: InboxSectionView[];
   status: PhoneStatus;
   /** Section titles the skeleton shows while loading. */
@@ -37,11 +35,10 @@ interface PhoneInboxProps {
 /** B1 for one list tab, with the S1 empty, S2 loading and S3 error states. */
 export function PhoneInbox(p: PhoneInboxProps) {
   const loading = p.status === 'loading';
-  const chips = <Chips chips={p.chips} value={p.chip} onChange={p.onChip} showCounts={!loading} />;
+  if (p.results) return p.results;
   if (p.status === 'empty') {
     return (
       <div className="ph-list is-short">
-        {chips}
         <EmptyBlock
           title={p.emptyTitle}
           body={p.emptyBody}
@@ -56,7 +53,6 @@ export function PhoneInbox(p: PhoneInboxProps) {
     <PullList
       locked={loading}
       short={p.status === 'error'}
-      chips={chips}
       banner={p.status === 'error' ? (p.banner ?? <ReachBanner detail={p.errorDetail} onRetry={p.onRefresh} />) : (p.notice ?? null)}
       refreshing={p.refreshing && !loading}
       onRefresh={p.onRefresh}

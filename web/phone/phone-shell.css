@@ -51,14 +51,10 @@
   border-bottom: 1px solid var(--borderColor-default);
 }
 
-.ph-appbar.is-searching {
-  height: 56px;
-}
-
 .ph-apptitle {
   position: absolute;
   left: 16px;
-  right: calc(16px + 96px * var(--ph-p));
+  right: calc(16px + 48px * var(--ph-p));
   bottom: 16px;
   margin: 0;
   font-size: calc(var(--text-title-large-size) - 11px * var(--ph-p));
@@ -87,17 +83,6 @@
 
 .ph-iconbtn:active {
   border-color: var(--borderColor-emphasis);
-}
-
-.ph-search {
-  flex: 1;
-  min-width: 0;
-  height: 44px;
-  margin-top: 6px;
-  padding: 0 12px;
-  background: var(--bgColor-default);
-  border: 1px solid var(--borderColor-accent-emphasis);
-  border-radius: 10px;
 }
 
 .ph-menu-scrim {

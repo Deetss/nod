@@ -74,10 +74,12 @@ export function resolveOpen(
   return out;
 }
 
+/** The bot section, when present, comes last. */
 export function issueChips(sections: readonly IssueSection[]): ChipCount<IssueSection['key']>[] {
   const all = sections.find((s) => s.key === 'all');
   const bot = sections.find((s) => s.key === 'bot');
-  return chips(sections, all?.count ?? 0, bot ? { ...ISSUE_CHIP_LABELS, bot: bot.title } : ISSUE_CHIP_LABELS);
+  const ordered = [...sections.filter((s) => s.key !== 'bot'), ...(bot ? [bot] : [])];
+  return chips(ordered, all?.count ?? 0, bot ? { ...ISSUE_CHIP_LABELS, bot: bot.title } : ISSUE_CHIP_LABELS);
 }
 
 export type PhoneStatus = 'loading' | 'error' | 'empty' | 'ready';

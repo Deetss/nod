@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="952" height="1157" viewBox="0 0 952 1157">
+<rect x="0" y="0" width="952" height="1157" rx="0" fill="#ffffff"/>
+<text x="40" y="36" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#222222" text-anchor="start">Bottom search and filter, phone mockup (light)</text>
+<text x="40" y="60" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Round 2 of issue #32. Same frames 1 and 3 in the light theme.</text>
+<text x="40" y="78" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Spec: bottom-search-spec.md.</text>
+<text x="40" y="124" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222" text-anchor="start">1 · PRs at rest, no filters</text>
+<text x="40" y="142" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">Bar 16px above the nav. Header keeps only ···.</text>
+<clipPath id="c0"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(40,154)"><g clip-path="url(#c0)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#ffffff"/>
+<text x="16" y="132" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="0" y="141" width="412" height="44" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="141.5" x2="412" y2="141.5" stroke="#e8ecef" stroke-width="1"/>
+<line x1="0" y1="184.5" x2="412" y2="184.5" stroke="#e8ecef" stroke-width="1"/>
+<path d="M17 161 L21 165 L25 161" fill="none" stroke="#59636e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="36" y="167" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">NEEDS MY REVIEW</text>
+<text x="396" y="167" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="end">2</text>
+<text x="32" y="213" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">fix: resolve duplicate webhook</text>
+<rect x="32.5" y="225.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 236 L45 239 L51 233" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="240" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="240" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">needs review</text>
+<text x="32" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#365</text>
+<text x="176.19921875" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· sam-lee · 3h · +18 -4 · 2 files</text>
+<line x1="0" y1="283.5" x2="412" y2="283.5" stroke="#e8ecef" stroke-width="1"/>
+<circle cx="16.5" cy="306.5" r="4.5" fill="#0969da"/>
+<rect x="329.53515625" y="297.5" width="65.96484375" height="19" rx="4" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<text x="362.517578125" y="311" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="middle">UPDATED</text>
+<text x="32" y="312" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">feat: retry failed webhook</text>
+<rect x="32.5" y="324.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 335 L45 338 L51 332" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="339" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="339" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">2 commits since you looked · needs review</text>
+<text x="32" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#371</text>
+<text x="176.19921875" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· build-bot · 5h · +89 -12 · 6 files</text>
+<line x1="0" y1="382.5" x2="412" y2="382.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="0" y="383" width="412" height="44" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="383.5" x2="412" y2="383.5" stroke="#e8ecef" stroke-width="1"/>
+<line x1="0" y1="426.5" x2="412" y2="426.5" stroke="#e8ecef" stroke-width="1"/>
+<path d="M17 403 L21 407 L25 403" fill="none" stroke="#59636e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="36" y="409" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">MINE</text>
+<text x="396" y="409" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="end">3</text>
+<circle cx="16.5" cy="449.5" r="4.5" fill="#0969da"/>
+<rect x="356.41796875" y="440.5" width="39.08203125" height="19" rx="4" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<text x="375.958984375" y="454" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="middle">NEW</text>
+<text x="32" y="455" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">fix: reject unsigned vendor calls</text>
+<rect x="32.5" y="467.5" width="90.87890625" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 2"/>
+<circle cx="46" cy="478" r="4" fill="none" stroke="#59636e" stroke-width="1.4"/>
+<text x="56" y="482" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI running</text>
+<text x="129.87890625" y="482" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">no reviews yet</text>
+<text x="32" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-dev/tools </text>
+<text x="121.63671875" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#11</text>
+<text x="146.1171875" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 12h · +54 -9 · 4 files</text>
+<line x1="0" y1="525.5" x2="412" y2="525.5" stroke="#e8ecef" stroke-width="1"/>
+<text x="32" y="554" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">chore: tidy swagger tags</text>
+<rect x="32.5" y="566.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 577 L45 580 L51 574" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="581" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="581" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">1 approval</text>
+<text x="32" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#368</text>
+<text x="176.19921875" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 1d · +6 -6 · 1 file</text>
+<line x1="0" y1="624.5" x2="412" y2="624.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="355.828125" y="638.5" width="39.671875" height="19" rx="10" fill="none" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="375.6640625" y="652" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="middle">Draft</text>
+<text x="32" y="653" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">docs: describe the API limits</text>
+<rect x="32.5" y="665.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 676 L45 679 L51 673" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="680" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="680" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">no reviews yet</text>
+<text x="32" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-dev/tools </text>
+<text x="121.63671875" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#10</text>
+<text x="146.1171875" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 20h · +48 -2 · 2 files</text>
+<line x1="0" y1="723.5" x2="412" y2="723.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="0" y="724" width="412" height="44" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="724.5" x2="412" y2="724.5" stroke="#e8ecef" stroke-width="1"/>
+<line x1="0" y1="767.5" x2="412" y2="767.5" stroke="#e8ecef" stroke-width="1"/>
+<path d="M17 744 L21 748 L25 744" fill="none" stroke="#59636e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="36" y="750" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">ORG OPEN</text>
+<text x="396" y="750" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="end">8</text>
+<text x="32" y="796" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">feat: log inbound vendor calls</text>
+<rect x="32.5" y="808.5" width="65.48828125" height="21" rx="11" fill="#ffebe9" stroke="#cf222e" stroke-width="1"/>
+<path d="M42 815 L50 823 M50 815 L42 823" fill="none" stroke="#d1242f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="823" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#d1242f" text-anchor="start">CI fail</text>
+<text x="104.48828125" y="823" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">needs review</text>
+<text x="32" y="849" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-dev/tools </text>
+<text x="121.63671875" y="849" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#12</text>
+<text x="146.1171875" y="849" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· build-bot · 3d · +140 -7 · 5 files</text>
+<line x1="0" y1="866.5" x2="412" y2="866.5" stroke="#e8ecef" stroke-width="1"/>
+<text x="32" y="895" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">chore: remove unused icons</text>
+<rect x="32.5" y="907.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 918 L45 921 L51 915" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="922" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="922" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">no reviews yet</text>
+<text x="32" y="948" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="948" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#360</text>
+<text x="176.19921875" y="948" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· sam-lee · 2d · +2 -64 · 9 files</text>
+<line x1="0" y1="965.5" x2="412" y2="965.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="112" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="112.5" x2="412" y2="112.5" stroke="#d1d9e0" stroke-width="1"/>
+<circle cx="382" cy="28" r="21.5" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<circle cx="375" cy="28" r="2" fill="#1f2328"/>
+<circle cx="382" cy="28" r="2" fill="#1f2328"/>
+<circle cx="389" cy="28" r="2" fill="#1f2328"/>
+<text x="16" y="87" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="28" font-weight="bold" fill="#1f2328" text-anchor="start">Pull requests</text>
+<linearGradient id="fade107" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="0.3" stop-color="#ffffff" stop-opacity="1"/></linearGradient>
+<rect x="0" y="746" width="412" height="80" fill="url(#fade107)"/>
+<rect x="16.5" y="766.5" width="335" height="43" rx="22" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<g transform="translate(30,778) scale(0.8333333333333334)">
+<circle cx="11" cy="11" r="7" fill="none" stroke="#59636e" stroke-width="2"/>
+<path d="M20 20 L16.5 16.5" fill="none" stroke="#59636e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="60" y="793" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#59636e" text-anchor="start">Search pull requests</text>
+<circle cx="382" cy="788" r="21.5" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M374 782 H390" fill="none" stroke="#1f2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M377 788 H387" fill="none" stroke="#1f2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 794 H384" fill="none" stroke="#1f2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="0" y="826" width="412" height="89" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="826.5" x2="412" y2="826.5" stroke="#d1d9e0" stroke-width="1"/>
+<rect x="36.67" y="833" width="64" height="32" rx="16" fill="#ddf4ff"/>
+<circle cx="63.67" cy="843" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<circle cx="63.67" cy="855" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<circle cx="73.67" cy="855" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<path d="M63.67 845.5 V852.5" fill="none" stroke="#0969da" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M73.67 852.5 V847 Q73.67 843 69.67 843 H68.67" fill="none" stroke="#0969da" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="68.67" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#1f2328" text-anchor="middle">PRs</text>
+<rect x="68.9434375" y="829" width="27.7265625" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="70.9434375" y="831" width="23.7265625" height="18" rx="9" fill="#0969da"/>
+<text x="82.80671875" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<circle cx="206.0" cy="849" r="8" fill="none" stroke="#59636e" stroke-width="1.8"/>
+<circle cx="206.0" cy="849" r="1.6" fill="#59636e"/>
+<text x="206.0" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="middle">Issues</text>
+<rect x="212.0" y="829" width="22" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="214.0" y="831" width="18" height="18" rx="9" fill="#0969da"/>
+<text x="223.0" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<path d="M333.33000000000004 849 H338.33000000000004 L341.33000000000004 841 L345.33000000000004 857 L348.33000000000004 849 H353.33000000000004" fill="none" stroke="#59636e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="343.33000000000004" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="middle">Activity</text>
+<rect x="349.33000000000004" y="829" width="22" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="351.33000000000004" y="831" width="18" height="18" rx="9" fill="#0969da"/>
+<text x="360.33000000000004" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+</g>
+<rect x="0.5" y="0.5" width="411" height="914" rx="14" fill="none" stroke="#8c959f" stroke-width="1"/>
+</g>
+<text x="500" y="124" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222" text-anchor="start">3 · Filter sheet open</text>
+<text x="500" y="142" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#555555" text-anchor="start">Ticks apply live. Done or Close shuts the sheet.</text>
+<clipPath id="c1"><rect x="0" y="0" width="412" height="915" rx="14"/></clipPath>
+<g transform="translate(500,154)"><g clip-path="url(#c1)">
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#ffffff"/>
+<text x="16" y="132" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="0" y="141" width="412" height="44" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="141.5" x2="412" y2="141.5" stroke="#e8ecef" stroke-width="1"/>
+<line x1="0" y1="184.5" x2="412" y2="184.5" stroke="#e8ecef" stroke-width="1"/>
+<path d="M17 161 L21 165 L25 161" fill="none" stroke="#59636e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="36" y="167" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">NEEDS MY REVIEW</text>
+<text x="396" y="167" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="end">2</text>
+<text x="32" y="213" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">fix: resolve duplicate webhook</text>
+<rect x="32.5" y="225.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 236 L45 239 L51 233" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="240" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="240" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">needs review</text>
+<text x="32" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#365</text>
+<text x="176.19921875" y="266" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· sam-lee · 3h · +18 -4 · 2 files</text>
+<line x1="0" y1="283.5" x2="412" y2="283.5" stroke="#e8ecef" stroke-width="1"/>
+<circle cx="16.5" cy="306.5" r="4.5" fill="#0969da"/>
+<rect x="329.53515625" y="297.5" width="65.96484375" height="19" rx="4" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<text x="362.517578125" y="311" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="middle">UPDATED</text>
+<text x="32" y="312" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">feat: retry failed webhook</text>
+<rect x="32.5" y="324.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 335 L45 338 L51 332" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="339" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="339" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">2 commits since you looked · needs review</text>
+<text x="32" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#371</text>
+<text x="176.19921875" y="365" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· build-bot · 5h · +89 -12 · 6 files</text>
+<line x1="0" y1="382.5" x2="412" y2="382.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="0" y="383" width="412" height="44" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="383.5" x2="412" y2="383.5" stroke="#e8ecef" stroke-width="1"/>
+<line x1="0" y1="426.5" x2="412" y2="426.5" stroke="#e8ecef" stroke-width="1"/>
+<path d="M17 403 L21 407 L25 403" fill="none" stroke="#59636e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="36" y="409" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">MINE</text>
+<text x="396" y="409" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="end">3</text>
+<circle cx="16.5" cy="449.5" r="4.5" fill="#0969da"/>
+<rect x="356.41796875" y="440.5" width="39.08203125" height="19" rx="4" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<text x="375.958984375" y="454" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="middle">NEW</text>
+<text x="32" y="455" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">fix: reject unsigned vendor calls</text>
+<rect x="32.5" y="467.5" width="90.87890625" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 2"/>
+<circle cx="46" cy="478" r="4" fill="none" stroke="#59636e" stroke-width="1.4"/>
+<text x="56" y="482" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI running</text>
+<text x="129.87890625" y="482" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">no reviews yet</text>
+<text x="32" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-dev/tools </text>
+<text x="121.63671875" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#11</text>
+<text x="146.1171875" y="508" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 12h · +54 -9 · 4 files</text>
+<line x1="0" y1="525.5" x2="412" y2="525.5" stroke="#e8ecef" stroke-width="1"/>
+<text x="32" y="554" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">chore: tidy swagger tags</text>
+<rect x="32.5" y="566.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 577 L45 580 L51 574" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="581" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="581" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">1 approval</text>
+<text x="32" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-co/orders-api </text>
+<text x="144.85546875" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#368</text>
+<text x="176.19921875" y="607" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 1d · +6 -6 · 1 file</text>
+<line x1="0" y1="624.5" x2="412" y2="624.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="355.828125" y="638.5" width="39.671875" height="19" rx="10" fill="none" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="375.6640625" y="652" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="middle">Draft</text>
+<text x="32" y="653" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">docs: describe the API limits</text>
+<rect x="32.5" y="665.5" width="71.375" height="21" rx="11" fill="none" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M42 676 L45 679 L51 673" fill="none" stroke="#59636e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="56" y="680" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">CI pass</text>
+<text x="110.375" y="680" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">no reviews yet</text>
+<text x="32" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">acme-dev/tools </text>
+<text x="121.63671875" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#59636e" text-anchor="start">#10</text>
+<text x="146.1171875" y="706" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" fill="#59636e" text-anchor="start">· acme-dev · 20h · +48 -2 · 2 files</text>
+<line x1="0" y1="723.5" x2="412" y2="723.5" stroke="#e8ecef" stroke-width="1"/>
+<rect x="0" y="0" width="412" height="112" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="112.5" x2="412" y2="112.5" stroke="#d1d9e0" stroke-width="1"/>
+<circle cx="382" cy="28" r="21.5" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<circle cx="375" cy="28" r="2" fill="#1f2328"/>
+<circle cx="382" cy="28" r="2" fill="#1f2328"/>
+<circle cx="389" cy="28" r="2" fill="#1f2328"/>
+<text x="16" y="87" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="28" font-weight="bold" fill="#1f2328" text-anchor="start">Pull requests</text>
+<linearGradient id="fade223" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="0.3" stop-color="#ffffff" stop-opacity="1"/></linearGradient>
+<rect x="0" y="746" width="412" height="80" fill="url(#fade223)"/>
+<rect x="16.5" y="766.5" width="335" height="43" rx="22" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<g transform="translate(30,778) scale(0.8333333333333334)">
+<circle cx="11" cy="11" r="7" fill="none" stroke="#59636e" stroke-width="2"/>
+<path d="M20 20 L16.5 16.5" fill="none" stroke="#59636e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="60" y="793" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#59636e" text-anchor="start">Search pull requests</text>
+<circle cx="382" cy="788" r="21.5" fill="#ddf4ff" stroke="#0969da" stroke-width="1"/>
+<path d="M374 782 H390" fill="none" stroke="#0969da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M377 788 H387" fill="none" stroke="#0969da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 794 H384" fill="none" stroke="#0969da" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="386" y="760" width="22" height="22" rx="11" fill="#ffffff"/>
+<rect x="388" y="762" width="18" height="18" rx="9" fill="#0969da"/>
+<text x="397.0" y="775" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+<rect x="0" y="826" width="412" height="89" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="826.5" x2="412" y2="826.5" stroke="#d1d9e0" stroke-width="1"/>
+<rect x="36.67" y="833" width="64" height="32" rx="16" fill="#ddf4ff"/>
+<circle cx="63.67" cy="843" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<circle cx="63.67" cy="855" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<circle cx="73.67" cy="855" r="2.5" fill="none" stroke="#0969da" stroke-width="1.8"/>
+<path d="M63.67 845.5 V852.5" fill="none" stroke="#0969da" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M73.67 852.5 V847 Q73.67 843 69.67 843 H68.67" fill="none" stroke="#0969da" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="68.67" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#1f2328" text-anchor="middle">PRs</text>
+<rect x="68.9434375" y="829" width="27.7265625" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="70.9434375" y="831" width="23.7265625" height="18" rx="9" fill="#0969da"/>
+<text x="82.80671875" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<circle cx="206.0" cy="849" r="8" fill="none" stroke="#59636e" stroke-width="1.8"/>
+<circle cx="206.0" cy="849" r="1.6" fill="#59636e"/>
+<text x="206.0" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="middle">Issues</text>
+<rect x="212.0" y="829" width="22" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="214.0" y="831" width="18" height="18" rx="9" fill="#0969da"/>
+<text x="223.0" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<path d="M333.33000000000004 849 H338.33000000000004 L341.33000000000004 841 L345.33000000000004 857 L348.33000000000004 849 H353.33000000000004" fill="none" stroke="#59636e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="343.33000000000004" y="880" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="middle">Activity</text>
+<rect x="349.33000000000004" y="829" width="22" height="22" rx="11" fill="#f6f8fa"/>
+<rect x="351.33000000000004" y="831" width="18" height="18" rx="9" fill="#0969da"/>
+<text x="360.33000000000004" y="844" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<rect x="0" y="0" width="412" height="915" rx="0" fill="#1f2328" fill-opacity="0.45"/>
+<rect x="0" y="547" width="412" height="396" rx="20" fill="#d1d9e0"/>
+<rect x="0" y="549" width="412" height="396" rx="20" fill="#ffffff"/>
+<rect x="188" y="557" width="36" height="4" rx="2" fill="#818b98"/>
+<text x="16" y="586" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="17" font-weight="bold" fill="#1f2328" text-anchor="start">Filter pull requests</text>
+<text x="16" y="605" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="normal" fill="#59636e" text-anchor="start">A PR shows if it is in any ticked section</text>
+<circle cx="376" cy="589" r="21.5" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M370 583 L382 595 M382 583 L370 595" fill="none" stroke="#1f2328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="0" y1="617.5" x2="412" y2="617.5" stroke="#d1d9e0" stroke-width="1"/>
+<rect x="16" y="631" width="22" height="22" rx="5" fill="#0969da"/>
+<path d="M22 642.5 L25.5 646 L32 638.5" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="50" y="647" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">Needs me</text>
+<text x="396" y="647" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#59636e" text-anchor="end">2</text>
+<line x1="0" y1="666.5" x2="412" y2="666.5" stroke="#dfe4e9" stroke-width="1"/>
+<rect x="16" y="680" width="22" height="22" rx="5" fill="#0969da"/>
+<path d="M22 691.5 L25.5 695 L32 687.5" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="50" y="696" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1f2328" text-anchor="start">Mine</text>
+<text x="396" y="696" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#59636e" text-anchor="end">3</text>
+<line x1="0" y1="715.5" x2="412" y2="715.5" stroke="#dfe4e9" stroke-width="1"/>
+<rect x="16.75" y="729.75" width="20.5" height="20.5" rx="5" fill="none" stroke="#818b98" stroke-width="1.5"/>
+<text x="50" y="745" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">Org</text>
+<text x="396" y="745" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#59636e" text-anchor="end">8</text>
+<line x1="0" y1="764.5" x2="412" y2="764.5" stroke="#dfe4e9" stroke-width="1"/>
+<rect x="16.75" y="778.75" width="20.5" height="20.5" rx="5" fill="none" stroke="#818b98" stroke-width="1.5"/>
+<text x="50" y="794" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="start">Dependabot</text>
+<text x="396" y="794" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#59636e" text-anchor="end">1</text>
+<line x1="0" y1="813.5" x2="412" y2="813.5" stroke="#dfe4e9" stroke-width="1"/>
+<rect x="0" y="814" width="412" height="101" rx="0" fill="#f6f8fa"/>
+<line x1="0" y1="814.5" x2="412" y2="814.5" stroke="#d1d9e0" stroke-width="1"/>
+<rect x="16.5" y="829.5" width="113" height="47" rx="10" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<text x="73" y="858" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="normal" fill="#1f2328" text-anchor="middle">Clear</text>
+<rect x="138" y="829" width="258" height="48" rx="10" fill="#1f883d"/>
+<text x="267" y="858" font-family="Noto Sans, Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">Done · 2 filters</text>
+</g>
+<rect x="0.5" y="0.5" width="411" height="914" rx="14" fill="none" stroke="#8c959f" stroke-width="1"/>
+</g>
+</svg>

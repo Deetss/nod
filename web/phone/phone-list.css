@@ -10,8 +10,9 @@
   background: var(--bgColor-default);
 }
 
+/* Search hides the header, so the list starts under the top inset. */
 .phone.is-searching .ph-list {
-  padding-top: calc(var(--ph-top) + 57px);
+  padding-top: var(--ph-top);
 }
 
 .phone.is-searching .ph-section {

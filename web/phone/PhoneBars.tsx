@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type RefObject } from 'react';
 import type { Density } from '../density';
-import { ActivityIcon, CloseIcon, IssueIcon, MoreIcon, PrIcon, SearchIcon } from './PhoneIcons';
+import { ActivityIcon, IssueIcon, MoreIcon, PrIcon } from './PhoneIcons';
 import { orgUrl } from '../org-settings';
 import type { PhoneTab } from './phone-logic';
 import { PhoneNotifySheet } from './PhoneNotifySheet';
@@ -8,12 +8,8 @@ import { usePush } from './usePush';
 
 interface AppBarProps {
   title: string;
-  searching: boolean;
-  query: string;
   density: Density;
   theme: 'dark' | 'light';
-  onQuery: (q: string) => void;
-  onSearching: (on: boolean) => void;
   menu: boolean;
   onMenu: (on: boolean) => void;
   onRefresh: () => void;
@@ -31,40 +27,11 @@ export function AppBar(p: AppBarProps) {
     setMenu(false);
     fn();
   };
-  if (p.searching) {
-    return (
-      <header className="ph-appbar is-searching">
-        <input
-          className="ph-search"
-          type="search"
-          autoFocus
-          placeholder="Search"
-          aria-label="Search"
-          value={p.query}
-          onChange={(e) => p.onQuery(e.target.value)}
-        />
-        <button
-          type="button"
-          className="ph-iconbtn"
-          aria-label="Close search"
-          onClick={() => {
-            p.onQuery('');
-            p.onSearching(false);
-          }}
-        >
-          <CloseIcon />
-        </button>
-      </header>
-    );
-  }
   return (
     <>
       {notifySheet ? <PhoneNotifySheet push={push} onClose={() => setNotifySheet(false)} /> : null}
       <header className="ph-appbar">
         <h1 className="ph-apptitle">{p.title}</h1>
-        <button type="button" className="ph-iconbtn" aria-label="Search" onClick={() => p.onSearching(true)}>
-          <SearchIcon />
-        </button>
         <button
           type="button"
           className="ph-iconbtn"

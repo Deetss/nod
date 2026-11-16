@@ -40,14 +40,17 @@ export function EmptyBlock({
   title,
   body,
   syncLine,
-  refreshing,
+  refreshing = false,
   onRefresh,
+  action,
 }: {
   title: string;
-  body: string;
-  syncLine: string;
-  refreshing: boolean;
-  onRefresh: () => void;
+  body?: string;
+  syncLine?: string;
+  refreshing?: boolean;
+  onRefresh?: () => void;
+  /** Replaces the Refresh button. */
+  action?: ReactNode;
 }) {
   return (
     <div className="ph-empty">
@@ -55,12 +58,15 @@ export function EmptyBlock({
         <CheckCircleIcon size={56} />
       </span>
       <h2 className="ph-empty-title">{title}</h2>
-      <p className="ph-empty-body">{body}</p>
-      <p className="ph-empty-sync">{syncLine}</p>
-      <button type="button" className="ph-btn" disabled={refreshing} onClick={onRefresh}>
-        {refreshing ? <span className="ph-spinner" aria-hidden="true" /> : null}
-        {refreshing ? 'Refreshing…' : 'Refresh'}
-      </button>
+      {body ? <p className="ph-empty-body">{body}</p> : null}
+      {syncLine ? <p className="ph-empty-sync">{syncLine}</p> : null}
+      {action ??
+        (onRefresh ? (
+          <button type="button" className="ph-btn" disabled={refreshing} onClick={onRefresh}>
+            {refreshing ? <span className="ph-spinner" aria-hidden="true" /> : null}
+            {refreshing ? 'Refreshing…' : 'Refresh'}
+          </button>
+        ) : null)}
     </div>
   );
 }

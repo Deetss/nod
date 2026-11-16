@@ -1,0 +1,206 @@
+/* Bottom search pill, filter button and search band. Spec: docs/design/bottom-search-spec.md */
+
+/* 16 + 44 + 16, plus 16 so the last row clears the bar. Kept while the bar hides, so rows do not jump. */
+.phone.has-bottombar:not(.is-searching) .ph-list {
+  padding-bottom: 92px;
+}
+
+/* Same level as the bar and later in the DOM, so the hiding bar slides behind it. */
+.ph-tabbar {
+  z-index: 3;
+}
+
+.ph-bottombar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  padding: 0 8px 0 16px;
+  pointer-events: none;
+  transition:
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Rows fade out over 24px above the bar instead of reading through the gaps around it. */
+.ph-bottombar::before {
+  content: '';
+  position: absolute;
+  inset: -20px 0 -16px;
+  background: linear-gradient(to bottom, transparent, var(--bgColor-default) 24px);
+}
+
+.ph-bottombar > * {
+  position: relative;
+  pointer-events: auto;
+}
+
+.phone.is-bar-hidden .ph-bottombar {
+  transform: translateY(60px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    visibility 0s 200ms;
+}
+
+.ph-pill {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 14px 0 13px;
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 22px;
+  color: var(--fgColor-muted);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ph-pill:active {
+  border-color: var(--borderColor-emphasis);
+}
+
+.ph-pill svg {
+  flex: none;
+}
+
+.ph-pill-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-bottombar .ph-filterbtn {
+  margin-top: 0;
+}
+
+.ph-filterbtn.is-on {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-emphasis);
+  color: var(--fgColor-accent);
+}
+
+.ph-filter-badge {
+  position: absolute;
+  top: -5px;
+  right: -3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  background: var(--bgColor-accent-emphasis);
+  box-shadow: 0 0 0 2px var(--bgColor-default);
+  color: var(--fgColor-onEmphasis);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Search: header and tab bar give way to the results and the band on the keyboard. */
+.phone.is-searching .ph-appbar,
+.phone.is-searching .ph-tabbar {
+  display: none;
+}
+
+.ph-list.is-results {
+  padding-bottom: 0;
+}
+
+.ph-results-line {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  height: 28px;
+  padding: 5px 16px;
+  background: var(--bgColor-default);
+  border-bottom: 1px solid var(--borderColor-hairline);
+  color: var(--fgColor-muted);
+  font-size: 13px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ph-searchband {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 9px 16px 10px;
+  background: var(--bgColor-inset);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.ph-searchband:not(.has-keyboard) {
+  padding-bottom: calc(10px + var(--ph-bottom));
+}
+
+.ph-searchfield {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 14px 0 12px;
+  background: var(--bgColor-default);
+  border: 2px solid var(--borderColor-accent-emphasis);
+  border-radius: 22px;
+  color: var(--fgColor-muted);
+}
+
+.ph-searchfield svg {
+  flex: none;
+}
+
+.ph-searchfield input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  color: var(--fgColor-default);
+  caret-color: var(--fgColor-accent);
+}
+
+.ph-searchfield input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.ph-btn.ph-search-cancel {
+  flex: none;
+  width: 72px;
+  min-height: 44px;
+  padding: 0;
+}
+
+.ph-empty-body + .ph-btn,
+.ph-empty-title + .ph-btn {
+  margin-top: 24px;
+}
+
+/* Filter sheet rows: 48 plus the 1px divider. */
+.ph-filter-list .ph-pk-row {
+  min-height: 49px;
+}
+
+.ph-actionbar .ph-btn.ph-filter-clear {
+  flex: none;
+  width: 114px;
+}

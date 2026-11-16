@@ -14,16 +14,13 @@ export function useLargeTitle(root: RefObject<HTMLElement | null>, tab: PhoneTab
     const el = root.current;
     if (!el) return;
     const list = el.querySelector<HTMLElement>(ACTIVE_LIST);
-    let p = searching ? 1 : collapseProgress(list?.scrollTop ?? 0);
+    let p = collapseProgress(list?.scrollTop ?? 0);
     if (reducedMotion()) p = steppedProgress(p);
     el.style.setProperty('--ph-p', String(p));
   };
 
   // A tab change, or search opening or closing, takes the progress from the list now in front.
-  useLayoutEffect(() => {
-    if (searching) root.current?.querySelector(ACTIVE_LIST)?.scrollTo({ top: 0 });
-    apply();
-  }, [tab, searching]);
+  useLayoutEffect(apply, [tab, searching]);
 
   useEffect(() => {
     const el = root.current;
