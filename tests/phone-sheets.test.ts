@@ -115,10 +115,33 @@ describe('action sheet rules, PR', () => {
     expect(ids({ ...own, draft: false })).not.toContain('ready');
   });
 
-  it('dispatch shows only when Orca is available, with a confirm', () => {
-    expect(ids({})).not.toContain('dispatch');
-    const item = actionItems({ ...base, orcaAvailable: true }).find((i) => i.id === 'dispatch');
-    expect(item?.confirm).toBe(true);
+  describe('Dispatch with Orca', () => {
+    const ready = { headRef: 'feat/webhook-retry', state: 'ready' } as const;
+    const row = (c: Partial<ActionContext>) => actionItems({ ...base, ...c }).find((i) => i.id === 'pr-dispatch');
+
+    it('is hidden unless Orca can take the PR', () => {
+      expect(ids({})).not.toContain('pr-dispatch');
+      expect(ids({ orcaAvailable: true })).not.toContain('dispatch');
+    });
+
+    it('sits after the Fix rows and before Comment, opening the dispatch dialog', () => {
+      const list = ids({ prDispatch: ready, fix: { count: 2, orca: true }, conflicts: true });
+      expect(list.slice(list.indexOf('fix-checks'), list.indexOf('comment') + 1)).toEqual(['fix-checks', 'pr-dispatch', 'comment']);
+      expect(row({ prDispatch: ready })).toMatchObject({ label: 'Dispatch with Orca…', sub: 'Starts an agent on feat/webhook-retry', opens: true });
+    });
+
+    it('is a dashed fact while a session works on the PR or a dispatch runs', () => {
+      expect(row({ prDispatch: { ...ready, state: 'in-orca' } })).toMatchObject({
+        label: 'In Orca',
+        disabled: 'A session already works on this PR',
+        dashed: true,
+      });
+      expect(row({ prDispatch: { ...ready, state: 'busy' } })).toMatchObject({ label: 'Dispatching…', disabled: 'Waiting for Orca', dashed: true });
+    });
+
+    it('is disabled offline', () => {
+      expect(row({ prDispatch: ready, writesOff: true })?.disabled).toBe('Offline');
+    });
   });
 
   it('PRs never list Start work or statuses, even with the project on', () => {

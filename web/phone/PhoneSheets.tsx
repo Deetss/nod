@@ -10,7 +10,7 @@ import { phoneBotState } from './bot-check-phone';
 import { PhoneBotSplit } from './PhoneBotSplit';
 import type { PrSummary } from '../../shared/types';
 import { NO_ACCESS, reviewAccess } from '../../shared/pr-actions';
-import { DEFAULT_AGENT, dispatchPrompt, repoInOrca, worktreeName } from '../../shared/orca';
+import { DEFAULT_AGENT, dispatchPrompt, prDispatchPrompt, prWorktreeName, repoInOrca, worktreeName } from '../../shared/orca';
 import { hasBotLabel } from '../../shared/bot';
 import { canFix, checksDispatch, failingChecks, botComment } from '../../shared/fix-checks';
 import { canResolve, conflictsDispatch } from '../../shared/fix-conflicts';
@@ -18,7 +18,7 @@ import type { OrcaDispatchRequest } from '../../shared/orca';
 import { launchLine, phoneAgent } from '../../shared/agent-models';
 import { useOrcaModels } from '../orca/ModelFields';
 import { orcaChoiceFor } from '../useFixChecks';
-import { PhoneFixBot } from './PhoneFix';
+import { PhoneFixBot, PhoneFixDispatch } from './PhoneFix';
 import { phoneFixItems, phoneFixTitle } from './phone-fix';
 import { isProjectStatus } from '../../shared/project-status';
 import { api } from '../api';
@@ -71,6 +71,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const issue = root?.kind === 'issue' ? issues.find((x) => x.id === root.id) : undefined;
   const [wrap, setWrap] = useState(loadWrap);
   const [dispatching, setDispatching] = useState(false);
+  const [prDispatch, setPrDispatch] = useState<{ busy: boolean; error?: string }>({ busy: false });
   const models = useOrcaModels();
   const [form, setForm] = useState<NewIssueForm>(() => emptyForm(''));
   const [created, setCreated] = useState<{ repo: string; number: number }>();
@@ -150,10 +151,16 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const fixable = !!pr && !!detail && canFix(detail);
   const conflicting = !!pr && !!detail && canResolve(detail);
   const orcaFix = orcaChoiceFor(detail, orca.data);
+  const prSessions = pr ? orcaUi.value.byPr[pr.id] : undefined;
+  const prInOrca = !!prSessions && (prSessions.related.length > 0 || prSessions.chosen !== undefined);
+  const prDispatchable = !!pr && !!detail && orcaFix === 'ready' && detail.isOpen !== false;
 
   const ctx: ActionContext = {
     fix: fixable ? { count: failing.length, orca: orcaFix !== 'absent' } : undefined,
     conflicts: conflicting,
+    ...(prDispatchable
+      ? { prDispatch: { headRef: detail.headRef, state: prDispatch.busy ? 'busy' : prInOrca ? 'in-orca' : 'ready' } }
+      : {}),
     target: pr ? 'pr' : 'issue',
     ownPr: access.ownPr,
     isAdmin: access.admin !== 'hidden',
@@ -255,6 +262,10 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     }
     if (item.id === 'fix-checks') return replaceTop({ kind: 'fix', mode: 'checks' });
     if (item.id === 'fix-conflicts') return replaceTop({ kind: 'fix', mode: 'conflicts' });
+    if (item.id === 'pr-dispatch') {
+      setPrDispatch({ busy: false });
+      return replaceTop({ kind: 'pr-dispatch' });
+    }
     if (item.id === 'edit-title') return replaceTop({ kind: 'edit-title' });
     if (item.id === 'hand-bot') return replaceTop({ kind: 'confirm', action: 'bot' });
     if (item.id === 'setup-bot') {
@@ -323,6 +334,20 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
       writes.notify(e instanceof Error ? e.message : 'Dispatch failed', false);
     } finally {
       setDispatching(false);
+    }
+  };
+
+  /** Starts an Orca worktree on the PR head. The dialog stays open on failure so the error shows in it. */
+  const dispatchPr = async (v: Omit<OrcaDispatchRequest, 'repo' | 'number'>) => {
+    if (!pr) return;
+    setPrDispatch({ busy: true });
+    try {
+      const res = await api.orcaDispatch({ repo: pr.repo, number: pr.number, ...v });
+      setPrDispatch({ busy: false });
+      writes.notify(`Dispatched to ${res.worktree}`);
+      pop();
+    } catch (e) {
+      setPrDispatch({ busy: false, error: e instanceof Error ? e.message : 'Dispatch failed' });
     }
   };
 
@@ -675,6 +700,21 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 initial={botComment(failing, bot())}
                 busy={dispatching}
                 onPost={(c) => void postFixComment(c)}
+                onCancel={pop}
+              />
+            ) : null;
+          case 'pr-dispatch':
+            return pr && detail && prDispatchable ? (
+              <PhoneFixDispatch
+                key="pr-dispatch"
+                subject={`${repoLabel(pr.repo)} #${pr.number} · ${pr.title}`}
+                agents={orca.data?.agents ?? []}
+                headRef={detail.headRef}
+                name={prWorktreeName(pr.number)}
+                prompt={prDispatchPrompt(pr.repo, pr.number, pr.title)}
+                busy={prDispatch.busy}
+                error={prDispatch.error}
+                onDispatch={(v) => void dispatchPr(v)}
                 onCancel={pop}
               />
             ) : null;
