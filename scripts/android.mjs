@@ -43,9 +43,9 @@ async function exists(path) {
   return stat(path).then(() => true, () => false);
 }
 
-/** `android.packageId` from the settings file the server reads, so the APK matches assetlinks.json. */
+/** `android.packageId` from the service's settings file, so the APK matches assetlinks.json. */
 async function packageId() {
-  const dir = process.env.REVIEW_INBOX_SETTINGS_DIR ?? join(process.env.XDG_CONFIG_HOME ?? join(homedir(), '.config'), 'review-inbox');
+  const dir = process.env.REVIEW_INBOX_SETTINGS_DIR ?? `${config}-service`;
   let raw = {};
   try {
     raw = JSON.parse(await readFile(join(dir, 'app-settings.json'), 'utf8'));
