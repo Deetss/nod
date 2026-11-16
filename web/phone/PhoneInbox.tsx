@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Chips } from './PhoneBars';
 import { PullList, SectionHeader } from './PhoneList';
-import { EmptyBlock, ErrorBanner, LoadingLine, SkeletonSections } from './PhoneStates';
+import { EmptyBlock, LoadingLine, ReachBanner, SkeletonSections } from './PhoneStates';
 import type { ChipCount, PhoneStatus } from './phone-logic';
 
 export interface InboxSectionView {
@@ -23,6 +23,10 @@ interface PhoneInboxProps {
   syncLine: string;
   cachedLine: string;
   errorDetail: string;
+  /** The error-state banner: a token state or a sync failure. Without one, Can't reach Nod. */
+  banner?: ReactNode;
+  /** A quiet notice above the rows while nothing is wrong. */
+  notice?: ReactNode;
   refreshing: boolean;
   emptyTitle: string;
   emptyBody: string;
@@ -53,7 +57,7 @@ export function PhoneInbox(p: PhoneInboxProps) {
       locked={loading}
       short={p.status === 'error'}
       chips={chips}
-      banner={p.status === 'error' ? <ErrorBanner detail={p.errorDetail} onRetry={p.onRefresh} /> : null}
+      banner={p.status === 'error' ? (p.banner ?? <ReachBanner detail={p.errorDetail} onRetry={p.onRefresh} />) : (p.notice ?? null)}
       refreshing={p.refreshing && !loading}
       onRefresh={p.onRefresh}
       syncLine={loading ? <LoadingLine /> : p.status === 'error' ? p.cachedLine : p.syncLine}

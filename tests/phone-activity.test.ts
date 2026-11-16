@@ -122,6 +122,7 @@ function mount(over: Partial<ActivityHandle> = {}) {
         onSeenPr: vi.fn(),
         onSeenIssue: vi.fn(),
         onRefresh: vi.fn(),
+        connection: { connection: undefined, result: undefined, busy: false, check: async () => {}, clearResult: () => {} },
         theme: 'dark',
         onToggleTheme: vi.fn(),
         density: 'comfortable',

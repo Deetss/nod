@@ -1,7 +1,8 @@
 import type { ReactNode, Ref } from 'react';
 import type { IssueSectionKey, IssueSummary } from '../../shared/issue-types';
 import { isProjectStatus } from '../../shared/project-status';
-import { Banner } from '../Banner';
+import { projectOff } from '../../shared/connection';
+import { ListBanner, QuietNote, tokenBlocks } from '../Banner';
 import { orgLogin, projectStatuses } from '../org-settings';
 import { Btn, CheckIcon, Chevron, KeyCap, Legend } from '../ui';
 import { Dropdown } from './Dropdown';
@@ -30,6 +31,8 @@ interface IssueListPaneProps {
   onBulk: (kind: 'labels' | 'assign' | 'assignMe' | 'close') => void;
   onClear: () => void;
   onRetry: () => void;
+  /** Opens Settings on GitHub, focused on Check again. */
+  onFixConnection: () => void;
   onNew: () => void;
   /** The closed section, shown under the open sections. */
   closed?: ReactNode;
@@ -144,6 +147,13 @@ export function IssueListPane(p: IssueListPaneProps) {
     ) : (
       <Loading done={0} total={1} />
     );
+  } else if (data.connection?.state === 'none' && data.issues.length === 0) {
+    body = (
+      <>
+        <ListBanner connection={data.connection} stale={undefined} rate={undefined} syncedAt={0} onRetry={p.onRetry} onFix={p.onFixConnection} />
+        <p className="nothing-synced">Nothing synced yet.</p>
+      </>
+    );
   } else if (data.syncing) {
     body = <Loading done={data.syncing.done} total={data.syncing.total} />;
   } else if (data.issues.length === 0) {
@@ -151,10 +161,18 @@ export function IssueListPane(p: IssueListPaneProps) {
   } else {
     body = (
       <>
-        {data.stale ? <Banner stale={data.stale} rate={data.rate} onRetry={p.onRetry} /> : null}
-        {data.stale ? (
+        <ListBanner
+          connection={data.connection}
+          stale={data.stale}
+          rate={data.rate}
+          syncedAt={data.syncedAt}
+          onRetry={p.onRetry}
+          onFix={p.onFixConnection}
+        />
+        {data.stale && !tokenBlocks(data.connection) ? (
           <p className="muted small istale-note">Cached rows are marked stale and actions are disabled.</p>
         ) : null}
+        {projectOff(data.connection) && !tokenBlocks(data.connection) ? <QuietNote onTurnOn={p.onFixConnection} /> : null}
         {filtersActive(f) && shown === 0 ? <FilteredEmpty total={data.issues.length} onClear={() => p.onFilters({ ...f, text: '', repo: '', label: '', status: '' })} /> : null}
         <div className={data.stale ? 'is-stale' : undefined}>
           {p.sections.map(({ key, title, count, issues, open }) => (
@@ -279,7 +297,7 @@ export function IssueListPane(p: IssueListPaneProps) {
       )}
       <div className="scroll inbox-list" role="listbox" tabIndex={0} ref={p.listRef}>
         {body}
-        {data && !data.syncing ? p.closed : null}
+        {data && !data.syncing && data.connection?.state !== 'none' ? p.closed : null}
       </div>
       <Legend />
     </aside>

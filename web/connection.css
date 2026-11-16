@@ -1,0 +1,561 @@
+/* GitHub token setup (docs/design/token-setup-spec.md): Connection card, marks, banners, phone sheet. */
+
+/* Connection card, Settings > GitHub */
+.conn-card {
+  margin: 16px 0 20px;
+  padding: 15px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  scroll-margin-bottom: 16px;
+}
+
+.conn-head {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.conn-title {
+  margin: 0;
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.conn-card .conn-who {
+  margin: 4px 0 0;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conn-cols,
+.conn-scope {
+  display: grid;
+  grid-template-columns: 28px 132px 100px minmax(0, 1fr);
+  align-items: center;
+}
+
+.conn-cols {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--borderColor-muted);
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.conn-cols span:first-child {
+  grid-column: 2;
+}
+
+.conn-scopes {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conn-scope {
+  height: 32px;
+}
+
+.conn-scope-name {
+  font: 400 13px/20px var(--fontStack-monospace);
+  color: var(--fgColor-default);
+  background: none;
+  padding: 0;
+}
+
+.conn-need {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.conn-turns {
+  font: 400 14px/20px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  max-width: 340px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conn-turns.is-on {
+  color: var(--fgColor-default);
+}
+
+.conn-after {
+  margin-top: 8px;
+  padding-top: 15px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.conn-after > * {
+  margin: 0;
+}
+
+.conn-after > * + * {
+  margin-top: 16px;
+}
+
+.conn-after > .conn-install + .conn-cmd-row {
+  margin-top: 12px;
+}
+
+.conn-after > .conn-cmd-row + .conn-cmd,
+.conn-after > .conn-cmd + .conn-hint {
+  margin-top: 8px;
+}
+
+.conn-result {
+  position: relative;
+  padding: 11px 11px 11px 39px;
+  background: var(--bgColor-danger-muted);
+  border: 1px solid var(--borderColor-danger-emphasis);
+  border-radius: 6px;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.conn-result > svg {
+  position: absolute;
+  left: 13px;
+  top: 12px;
+  color: var(--fgColor-danger);
+}
+
+.conn-ok {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.conn-ok > svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--fgColor-success);
+}
+
+.conn-install {
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.conn-cmd-row {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.conn-cmd-label {
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.conn-card:not(.is-phone) .conn-copy {
+  width: 80px;
+  height: 28px;
+  justify-content: center;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.conn-copy.is-copied svg {
+  color: var(--fgColor-success);
+}
+
+.conn-cmd {
+  padding: 7px 11px;
+  background: var(--bgColor-inset);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  font: 400 13px/22px var(--fontStack-monospace);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.conn-hint {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.conn-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.conn-checked {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.settings-under-card {
+  margin-top: 0;
+}
+
+/* Pill: fill and border differ per state, and danger and success carry an icon. */
+.conn-pill {
+  flex: none;
+  height: 22px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  font: 600 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.conn-pill.is-neutral {
+  background: var(--bgColor-neutral-muted);
+  border: 1px dashed var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+}
+
+.conn-pill.is-danger {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+}
+
+.conn-pill.is-attention {
+  background: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-emphasis);
+  color: var(--fgColor-attention);
+}
+
+.conn-pill.is-success {
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+  color: var(--fgColor-success);
+}
+
+/* Marks: filled disc, ring, dashed ring. */
+.conn-mark {
+  flex: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.conn-mark.is-granted {
+  background: var(--bgColor-success-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.conn-mark.is-missing-required {
+  background: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.conn-mark.is-missing-optional {
+  border: 1.5px solid var(--fgColor-attention);
+  color: var(--fgColor-attention);
+}
+
+.conn-mark.is-missing-optional svg {
+  margin: -1.5px;
+}
+
+.conn-mark.is-unknown {
+  border: 1.5px dashed var(--borderColor-emphasis);
+}
+
+.conn-mark-q {
+  font: 700 12px/1 var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* The `!` on the gear and on the GitHub section. */
+.top-mark,
+.nav-mark {
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font: 700 12px/16px var(--fontStack-system);
+  color: var(--fgColor-onEmphasis);
+}
+
+.top-mark.is-danger,
+.nav-mark.is-danger {
+  background: var(--borderColor-danger-emphasis);
+}
+
+.top-mark.is-attention,
+.nav-mark.is-attention {
+  background: var(--bgColor-attention-emphasis);
+}
+
+.icon-btn.has-mark {
+  position: relative;
+  overflow: visible;
+}
+
+.top-mark {
+  position: absolute;
+  top: -7px;
+  right: -5px;
+  box-shadow: 0 0 0 2px var(--bgColor-inset);
+  pointer-events: none;
+}
+
+.nav-mark {
+  margin-right: -6px;
+  box-shadow: 0 0 0 2px var(--bgColor-muted);
+}
+
+.settings-nav-item.is-active .nav-mark {
+  box-shadow: 0 0 0 2px var(--bgColor-neutral-muted);
+}
+
+.settings-nav-note {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* List banners */
+.banner-setup {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-emphasis);
+}
+
+.banner-icon-accent {
+  color: var(--fgColor-accent);
+}
+
+.banner-message {
+  margin: 0;
+  font: 400 14px/20px var(--fontStack-system);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.banner-cached {
+  height: 26px;
+  margin: -4px 0 0;
+  padding: 0 16px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.nothing-synced {
+  margin: 48px 0 0;
+  text-align: center;
+  font: 400 14px/20px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.quiet-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px;
+  padding: 7px 11px;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-muted);
+  border-radius: 6px;
+}
+
+.quiet-note-icon {
+  flex: none;
+  display: inline-flex;
+  color: var(--fgColor-muted);
+}
+
+.quiet-note-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.quiet-note-text strong {
+  font-weight: 600;
+  color: var(--fgColor-default);
+}
+
+.quiet-note .btn.quiet-note-btn {
+  height: 28px;
+  padding: 0 15px;
+  font-size: 12px;
+}
+
+/* Phone */
+.ph-error.is-setup {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-emphasis);
+}
+
+.ph-error.is-setup .ph-error-icon {
+  color: var(--fgColor-accent);
+}
+
+.ph-error-note {
+  margin: -8px 0 12px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.quiet-note.ph-quiet-note {
+  min-height: 72px;
+  box-sizing: border-box;
+  margin: 8px 12px;
+  padding: 14px 14px 14px 15px;
+  gap: 8px;
+  border-radius: 12px;
+  align-items: flex-start;
+}
+
+.ph-quiet-note .quiet-note-icon {
+  margin-top: 1px;
+}
+
+.ph-quiet-note .quiet-note-text {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ph-quiet-note .quiet-note-text strong {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ph-quiet-note .ph-btn.quiet-note-btn {
+  width: 92px;
+  min-height: 44px;
+  padding: 0;
+}
+
+/* Over the tab bar too, so the action bar sits on the bottom edge. */
+.ph-scrim.ph-conn-scrim {
+  position: fixed;
+  z-index: 60;
+}
+
+/* The action bar carries the gesture inset itself. */
+.ph-asheet.ph-conn-sheet {
+  padding-bottom: 0;
+}
+
+.ph-conn-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ph-conn-sheet .ph-actionbar {
+  margin: 0 -16px;
+}
+
+.conn-card.is-phone {
+  margin: 0;
+  padding: 0 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.is-phone .conn-who {
+  margin: 0;
+  padding-bottom: 12px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-scopes {
+  margin: 0;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.is-phone .conn-scope {
+  height: 60px;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  grid-template-rows: 20px 18px;
+  align-content: center;
+  align-items: start;
+  row-gap: 2px;
+}
+
+.is-phone .conn-mark {
+  grid-row: 1;
+  margin-top: 1px;
+}
+
+.is-phone .conn-scope-name {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.is-phone .conn-need {
+  grid-column: 3;
+  grid-row: 1;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-turns {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  max-width: none;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-after {
+  margin-top: 0;
+  padding-top: 16px;
+}
+
+.is-phone .conn-after > .conn-install + .conn-cmd-row {
+  margin-top: 12px;
+}
+
+.is-phone .conn-cmd-row {
+  min-height: 44px;
+}
+
+.is-phone .conn-cmd-label {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-copy {
+  width: 92px;
+  min-height: 44px;
+  padding: 0;
+}
+
+.is-phone .conn-cmd {
+  padding: 10px 11px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-hint {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.is-phone .conn-hint + .conn-hint {
+  margin-top: 8px;
+}

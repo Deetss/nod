@@ -221,12 +221,13 @@ function usePairedCount(dialogOpen: boolean): number | undefined {
 }
 
 /** Opens the settings dialog (`,`). */
-export function SettingsButton({ onClick }: { onClick: () => void }) {
+/** The gear. `mark` adds the `!` when the GitHub token needs attention. */
+export function SettingsButton({ onClick, mark }: { onClick: () => void; mark?: 'danger' | 'attention' }) {
   return (
     <button
       type="button"
-      className="btn icon-btn"
-      aria-label="Settings"
+      className={`btn icon-btn${mark ? ' has-mark' : ''}`}
+      aria-label={mark ? 'Settings, GitHub needs attention' : 'Settings'}
       aria-keyshortcuts=","
       title="Settings (,)"
       onClick={onClick}
@@ -237,6 +238,11 @@ export function SettingsButton({ onClick }: { onClick: () => void }) {
           <path d="M8 1.8v1.7M8 12.5v1.7M1.8 8h1.7M12.5 8h1.7M3.6 3.6l1.2 1.2M11.2 11.2l1.2 1.2M12.4 3.6l-1.2 1.2M4.8 11.2l-1.2 1.2" />
         </g>
       </svg>
+      {mark ? (
+        <span className={`top-mark is-${mark}`} aria-hidden="true">
+          !
+        </span>
+      ) : null}
     </button>
   );
 }
@@ -298,6 +304,8 @@ interface TopbarProps {
   pairOpen: boolean;
   onPairPhone: () => void;
   onSettings: () => void;
+  /** The gear's `!` while the GitHub token needs attention. */
+  settingsMark?: 'danger' | 'attention';
 }
 
 export function Topbar(p: TopbarProps) {
@@ -336,7 +344,7 @@ export function Topbar(p: TopbarProps) {
       <div className="top-right">
         <div className="top-icons">
           {pairCount === undefined ? null : <PairButton count={pairCount} onClick={p.onPairPhone} />}
-          <SettingsButton onClick={p.onSettings} />
+          <SettingsButton onClick={p.onSettings} mark={p.settingsMark} />
           <NotifyMenu
             settings={p.notify.settings}
             onChange={p.notify.onChange}

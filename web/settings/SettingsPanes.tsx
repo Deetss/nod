@@ -5,6 +5,8 @@ import { Btn } from '../ui';
 import type { FieldErrors, FormState, SectionId } from './form';
 import { PaneErrors, Switch, TextField } from './SettingsFields';
 import { UpdateCheck } from './UpdateCheck';
+import { ConnectionBlock } from './ConnectionBlock';
+import type { ConnectionView } from './useConnection';
 
 export interface PaneProps {
   form: FormState;
@@ -13,6 +15,10 @@ export interface PaneProps {
   patch: (change: Partial<FormState>) => void;
   /** Enter in a field: saves when Save is enabled. */
   onEnter: () => void;
+  /** The GitHub token's state, for the GitHub pane's Connection card. */
+  connection?: ConnectionView;
+  /** Opened from a banner: focus lands on Check again. */
+  focusCheck?: boolean;
 }
 
 const STATUS_LABELS: Record<StatusOptionKey, string> = {
@@ -33,11 +39,13 @@ function Pane({ title, caption, children }: { title: string; caption: string; ch
   );
 }
 
-function GithubPane({ form, errors, patch, onEnter }: PaneProps) {
+function GithubPane({ form, errors, patch, onEnter, connection, focusCheck }: PaneProps) {
   const setOrg = (i: number, value: string) => patch({ orgs: form.orgs.map((o, j) => (j === i ? value : o)) });
   const named = form.orgs.map((o) => o.trim()).filter((o) => o !== '');
   return (
-    <Pane title="GitHub" caption="Orgs Nod watches for PRs and issues. Add your own login to include your personal repos.">
+    <Pane title="GitHub" caption="The account Nod signs in as, and the orgs it watches.">
+      {connection?.connection ? <ConnectionBlock view={connection} autoFocus={focusCheck} /> : null}
+      <p className="settings-caption settings-under-card">Orgs Nod watches for PRs and issues. Add your own login to include your personal repos.</p>
       <p className="settings-caption">The first org also owns the project board and Status.</p>
       <Switch
         label="Also show things I'm involved in"

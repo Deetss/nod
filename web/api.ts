@@ -1,5 +1,6 @@
 import type { ActivityFeed } from '../shared/activity-types';
 import type { ClosedIssue, ClosedPage, ClosedPr, ClosedWindow } from '../shared/closed';
+import type { ConnectionCheck } from '../shared/connection';
 import type {
   IssueAction,
   IssueActionResult,
@@ -166,6 +167,8 @@ export const api = {
   refresh: () => post<{ ok: boolean }>('/api/refresh', {}),
   /** Asks for a delta poll now. The server ignores it when one ran in the last 10 s. */
   nudgeSync: () => post<{ polled: boolean }>('/api/sync/nudge', {}),
+  /** Check again: the server re-reads `gh auth token` and the token's scopes. */
+  checkConnection: () => post<ConnectionCheck>(withState('/api/connection/check'), {}),
   detail: (repo: string, number: number) => get<PrDetail>(prPath(repo, number)),
   diff: (repo: string, number: number, mode: DiffMode) =>
     get<DiffData>(`${prPath(repo, number)}/diff`, { mode }),
