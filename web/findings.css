@@ -537,6 +537,7 @@
 
 .ph-thread .finding-human-actions .finding-btn {
   width: 100%;
+  justify-content: center;
 }
 
 .ph-thread .finding-human .finding-head {
