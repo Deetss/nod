@@ -5,11 +5,30 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  /* The header covers the top of the scroll: its expanded height. */
+  padding-top: calc(var(--ph-top) + 113px);
   background: var(--bgColor-default);
+}
+
+.phone.is-searching .ph-list {
+  padding-top: calc(var(--ph-top) + 57px);
+}
+
+.phone.is-searching .ph-section {
+  top: 0;
 }
 
 .ph-list.is-locked {
   overflow: hidden;
+}
+
+/* A short list still has 56px to scroll, so the header can finish collapsing. */
+.ph-list-body {
+  min-height: calc(100% + 56px);
+}
+
+.ph-list.is-short .ph-list-body {
+  min-height: 0;
 }
 
 .ph-syncline {
@@ -27,7 +46,8 @@
 
 .ph-section {
   position: sticky;
-  top: 0;
+  /* Sticky offsets start below the list's padding: 57 under the top edge is 56 above the padding edge. */
+  top: -56px;
   z-index: 2;
   display: flex;
   align-items: center;

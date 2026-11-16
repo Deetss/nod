@@ -131,6 +131,29 @@ export function nextUnviewed(files: readonly { path: string; viewed: boolean }[]
   return order.find((f) => !f.viewed && f.path !== from)?.path;
 }
 
+/** Scroll distance over which the large title collapses. */
+export const COLLAPSE_PX = 56;
+
+/** 0 is the expanded header, 1 the collapsed one. */
+export function collapseProgress(scrollTop: number): number {
+  return Math.min(1, Math.max(0, scrollTop / COLLAPSE_PX));
+}
+
+/** Reduced motion has no in-between: the header is one of its two states. */
+export function steppedProgress(p: number): 0 | 1 {
+  return p >= 0.5 ? 1 : 0;
+}
+
+/** Where a list resting inside the collapse range settles, or undefined when it is already at an end. */
+export function snapTarget(scrollTop: number): number | undefined {
+  if (scrollTop <= 0 || scrollTop >= COLLAPSE_PX) return undefined;
+  return scrollTop < COLLAPSE_PX / 2 ? 0 : COLLAPSE_PX;
+}
+
+export function tabTitle(tab: PhoneTab): string {
+  return tab === 'prs' ? 'Pull requests' : tab === 'issues' ? 'Issues' : 'Activity';
+}
+
 export const SWIPE_CLOSE_PX = 120;
 const FLING_PX = 40;
 const FLING_MS = 200;

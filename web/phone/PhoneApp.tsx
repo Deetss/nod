@@ -28,8 +28,10 @@ import {
   prChips,
   resolveOpen,
   syncText,
+  tabTitle,
   type PhoneTab,
 } from './phone-logic';
+import { useLargeTitle } from './useLargeTitle';
 
 interface PhoneAppProps {
   tab: PhoneTab;
@@ -185,6 +187,8 @@ export function PhoneApp(p: PhoneAppProps) {
 
   const sheets = useSheetStack(p.sheet ? [p.sheet] : []);
   const root = sheets.stack[0];
+  const shell = useRef<HTMLDivElement>(null);
+  useLargeTitle(shell, p.tab, searching);
 
   // Swiping the content moves between the bottom tabs exactly as tapping them does.
   const pager = useTabPager(TAB_ORDER, p.tab, selectTab, { disabled: root !== undefined || menu });
@@ -256,23 +260,23 @@ export function PhoneApp(p: PhoneAppProps) {
   }, [root]);
 
   return (
-    <div className="phone" data-sheet={root ? 'open' : undefined}>
-      <AppBar
-        title={p.tab === 'activity' ? 'Activity' : 'Nod'}
-        searching={searching}
-        query={query}
-        density={p.density}
-        theme={p.theme}
-        onQuery={setQuery}
-        onSearching={setSearchingLayer}
-        menu={menu}
-        onMenu={setMenuLayer}
-        onRefresh={p.onRefresh}
-        onDensity={p.onDensity}
-        onToggleTheme={p.onToggleTheme}
-      />
+    <div ref={shell} className={`phone${searching ? ' is-searching' : ''}`} data-sheet={root ? 'open' : undefined}>
       {apk.shown ? <ApkBanner release={apk.shown} onDismiss={apk.dismiss} /> : null}
       <main className="ph-main">
+        <AppBar
+          title={tabTitle(p.tab)}
+          searching={searching}
+          query={query}
+          density={p.density}
+          theme={p.theme}
+          onQuery={setQuery}
+          onSearching={setSearchingLayer}
+          menu={menu}
+          onMenu={setMenuLayer}
+          onRefresh={p.onRefresh}
+          onDensity={p.onDensity}
+          onToggleTheme={p.onToggleTheme}
+        />
         <SwipePager
           pager={pager}
           panes={[
