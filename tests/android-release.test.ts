@@ -103,6 +103,8 @@ describe('version comparison and banner', () => {
     expect(parseRelease(release(3))).toEqual(release(3));
     expect(parseRelease({ ...release(3), sha256: 'nope' })).toBeUndefined();
     expect(parseRelease({ ...release(3), versionCode: -1 })).toBeUndefined();
+    expect(parseRelease({ ...release(3), packageId: 'example.acme.nod' })).toEqual({ ...release(3), packageId: 'example.acme.nod' });
+    expect(parseRelease({ ...release(3), packageId: 'Not A Package' })).toEqual(release(3));
   });
 });
 
@@ -123,7 +125,7 @@ describe('android.mjs in a temporary HOME', () => {
     const path = SCRIPT;
     return (await import(path)) as {
       twaManifest: (host: string, iconBase: string, version: number) => Record<string, unknown>;
-      finishBuild: (signed: string, version: number, releaseApk?: string) => Promise<AndroidRelease>;
+      finishBuild: (signed: string, version: number, pkg: string, releaseApk?: string) => Promise<AndroidRelease>;
     };
   }
 
@@ -159,12 +161,12 @@ describe('android.mjs in a temporary HOME', () => {
     const signed = join(home, 'app-release-signed.apk');
     await writeFile(signed, BYTES);
     vi.spyOn(console, 'log').mockImplementation(() => undefined);
-    await mod.finishBuild(signed, 12, join(home, 'release', 'nod.apk'));
+    await mod.finishBuild(signed, 12, 'example.acme.nod', join(home, 'release', 'nod.apk'));
 
     const dir = join(home, '.local', 'state', 'nod', 'android');
     expect(await readFile(join(dir, 'nod.apk'), 'utf8')).toBe(BYTES);
     const meta = await readRelease(dir);
-    expect(meta).toMatchObject({ versionCode: 12, versionName: '1.0.12', sha256: sha(BYTES) });
+    expect(meta).toMatchObject({ versionCode: 12, versionName: '1.0.12', sha256: sha(BYTES), packageId: 'example.acme.nod' });
     expect(Number.isNaN(Date.parse(meta?.builtAt ?? ''))).toBe(false);
     expect(await readFile(join(home, '.config', 'nod', 'android-version.txt'), 'utf8')).toBe('12\n');
     expect(await readFile(join(home, 'release', 'nod.apk'), 'utf8')).toBe(BYTES);

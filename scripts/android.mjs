@@ -212,7 +212,7 @@ async function build() {
   } finally {
     server.close();
   }
-  await finishBuild(join(androidDir, 'app-release-signed.apk'), version);
+  await finishBuild(join(androidDir, 'app-release-signed.apk'), version, pkg);
   console.log(`Fingerprint written to ${fingerprintFile}. Restart the service so assetlinks.json serves it.`);
 }
 
@@ -220,10 +220,10 @@ async function build() {
  * Copies the signed APK to release/android for adb, publishes it with its metadata to the
  * state dir the server reads, and only then counts the version as built.
  */
-export async function finishBuild(signedApk, version, releaseApk = apk) {
+export async function finishBuild(signedApk, version, pkg, releaseApk = apk) {
   await mkdir(dirname(releaseApk), { recursive: true });
   await copyFile(signedApk, releaseApk);
-  const release = await publishRelease(signedApk, { versionCode: version, versionName: versionNameFor(version) });
+  const release = await publishRelease(signedApk, { versionCode: version, versionName: versionNameFor(version), packageId: pkg });
   await mkdir(config, { recursive: true, mode: 0o700 });
   await writeFile(versionFile, `${version}\n`);
   console.log(`APK: ${releaseApk} (version ${version})`);

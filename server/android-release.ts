@@ -33,7 +33,7 @@ export function apkFileName(release: AndroidRelease): string {
  */
 export async function publishRelease(
   apk: string,
-  version: { versionCode: number; versionName: string },
+  version: { versionCode: number; versionName: string; packageId?: string },
   dir: string = androidReleaseDir(),
   now: Date = new Date(),
 ): Promise<AndroidRelease> {

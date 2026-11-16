@@ -6,6 +6,7 @@ import { pushPayload, type PushPayload, type PushSubscriptionJson } from '../sha
 import { buildAssetLinks, LEGACY_ANDROID_PACKAGE, loadAssetLinks, readFingerprint } from '../server/assetlinks';
 
 const PACKAGE = 'org.example.reviewinbox';
+import { publishRelease } from '../server/android-release';
 import { createApp } from '../server/app';
 import { DeviceStore } from '../server/devices';
 import { FixtureProvider } from '../server/fixture-provider';
@@ -189,7 +190,9 @@ describe('assetlinks.json', () => {
   it('is served by the desktop server once a fingerprint file exists, new path before old', async () => {
     const config = await mkdtemp(join(tmpdir(), 'fp-config-'));
     const saved = process.env.XDG_CONFIG_HOME;
+    const savedState = process.env.XDG_STATE_HOME;
     process.env.XDG_CONFIG_HOME = config;
+    process.env.XDG_STATE_HOME = join(config, 'state');
     try {
       expect(await loadAssetLinks(PACKAGE)).toBeUndefined();
 
@@ -213,6 +216,25 @@ describe('assetlinks.json', () => {
     } finally {
       if (saved === undefined) delete process.env.XDG_CONFIG_HOME;
       else process.env.XDG_CONFIG_HOME = saved;
+      if (savedState === undefined) delete process.env.XDG_STATE_HOME;
+      else process.env.XDG_STATE_HOME = savedState;
     }
+  });
+
+  // The service's settings named one package while the published APK was built as another.
+  it('vouches for the package the published APK was built as, ahead of settings', async () => {
+    const BUILT = 'example.acme.built';
+    const statement = (package_name: string) => ({
+      relation: ['delegate_permission/common.handle_all_urls'],
+      target: { namespace: 'android_app', package_name, sha256_cert_fingerprints: [FINGERPRINT] },
+    });
+    expect(buildAssetLinks(FINGERPRINT, PACKAGE, BUILT)).toEqual([statement(BUILT), statement(PACKAGE), statement(LEGACY_ANDROID_PACKAGE)]);
+    expect(buildAssetLinks(FINGERPRINT, PACKAGE, PACKAGE)).toEqual(buildAssetLinks(FINGERPRINT, PACKAGE));
+
+    const dir = await mkdtemp(join(tmpdir(), 'fp-release-'));
+    await writeFile(join(dir, 'fp.txt'), `${FINGERPRINT}\n`);
+    await writeFile(join(dir, 'signed.apk'), 'apk');
+    await publishRelease(join(dir, 'signed.apk'), { versionCode: 3, versionName: '1.0.3', packageId: BUILT }, dir);
+    expect(await loadAssetLinks(PACKAGE, [join(dir, 'fp.txt')], dir)).toEqual(buildAssetLinks(FINGERPRINT, PACKAGE, BUILT));
   });
 });

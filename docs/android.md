@@ -24,6 +24,7 @@ A Trusted Web Activity wraps the phone page (package `dev.example.nod`, launcher
 
 - The generated manifest claims every `https://<tailnet host>` URL with `android:autoVerify="true"`.
 - Android checks `/.well-known/assetlinks.json` on port 443 when the app is installed or updated. The APK must be installed after Tailscale Serve answers on 443. A failed check is not retried until the next install.
+- `assetlinks.json` lists the package the published APK was built as (`packageId` in `latest.json`), then settings `android.packageId`. If the app still shows a browser bar, compare `curl https://<tailnet host>/.well-known/assetlinks.json` with the APK's package (`aapt2 dump packagename nod.apk`).
 
 **Notifications.** In the app, open the menu (three dots) and turn on "Notifications on this phone". The phone asks for permission, subscribes, and sends the subscription to the server, which stores it with the device.
 
