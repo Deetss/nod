@@ -16,6 +16,7 @@ import {
   type ThreadGroups,
 } from '../shared/findings';
 import type { ThreadItem } from '../shared/fix-comments';
+import { BUZZ, buzz } from './phone/haptics';
 import type { OrcaDispatchRequest } from '../shared/orca';
 import { SEND_MAX, type SendResult, type SessionView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
@@ -312,11 +313,12 @@ export function useFindings(o: Options): FindingControls | undefined {
         .then((res) => {
           if (!res.ok) throw new Error(res.message);
           patch(t.id, { resolve: IDLE });
+          if (phone && !t.resolved) buzz(BUZZ.success);
           onDone();
         })
         .catch((e: unknown) => patch(t.id, { resolve: { s: 'failed', message: `${t.resolved ? 'Reopen' : 'Resolve'} failed: ${msg(e, 'Request failed')}` } }));
     },
-    [detail, writable, cell, patch, onDone],
+    [detail, writable, cell, patch, onDone, phone],
   );
 
   const handable_ = useMemo(() => groups.open.filter(handable), [groups.open]);

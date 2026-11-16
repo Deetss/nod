@@ -26,6 +26,7 @@ import {
   phoneStatus,
   prAllTotal,
   prChips,
+  rateLimited,
   sectionStates,
   syncText,
   tabTitle,
@@ -58,7 +59,8 @@ interface PhoneAppProps {
   /** Called when a sheet closes, which clears the item's unseen state. */
   onSeenPr: (pr: PrSummary) => void;
   onSeenIssue: (issue: IssueSummary) => void;
-  onRefresh: () => void;
+  /** Resolves false when the sync failed. */
+  onRefresh: () => Promise<boolean>;
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
   density: Density;
@@ -155,6 +157,7 @@ export function PhoneApp(p: PhoneAppProps) {
   const cachedLine = conn?.state === 'none' ? 'Nothing synced yet.' : `Cached ${cachedAt} · actions off`;
   const errorDetail = inbox.error ?? issues.error ?? stale?.message ?? '';
   const refreshing = inbox.loading && inbox.data !== undefined;
+  const limited = rateLimited(stale, now);
 
   const [connSheet, setConnSheet] = useState(false);
   const setConnLayer = (on: boolean) => {
@@ -377,6 +380,7 @@ export function PhoneApp(p: PhoneAppProps) {
               noun="pull request"
               onToggle={toggle}
               onRefresh={p.onRefresh}
+              limited={limited}
             />,
             <PhoneInbox
               results={onPrs ? undefined : results}
@@ -395,11 +399,13 @@ export function PhoneApp(p: PhoneAppProps) {
               noun="issue"
               onToggle={toggle}
               onRefresh={p.onRefresh}
+              limited={limited}
             />,
             <PhoneActivity
               activity={p.activity}
               refreshing={refreshing}
               onRefresh={p.onRefresh}
+              limited={limited}
               onOpen={(i) => openRoot({ kind: i.kind, id: i.id })}
               expanded={expandedRow}
               onExpand={setExpanded}

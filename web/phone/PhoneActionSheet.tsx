@@ -6,6 +6,7 @@ import { CheckIcon } from '../ui';
 import { bot } from '../org-settings';
 import { useFocusTrap } from '../useFocusTrap';
 import { useKeyboardInset } from './useKeyboardInset';
+import { useSwipeClose } from './useSwipeClose';
 import { repoLabel } from '../repo-label';
 
 interface ActionSheetProps {
@@ -45,12 +46,15 @@ export function PhoneActionSheet(p: ActionSheetProps) {
   );
 
   const trap = useFocusTrap(p.onClose);
+  const swipe = useSwipeClose(p.onClose);
 
   return (
-    <div className="ph-scrim" style={{ zIndex: 60 }} onClick={p.onClose}>
-      <div ref={trap} className="ph-asheet" role="dialog" aria-modal="true" aria-label={p.title} onClick={(e) => e.stopPropagation()}>
-        <span className="ph-handle" aria-hidden="true" />
-        <h2 className="ph-asheet-title">{p.title}</h2>
+    <div className="ph-scrim" style={{ ...swipe.scrimStyle, zIndex: 60 }} onClick={p.onClose}>
+      <div ref={trap} className="ph-asheet" role="dialog" aria-modal="true" aria-label={p.title} onClick={(e) => e.stopPropagation()} {...swipe.sheet}>
+        <div className="ph-strip" {...swipe.bind}>
+          <span className="ph-handle" aria-hidden="true" />
+          <h2 className="ph-asheet-title">{p.title}</h2>
+        </div>
         <div className="ph-asheet-body">
         {trim || check ? (
           <div className="ph-bot-top">

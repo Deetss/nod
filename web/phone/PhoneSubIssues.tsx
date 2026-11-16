@@ -8,6 +8,7 @@ import { ChevronIcon, PlusIcon } from './PhoneIcons';
 import { FieldRow } from './PhonePickerParts';
 import { PhoneSheet } from './PhoneSheet';
 import { useKeyboardInset } from './useKeyboardInset';
+import { useSwipeClose } from './useSwipeClose';
 import { repoLabel } from '../repo-label';
 
 /** Phone sub-issues (docs/design/sub-issues-spec.md §6). No reorder and no add-existing here. */
@@ -228,13 +229,16 @@ export function PhoneSubRowSheet(p: RowSheetProps) {
   const trap = useFocusTrap(p.onClose);
   const ref = subRef(p.child, p.parentRepo);
   const keeps = p.child.state === 'open' ? 'stays open' : 'stays closed';
+  const swipe = useSwipeClose(p.onClose);
   return (
-    <div className="ph-scrim" style={{ zIndex: 60 }} onClick={p.onClose}>
-      <div ref={trap} className="ph-asheet" role="dialog" aria-modal="true" aria-label={`${repoLabel(p.child.repo)} #${p.child.number}`} onClick={(e) => e.stopPropagation()}>
-        <span className="ph-handle" aria-hidden="true" />
-        <h2 className="ph-asheet-title">
-          {repoLabel(p.child.repo)} #{p.child.number}
-        </h2>
+    <div className="ph-scrim" style={{ ...swipe.scrimStyle, zIndex: 60 }} onClick={p.onClose}>
+      <div ref={trap} className="ph-asheet" role="dialog" aria-modal="true" aria-label={`${repoLabel(p.child.repo)} #${p.child.number}`} onClick={(e) => e.stopPropagation()} {...swipe.sheet}>
+        <div className="ph-strip" {...swipe.bind}>
+          <span className="ph-handle" aria-hidden="true" />
+          <h2 className="ph-asheet-title">
+            {repoLabel(p.child.repo)} #{p.child.number}
+          </h2>
+        </div>
         <div className="ph-asheet-body">
           <button type="button" className="ph-arow" onClick={p.onOpen}>
             <span className="ph-arow-text">

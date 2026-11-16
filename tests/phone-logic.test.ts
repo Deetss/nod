@@ -10,10 +10,19 @@ import {
   prAllTotal,
   collapseProgress,
   prChips,
-  pullOffset,
+  crossedUp,
+  DISC_MAX,
+  DISC_REST,
+  discTravel,
+  PULL_THRESHOLD,
+  pullProgress,
+  rateLimited,
   resolveOpen,
   sectionStates,
+  sheetScrimOpacity,
+  shouldCloseSwipe,
   shouldRefresh,
+  SWIPE_CLOSE_PX,
   snapTarget,
   steppedProgress,
   tabTitle,
@@ -138,10 +147,52 @@ describe('pull to refresh', () => {
     expect(shouldRefresh(72)).toBe(true);
   });
 
-  it('damps the visual travel and ignores upward drags', () => {
-    expect(pullOffset(-10)).toBe(0);
-    expect(pullOffset(50)).toBe(30);
-    expect(pullOffset(400)).toBe(72);
+  it('damps the disc travel, caps it at 56 and ignores upward drags', () => {
+    expect(discTravel(-10)).toBe(0);
+    expect(discTravel(0)).toBe(0);
+    expect(discTravel(50)).toBe(30);
+    expect(discTravel(72)).toBeCloseTo(43.2);
+    expect(discTravel(100)).toBe(DISC_MAX);
+    expect(DISC_MAX).toBe(56);
+    expect(DISC_REST).toBe(40);
+  });
+
+  it('fills the ring in step with the threshold', () => {
+    expect(pullProgress(-5)).toBe(0);
+    expect(pullProgress(36)).toBe(0.5);
+    expect(pullProgress(72)).toBe(1);
+    expect(pullProgress(200)).toBe(1);
+  });
+
+  it('ticks once per crossing and re-arms below the line', () => {
+    const path = [0, 40, 71, 72, 90, 60, 75, 80];
+    const ticks = path.slice(1).filter((next, i) => crossedUp(path[i] ?? 0, next, PULL_THRESHOLD));
+    expect(ticks).toEqual([72, 75]);
+  });
+
+  it('knows a live rate limit only by kind and a reset still ahead', () => {
+    const now = Date.parse('2026-11-16T12:00:00Z');
+    expect(rateLimited(undefined, now)).toBe(false);
+    expect(rateLimited({ kind: 'error', resetAt: '2026-11-16T12:10:00Z' }, now)).toBe(false);
+    expect(rateLimited({ kind: 'ratelimit' }, now)).toBe(false);
+    expect(rateLimited({ kind: 'ratelimit', resetAt: '2026-11-16T11:59:00Z' }, now)).toBe(false);
+    expect(rateLimited({ kind: 'ratelimit', resetAt: '2026-11-16T12:10:00Z' }, now)).toBe(true);
+  });
+});
+
+describe('swipe down to close', () => {
+  it('closes past 120 or on a quick 40px fling', () => {
+    expect(shouldCloseSwipe(119, 500)).toBe(false);
+    expect(shouldCloseSwipe(SWIPE_CLOSE_PX, 500)).toBe(true);
+    expect(shouldCloseSwipe(40, 200)).toBe(true);
+    expect(shouldCloseSwipe(40, 201)).toBe(false);
+    expect(shouldCloseSwipe(39, 100)).toBe(false);
+  });
+
+  it('fades the scrim to half at the close line', () => {
+    expect(sheetScrimOpacity(0)).toBe(1);
+    expect(sheetScrimOpacity(120)).toBe(0.5);
+    expect(sheetScrimOpacity(300)).toBe(0);
   });
 });
 

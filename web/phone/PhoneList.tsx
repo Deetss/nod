@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { IssueSummary } from '../../shared/issue-types';
 import type { PrSummary, SeenState } from '../../shared/types';
 import { repoLabel } from '../repo-label';
@@ -6,7 +6,7 @@ import { issueGlyph, issueSentence, prGlyph, prSentence, StatusGlyph } from '../
 import { ageWords, formatAge } from '../ui';
 import { ChevronIcon } from './PhoneIcons';
 import { ListRow } from './ListRow';
-import { pullOffset, shouldRefresh } from './phone-logic';
+import { usePullToRefresh } from './PullDisc';
 import { squeezeAll } from './row-squeeze';
 
 const SEEN_WORD: Record<SeenState, string | undefined> = { new: 'New', updated: 'Updated', seen: undefined };
@@ -142,15 +142,19 @@ interface PullListProps {
   chips?: ReactNode;
   /** Sits between the chip row and the sync line. */
   banner?: ReactNode;
-  onRefresh: () => void;
+  /** Resolves false when the sync failed. */
+  onRefresh: () => Promise<boolean>;
+  /** GitHub's rate limit holds, so a pull sends no request. */
+  limited?: boolean;
   children: ReactNode;
 }
 
 /** The one vertical scroller on a tab. A touch drag from the top past 72px refreshes. */
-export function PullList({ syncLine, refreshing, locked, short, chips, banner, onRefresh, children }: PullListProps) {
-  const [dy, setDy] = useState(0);
-  const start = useRef<number | undefined>(undefined);
+export function PullList({ syncLine, refreshing, locked, short, chips, banner, onRefresh, limited, children }: PullListProps) {
   const el = useRef<HTMLDivElement>(null);
+  const pull = usePullToRefresh({ scroller: el, onRefresh, limited });
+  const heldBanner = useRef(banner);
+  if (!pull.holding) heldBanner.current = banner;
 
   useEffect(() => {
     const list = el.current;
@@ -165,38 +169,24 @@ export function PullList({ syncLine, refreshing, locked, short, chips, banner, o
     return () => ro.disconnect();
   }, []);
 
-  const onStart = (e: TouchEvent) => {
-    const top = el.current?.scrollTop ?? 1;
-    start.current = top <= 0 ? e.touches[0]?.clientY : undefined;
-  };
-  const onMove = (e: TouchEvent) => {
-    if (start.current === undefined) return;
-    setDy((e.touches[0]?.clientY ?? start.current) - start.current);
-  };
-  const onEnd = () => {
-    if (start.current !== undefined && shouldRefresh(dy)) onRefresh();
-    start.current = undefined;
-    setDy(0);
-  };
-
   return (
-    <div
-      ref={el}
-      className={`ph-list${locked ? ' is-locked' : ''}${locked || short ? ' is-short' : ''}`}
-      onTouchStart={onStart}
-      onTouchMove={onMove}
-      onTouchEnd={onEnd}
-      onTouchCancel={onEnd}
-    >
-      <div className="ph-list-body">
-        {chips}
-        {banner}
-        <div className="ph-syncline" style={{ marginTop: pullOffset(dy) }} role="status">
-          {refreshing ? <span className="ph-spinner" aria-hidden="true" /> : null}
-          {refreshing ? 'Refreshing…' : dy > 0 && shouldRefresh(dy) ? 'Release to refresh' : syncLine}
+    <>
+      {pull.disc}
+      <div
+        ref={el}
+        className={`ph-list${locked ? ' is-locked' : ''}${locked || short ? ' is-short' : ''}`}
+        {...pull.handlers}
+      >
+        <div className="ph-list-body">
+          {chips}
+          {heldBanner.current}
+          <div className="ph-syncline" role="status">
+            {refreshing && !pull.discShown ? <span className="ph-spinner" aria-hidden="true" /> : null}
+            {pull.line ?? (refreshing ? 'Refreshing…' : syncLine)}
+          </div>
+          {children}
         </div>
-        {children}
       </div>
-    </div>
+    </>
   );
 }

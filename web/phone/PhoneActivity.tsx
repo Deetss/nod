@@ -22,7 +22,9 @@ import type { ActivityItemRef } from '../../shared/activity-types';
 interface PhoneActivityProps {
   activity: ActivityHandle;
   refreshing: boolean;
-  onRefresh: () => void;
+  /** Resolves false when the sync failed. */
+  onRefresh: () => Promise<boolean>;
+  limited?: boolean;
   onOpen: (item: ActivityItemRef) => void;
   /** Key of the expanded row. Owned by the app so Back can collapse it. */
   expanded: string | undefined;
@@ -92,7 +94,7 @@ function SkeletonRows() {
 }
 
 /** B1 to B7: the item-grouped Activity feed. */
-export function PhoneActivity({ activity, refreshing, onRefresh, onOpen, expanded, onExpand }: PhoneActivityProps) {
+export function PhoneActivity({ activity, refreshing, onRefresh, limited, onOpen, expanded, onExpand }: PhoneActivityProps) {
   const { feed, error, lastVisit } = activity;
   const [filter, setFilter] = useState<ActivityFilter>('all');
   const [showMine, setShowMine] = useState(false);
@@ -213,6 +215,7 @@ export function PhoneActivity({ activity, refreshing, onRefresh, onOpen, expande
         syncLine={syncLine}
         refreshing={refreshing}
         onRefresh={onRefresh}
+        limited={limited}
       >
         {status === 'ready' || status === 'empty' ? (
           <div className="ph-afilter" role="status">

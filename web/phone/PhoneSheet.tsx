@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef, useState, type PointerEvent, type ReactNode, type RefObject } from 'react';
+import { useContext, useEffect, type ReactNode, type RefObject } from 'react';
 import { BackIcon, MoreIcon } from './PhoneIcons';
-import { shouldCloseSwipe } from './phone-logic';
 import { SheetHoldContext } from './useSheetStack';
+import { useSwipeClose } from './useSwipeClose';
 import { useFocusTrap } from '../useFocusTrap';
 
 export interface SheetTarget {
@@ -40,58 +40,36 @@ interface PhoneSheetProps {
  * Dragging the top strip down past 120px, or flinging, closes it.
  */
 export function PhoneSheet(p: PhoneSheetProps) {
-  const [dy, setDy] = useState(0);
-  const drag = useRef<{ y: number; t: number } | undefined>(undefined);
   const hold = useContext(SheetHoldContext);
   useEffect(() => (p.closeDisabled && hold ? hold() : undefined), [p.closeDisabled, hold]);
   const close = () => {
     if (!p.closeDisabled) p.onClose();
   };
+  const swipe = useSwipeClose(close, { disabled: p.closeDisabled });
   // A sheet covered by another one leaves Esc to the sheet on top.
   const trap = useFocusTrap(() => {
     if (!p.covered) close();
   });
 
-  const down = (e: PointerEvent) => {
-    if ((e.target as HTMLElement).closest('button')) return;
-    drag.current = { y: e.clientY, t: e.timeStamp };
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-  const move = (e: PointerEvent) => {
-    if (drag.current) setDy(Math.max(0, e.clientY - drag.current.y));
-  };
-  const up = (e: PointerEvent) => {
-    const d = drag.current;
-    drag.current = undefined;
-    if (!d) return;
-    const dist = Math.max(0, e.clientY - d.y);
-    setDy(0);
-    if (shouldCloseSwipe(dist, e.timeStamp - d.t)) close();
-  };
-
+  const z = 20 + (p.depth ?? 0);
   return (
+    <>
+    {/* A fit sheet already sits on its own scrim. */}
+    {p.fit ? null : <div className="ph-sheet-scrim" aria-hidden="true" style={{ ...swipe.scrimStyle, zIndex: z }} />}
     <div
       ref={trap}
       className={`ph-sheet${p.covered ? ' is-covered' : ''}${p.fit ? ' is-fit' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label={p.title}
+      onTransitionEnd={swipe.sheet.onTransitionEnd}
       style={{
-        zIndex: 20 + (p.depth ?? 0),
-        transform: dy ? `translateY(${dy}px)` : undefined,
+        ...swipe.sheet.style,
+        zIndex: z,
         height: p.keyboardHeight && !p.fit ? `calc(${p.keyboardHeight}px - var(--ph-top))` : undefined,
       }}
     >
-      <div
-        className="ph-strip"
-        onPointerDown={down}
-        onPointerMove={move}
-        onPointerUp={up}
-        onPointerCancel={() => {
-          drag.current = undefined;
-          setDy(0);
-        }}
-      >
+      <div className="ph-strip" {...swipe.bind}>
         <span className="ph-handle" aria-hidden="true" />
         <header className="ph-sheet-head">
           <button type="button" className="ph-iconbtn" aria-label="Back" disabled={p.closeDisabled} onClick={close}>
@@ -112,5 +90,6 @@ export function PhoneSheet(p: PhoneSheetProps) {
       <div ref={p.bodyRef} className={`ph-sheet-body${p.bodyScrolls === false ? ' no-scroll' : ''}`}>{p.children}</div>
       {p.bar ? <div className="ph-actionbar">{p.bar}</div> : null}
     </div>
+    </>
   );
 }

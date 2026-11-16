@@ -33,6 +33,7 @@ import './settings.css';
 import './connection.css';
 import './phone/phone-shell.css';
 import './phone/phone-list.css';
+import './phone/phone-pull.css';
 import './phone/phone-states.css';
 import './phone/phone-sheets.css';
 import './phone/phone-timeline.css';

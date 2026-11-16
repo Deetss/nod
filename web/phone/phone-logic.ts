@@ -156,9 +156,36 @@ export function shouldRefresh(dy: number): boolean {
   return dy >= PULL_THRESHOLD;
 }
 
-/** Visual travel of the sync line while dragging, damped and capped. */
-export function pullOffset(dy: number): number {
-  return dy <= 0 ? 0 : Math.min(PULL_THRESHOLD, dy * 0.6);
+/** Furthest the pull disc travels below the header. */
+export const DISC_MAX = 56;
+/** Where the disc rests while a sync runs. */
+export const DISC_REST = 40;
+
+/** Pull disc travel for a finger travel, damped and capped. */
+export function discTravel(dy: number): number {
+  return dy <= 0 ? 0 : Math.min(DISC_MAX, dy * 0.6);
+}
+
+/** How much of the ring is drawn, 0 to 1. */
+export function pullProgress(dy: number): number {
+  return Math.min(1, Math.max(0, dy / PULL_THRESHOLD));
+}
+
+/** True only on the move that crosses `line` going down the screen, so a tick fires once per crossing. */
+export function crossedUp(prev: number, next: number, line: number): boolean {
+  return prev < line && next >= line;
+}
+
+/** The scrim behind a dragged sheet fades out over 240px, half way at the close line. */
+export function sheetScrimOpacity(dy: number): number {
+  return Math.max(0, 1 - dy / 240);
+}
+
+/** GitHub's rate limit holds until `resetAt`, and the server skips the poll until then. */
+export function rateLimited(stale: { kind: string; resetAt?: string } | undefined, now: number): boolean {
+  if (stale?.kind !== 'ratelimit' || !stale.resetAt) return false;
+  const reset = Date.parse(stale.resetAt);
+  return Number.isFinite(reset) && reset > now;
 }
 
 /** Next file after `from` that is not viewed, wrapping to the start. Undefined when all are viewed. */

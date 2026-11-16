@@ -293,11 +293,13 @@ export function App() {
     };
   }, [detail.data, selected]);
 
+  /** Resolves false when the sync failed, which the phone's pull disc shows. */
   const refresh = useCallback(() => {
-    if (limited) return;
-    inbox.reload(true);
+    if (limited) return Promise.resolve(false);
+    const ok = inbox.reload(true);
     detail.reload();
     diff.reload();
+    return ok;
   }, [limited, inbox, detail, diff]);
 
   // Keyboard focus starts on the inbox list.
