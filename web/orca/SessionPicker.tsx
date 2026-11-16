@@ -16,7 +16,18 @@ interface Props {
   onClose: () => void;
 }
 
-function Row({ s, focused, hint, onHover, onPick }: { s: SessionView; focused: boolean; hint: string; onHover: () => void; onPick: () => void }) {
+interface RowProps {
+  s: SessionView;
+  focused: boolean;
+  hint: string;
+  /** A radio in place of the state glyph, for a choice inside a dialog. */
+  radio?: boolean;
+  onHover?: () => void;
+  onPick: () => void;
+}
+
+/** One session: glyph or radio, name and state, then the reason and the hint. */
+export function Row({ s, focused, hint, radio, onHover, onPick }: RowProps) {
   return (
     <div
       role="option"
@@ -26,15 +37,19 @@ function Row({ s, focused, hint, onHover, onPick }: { s: SessionView; focused: b
       onClick={onPick}
     >
       <span className="picker-row-line1">
-        <span className={`orca-state-glyph orca-state-${s.state}`}>
-          <StateGlyph state={s.state} size={14} />
-        </span>
+        {radio ? (
+          <span className={`picker-radio${focused ? ' is-on' : ''}`} aria-hidden="true" />
+        ) : (
+          <span className={`orca-state-glyph orca-state-${s.state}`}>
+            <StateGlyph state={s.state} size={14} />
+          </span>
+        )}
         <span className="mono orca-picker-name">{s.name}</span>
         <span className={`orca-word orca-state-${s.state}`}>{STATE_WORD[s.state]}</span>
       </span>
       <span className="picker-row-line2 muted">
         <span className="orca-reason">{s.reason}</span>
-        {focused || hint === 'Send once' ? <span className="picker-act">{hint}</span> : null}
+        {hint && (focused || hint === 'Send once') ? <span className="picker-act">{hint}</span> : null}
       </span>
     </div>
   );

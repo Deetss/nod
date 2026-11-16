@@ -9,7 +9,7 @@ import {
 import { ActionDialog, HelpSheet } from './Dialogs';
 import { screenPeople } from './mentions/mention-logic';
 import { PairDialog } from './PairDialog';
-import { ACTIVITY_HELP_KEYS, FOOTER_FINDINGS, issueHelpKeys, type KeyDef } from './keys';
+import { ACTIVITY_HELP_KEYS, FOOTER_FINDINGS, FOOTER_FINDINGS_NARROW, issueHelpKeys, type KeyDef } from './keys';
 import { bot, isFirstRun, loadedSettings } from './org-settings';
 import { SettingsDialog } from './settings/SettingsDialog';
 import type { SectionId } from './settings/form';
@@ -986,7 +986,7 @@ export function App() {
         narrow={narrow}
         view={listView}
         extra={listView === 'issues' ? orcaHints : undefined}
-        replace={listView === 'issues' ? footerKeys : findingFocus ? FOOTER_FINDINGS : undefined}
+        replace={listView === 'issues' ? footerKeys : findingFocus ? (narrow ? FOOTER_FINDINGS_NARROW : FOOTER_FINDINGS) : undefined}
       />
       {action && dialogPr && d ? (
         <ActionDialog

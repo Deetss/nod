@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CloseReason, IssueLabel, RepoMeta } from '../../shared/issue-types';
 import type { BulkFailure } from '../../shared/bulk';
-import { DEFAULT_AGENT, dispatchPrompt, worktreeName, type OrcaDispatchRequest } from '../../shared/orca';
-import { ModelFields, refreshOrcaModels, useModelChoice, useOrcaModels } from '../orca/ModelFields';
+import { dispatchPrompt, worktreeName, type OrcaDispatchRequest } from '../../shared/orca';
+import { DispatchFields, useDispatchFields } from '../orca/DispatchFields';
 import { bot } from '../org-settings';
 import { Btn, KeyCap } from '../ui';
 import { useFocusTrap } from '../useFocusTrap';
@@ -342,16 +342,7 @@ interface DispatchDialogProps {
 
 export function DispatchDialog(p: DispatchDialogProps) {
   const { repo, number, title, url } = p.issue;
-  const [agent, setAgent] = useState(p.agents.includes(DEFAULT_AGENT) ? DEFAULT_AGENT : (p.agents[0] ?? DEFAULT_AGENT));
-  const models = useOrcaModels();
-  const agentTouched = useRef(false);
-  // Start on the agent last dispatched with, unless the user already picked one.
-  useEffect(() => {
-    const last = models?.lastAgent;
-    if (last && !agentTouched.current && p.agents.includes(last)) setAgent(last);
-  }, [models?.lastAgent, p.agents]);
-  const m = useModelChoice(agent, models);
-  const [name, setName] = useState(() => p.pr?.name ?? worktreeName(number, title));
+  const f = useDispatchFields(p.agents, p.pr?.name ?? worktreeName(number, title));
   const [baseBranch, setBaseBranch] = useState('');
   const [prompt, setPrompt] = useState(() => p.pr?.prompt ?? dispatchPrompt(repo, number, title, url));
   const confirm = useRef<HTMLButtonElement>(null);
@@ -359,16 +350,13 @@ export function DispatchDialog(p: DispatchDialogProps) {
   const trap = useFocusTrap();
 
   const base = baseBranch.trim();
-  const nameOk = /^[a-z0-9][a-z0-9-]{0,60}$/.test(name);
   const baseOk = base === '' || /^[A-Za-z0-9._/-]{1,100}$/.test(base);
   const promptOk = prompt.trim() !== '' && prompt.length <= 4000;
-  const ready = nameOk && baseOk && promptOk && m.choice.valid && !p.busy;
+  const ready = f.valid && baseOk && promptOk && !p.busy;
   const go = () => {
     if (!ready) return;
-    const model = { model: m.choice.model, ...(m.choice.effort ? { effort: m.choice.effort } : {}) };
-    refreshOrcaModels();
-    if (p.pr) p.onConfirm({ agent, name, baseBranch: p.pr.headRef, prompt, pr: true, ...model });
-    else p.onConfirm({ agent, name, ...(base ? { baseBranch: base } : {}), prompt, ...model });
+    if (p.pr) p.onConfirm({ ...f.request(), baseBranch: p.pr.headRef, prompt, pr: true });
+    else p.onConfirm({ ...f.request(), ...(base ? { baseBranch: base } : {}), prompt });
   };
 
   return (
@@ -394,29 +382,7 @@ export function DispatchDialog(p: DispatchDialogProps) {
             {repoLabel(repo)} #{number}
           </span>
         </div>
-        <label className="field-label" htmlFor="dp-agent">
-          Agent
-        </label>
-        <select
-          id="dp-agent"
-          value={agent}
-          onChange={(e) => {
-            agentTouched.current = true;
-            setAgent(e.target.value);
-          }}
-        >
-          {p.agents.map((a) => (
-            <option key={a} value={a}>
-              {a}
-            </option>
-          ))}
-        </select>
-        <ModelFields agent={agent} m={m} />
-        <label className="field-label" htmlFor="dp-name">
-          Worktree name
-        </label>
-        <input id="dp-name" value={name} aria-invalid={!nameOk} onChange={(e) => setName(e.target.value)} />
-        {nameOk ? null : <span className="muted small">Lower-case letters, digits and dashes, up to 61 characters.</span>}
+        <DispatchFields f={f} agents={p.agents} />
         {p.pr ? (
           <>
             <label className="field-label" htmlFor="dp-head">

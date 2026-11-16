@@ -7,6 +7,7 @@
   --bgColor-muted: #151b23;
   --bgColor-inset: #010409;
   --bgColor-neutral-muted: #656c7633;
+  --bgColor-neutral-emphasis: #656c76;
   --bgColor-accent-muted: #388bfd1a;
   --bgColor-accent-emphasis: #1f6feb;
   --bgColor-success-muted: #2ea04326;
@@ -59,6 +60,7 @@
   --bgColor-muted: #f6f8fa;
   --bgColor-inset: #f6f8fa;
   --bgColor-neutral-muted: #818b981f;
+  --bgColor-neutral-emphasis: #59636e;
   --bgColor-accent-muted: #ddf4ff;
   --bgColor-accent-emphasis: #0969da;
   --bgColor-success-muted: #dafbe1;

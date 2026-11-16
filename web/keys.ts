@@ -33,6 +33,7 @@ export const HELP_KEYS: KeyDef[] = [
   { keys: 'F', label: 'fix failing checks' },
   { keys: 'b', label: 'hand finding to the bot (on a finding card)' },
   { keys: 'H', label: 'hand all findings to the bot' },
+  { keys: 'S', label: 'dispatch all findings to Orca (in Issues, S is start / stop work)' },
   { keys: 'O', label: 'open on GitHub' },
   { keys: 'Y', label: 'copy link' },
   { keys: 's', label: 'send message to Orca session, or dispatch a finding (in Issues, s is status)' },
@@ -96,8 +97,11 @@ export const FOOTER_FINDINGS: KeyDef[] = [
   { keys: 's', label: 'dispatch' },
   { keys: 'q', label: 'reply' },
   { keys: 'x', label: 'resolve' },
-  { keys: 'H', label: 'hand all' },
+  { keys: 'H S', label: 'hand all / dispatch all' },
 ];
+
+/** The finding footer at the narrow width, where the last pair shortens to `all`. */
+export const FOOTER_FINDINGS_NARROW: KeyDef[] = FOOTER_FINDINGS.map((k) => (k.keys === 'H S' ? { ...k, label: 'all' } : k));
 
 export const FOOTER_NARROW:KeyDef[] = [
   { keys: 'j/k', label: 'PR' },

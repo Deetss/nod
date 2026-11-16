@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   bannerOf,
+  dispatchAllOf,
+  dispatchAllText,
   dispatchText,
+  showDispatchAll,
   groupThreads,
   handBody,
   handStateOf,
@@ -13,7 +16,8 @@ import {
   type ThreadGroups,
 } from '../shared/findings';
 import type { ThreadItem } from '../shared/fix-comments';
-import type { SendResult } from '../shared/orca-sessions';
+import type { OrcaDispatchRequest } from '../shared/orca';
+import { SEND_MAX, type SendResult, type SessionView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
 import { bot, reviewer } from './org-settings';
@@ -23,7 +27,7 @@ export type Step =
   | { s: 'idle' }
   | { s: 'busy' }
   | { s: 'done'; at: number; note?: string; /** The note names a new worktree, not a session. */ worktree?: boolean }
-  | { s: 'failed'; message: string };
+  | { s: 'failed'; message: string; /** Retry reopens Dispatch all with the same ticks and text. */ all?: boolean };
 
 const IDLE: Step = { s: 'idle' };
 
@@ -37,10 +41,49 @@ export interface Cell {
 
 const EMPTY: Cell = { hand: IDLE, dispatch: IDLE, resolve: IDLE, reply: { open: false, text: '', step: IDLE } };
 
+/** Where Dispatch all can go for this PR: the one linked session, a choice of sessions, or a new worktree. */
+export interface DispatchOffer {
+  related: readonly SessionView[];
+  possible: readonly SessionView[];
+  /** The one linked session, sent to without asking. */
+  single?: SessionView;
+  agents: readonly string[];
+  headRef: string;
+}
+
+/** The target Dispatch all confirmed. `remember` saves a related session as this PR's choice. */
+export type DispatchTarget =
+  | { kind: 'session'; session: SessionView; remember?: boolean }
+  | { kind: 'worktree'; request: Omit<OrcaDispatchRequest, 'repo' | 'number'> };
+
+/** A send names its session and Orca's status; a dispatch names its new worktree. */
+export type SendAllResult = { name: string; status: SendResult['status'] } | { name: string; worktree: true };
+
 /** What the Orca Send flow offers the findings. Absent when Orca or the repo is not available. */
 export interface FindingSender {
   /** Opens the Send flow with this text. False when no session could take it. `where` is the `file:line` the phone sheet shows. */
   send: (text: string, tag: string, where?: string) => boolean;
+  offer: DispatchOffer;
+  /** One send or one dispatch carrying every ticked finding. Rejects when the request fails. */
+  sendAll: (text: string, target: DispatchTarget) => Promise<SendAllResult>;
+  /** Phone: opens the session picker sheet and hands back the pick. `once` is a possible session. */
+  pick: (then: (s: SessionView, once: boolean) => void) => void;
+}
+
+/** The Dispatch all confirm while open. `edited` stops ticks from rebuilding the prompt. */
+export interface DispatchAllView {
+  repo: string;
+  number: number;
+  rows: BulkRow[];
+  text: string;
+  edited: boolean;
+  /** Ticks changed after an edit, so the prompt no longer matches them. */
+  stale: boolean;
+  busy: boolean;
+  error: string | undefined;
+  offer: DispatchOffer;
+  /** Phone: the session the picker sheet named. */
+  picked: { session: SessionView; once: boolean } | undefined;
 }
 
 export interface BulkRow {
@@ -71,6 +114,19 @@ export interface FindingControls {
   closeBulk: () => void;
   toggleBulk: (id: string) => void;
   confirmBulk: () => void;
+  /** Dispatch all shows: blocked, Orca can take a message, and 2 or more findings are open. */
+  canDispatchAll: boolean;
+  /** Findings that went to Orca from this page, for the banner. */
+  sentCount: number;
+  dispatchAll: DispatchAllView | undefined;
+  openDispatchAll: () => void;
+  toggleDispatchAll: (id: string) => void;
+  editDispatchAll: (text: string) => void;
+  rebuildDispatchAll: () => void;
+  closeDispatchAll: () => void;
+  confirmDispatchAll: (target: DispatchTarget) => void;
+  /** A card's Retry after a Dispatch all that may not have landed. */
+  retryDispatchAll: () => void;
   /** A Send flow result for a dispatched finding. */
   onSendResult: (tag: string, r: SendResult & { session: { name: string } }) => void;
   /** A finding was dispatched to a new worktree. */
@@ -85,6 +141,19 @@ interface Options {
   sender?: FindingSender | undefined;
   notify: (ok: boolean, message: string) => void;
   onDone: () => void;
+  /** Phone: Dispatch all asks the picker sheet for a session before its own sheet opens. */
+  phone?: boolean;
+}
+
+interface AllState {
+  ids: string[];
+  checked: Set<string>;
+  text: string;
+  edited: boolean;
+  stale?: boolean;
+  busy: boolean;
+  error?: string;
+  picked?: { session: SessionView; once: boolean };
 }
 
 const msg = (e: unknown, fallback: string): string => (e instanceof Error ? e.message : fallback);
@@ -112,16 +181,21 @@ export const tagOf = (prId: string, threadId: string): string => `${prId}|${thre
 
 /** State behind the finding cards, the merge banner and the bulk confirm. `undefined` while no finding exists. */
 export function useFindings(o: Options): FindingControls | undefined {
-  const { detail, limited, sender, notify, onDone } = o;
+  const { detail, limited, sender, notify, onDone, phone = false } = o;
   const r = reviewer();
   const b = bot();
   const prId = detail?.summary.id;
   const [cells, setCells] = useState<Record<string, Cell>>({});
   const [bulk, setBulk] = useState<{ ids: string[]; busy: boolean; checked: Set<string> }>();
 
+  const [all, setAll] = useState<AllState>();
+  const [lastAll, setLastAll] = useState<{ checked: ReadonlySet<string>; text: string; edited: boolean }>();
+
   useEffect(() => {
     setCells({});
     setBulk(undefined);
+    setAll(undefined);
+    setLastAll(undefined);
   }, [prId]);
 
   const groups = useMemo(() => groupThreads(detail?.thread ?? [], r), [detail?.thread, r]);
@@ -289,10 +363,104 @@ export function useFindings(o: Options): FindingControls | undefined {
     [bulk, handable_],
   );
 
+  const eligible = useMemo(() => dispatchAllOf(groups), [groups]);
+  const banner = useMemo(() => bannerOf(groups), [groups]);
+  const canDispatchAll = writable && showDispatchAll(banner, sender !== undefined, eligible.length);
+  const textFor = useCallback(
+    (checked: ReadonlySet<string>): string =>
+      detail ? dispatchAllText(eligible.filter((f) => checked.has(f.thread.id)), detail.summary.repo, detail.summary.number) : '',
+    [detail, eligible],
+  );
+
+  const startAll = useCallback(
+    (seed?: { checked: ReadonlySet<string>; text: string; edited: boolean }) => {
+      if (!canDispatchAll || !sender) return;
+      const ids = eligible.map((f) => f.thread.id);
+      const checked = new Set(seed ? ids.filter((id) => seed.checked.has(id)) : ids);
+      const edited = seed?.edited ?? false;
+      const base: AllState = { ids, checked, text: edited && seed ? seed.text : textFor(checked), edited, busy: false };
+      const { single, related, possible } = sender.offer;
+      if (phone && !single && related.length + possible.length > 0) sender.pick((session, once) => setAll({ ...base, picked: { session, once } }));
+      else setAll(base);
+    },
+    [canDispatchAll, sender, eligible, textFor, phone],
+  );
+  const openDispatchAll = useCallback(() => startAll(), [startAll]);
+  const retryDispatchAll = useCallback(() => startAll(lastAll), [startAll, lastAll]);
+
+  const toggleDispatchAll = useCallback(
+    (id: string) =>
+      setAll((cur) => {
+        if (!cur || cur.busy) return cur;
+        const checked = new Set(cur.checked);
+        if (checked.has(id)) checked.delete(id);
+        else checked.add(id);
+        return { ...cur, checked, text: cur.edited ? cur.text : textFor(checked), stale: cur.edited };
+      }),
+    [textFor],
+  );
+  const editDispatchAll = useCallback((text: string) => setAll((cur) => (cur && !cur.busy ? { ...cur, text, edited: true } : cur)), []);
+  const rebuildDispatchAll = useCallback(
+    () => setAll((cur) => (cur && !cur.busy ? { ...cur, text: textFor(cur.checked), edited: false, stale: false } : cur)),
+    [textFor],
+  );
+  const closeDispatchAll = useCallback(() => setAll((cur) => (cur?.busy ? cur : undefined)), []);
+
+  const confirmDispatchAll = useCallback(
+    (target: DispatchTarget) => {
+      if (!all || all.busy || !sender) return;
+      const chosen = eligible.filter((f) => all.checked.has(f.thread.id));
+      if (chosen.length === 0 || all.text.trim() === '' || all.text.length > SEND_MAX) return;
+      setAll({ ...all, busy: true, error: undefined });
+      const mark = (step: Step) => chosen.forEach((f) => patch(f.thread.id, { dispatch: step }));
+      const keep = (error: string) => setAll((cur) => (cur ? { ...cur, busy: false, error } : cur));
+      const noun = `${chosen.length} finding${chosen.length === 1 ? '' : 's'}`;
+      sender
+        .sendAll(all.text, target)
+        .then((res) => {
+          const failure = 'status' in res ? sendFailure(res.status, res.name) : undefined;
+          if (failure === undefined) {
+            mark({ s: 'done', at: Date.now(), note: res.name, ...('worktree' in res ? { worktree: true } : {}) });
+            setAll(undefined);
+            notify(true, `Dispatched ${noun} to ${res.name}`);
+          } else if ('status' in res && (res.status === 'blocked' || res.status === 'not-writable')) {
+            keep(`${failure}. Your text is kept.`);
+          } else {
+            // The message may have landed, so the cards say so and Retry reopens this confirm.
+            setLastAll({ checked: all.checked, text: all.text, edited: all.edited });
+            mark({ s: 'failed', message: failure, all: true });
+            setAll(undefined);
+          }
+        })
+        .catch((e: unknown) => keep(target.kind === 'worktree' ? msg(e, 'Dispatch failed') : `Could not send: ${msg(e, 'Request failed')}. Your text is kept.`));
+    },
+    [all, sender, eligible, patch, notify],
+  );
+
+  const allView = useMemo<DispatchAllView | undefined>(
+    () =>
+      all && sender && detail
+        ? {
+            repo: detail.summary.repo,
+            number: detail.summary.number,
+            rows: eligible.filter((f) => all.ids.includes(f.thread.id)).map((f) => ({ finding: f, checked: all.checked.has(f.thread.id) })),
+            text: all.text,
+            edited: all.edited,
+            stale: all.stale === true,
+            busy: all.busy,
+            error: all.error,
+            offer: sender.offer,
+            picked: all.picked,
+          }
+        : undefined,
+    [all, sender, detail, eligible],
+  );
+  const sentCount = groups.open.filter((f) => cell(f.thread.id).dispatch.s === 'done').length;
+
   if (!has) return undefined;
   return {
     groups,
-    banner: bannerOf(groups),
+    banner,
     botOn: b.enabled,
     canDispatch: sender !== undefined,
     writable,
@@ -309,6 +477,16 @@ export function useFindings(o: Options): FindingControls | undefined {
     closeBulk,
     toggleBulk,
     confirmBulk,
+    canDispatchAll,
+    sentCount,
+    dispatchAll: allView,
+    openDispatchAll,
+    toggleDispatchAll,
+    editDispatchAll,
+    rebuildDispatchAll,
+    closeDispatchAll,
+    confirmDispatchAll,
+    retryDispatchAll,
     onSendResult,
     onDispatched,
   };
