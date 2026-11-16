@@ -62,6 +62,7 @@ import { usePhone } from './phone/usePhone';
 import { useActivity } from './useActivity';
 import { useNotifications, useNotifySettings } from './useNotifications';
 import { usePaneWidths } from './usePaneWidths';
+import { useOrcaInfo } from './orca/useOrcaInfo';
 import { useRemote } from './useRemote';
 import {
   ViewedWriter,
@@ -473,7 +474,7 @@ export function App() {
   useEffect(() => saveWrap(wrap), [wrap]);
   useEffect(() => saveHideViewed(hideViewed), [hideViewed]);
 
-  const orca = useRemote('orca', () => api.orca());
+  const orca = useOrcaInfo();
   const { controls: fix, dialogs: fixDialogs } = useFixChecks({
     detail: detail.data,
     limited,

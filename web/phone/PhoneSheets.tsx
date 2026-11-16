@@ -23,6 +23,7 @@ import { phoneFixItems, phoneFixTitle } from './phone-fix';
 import { isProjectStatus } from '../../shared/project-status';
 import { api } from '../api';
 import { loadWrap, saveWrap } from '../diff-view';
+import { useOrcaInfo } from '../orca/useOrcaInfo';
 import { useRemote } from '../useRemote';
 import { actionItems, type ActionContext, type ActionItem } from './action-items';
 import { PhoneActionSheet, PhoneConfirm } from './PhoneActionSheet';
@@ -84,7 +85,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const writes = usePhoneWrites(changed);
   const { notify } = writes;
   const prData = usePhonePr(pr, (m) => writes.notify(m, false));
-  const orca = useRemote('orca', () => api.orca());
+  const orca = useOrcaInfo();
   const findingResult = useRef<FindingControls['onSendResult']>(undefined);
   const orcaUi = useOrca({
     detail: prData.detail.data,

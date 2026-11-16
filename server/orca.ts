@@ -282,8 +282,12 @@ export class Orca {
     const bin = await this.resolve();
     if (!bin) return undefined;
     if (!this.repos || this.now() - this.reposAt > REPO_TTL_MS) {
-      this.repos = await this.mapRepos(bin);
-      this.reposAt = this.now();
+      // A failed list keeps the last good map and is retried on the next call, not cached as empty.
+      const fresh = await this.mapRepos(bin);
+      if (fresh) {
+        this.repos = fresh;
+        this.reposAt = this.now();
+      }
     }
     return this.repos;
   }
@@ -344,7 +348,8 @@ export class Orca {
     return undefined;
   }
 
-  private async mapRepos(bin: string): Promise<Map<string, string>> {
+  /** Undefined when `orca-ide repo list` fails. */
+  private async mapRepos(bin: string): Promise<Map<string, string> | undefined> {
     const map = new Map<string, string>();
     let list: RepoEntry[] = [];
     try {
@@ -352,8 +357,9 @@ export class Orca {
         result?: { repos?: RepoEntry[] };
       };
       list = parsed.result?.repos ?? [];
-    } catch {
-      return map;
+    } catch (e) {
+      this.log(`[orca] repo list failed: ${(e instanceof Error ? e.message : String(e)).slice(0, 200)}`);
+      return undefined;
     }
     for (const r of list) {
       if (typeof r.id !== 'string' || typeof r.path !== 'string') continue;
