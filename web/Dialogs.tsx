@@ -140,6 +140,35 @@ export function ActionDialog(p: ActionDialogProps) {
   );
 }
 
+/**
+ * One chip per key. `a / b` lists alternatives, separated by a slash; `g o` is a sequence of
+ * separate keys; `Ctrl+Enter` is one chord and stays one chip.
+ */
+export function KeyChips({ keys }: { keys: string }) {
+  const alternatives = keys === '/' ? ['/'] : keys.split(' / ');
+  return (
+    <span className="help-keys">
+      {alternatives.map((alt, i) => (
+        <span className="help-alt" key={i}>
+          {alt
+            .split(/\s+/)
+            .filter(Boolean)
+            .map((key, j) => (
+              <kbd className="help-key mono" key={j}>
+                {key}
+              </kbd>
+            ))}
+          {i < alternatives.length - 1 ? (
+            <span className="help-or" aria-hidden="true">
+              /
+            </span>
+          ) : null}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export function HelpSheet({ onClose, keys = HELP_KEYS }: { onClose: () => void; keys?: KeyDef[] }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -167,8 +196,8 @@ export function HelpSheet({ onClose, keys = HELP_KEYS }: { onClose: () => void; 
             <div key={i}>
               {col.map((k) => (
                 <div className="help-row" key={k.keys}>
-                  <span className="help-key mono">{k.keys}</span>
-                  <span>{k.label}</span>
+                  <KeyChips keys={k.keys} />
+                  <span className="help-label">{k.label}</span>
                 </div>
               ))}
             </div>
