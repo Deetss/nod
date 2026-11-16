@@ -26,6 +26,7 @@ import './pr-detail.css';
 import './orca.css';
 import './timeline.css';
 import './findings.css';
+import './dispatch-all.css';
 import './pair.css';
 import './mentions/mentions.css';
 import './settings.css';

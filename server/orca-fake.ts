@@ -7,6 +7,8 @@
  * but shows in the terminal, so the server confirms it from the output.
  */
 
+import { appEnv } from './env';
+
 interface FakeAgent {
   state: string;
   conversationName: string;
@@ -40,6 +42,18 @@ const WORKTREES: FakeWorktree[] = [
   { repo: 'notes', name: 'crew-aof-41', branch: 'feature/41', state: 'working', outputAgoS: 70 },
 ];
 
+/**
+ * `NOD_FIXTURE_SESSIONS` reshapes the sessions for PR #365, so every Dispatch target shows:
+ * `several` adds a second linked session (the picker), `none` unlinks it (a new worktree).
+ */
+function fixtureWorktrees(mode = appEnv('FIXTURE_SESSIONS')): FakeWorktree[] {
+  if (mode === 'none') return WORKTREES.filter((w) => w.linkedPr !== 365);
+  if (mode === 'several') {
+    return [...WORKTREES, { repo: 'orders-api', name: 'review-365', branch: 'sam-lee/review-365', linkedPr: 365, state: 'done', outputAgoS: 300 }];
+  }
+  return WORKTREES;
+}
+
 const wid = (w: FakeWorktree): string => `fixture-${w.repo}::/fixture/${w.name}`;
 const pane = (w: FakeWorktree): string => `tab-${w.name}:leaf-${w.name}`;
 const handle = (w: FakeWorktree): string => `term_fixture_${w.name}`;
@@ -58,6 +72,7 @@ export class OrcaFake {
   /** Output lines per handle, so `terminal read --cursor` can show what arrived. */
   private readonly output = new Map<string, string[]>();
   private n = 0;
+  private readonly worktrees = fixtureWorktrees();
 
   constructor(private readonly now: () => number = Date.now) {}
 
@@ -77,9 +92,9 @@ export class OrcaFake {
   private ps() {
     return {
       result: {
-        totalCount: WORKTREES.length,
+        totalCount: this.worktrees.length,
         truncated: false,
-        worktrees: WORKTREES.map((w) => ({
+        worktrees: this.worktrees.map((w) => ({
           worktreeId: wid(w),
           repoId: `fixture-${w.repo}`,
           path: `/fixture/${w.name}`,
@@ -105,9 +120,9 @@ export class OrcaFake {
   private terminals() {
     return {
       result: {
-        totalCount: WORKTREES.length,
+        totalCount: this.worktrees.length,
         truncated: false,
-        terminals: WORKTREES.map((w) => ({
+        terminals: this.worktrees.map((w) => ({
           handle: handle(w),
           worktreeId: wid(w),
           tabId: `tab-${w.name}`,

@@ -1,10 +1,12 @@
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { commentPlain, firstLine, type Finding } from '../shared/findings';
 import type { ThreadItem } from '../shared/fix-comments';
+import { DispatchAllDialog, type DispatchAllProps } from './DispatchAll';
 import { BulkDialog, FindingBanner, FindingBtn, SeverityBadge, StatusLine } from './FindingParts';
 import { setFindingFocus } from './finding-focus';
 import { Avatar } from './issues/parts';
 import { bot } from './org-settings';
+import { PhoneDispatchAll } from './phone/PhoneDispatchAll';
 import { PrThreadRow } from './PrThread';
 import { TimelineList, useShown } from './Timeline';
 import { CheckIcon } from './ui';
@@ -60,7 +62,7 @@ function Statuses({ c, f, cell }: { c: FindingControls; f: Finding; cell: Cell }
   return (
     <>
       {cell.hand.s === 'failed' ? <StatusLine tone="err" retry={() => c.hand(f)} retryKey="b">{cell.hand.message}</StatusLine> : null}
-      {cell.dispatch.s === 'failed' ? <StatusLine tone="err" retry={() => c.dispatch(f)} retryKey="s">{cell.dispatch.message}</StatusLine> : null}
+      {cell.dispatch.s === 'failed' ? <StatusLine tone="err" retry={() => (cell.dispatch.s === 'failed' && cell.dispatch.all ? c.retryDispatchAll() : c.dispatch(f))} retryKey="s">{cell.dispatch.message}</StatusLine> : null}
       {handedAt !== undefined ? (
         <StatusLine tone="wait">{`Handed to ${b.name} ${clock(handedAt)}, waiting for reply`}</StatusLine>
       ) : null}
@@ -187,6 +189,20 @@ function ResolvedRow({ c, t, severity, phone }: CardProps & { t: ThreadItem; sev
   );
 }
 
+const allProps = (c: FindingControls, v: NonNullable<FindingControls['dispatchAll']>): DispatchAllProps => ({
+  v,
+  onToggle: c.toggleDispatchAll,
+  onEdit: c.editDispatchAll,
+  onRebuild: c.rebuildDispatchAll,
+  onCancel: c.closeDispatchAll,
+  onConfirm: c.confirmDispatchAll,
+});
+
+/** The Dispatch all confirm: a dialog on desktop, a bottom sheet on the phone. */
+function DispatchAll({ phone, ...p }: DispatchAllProps & { phone: boolean }) {
+  return phone ? <PhoneDispatchAll {...p} /> : <DispatchAllDialog {...p} />;
+}
+
 /** Findings first (blocker, then major), then people's threads, then resolved rows, then reviews and comments. */
 export function FindingList({ c, phone = false }: CardProps & { phone?: boolean }) {
   const shown = useShown();
@@ -205,6 +221,12 @@ export function FindingList({ c, phone = false }: CardProps & { phone?: boolean 
       e.preventDefault();
       e.stopPropagation();
       c.openBulk();
+      return;
+    }
+    if (e.key === 'S' && c.canDispatchAll) {
+      e.preventDefault();
+      e.stopPropagation();
+      c.openDispatchAll();
       return;
     }
     const card = (e.target as HTMLElement).closest<HTMLElement>('[data-fcard]');
@@ -241,7 +263,17 @@ export function FindingList({ c, phone = false }: CardProps & { phone?: boolean 
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFindingFocus(false);
       }}
     >
-      <FindingBanner banner={banner} botOn={c.botOn} canHand={handable && c.writable} cap={phone ? undefined : 'H'} onHandAll={c.openBulk} />
+      <FindingBanner
+        banner={banner}
+        botOn={c.botOn}
+        canHand={handable && c.writable}
+        cap={phone ? undefined : 'H'}
+        onHandAll={c.openBulk}
+        canDispatch={c.canDispatchAll}
+        onDispatchAll={c.openDispatchAll}
+        dispatchCap={phone ? undefined : 'S'}
+        sent={c.sentCount}
+      />
       <div className="finding-list" ref={list}>
         {groups.open.map((f) => (
           <FindingCard key={f.thread.id} c={c} f={f} phone={phone} />
@@ -265,6 +297,7 @@ export function FindingList({ c, phone = false }: CardProps & { phone?: boolean 
       {c.bulk ? (
         <BulkDialog rows={c.bulk.rows} busy={c.bulk.busy} phone={phone} onToggle={c.toggleBulk} onCancel={c.closeBulk} onConfirm={c.confirmBulk} />
       ) : null}
+      {c.dispatchAll ? <DispatchAll phone={phone} {...allProps(c, c.dispatchAll)} /> : null}
     </div>
   );
 }

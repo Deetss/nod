@@ -76,26 +76,98 @@ interface BannerProps {
   /** Key cap on the button, desktop only. */
   cap?: string;
   onHandAll: () => void;
+  /** Dispatch all shows (`showDispatchAll`). */
+  canDispatch?: boolean;
+  onDispatchAll?: () => void;
+  dispatchCap?: string;
+  /** Findings sent to Orca from this page. */
+  sent?: number;
 }
 
-/** Pinned above the findings: unresolved count, Merge blocked or Ready to merge, and Hand all. */
-export function FindingBanner({ banner, botOn, canHand, cap, onHandAll }: BannerProps) {
-  const label = `Hand all to ${bot().name}`;
+/** Pinned above the findings: unresolved count, Merge blocked or Ready to merge, Hand all and Dispatch all. */
+export function FindingBanner({ banner, botOn, canHand, cap, onHandAll, canDispatch, onDispatchAll, dispatchCap, sent = 0 }: BannerProps) {
+  const hand =
+    banner.blocked && botOn && canHand ? (
+      <button type="button" className="btn finding-btn finding-banner-btn" onClick={onHandAll}>
+        <span className="finding-banner-label">{`Hand all to ${bot().name}`}</span>
+        {cap ? <KeyCap>{cap}</KeyCap> : null}
+      </button>
+    ) : null;
+  const dispatch =
+    banner.blocked && canDispatch && onDispatchAll ? (
+      <button type="button" className="btn finding-btn finding-banner-btn" onClick={onDispatchAll}>
+        <span className="finding-banner-label">Dispatch all</span>
+        {dispatchCap ? <KeyCap>{dispatchCap}</KeyCap> : null}
+      </button>
+    ) : null;
+  const both = hand !== null && dispatch !== null;
   return (
-    <div className={`finding-banner ${banner.blocked ? 'is-blocked' : 'is-ready'}`} role="status">
+    <div className={`finding-banner ${banner.blocked ? 'is-blocked' : 'is-ready'}${both ? ' has-actions' : ''}`} role="status">
       <span className="finding-banner-icon">{banner.blocked ? <OctagonIcon size={16} /> : <CheckIcon size={16} />}</span>
       <span className="finding-banner-text">
         <strong>{banner.blocked ? 'Merge blocked' : 'Ready to merge'}</strong>
-        <span className="finding-banner-sub">{banner.unresolved} unresolved</span>
+        <span className="finding-banner-sub">
+          {banner.unresolved} unresolved{sent > 0 ? ` · ${sent} sent to Orca` : ''}
+        </span>
       </span>
-      {banner.blocked && botOn && canHand ? (
-        <button type="button" className="btn finding-btn finding-banner-btn" onClick={onHandAll}>
-          {label}
-          {cap ? <KeyCap>{cap}</KeyCap> : null}
-        </button>
-      ) : null}
-      {banner.blocked && !botOn ? <span className="finding-banner-sub finding-banner-note">No bot set</span> : null}
+      {both ? (
+        <span className="finding-banner-actions">
+          {hand}
+          {dispatch}
+        </span>
+      ) : (
+        <>
+          {hand}
+          {banner.blocked && !botOn ? <span className="finding-banner-sub finding-banner-note">No bot set</span> : null}
+          {dispatch}
+        </>
+      )}
     </div>
+  );
+}
+
+interface ShellProps {
+  title: string;
+  /** Extra classes on the dialog. */
+  className: string;
+  busy: boolean;
+  phone?: boolean;
+  /** Ctrl+Enter confirms from anywhere; otherwise Enter outside buttons and inputs does. */
+  ctrlEnter?: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+  children: ReactNode;
+}
+
+/** The bulk confirm's shell: scrim, focus trap, Esc to cancel (not while busy) and the confirm key. */
+export function BulkShell({ title, className, busy, phone, ctrlEnter, onCancel, onConfirm, children }: ShellProps) {
+  const trap = useFocusTrap();
+  return createPortal(
+    <div className={`scrim${phone ? ' ph-scrim finding-bulk-scrim' : ''}`} onMouseDown={() => !busy && onCancel()}>
+      <div
+        ref={trap}
+        tabIndex={-1}
+        className={`dialog finding-bulk ${className}${phone ? ' is-phone' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        onMouseDown={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape' && !busy) {
+            e.stopPropagation();
+            onCancel();
+          } else if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+            const plain = !(e.target instanceof HTMLButtonElement || e.target instanceof HTMLInputElement);
+            if (ctrlEnter ? !(e.ctrlKey || e.metaKey) : !plain) return;
+            e.preventDefault();
+            onConfirm();
+          }
+        }}
+      >
+        {children}
+      </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -112,30 +184,12 @@ interface BulkProps {
 export function BulkDialog({ rows, busy, phone, onToggle, onCancel, onConfirm }: BulkProps) {
   const b = bot();
   const n = rows.filter((r) => r.checked).length;
-  const trap = useFocusTrap();
   const title = bulkTitle(n, b.name);
   const go = (): void => {
     if (!busy && n > 0) onConfirm();
   };
-  const sheet: ReactNode = (
-    <div
-      ref={trap}
-      tabIndex={-1}
-      className={`dialog fix-dialog finding-bulk${phone ? ' is-phone' : ''}`}
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
-      onMouseDown={(e) => e.stopPropagation()}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape' && !busy) {
-          e.stopPropagation();
-          onCancel();
-        } else if (e.key === 'Enter' && !e.nativeEvent.isComposing && !(e.target instanceof HTMLButtonElement || e.target instanceof HTMLInputElement)) {
-          e.preventDefault();
-          go();
-        }
-      }}
-    >
+  return (
+    <BulkShell title={title} className="fix-dialog" busy={busy} phone={phone} onCancel={onCancel} onConfirm={go}>
       <div className="dialog-head">
         <h2>{title}</h2>
       </div>
@@ -172,13 +226,7 @@ export function BulkDialog({ rows, busy, phone, onToggle, onCancel, onConfirm }:
           {phone ? null : <KeyCap>Enter</KeyCap>}
         </button>
       </div>
-    </div>
-  );
-  return createPortal(
-    <div className={`scrim${phone ? ' ph-scrim finding-bulk-scrim' : ''}`} onMouseDown={() => !busy && onCancel()}>
-      {sheet}
-    </div>,
-    document.body,
+    </BulkShell>
   );
 }
 

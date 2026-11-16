@@ -93,6 +93,8 @@ export function useOrca(o: Options): OrcaController {
   }>();
   /** A finding waiting for the picker to name its session. */
   const [pending, setPending] = useState<{ text: string; tag: string; where?: string }>();
+  /** Dispatch all on the phone, waiting for the picker sheet to name its session. */
+  const [pickThen, setPickThen] = useState<{ then: (s: SessionView, once: boolean) => void }>();
   const [dispatch, setDispatch] = useState<{ prId: string; text: string; name?: string; tag?: string }>();
   const [dispatchBusy, setDispatchBusy] = useState(false);
   const [dispatchError, setDispatchError] = useState<string>();
@@ -142,6 +144,7 @@ export function useOrca(o: Options): OrcaController {
     setDialog(undefined);
     setDispatch(undefined);
     setPending(undefined);
+    setPickThen(undefined);
   }, [prId]);
 
   const single = sessions?.related.length === 1 ? sessions.related[0] : undefined;
@@ -349,17 +352,22 @@ export function useOrca(o: Options): OrcaController {
           title={pending && pickerSessions.related.length === 0 ? `No Orca session linked to PR #${summary.number}` : undefined}
           onChoose={(s) => {
             choose(picker, s);
-            if (pending) openSend(s, pending.text, pending.tag, pending.where);
+            if (pickThen) pickThen.then(s, false);
+            else if (pending) openSend(s, pending.text, pending.tag, pending.where);
             setPending(undefined);
+            setPickThen(undefined);
           }}
           onSendOnce={(s) => {
             setPicker(undefined);
-            openSend(s, pending?.text, pending?.tag, pending?.where, true);
+            if (pickThen) pickThen.then(s, true);
+            else openSend(s, pending?.text, pending?.tag, pending?.where, true);
             setPending(undefined);
+            setPickThen(undefined);
           }}
           onClose={() => {
             setPicker(undefined);
             setPending(undefined);
+            setPickThen(undefined);
           }}
         />
       ) : null}
@@ -441,6 +449,31 @@ export function useOrca(o: Options): OrcaController {
           // The phone sheet uses the PR worktree name from the spec.
           setDispatch({ prId, text, tag, ...(phone ? {} : { name: `pr-${summary?.number ?? 0}-finding` }) });
           return true;
+        },
+        offer: {
+          related: sessions?.related ?? [],
+          possible: sessions?.possible ?? [],
+          ...(single ? { single } : {}),
+          agents: orca?.agents ?? [],
+          headRef: detail?.headRef ?? '',
+        },
+        sendAll: async (text, target) => {
+          if (!summary) throw new Error('No pull request');
+          if (target.kind === 'worktree') {
+            const res = await api.orcaDispatch({ repo: summary.repo, number: summary.number, ...target.request });
+            setOutcome(undefined);
+            return { name: res.worktree, worktree: true };
+          }
+          if (target.remember) choose(summary.id, target.session);
+          const r = await api.orcaSend(target.session.id, text);
+          setOutcome({ ...r, prId: summary.id, session: target.session, text });
+          reload();
+          return { name: target.session.name, status: r.status };
+        },
+        pick: (then) => {
+          if (!prId) return;
+          setPickThen({ then });
+          setPicker(prId);
         },
       }
     : undefined;

@@ -92,14 +92,56 @@ interface DispatchProps {
   onCancel: () => void;
 }
 
+/** Agent and worktree name for a phone dispatch. The model is the one remembered for the agent. */
+export function usePhoneDispatchFields(agents: readonly string[], initialName: string) {
+  const [agent, setAgent] = useState(agents.includes(DEFAULT_AGENT) ? DEFAULT_AGENT : (agents[0] ?? DEFAULT_AGENT));
+  const [name, setName] = useState(initialName);
+  return { agent, setAgent, name, setName, nameOk: NAME_RE.test(name) };
+}
+
+/** Agent, Worktree name, and the locked Head branch with its note. */
+export function PhoneDispatchFields({ d, agents, headRef, busy }: { d: ReturnType<typeof usePhoneDispatchFields>; agents: readonly string[]; headRef: string; busy: boolean }) {
+  return (
+    <>
+      <label className="ph-fix-label" htmlFor="ph-fix-agent">
+        Agent
+      </label>
+      <select id="ph-fix-agent" className="ph-fix-field ph-fit-select" value={d.agent} disabled={busy} onChange={(e) => d.setAgent(e.target.value)}>
+        {agents.map((a) => (
+          <option key={a} value={a}>
+            {a}
+          </option>
+        ))}
+      </select>
+      <label className="ph-fix-label" htmlFor="ph-fix-name">
+        Worktree name
+      </label>
+      <input
+        id="ph-fix-name"
+        className="ph-fix-field ph-fit-input ph-mono"
+        value={d.name}
+        readOnly={busy}
+        autoCapitalize="off"
+        autoCorrect="off"
+        spellCheck={false}
+        aria-invalid={!d.nameOk}
+        onChange={(e) => d.setName(e.target.value)}
+      />
+      <label className="ph-fix-label" htmlFor="ph-fix-head">
+        Head branch
+      </label>
+      <input id="ph-fix-head" className="ph-fix-field ph-fit-input ph-fix-locked ph-mono" value={headRef} readOnly />
+      <p className="ph-fit-note ph-fit-note-up">Locked. The agent works on the PR head and pushes its fix there.</p>
+    </>
+  );
+}
+
 /** The Orca dispatch bottom sheet in PR mode: the head branch is locked. Fields lock while dispatching. */
 export function PhoneFixDispatch(p: DispatchProps) {
   const max = p.max ?? COMMENT_MAX;
-  const [agent, setAgent] = useState(p.agents.includes(DEFAULT_AGENT) ? DEFAULT_AGENT : (p.agents[0] ?? DEFAULT_AGENT));
-  const [name, setName] = useState(p.name);
+  const d = usePhoneDispatchFields(p.agents, p.name);
   const [prompt, setPrompt] = useState(p.prompt);
 
-  const nameOk = NAME_RE.test(name);
   const promptOk = prompt.trim() !== '' && prompt.length <= max;
   const failed = p.error !== undefined && !p.busy;
 
@@ -114,42 +156,14 @@ export function PhoneFixDispatch(p: DispatchProps) {
           busy={p.busy}
           primary={failed ? 'Retry' : 'Dispatch'}
           busyLabel="Dispatching..."
-          disabled={!nameOk || !promptOk}
+          disabled={!d.nameOk || !promptOk}
           onCancel={p.onCancel}
-          onPrimary={() => p.onDispatch({ agent, name, baseBranch: p.headRef, prompt, pr: true })}
+          onPrimary={() => p.onDispatch({ agent: d.agent, name: d.name, baseBranch: p.headRef, prompt, pr: true })}
         />
       }
     >
       <div className={`ph-fit-form is-tall${p.busy ? ' is-locked' : ''}`}>
-        <label className="ph-fix-label" htmlFor="ph-fix-agent">
-          Agent
-        </label>
-        <select id="ph-fix-agent" className="ph-fix-field ph-fit-select" value={agent} disabled={p.busy} onChange={(e) => setAgent(e.target.value)}>
-          {p.agents.map((a) => (
-            <option key={a} value={a}>
-              {a}
-            </option>
-          ))}
-        </select>
-        <label className="ph-fix-label" htmlFor="ph-fix-name">
-          Worktree name
-        </label>
-        <input
-          id="ph-fix-name"
-          className="ph-fix-field ph-fit-input ph-mono"
-          value={name}
-          readOnly={p.busy}
-          autoCapitalize="off"
-          autoCorrect="off"
-          spellCheck={false}
-          aria-invalid={!nameOk}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label className="ph-fix-label" htmlFor="ph-fix-head">
-          Head branch
-        </label>
-        <input id="ph-fix-head" className="ph-fix-field ph-fit-input ph-fix-locked ph-mono" value={p.headRef} readOnly />
-        <p className="ph-fit-note ph-fit-note-up">Locked. The agent works on the PR head and pushes its fix there.</p>
+        <PhoneDispatchFields d={d} agents={p.agents} headRef={p.headRef} busy={p.busy} />
         <label className="ph-fix-label" htmlFor="ph-fix-prompt">
           Prompt
         </label>

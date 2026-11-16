@@ -106,6 +106,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     sender: orcaUi.findingSender,
     notify: (ok, message) => writes.notify(message, ok),
     onDone: prData.reload,
+    phone: true,
   });
   const issueDetail = useRemote(issue ? `issue:${issue.id}` : null, () =>
     api.issueDetail(issue?.repo ?? '', issue?.number ?? 0),
