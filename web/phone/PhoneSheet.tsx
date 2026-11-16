@@ -1,6 +1,7 @@
-import { useRef, useState, type PointerEvent, type ReactNode, type RefObject } from 'react';
-import { CloseIcon, MoreIcon } from './PhoneIcons';
+import { useContext, useEffect, useRef, useState, type PointerEvent, type ReactNode, type RefObject } from 'react';
+import { BackIcon, MoreIcon } from './PhoneIcons';
 import { shouldCloseSwipe } from './phone-logic';
+import { SheetHoldContext } from './useSheetStack';
 import { useFocusTrap } from '../useFocusTrap';
 
 export interface SheetTarget {
@@ -27,9 +28,9 @@ interface PhoneSheetProps {
   covered?: boolean;
   /** Visual viewport height while the keyboard is up, so the sheet ends on top of it. */
   keyboardHeight?: number;
-  /** Content-height bottom sheet over a scrim: Close on the right, height set by its content. */
+  /** Content-height bottom sheet over a scrim, height set by its content. */
   fit?: boolean;
-  /** Disables the Close button, such as while a request runs. */
+  /** A request is running: Back, the swipe, Esc and the Android back gesture wait. */
   closeDisabled?: boolean;
   children: ReactNode;
 }
@@ -41,9 +42,14 @@ interface PhoneSheetProps {
 export function PhoneSheet(p: PhoneSheetProps) {
   const [dy, setDy] = useState(0);
   const drag = useRef<{ y: number; t: number } | undefined>(undefined);
+  const hold = useContext(SheetHoldContext);
+  useEffect(() => (p.closeDisabled && hold ? hold() : undefined), [p.closeDisabled, hold]);
+  const close = () => {
+    if (!p.closeDisabled) p.onClose();
+  };
   // A sheet covered by another one leaves Esc to the sheet on top.
   const trap = useFocusTrap(() => {
-    if (!p.covered) p.onClose();
+    if (!p.covered) close();
   });
 
   const down = (e: PointerEvent) => {
@@ -60,14 +66,8 @@ export function PhoneSheet(p: PhoneSheetProps) {
     if (!d) return;
     const dist = Math.max(0, e.clientY - d.y);
     setDy(0);
-    if (shouldCloseSwipe(dist, e.timeStamp - d.t)) p.onClose();
+    if (shouldCloseSwipe(dist, e.timeStamp - d.t)) close();
   };
-
-  const closeButton = (
-    <button type="button" className="ph-iconbtn" aria-label="Close" disabled={p.closeDisabled} onClick={p.onClose}>
-      <CloseIcon />
-    </button>
-  );
 
   return (
     <div
@@ -94,12 +94,13 @@ export function PhoneSheet(p: PhoneSheetProps) {
       >
         <span className="ph-handle" aria-hidden="true" />
         <header className="ph-sheet-head">
-          {p.fit ? null : closeButton}
+          <button type="button" className="ph-iconbtn" aria-label="Back" disabled={p.closeDisabled} onClick={close}>
+            <BackIcon />
+          </button>
           <div className="ph-sheet-titles">
             <h2 className="ph-sheet-title">{p.title}</h2>
             <p className="ph-sheet-sub">{p.sub}</p>
           </div>
-          {p.fit ? closeButton : null}
           {p.onMore ? (
             <button type="button" className="ph-iconbtn" aria-label="More actions" onClick={p.onMore}>
               <MoreIcon />

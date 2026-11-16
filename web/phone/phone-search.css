@@ -199,8 +199,3 @@
 .ph-filter-list .ph-pk-row {
   min-height: 49px;
 }
-
-.ph-actionbar .ph-btn.ph-filter-clear {
-  flex: none;
-  width: 114px;
-}

@@ -515,8 +515,24 @@
 .ph-thread .finding-btn.is-spent,
 .ph-thread .finding-retry {
   height: 44px;
-  border-radius: 10px;
+  border-radius: var(--borderRadius-full);
   font: 400 15px/22px var(--fontStack-system);
+}
+
+.ph-thread .finding-btn:active {
+  background: var(--button-default-bgColor-hover);
+  border-color: var(--borderColor-emphasis);
+}
+
+.ph-thread .finding-btn[aria-disabled='true']:not(.is-spent, .is-busy) {
+  opacity: 1;
+  background: transparent;
+  border: 1px dashed var(--borderColor-default);
+  color: var(--fgColor-muted);
+}
+
+.ph-thread .finding-btn .spinner {
+  order: -1;
 }
 
 .ph-thread .finding-human-actions .finding-btn {

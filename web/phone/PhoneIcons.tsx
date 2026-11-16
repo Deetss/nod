@@ -48,6 +48,12 @@ export const CloseIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const BackIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M19 12H5M12 19l-7-7 7-7" />
+  </Svg>
+);
+
 export const PrIcon = (p: IconProps) => (
   <Svg {...p}>
     <circle cx="6" cy="6" r="2.5" />

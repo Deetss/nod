@@ -2,7 +2,8 @@
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useSheetStack, type SheetStack } from '../web/phone/useSheetStack';
+import { PhoneSheet } from '../web/phone/PhoneSheet';
+import { SheetHoldContext, useSheetStack, type SheetStack } from '../web/phone/useSheetStack';
 import type { Level } from '../web/phone/sheet-stack';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -327,5 +328,55 @@ describe('case 7: a non-default tab with nothing open', () => {
     back();
     expect(fake.index).toBe(0);
     expect(sheets?.stack).toEqual([]);
+  });
+});
+
+describe('case 8: a sheet whose request is running', () => {
+  it('Back keeps the held sheet and its entry, then closes it once released', () => {
+    mount();
+    run((s) => s.push(pr('P1')));
+    run((s) => s.push({ kind: 'fix', mode: 'checks' }));
+    let release: () => void = () => undefined;
+    run((s) => {
+      release = s.hold();
+    });
+    back();
+    expect(sheets?.stack).toEqual([pr('P1'), { kind: 'fix', mode: 'checks' }]);
+    expectDepthMatchesStack();
+    act(() => release());
+    back();
+    expect(sheets?.stack).toEqual([pr('P1')]);
+    expectDepthMatchesStack();
+  });
+
+  it('a busy PhoneSheet holds Back and disables its back button', () => {
+    let busy = true;
+    function Busy() {
+      sheets = useSheetStack([]);
+      const top = sheets.stack[sheets.stack.length - 1];
+      const sheet =
+        top?.kind === 'fix'
+          ? createElement(PhoneSheet, { fit: true, title: 'Fix', sub: 'acme/app #7', closeDisabled: busy, onClose: () => sheets?.pop(), children: null })
+          : null;
+      return createElement(SheetHoldContext.Provider, { value: sheets.hold }, sheet);
+    }
+    host = document.createElement('div');
+    document.body.append(host);
+    root = createRoot(host);
+    act(() => root?.render(createElement(Busy)));
+    run((s) => s.push(pr('P1')));
+    run((s) => s.push({ kind: 'fix', mode: 'checks' }));
+
+    const backBtn = host.querySelector<HTMLButtonElement>('[aria-label="Back"]');
+    expect(backBtn?.disabled).toBe(true);
+    back();
+    expect(sheets?.stack).toEqual([pr('P1'), { kind: 'fix', mode: 'checks' }]);
+    expectDepthMatchesStack();
+
+    busy = false;
+    act(() => root?.render(createElement(Busy)));
+    expect(host.querySelector<HTMLButtonElement>('[aria-label="Back"]')?.disabled).toBe(false);
+    back();
+    expect(sheets?.stack).toEqual([pr('P1')]);
   });
 });

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { createContext, useCallback, useEffect, useReducer, useRef } from 'react';
 import { depthAfterBack, isRoot, layersAfterBack, stackReducer, type Level } from './sheet-stack';
 
 export interface SheetStack {
@@ -15,7 +15,12 @@ export interface SheetStack {
   openFromNavigation: (level: Level) => void;
   /** Closes the top level. Goes through History so the back gesture and Close agree. */
   pop: () => void;
+  /** Keeps the top sheet open against Back while a request runs. Returns the release. */
+  hold: () => () => void;
 }
+
+/** The stack's `hold`, for sheets that block Back while busy. Absent outside the phone app. */
+export const SheetHoldContext = createContext<SheetStack['hold'] | undefined>(undefined);
 
 interface Layer {
   key: string;
@@ -38,6 +43,7 @@ export function useSheetStack(initial: readonly Level[] = []): SheetStack {
   const pendingRoot = useRef<Level | undefined>(undefined);
   // True while the entry at depth 1 is the one the notification navigation created. Nothing sits below it.
   const fromNavigation = useRef(false);
+  const held = useRef(0);
 
   // A reload or an earlier mount can leave this entry at a depth the new stack does not have.
   useEffect(() => {
@@ -46,6 +52,11 @@ export function useSheetStack(initial: readonly Level[] = []): SheetStack {
 
   useEffect(() => {
     const onPop = (e: PopStateEvent) => {
+      if (held.current > 0) {
+        // A running request keeps its sheet, so put back the entry Back just left.
+        window.history.pushState(entry(size.current, layers.current.length), '');
+        return;
+      }
       // Layers above the restored entry were closed by Back.
       const closed = layers.current.splice(layersAfterBack(e.state));
       closed.forEach((l) => l.onBack());
@@ -121,5 +132,15 @@ export function useSheetStack(initial: readonly Level[] = []): SheetStack {
     }
   }, []);
 
-  return { stack, push, replaceTop, replaceRoot: placeRoot, openLayer, closeLayer, openFromNavigation, pop };
+  const hold = useCallback(() => {
+    held.current += 1;
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      held.current -= 1;
+    };
+  }, []);
+
+  return { stack, push, replaceTop, replaceRoot: placeRoot, openLayer, closeLayer, openFromNavigation, pop, hold };
 }

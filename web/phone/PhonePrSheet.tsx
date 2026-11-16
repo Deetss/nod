@@ -9,6 +9,7 @@ import { PrThreadList } from '../PrThread';
 import type { FindingControls } from '../useFindings';
 import { CancelledIcon, CheckIcon, RingIcon, SkippedIcon, XIcon, formatAge } from '../ui';
 import { approveDisabled } from './action-items';
+import { MoreIcon } from './PhoneIcons';
 import { PhoneSheet } from './PhoneSheet';
 import { SheetTabs, SwipePager, useTabPager } from './SwipePager';
 import type { PhonePr } from './usePhonePr';
@@ -214,8 +215,8 @@ export function PhonePrSheet(p: PrSheetProps) {
           <button type="button" className={`ph-btn${p.writesOff ? ' is-off' : ''}`} disabled={p.writesOff} onClick={p.onComment}>
             Comment
           </button>
-          <button type="button" className="ph-btn is-narrow" onClick={p.onMore}>
-            More
+          <button type="button" className="ph-btn is-narrow is-round" aria-label="More actions" onClick={p.onMore}>
+            <MoreIcon />
           </button>
         </>
       }
