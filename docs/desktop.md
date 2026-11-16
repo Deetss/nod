@@ -15,7 +15,7 @@ The install script copies the newest AppImage to `~/.local/opt/nod/nod.AppImage`
 
 ## Updates
 
-After the first install, Nod updates itself from [GitHub releases](https://github.com/Deetss/nod/releases). Only the process that owns the server checks, at start and every hour. Settings > Updates > Check for updates checks now.
+After the first install, Nod updates itself from [GitHub releases](https://github.com/Deetss/nod/releases). Only the process that owns the server checks, at start, every hour, and when a window or phone opens Nod (at most once every 10 minutes). Settings > Updates > Check for updates checks now, and so does `nod update` in a terminal, which asks the server on port 4477 and prints the answer.
 
 - The service installs a new release as soon as it downloads and exits. systemd restarts it on the new build, and open windows and phones reload onto it.
 - A window running its own server installs on quit (`Ctrl+Q`).
