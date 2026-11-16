@@ -36,19 +36,29 @@ describe('POST /api/updates/check', () => {
     expect(await (await setup().post(DESKTOP)).json()).toEqual({ state: 'unsupported' });
   });
 
-  it('is loopback only: a paired phone gets 403 and no check runs', async () => {
-    const check = vi.fn(async (): Promise<UpdateCheckResult> => ({ state: 'unsupported' }));
+  const fromPhone = (cookie?: string) => ({
+    host: `${PHONE.host}:8443`,
+    'tailscale-user-login': PHONE.owner,
+    origin: `https://${PHONE.host}:8443`,
+    'x-nod-token': TOKEN,
+    'content-type': 'application/json',
+    ...(cookie ? { cookie } : {}),
+  });
+
+  it('lets a paired phone check', async () => {
+    const check = vi.fn(async (): Promise<UpdateCheckResult> => ({ state: 'current', version: '0.2.10' }));
     const { devices, post } = setup({ check });
     const key = await devices.add('Pixel');
-    const res = await post({
-      host: `${PHONE.host}:8443`,
-      'tailscale-user-login': PHONE.owner,
-      origin: `https://${PHONE.host}:8443`,
-      'x-nod-token': TOKEN,
-      'content-type': 'application/json',
-      cookie: `nod_device=${key}`,
-    });
-    expect(res.status).toBe(403);
+    const res = await post(fromPhone(`nod_device=${key}`));
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ state: 'current', version: '0.2.10' });
+    expect(check).toHaveBeenCalledOnce();
+  });
+
+  it('refuses an unpaired phone and runs no check', async () => {
+    const check = vi.fn(async (): Promise<UpdateCheckResult> => ({ state: 'unsupported' }));
+    const res = await setup({ check }).post(fromPhone());
+    expect(res.status).toBe(401);
     expect(check).not.toHaveBeenCalled();
   });
 });

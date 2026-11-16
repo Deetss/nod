@@ -19,6 +19,7 @@ interface AppBarProps {
   onRefresh: () => void;
   onDensity: (d: Density) => void;
   onToggleTheme: () => void;
+  onCheckUpdates: () => void;
 }
 
 export function AppBar(p: AppBarProps) {
@@ -101,6 +102,9 @@ export function AppBar(p: AppBarProps) {
                 onClick={run(() => window.open(orgUrl(),'_blank', 'noopener'))}
               >
                 Open on GitHub
+              </button>
+              <button type="button" role="menuitem" onClick={run(p.onCheckUpdates)}>
+                Check for updates
               </button>
             </div>
           </>
