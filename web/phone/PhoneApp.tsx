@@ -196,7 +196,7 @@ export function PhoneApp(p: PhoneAppProps) {
 
   const prRow = (pr: PrSummary) => <PrRow key={pr.id} pr={pr} onOpen={(x) => openRoot({ kind: 'pr', id: x.id })} />;
   const issueRow = (i: IssueSummary) => (
-    <IssueRow key={i.id} issue={i} onOpen={(x) => openRoot({ kind: 'issue', id: x.id })} />
+    <IssueRow key={i.id} issue={i} showStatus={issues.data?.projectStatus === true} onOpen={(x) => openRoot({ kind: 'issue', id: x.id })} />
   );
 
   const sectionInput = { saved: open, closedByDefault: CLOSED_BY_DEFAULT, peeked };

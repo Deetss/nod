@@ -74,6 +74,8 @@ Issue project status (the existing `.status-*` colours in `web/issues.css`):
 | Done | `ApprovedGlyph` | `fgColor-success` |
 | No project status | `DashGlyph` | `fgColor-muted` |
 
+`No project status` shows only when the org project is configured (`showStatus`, from `projectStatus`). With no project set up, issue rows have no status line: line 2 is omitted and the row is 22 shorter.
+
 Activity: `PrIcon` or `CircleDotIcon` by `item.kind`, `fgColor-muted`.
 
 The cut-outs in filled glyphs use the row fill, never a fixed colour.
@@ -83,7 +85,7 @@ The cut-outs in filled glyphs use the row fill, never a fixed colour.
 | Row | Sentence | Example |
 |---|---|---|
 | PR | `[Draft ·] lead · other [· updatedNote]`. For glyphs 1 and 3, CI comes first; otherwise review comes first. First letter capitalised. CI words: `CI failing`, `CI running`, `CI passing`, `No CI` | `CI failing · needs review · 2 commits since you looked`, `1 approval · CI passing`, `Draft · no reviews yet · No CI` |
-| Issue | `status name [· updatedNote]` | `In progress · 1 new comment` |
+| Issue | `status name [· updatedNote]`; no line without a configured project | `In progress · 1 new comment` |
 | Activity | `rowMeta` tail (actor and verb, or the event sentence) `[· n updates]` when `updates > 1` | `sam-lee requested changes · 3 updates` |
 
 `updatedNote` shows only when `seen === 'updated'`, as today. The Draft chip on line 1 goes; `Draft` leads the sentence instead. The `N updates` pill on Activity goes into the sentence.
@@ -226,6 +228,6 @@ The row hides the count when it is 0 or absent. This counts conversation comment
 ## Open questions
 
 - Needs review is drawn in `fgColor-done` (purple), which the app already uses for In review. Accent would clash with the unread dot and CI running.
-- Issues with no project configured would all read `No project status`. Today the chip hides for them instead. The alternative is `CircleDotIcon` and `Open` for that case.
+- Issues with no project configured would all read `No project status`. Decided: they show no status line, as main does today; the dash shows only when a project is configured.
 - The wireframe drew Today and Earlier headers on Activity. Activity has no groups today, so the mockup keeps a flat list.
 - Should the PR comment count include review-thread comments (`reviewThreads` totals)? That costs more per search page.

@@ -31,11 +31,11 @@ export function prRowLabel(pr: PrSummary, now = Date.now()): string {
     .join(', ');
 }
 
-export function issueRowLabel(issue: IssueSummary, now = Date.now()): string {
+export function issueRowLabel(issue: IssueSummary, showStatus: boolean, now = Date.now()): string {
   return [
     issue.title,
     SEEN_WORD[issue.seen],
-    spoken(issueSentence(issue)),
+    showStatus ? spoken(issueSentence(issue)) : issue.seen === 'updated' ? issue.updatedNote : undefined,
     issue.labels.length > 0 ? `labels ${issue.labels.map((l) => l.name).join(', ')}` : undefined,
     `${repoLabel(issue.repo)} number ${issue.number} by ${issue.author}`,
     issue.commentCount ? plural(issue.commentCount, 'comment') : undefined,
@@ -68,7 +68,16 @@ export function PrRow({ pr, onOpen }: { pr: PrSummary; onOpen: (pr: PrSummary) =
   );
 }
 
-export function IssueRow({ issue, onOpen }: { issue: IssueSummary; onOpen: (i: IssueSummary) => void }) {
+export function IssueRow({
+  issue,
+  showStatus = false,
+  onOpen,
+}: {
+  issue: IssueSummary;
+  /** The org project resolved. Without one the row has no status line. */
+  showStatus?: boolean;
+  onOpen: (i: IssueSummary) => void;
+}) {
   const kind = issueGlyph(issue.status);
   return (
     <ListRow
@@ -78,13 +87,13 @@ export function IssueRow({ issue, onOpen }: { issue: IssueSummary; onOpen: (i: I
       time={formatAge(issue.updatedAt)}
       glyph={<StatusGlyph kind={kind} />}
       glyphClass={`is-${kind}`}
-      sentence={issueSentence(issue)}
+      sentence={showStatus ? issueSentence(issue) : undefined}
       labels={issue.labels}
       repo={issue.repo}
       number={issue.number}
       author={issue.author}
       comments={issue.commentCount}
-      label={issueRowLabel(issue)}
+      label={issueRowLabel(issue, showStatus)}
       onClick={() => onOpen(issue)}
     />
   );

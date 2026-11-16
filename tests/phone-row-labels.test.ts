@@ -30,13 +30,13 @@ const issue = (count: number): IssueSummary => ({
 let root: Root | undefined;
 let host: HTMLElement | undefined;
 
-function render(i: IssueSummary, density: Density = 'comfortable'): HTMLElement {
+function render(i: IssueSummary, density: Density = 'comfortable', showStatus = false): HTMLElement {
   host = document.createElement('div');
   document.body.append(host);
   root = createRoot(host);
   act(() =>
     root!.render(
-      createElement(DensityContext.Provider, { value: density }, createElement(IssueRow, { issue: i, onOpen: () => {} })),
+      createElement(DensityContext.Provider, { value: density }, createElement(IssueRow, { issue: i, showStatus, onOpen: () => {} })),
     ),
   );
   return host;
@@ -88,11 +88,21 @@ describe('phone issue row labels', () => {
     expect(el.querySelector('.ph-lrow-comments')?.textContent).toBe('2');
   });
 
-  it('reads every label in the row label, and the dash status when there is none', () => {
+  it('reads every label in the row label', () => {
     const el = render(issue(3));
-    const label = el.querySelector('.ph-lrow')?.getAttribute('aria-label') ?? '';
-    expect(label).toContain('labels label-1, label-2, label-3');
-    expect(label).toContain('No project status');
+    expect(el.querySelector('.ph-lrow')?.getAttribute('aria-label')).toContain('labels label-1, label-2, label-3');
+  });
+
+  it('shows no status line when no project is configured', () => {
+    const el = render(issue(1));
+    expect(el.querySelector('.ph-lrow-status')).toBeNull();
+    expect(el.querySelector('.ph-lrow')?.getAttribute('aria-label')).not.toContain('No project status');
+  });
+
+  it('shows the dash and No project status when the project resolved but the issue is not on it', () => {
+    const el = render(issue(1), 'comfortable', true);
     expect(el.querySelector('.ph-lrow-glyph')?.className).toContain('is-none');
+    expect(el.querySelector('.ph-lrow-sentence')?.textContent).toBe('No project status');
+    expect(el.querySelector('.ph-lrow')?.getAttribute('aria-label')).toContain('No project status');
   });
 });

@@ -14,10 +14,10 @@ export interface ListRowProps {
   unread: boolean;
   seen?: SeenState;
   time: string;
-  /** The status mark, coloured by `glyphClass`. */
-  glyph: ReactNode;
-  glyphClass: string;
-  sentence: string;
+  /** The status mark, coloured by `glyphClass`. Without a sentence the row has no status line. */
+  glyph?: ReactNode;
+  glyphClass?: string;
+  sentence?: string;
   labels?: readonly IssueLabel[];
   repo: string;
   number: number;
@@ -81,12 +81,14 @@ export function ListRow(p: ListRowProps) {
         <Badge seen={p.seen} />
         <span className="ph-lrow-time">{p.time}</span>
       </span>
-      <span className="ph-lrow-status">
-        <span className={`ph-lrow-glyph ${p.glyphClass}`} aria-hidden="true">
-          {p.glyph}
+      {p.sentence ? (
+        <span className="ph-lrow-status">
+          <span className={`ph-lrow-glyph ${p.glyphClass ?? ''}`} aria-hidden="true">
+            {p.glyph}
+          </span>
+          <span className="ph-lrow-sentence">{p.sentence}</span>
         </span>
-        <span className="ph-lrow-sentence">{p.sentence}</span>
-      </span>
+      ) : null}
       <span className="ph-lrow-meta" ref={meta}>
         {p.labels ? <Chips labels={p.labels} /> : null}
         <span className="ph-lrow-repo-name">{repoLabel(p.repo)}</span>
