@@ -28,13 +28,18 @@ export function exitRestarter(
   };
 }
 
+/** How long the relaunch waits for this instance to exit before starting the next one anyway. */
+const RELAUNCH_WAIT_TENTHS = 300;
+
 /**
- * What `app.relaunch` needs to start the same command line again. Inside an AppImage the binary
- * lives on a mount that goes away on quit, and may be an older build than the file, so it relaunches
- * the AppImage file itself. Undefined means Electron's own default.
+ * Starts the AppImage file again once `pid` exits. The binary on the mount goes away on quit and
+ * may be older than the file, so it runs the file itself. `app.relaunch` cannot: its helper sets
+ * no_new_privs, so the setuid `fusermount` fails and the new AppImage exits before it opens.
+ * Waiting for the exit keeps the new instance from losing the single-instance lock to this one.
  */
-export function relaunchOptions(appImage: string | undefined, argv: readonly string[]): { execPath: string; args: string[] } | undefined {
-  return appImage ? { execPath: appImage, args: argv.slice(1) } : undefined;
+export function appImageRelaunch(appImage: string, argv: readonly string[], pid: number): { command: string; args: string[] } {
+  const script = `i=0; while kill -0 "$0" 2>/dev/null && [ $i -lt ${RELAUNCH_WAIT_TENTHS} ]; do sleep 0.1; i=$((i+1)); done; exec "$@"`;
+  return { command: '/bin/sh', args: ['-c', script, String(pid), appImage, ...argv.slice(1)] };
 }
 
 /** The Electron app: relaunch the same command line, then quit this instance. */
