@@ -10,6 +10,7 @@ export type Level =
   | { kind: 'edit-title' }
   | { kind: 'fix'; mode: FixMode }
   | { kind: 'fix-bot' }
+  | { kind: 'pr-dispatch' }
   | { kind: 'bot-split' }
   | { kind: 'new-issue' }
   | { kind: 'sub-create' }

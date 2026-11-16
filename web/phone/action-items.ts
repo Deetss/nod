@@ -23,6 +23,7 @@ export type ActionId =
   | 'admin-merge'
   | 'ready'
   | 'dispatch'
+  | 'pr-dispatch'
   | 'fix-checks'
   | 'fix-conflicts'
   | 'fix-bot'
@@ -83,6 +84,8 @@ export interface ActionContext {
   fix?: { count: number; orca: boolean };
   /** The open PR conflicts with its base, so the Fix conflicts row shows. */
   conflicts?: boolean;
+  /** Orca can take this open PR on its head branch; absent hides the PR Dispatch row. */
+  prDispatch?: { headRef: string; state: 'ready' | 'in-orca' | 'busy' };
 }
 
 export interface ActionItem {
@@ -168,12 +171,16 @@ function prItems(ctx: ActionContext): ActionItem[] {
     const how = b.enabled ? (ctx.fix.orca ? `${b.name} or Orca` : `Asks ${b.name}`) : 'Orca';
     items.push({ id: 'fix-checks', label: 'Fix checks…', sub: `${ctx.fix.count} failing. ${how}`, opens: true });
   }
-  if (ctx.orcaAvailable) {
-    items.push({ id: 'dispatch', label: 'Dispatch with Orca', sub: 'Asks to confirm first', confirm: true });
-  }
+  if (ctx.prDispatch) items.push(prDispatchItem(ctx.prDispatch));
   items.push({ id: 'comment', label: 'Comment', sub: 'Opens the composer' });
   items.push({ id: 'open-github', label: 'Open on GitHub' }, ...linkItems(ctx));
   return items;
+}
+
+function prDispatchItem({ headRef, state }: NonNullable<ActionContext['prDispatch']>): ActionItem {
+  if (state === 'in-orca') return { id: 'pr-dispatch', label: 'In Orca', disabled: 'A session already works on this PR', dashed: true };
+  if (state === 'busy') return { id: 'pr-dispatch', label: 'Dispatching…', disabled: 'Waiting for Orca', dashed: true };
+  return { id: 'pr-dispatch', label: 'Dispatch with Orca…', sub: `Starts an agent on ${headRef}`, opens: true };
 }
 
 function botItem(ctx: ActionContext, b: BotSettings): ActionItem {

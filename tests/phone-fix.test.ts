@@ -29,9 +29,9 @@ describe('phone Fix checks row', () => {
   });
 
   it('sits after Admin merge and before Dispatch with Orca', () => {
-    const list = ids(ctx({ fix: { count: 2, orca: true }, orcaAvailable: true }));
+    const list = ids(ctx({ fix: { count: 2, orca: true }, prDispatch: { headRef: 'feat/x', state: 'ready' } }));
     expect(list.indexOf('fix-checks')).toBe(list.indexOf('admin-merge') + 1);
-    expect(list.indexOf('fix-checks')).toBe(list.indexOf('dispatch') - 1);
+    expect(list.indexOf('fix-checks')).toBe(list.indexOf('pr-dispatch') - 1);
   });
 
   it('names both choices when Orca can take the PR', () => {
