@@ -10,11 +10,12 @@
 ## Polling
 
 - The server owns the polling, so the cost does not grow with the number of open windows, tabs or phones.
-- Every 15 seconds at first, stepping up to 30, 60 and then 120 seconds while nothing changes. It returns to 15 on any change to a PR, issue or mention. A low GitHub API budget stretches the wait 2x under 50% remaining and 4x under 20%.
-- Each poll runs one query for PRs, issues and mentions updated since the last sync (minus 1 minute), so closed and merged PRs arrive and drop out.
+- Every 10 seconds at first, stepping up to 15, 20 and then 30 seconds while nothing changes. It returns to 10 on any change to a PR, issue or mention. A low GitHub API budget stretches the wait 2x under 50% remaining and 4x under 20%.
+- Each poll runs one query for PRs (changed, issues and mentions updated since the last sync, minus 1 minute), so closed and merged PRs arrive and drop out. The gap is a full minute rather than the step, so a poll never re-reads the same change.
+- A quiet poll carries a fourth search: your own open PRs while one of their checks is running. A check finishing does not move a PR's updated time, so without it a failing check would wait for the next full sweep.
 - A search with more hits than its first 10 continues from its cursor. A bulk change pages the delta and never triggers a sweep.
 - A full sweep runs when nothing is saved, when the last one is an hour old, and on Refresh. A restart with a saved list under an hour old runs a delta instead. Teams and project ids refresh on the first sync and then hourly.
-- A quiet poll is one GraphQL request that carries three searches (changed PRs, changed issues, changed mentions) and costs about 1 point on the org.
+- A quiet poll is one GraphQL request that carries four searches and costs about 1 point on the org.
 
 ## After an action
 
@@ -43,7 +44,7 @@
 
 ## Teams
 
-Needs my review also includes PRs that request a review from one of your teams in `acme-co`. The server reads your team slugs (`organization.teams(userLogins:)`) and saves them with the inbox. If the token cannot read teams, it logs one line and matches your user requests only.
+Needs my review also includes PRs that request a review from one of your teams in the configured orgs. The server reads your team slugs (`organization.teams(userLogins:)`) and saves them with the inbox. If the token cannot read teams, it logs one line and matches your user requests only.
 
 ## Cache
 

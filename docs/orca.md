@@ -1,6 +1,6 @@
 # Orca sessions
 
-When Orca and `orca-ide` are present, a PR row shows a chip for the agent session related to it. The detail pane shows an Orca session card under the description, and your actions notify that session. The feature is absent when `orca-ide` is missing or Orca is not running. It is also absent for phones and other browsers that reach the service. The phone layout has none of it.
+When Orca and `orca-ide` are present, a PR row shows a chip for the agent session related to it. The detail pane shows an Orca session card under the description, and your actions notify that session. The feature is absent when `orca-ide` is missing or Orca is not running. It works the same on a phone that reaches the service, where sessions show the same chip and can be sent to from the bottom sheet. A phone does not show the diff's file actions, which stay desktop only.
 
 ## Sessions
 
@@ -40,6 +40,10 @@ Settings, Orca messages has one global box (default on) and a per-repo Default, 
 ## Fixture mode
 
 Fixture mode uses an in-memory Orca stand-in with synthetic sessions and records sends in memory (`GET /api/orca/fixture-sends`). Put `fixture-down`, `fixture-exited`, `fixture-blocked`, `fixture-unconfirmed` or `fixture-echo` (unconfirmed by Orca, confirmed from the terminal) in a message to see each result.
+
+## Dispatch from a phone
+
+Findings get a dispatch action on a phone too, as a bottom sheet: the ticked findings, a session or a new worktree on the PR head, and one editable prompt. It sends through the same Orca flow and needs the token and Origin guard, so it asks to confirm before it runs.
 
 ## File actions in the diff
 

@@ -15,7 +15,7 @@ The desktop app notifies through the shell. The front end compares each poll wit
 - More than 3 in one poll become one summary.
 - Nothing shows while the window is focused.
 - Clicking a notification focuses the window and selects the PR or issue.
-- The bell menu has Send test notification. It fires a notification after 5 seconds, so you can switch to another window first.
+- The bell menu has Send test notification. It sends at once and ignores the mute switch and the focus of the window, so it lands while the window still has the focus.
 - A trigger added after your settings were saved starts with its default. Your other choices stay.
 - The bell in the top bar (desktop app only) toggles each trigger or mutes all. Settings persist in the userData folder.
 

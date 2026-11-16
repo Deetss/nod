@@ -1,6 +1,6 @@
 # Android
 
-A Trusted Web Activity wraps the phone page (package `dev.example.nod`, launcher name "Nod") and shows Web Push notifications.
+A Trusted Web Activity wraps the phone page (package from `android.packageId` in settings, `io.github.reviewinbox` by default, launcher name "Nod") and shows Web Push notifications.
 
 **One APK for every server.** No host is built in. On first launch the app shows a setup screen: scan the pair QR, paste the pair link, or type the desktop's tailnet name. It checks `GET https://<host>/api/health` answers `app: "nod"`, stores the host on the phone, then opens `https://<host>/?apk=<versionCode>`.
 
@@ -8,6 +8,8 @@ A Trusted Web Activity wraps the phone page (package `dev.example.nod`, launcher
 - Long-press the launcher icon for Change server (or open `nod://server`) to point the app at another desktop.
 - QR scanning uses ZXing (`zxing-android-embedded`), so it needs no Google Play Services.
 - Debug builds may check `10.0.2.2` (the emulator's host) over http, for testing against `FIXTURES=1 pnpm start`. Release builds use https only.
+
+The app is built for the package in `android.packageId` (Settings > Phone and push), so an APK matches the `assetlinks.json` the server serves.
 
 **Build.** `android/` is a hand-kept Gradle project (a Bubblewrap scaffold, no longer regenerated). `pnpm android:build` needs JDK 17 (`.mise.toml` pins it; run `mise install`) and the Android SDK, and runs `./gradlew assembleRelease` with the same `-PnodPackage`, `-PnodVersionCode` and `-PnodVersionName` properties the release workflow passes.
 
@@ -17,7 +19,7 @@ A Trusted Web Activity wraps the phone page (package `dev.example.nod`, launcher
 - The build publishes the APK and `latest.json` (`{versionCode, versionName, sha256, builtAt}`) to `~/.local/state/nod/android/`. The server reads them from there and never serves from the repo.
 - The certificate fingerprint goes to `~/.config/nod/android-fingerprint.txt`. The server reads it at start and serves `/.well-known/assetlinks.json`, so restart the service after the first build.
 
-**Install.** Turn on USB debugging on the phone and run `pnpm android:install` (`adb install -r`). Or copy `release/android/nod.apk` to the phone and open it.
+**Install.** Turn on USB debugging on the phone and run `pnpm android:install` (`adb install -r`). Or copy `release/android/nod.apk` to the phone and open it. See [Phone](phone.md) for pairing, updates and the service.
 
 **Updates without USB.** The phone page remembers the version from its start URL (localStorage, with a `nod_apk` cookie as fallback) and checks `GET /api/android/latest` on launch. When the published version is newer, it shows "App update available" with an Install button. The button downloads `GET /api/android/nod.apk`, and Android then asks to install it.
 
@@ -37,5 +39,3 @@ A Trusted Web Activity wraps the phone page (package `dev.example.nod`, launcher
 - The payload holds only the title, body and target. Tapping it opens that PR or issue.
 - VAPID keys are generated once into `~/.local/state/nod/vapid.json` (mode 600).
 - Revoking a phone deletes its subscription.
-
-See [Phone](phone.md) for pairing and updates.

@@ -22,6 +22,54 @@
 - Issues grouped by who is on them, with inline review comments and a phone view.
 - It runs on your machine and uses your own GitHub token.
 
+## Install
+
+### Desktop (Linux x64)
+
+1. Install the GitHub CLI and sign in: `gh auth login`.
+   - `repo` is required. It lets Nod read pull requests, issues and org projects.
+   - `read:org` is optional. Without it, team review requests are missed; requests to you still match.
+   - `project` is optional. Without it, issue Status and Move to In progress are hidden.
+   - To get all three at once, sign in with `gh auth login -s project`. Settings > GitHub shows which scopes Nod sees.
+2. Download `nod-<version>.AppImage` from [releases](https://github.com/Deetss/nod/releases/latest).
+3. Make it executable and run it:
+
+```bash
+chmod +x nod-<version>.AppImage
+./nod-<version>.AppImage
+```
+
+That is all. On the first start it asks which GitHub org to watch; you can skip that and see only your own repos. After the first run it checks for a new release once an hour and installs it itself. It saves settings and other data under `~/.config/nod` and `~/.cache/nod`.
+
+AppImages need FUSE 2 (`fuse2` on Arch, `libfuse2` on Debian and Ubuntu).
+
+### Phone
+
+1. Install Tailscale on the desktop and on the phone.
+2. Download `nod-<version>.apk` from the [same releases page](https://github.com/Deetss/nod/releases/latest) and open it on the phone. The app has a setup screen: pair with a QR code, a pair link, or an address. It finds your desktop over Tailscale Serve.
+3. Or pair from the desktop: click the phone button in the top bar (or press `P`) to open Pair phone. The app asks you to approve the pairing once.
+
+See [docs/phone.md](docs/phone.md) for pairing, updates and the service.
+
+## Build from source
+
+You need Node, pnpm, the GitHub CLI and a GitHub login (`gh auth login`).
+
+```
+pnpm install
+pnpm start
+```
+
+Open the URL that `pnpm start` prints (default `http://127.0.0.1:4477`). Set `PORT` to change the port.
+
+To try the app without GitHub calls, run `NOD_FIXTURES=1 pnpm start` or `pnpm start --fixtures`. It serves synthetic data.
+
+The first time Nod starts it asks which GitHub org to watch. You can skip that and see only your own repos.
+
+<p align="center">
+  <img src="docs/images/first-run.png" alt="Nod on first run" width="560">
+</p>
+
 ## Features
 
 - **Review queue.** PRs that need your review, your own, your org's and Dependabot's, with a checks rollup and a "since my review" diff.
@@ -52,34 +100,17 @@
   <img src="docs/images/settings.png" alt="The settings dialog" width="720">
 </p>
 
-## Quick start
-
-You need Node, pnpm, and a GitHub login (`gh auth login`).
-
-```
-pnpm install
-pnpm start
-```
-
-Open the URL that `pnpm start` prints (default `http://127.0.0.1:4477`). Set `PORT` to change the port.
-
-To try the app without GitHub calls, run `NOD_FIXTURES=1 pnpm start` or `pnpm start --fixtures`. It serves synthetic data.
-
-The first time Nod starts it asks which GitHub org to watch. You can skip that and see only your own repos.
-
-<p align="center">
-  <img src="docs/images/first-run.png" alt="Nod on first run" width="560">
-</p>
-
 ## Desktop app
 
+Install a desktop app from releases (see [Install](#install)), or release a new build with:
+
 ```
+pnpm build
 pnpm app:dist
 scripts/install-desktop.sh
-nod
 ```
 
-It then updates itself from GitHub releases. See [docs/desktop.md](docs/desktop.md) for updates, autostart and uninstall.
+It lands as an AppImage in `release/nod-<version>.AppImage` and updates itself from GitHub releases. See [docs/desktop.md](docs/desktop.md) for updates, autostart and uninstall.
 
 ## Settings
 
