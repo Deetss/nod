@@ -6,8 +6,10 @@ Opens the inbox on your phone over Tailscale Serve. The laptop must be awake and
 
 1. Turn on Settings > Phone access in the desktop app (or set `NOD_PHONE=1` for `pnpm start`, or run the [service](#service)), then restart. The server uses fixed port 4477 and reads the tailnet name and your login from `tailscale status --json`. If tailscale is missing, phone access stays off and one line is logged.
 2. Run once: `tailscale serve --bg --https=443 http://127.0.0.1:4477`. The Android app verifies the host on the default port, so links on any other port open in Chrome. To advertise another port, set `NOD_PHONE_HTTPS_PORT` (for example `8443`) and serve that port instead.
-3. In the desktop app, open Settings (the bell) > Pair phone. The dialog shows a QR code, the pairing link with a Copy button, a countdown, and the paired phones.
+3. In the desktop app, click the phone button in the top bar (or press `P`) to open Pair phone. The dialog shows a QR code, the pairing link with a Copy button, a countdown, and the paired phones.
 4. Scan the code with the phone camera. The phone is paired and opens the inbox. Add to Home screen from the browser menu.
+
+See [Android](android.md) to install the app first, or download `nod-<version>.apk` from the [releases page](https://github.com/Deetss/nod/releases/latest).
 
 ## Pairing
 
@@ -26,6 +28,10 @@ Pairing works like `orca serve --mobile-pairing`. The link is `https://<tailnet 
 - Mutations also accept `Origin: https://<tailnet host>`, the same host on `:8443` (older bookmarks) or on `NOD_PHONE_HTTPS_PORT`. They still need the session token, which is injected into the HTML served after the device key checks out.
 - Any request that carries `Tailscale-User-Login` must match your login, even with a loopback Host (Tailscale Serve may forward that way). It is rejected when phone access is off.
 - Creating codes, listing, renaming and revoking devices, and Update phones are loopback only. Requests without the header on loopback are unchanged.
+
+## Layout
+
+The phone page is one scrolling list per tab, and each PR or issue opens as a full-screen sheet. While you scroll, the top header collapses into a narrow bar and expands again when you come back to the top. Actions open as bottom sheets: dispatch all findings under a PR shows the ticked findings, a session or a new worktree, and one editable prompt.
 
 ## Updates
 

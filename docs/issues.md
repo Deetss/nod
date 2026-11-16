@@ -1,6 +1,6 @@
 # Issues
 
-The PRs / Issues switch in the top bar (or `g p` / `g i`) changes the view. The inactive side shows its unseen count, and the choice is remembered. The Issues view is a list, a thread and a metadata sidebar.
+The PRs / Issues switch in the top bar (or `g p` / `g i`) changes the view. The inactive side shows its unseen count, and the choice is remembered. The Issues view is a list, a thread and a metadata sidebar. It also lists PR findings with their own actions; see [Finding actions](#finding-actions).
 
 ## Groups
 
@@ -17,7 +17,7 @@ The acme-co project "Dev" Status field (Backlog, Ready, In progress, In review, 
 - `s` opens the five-option dropdown.
 - `S` toggles Start work (assign you if needed, add the issue to the project if missing, set In progress) and Stop work (set Ready, keep the assignee). There is no confirm, and a toast shows.
 - A Status filter sits next to Repo and Label.
-- The project, field and option ids are resolved by name at start, cached in `~/.cache/nod/project.json` and refreshed on the 15-minute sweep.
+- The project, field and option ids are resolved by name at start, cached in `~/.cache/nod/project.json` and refreshed with teams on the first sync and then hourly.
 - If the project, field or any option name is missing, the feature hides and one line is logged.
 - Fixture mode gives issues statuses and changes the in-memory copy. The phone action sheet has the same Status control.
 
@@ -117,6 +117,7 @@ When `reviewer.login` and `reviewer.threadMarker` are set in [Settings](settings
 - `s` Dispatch sends the file and finding through the Orca Send flow, with a session picker when none is linked.
 - `c` replies, and `x` resolves or reopens.
 - A pinned banner shows `Merge blocked` with the unresolved count, or `Ready to merge`.
+- `S` Dispatch all sends every unresolved finding in the PR in one message (one prompt with all the ticked findings, ticked for the ones you want). It shows beside Hand all when Orca is on and there are at least two unresolved findings. It can send to the linked session, pick one of the related or possible sessions, or open a new worktree on the PR head. Human threads are left out, and the choice of a related session is remembered per PR. On a phone this is a bottom sheet with the same fields.
 - `H` Hand all to bot confirms, then posts one reply per finding thread and skips human threads.
 
 Spec: `docs/design/thread-actions-spec.md`.
