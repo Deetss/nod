@@ -145,7 +145,7 @@ describe('phone finding dispatch, no linked session (Job 3)', () => {
     expect(btn(el, 'Cancel').disabled).toBe(true);
     expect((el.querySelector('#ph-fix-prompt') as HTMLTextAreaElement).readOnly).toBe(true);
     expect(el.querySelector('.ph-fit-counter')?.textContent).toContain('Fields are locked while dispatching.');
-    expect(el.querySelector<HTMLButtonElement>('[aria-label="Close"]')?.disabled).toBe(true);
+    expect(el.querySelector<HTMLButtonElement>('[aria-label="Back"]')?.disabled).toBe(true);
 
     await act(async () => finish({ ok: true, worktree: 'pr-7' }));
   });

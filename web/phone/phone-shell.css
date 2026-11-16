@@ -76,13 +76,21 @@
   padding: 0;
   background: var(--button-default-bgColor-rest);
   border: 1px solid var(--borderColor-default);
-  border-radius: 22px;
+  border-radius: var(--borderRadius-full);
   color: var(--fgColor-default);
   cursor: pointer;
 }
 
 .ph-iconbtn:active {
+  background: var(--button-default-bgColor-hover);
   border-color: var(--borderColor-emphasis);
+}
+
+.ph-iconbtn:disabled {
+  background: transparent;
+  border-style: dashed;
+  color: var(--fgColor-muted);
+  cursor: default;
 }
 
 .ph-menu-scrim {

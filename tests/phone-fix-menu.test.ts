@@ -314,7 +314,7 @@ describe('phone fix sheet from the PR Overview', () => {
 
   it('the More sheet lists Fix conflicts… and opens the same sheet', async () => {
     const el = await openOverview();
-    act(() => button(el, 'More').click());
+    act(() => el.querySelector<HTMLButtonElement>('.ph-actionbar [aria-label="More actions"]')!.click());
     act(() => button(el, 'Fix conflicts…').click());
     expect(el.querySelector('[role="dialog"][aria-label="Resolve conflicts"]')).not.toBeNull();
   });

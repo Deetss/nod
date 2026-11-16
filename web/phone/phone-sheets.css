@@ -94,11 +94,23 @@
   min-width: 72px;
 }
 
+.ph-actionbar .ph-btn.is-round {
+  flex: none;
+  width: 48px;
+  min-width: 0;
+  padding: 0;
+}
+
 .ph-btn.is-primary {
   background: var(--button-primary-bgColor-rest);
   border-color: var(--button-primary-bgColor-rest);
   color: var(--fgColor-onEmphasis);
   font-weight: 600;
+}
+
+.ph-btn.is-primary:active {
+  background: var(--button-primary-bgColor-hover);
+  border-color: var(--button-primary-bgColor-hover);
 }
 
 .ph-btn.is-primary:disabled,
@@ -485,7 +497,7 @@
 .ph-apk-install {
   flex: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: var(--borderRadius-full);
   background: var(--bgColor-accent-emphasis);
   color: var(--fgColor-onEmphasis);
   font-weight: 600;
@@ -494,9 +506,10 @@
 
 .ph-apk-close {
   flex: none;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 0;
+  border-radius: var(--borderRadius-full);
   background: none;
   color: var(--fgColor-muted);
   font-size: 22px;

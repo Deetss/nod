@@ -10,14 +10,28 @@
   box-sizing: border-box;
   background: var(--button-default-bgColor-rest);
   border: 1px solid var(--borderColor-default);
-  border-radius: 10px;
+  border-radius: var(--borderRadius-full);
   color: var(--fgColor-default);
   font-size: 15px;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
 }
 
+/* Beats `.phone button { font: inherit }`. */
+.phone .ph-btn {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.ph-btn:active {
+  background: var(--button-default-bgColor-hover);
+  border-color: var(--borderColor-emphasis);
+}
+
 .ph-btn:disabled {
+  background: transparent;
+  border-style: dashed;
   color: var(--fgColor-muted);
   cursor: default;
 }

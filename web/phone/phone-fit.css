@@ -14,24 +14,6 @@
   flex: 0 1 auto;
 }
 
-.is-fit .ph-sheet-head {
-  padding: 0 14px 0 16px;
-}
-
-.is-fit .ph-iconbtn {
-  border-radius: 50%;
-}
-
-.is-fit .ph-iconbtn:disabled {
-  border-style: dashed;
-  color: var(--fgColor-muted);
-}
-
-.is-fit .ph-actionbar .ph-btn:disabled:not(.is-primary) {
-  background: transparent;
-  border-style: dashed;
-}
-
 .ph-fit-form {
   display: flex;
   flex-direction: column;

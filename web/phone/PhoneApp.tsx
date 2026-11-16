@@ -17,7 +17,7 @@ import type { SheetTarget } from './PhoneSheet';
 import { PhoneSheets } from './PhoneSheets';
 import { SwipePager, useTabPager } from './SwipePager';
 import { phoneLinkRouter } from './link-router';
-import { useSheetStack } from './useSheetStack';
+import { SheetHoldContext, useSheetStack } from './useSheetStack';
 import { loadOpen, saveOpen } from './phone-collapsed';
 import { activityBadge } from '../../shared/activity';
 import type { ActivityHandle } from '../activity-ui';
@@ -442,6 +442,7 @@ export function PhoneApp(p: PhoneAppProps) {
         </div>
       ) : null}
       <LinkRouterContext.Provider value={routeLink}>
+      <SheetHoldContext.Provider value={sheets.hold}>
       <PhoneSheets
         sheets={sheets}
         prs={inbox.data?.prs ?? []}
@@ -454,6 +455,7 @@ export function PhoneApp(p: PhoneAppProps) {
           issues.reload();
         }}
       />
+      </SheetHoldContext.Provider>
       </LinkRouterContext.Provider>
       {connSheet ? <PhoneConnectionSheet view={p.connection} onClose={() => setConnLayer(false)} /> : null}
       {p.overlay}

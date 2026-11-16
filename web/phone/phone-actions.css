@@ -265,7 +265,7 @@
 .ph-seg {
   display: flex;
   border: 1px solid var(--borderColor-default);
-  border-radius: 10px;
+  border-radius: var(--borderRadius-full);
   overflow: hidden;
 }
 
@@ -280,9 +280,11 @@
   border-left: 1px solid var(--borderColor-default);
 }
 
+/* Two rows under a full radius look odd, so the grid keeps 10px. */
 .ph-seg-wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  border-radius: 10px;
 }
 
 .ph-seg-wrap button {

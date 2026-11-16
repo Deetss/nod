@@ -10,6 +10,7 @@ import { ExpandToggle, formatAge } from '../ui';
 import type { Remote } from '../useRemote';
 import { statusOption } from '../org-settings';
 import { issuePrimary } from './action-items';
+import { MoreIcon } from './PhoneIcons';
 import { PhoneSheet } from './PhoneSheet';
 import { SheetTabs, SwipePager, useTabPager } from './SwipePager';
 import { repoLabel } from '../repo-label';
@@ -193,8 +194,8 @@ export function PhoneIssueSheet(p: IssueSheetProps) {
           <button type="button" className={`ph-btn${p.writesOff ? ' is-off' : ''}`} disabled={p.writesOff} onClick={p.onComment}>
             Comment
           </button>
-          <button type="button" className="ph-btn is-narrow" onClick={p.onMore}>
-            More
+          <button type="button" className="ph-btn is-narrow is-round" aria-label="More actions" onClick={p.onMore}>
+            <MoreIcon />
           </button>
         </>
       }
