@@ -137,7 +137,17 @@
 
 .dispatch-all-pick {
   max-height: none;
-  overflow: visible;
+  overflow: hidden;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+}
+
+.dispatch-all-pick .orca-group-split {
+  margin-top: 0;
+}
+
+.dispatch-all-pick .orca-word {
+  color: var(--fgColor-muted);
 }
 
 .dispatch-all-pick .orca-group {
@@ -182,6 +192,11 @@
 .dispatch-all-worktree {
   display: flex;
   flex-direction: column;
+}
+
+.finding-dispatch-all input.dispatch-locked {
+  border-style: dashed;
+  color: var(--fgColor-muted);
 }
 
 .dispatch-all-worktree .field-label {
