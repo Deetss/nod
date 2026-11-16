@@ -31,7 +31,7 @@ Pairing works like `orca serve --mobile-pairing`. The link is `https://<tailnet 
 
 ## Layout
 
-The phone page is one scrolling list per tab, and each PR or issue opens as a full-screen sheet. While you scroll, the top header collapses into a narrow bar and expands again when you come back to the top. Actions open as bottom sheets: dispatch all findings under a PR shows the ticked findings, a session or a new worktree, and one editable prompt.
+The phone page is one scrolling list per tab, and each PR or issue opens as a full-screen sheet. While you scroll, the top header collapses into a narrow bar and expands again when you come back to the top. On PRs and Issues, a search pill and a filter button float above the tab bar. They hide while you scroll down and come back on any scroll up. The filter button opens a sheet of section checkboxes: a PR or issue shows if it is in any ticked section, and the button shows how many are on. Search opens a field on top of the keyboard with one flat list of matches. Actions open as bottom sheets: dispatch all findings under a PR shows the ticked findings, a session or a new worktree, and one editable prompt.
 
 ## Updates
 

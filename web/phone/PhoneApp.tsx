@@ -32,6 +32,11 @@ import {
   type PhoneTab,
 } from './phone-logic';
 import { useLargeTitle } from './useLargeTitle';
+import { useBarHide } from './useBarHide';
+import { useKeyboardInset } from './useKeyboardInset';
+import { flatResults, sectionShown, shownTotal, toggleFilter, type FilterSet } from './bottom-search';
+import { BottomBar, SearchBand, SearchResults } from './PhoneSearch';
+import { PhoneFilterSheet } from './PhoneFilterSheet';
 import { projectOff } from '../../shared/connection';
 import { clockOf, tokenBlocks } from '../Banner';
 import type { ConnectionView } from '../settings/useConnection';
@@ -73,8 +78,10 @@ export function PhoneApp(p: PhoneAppProps) {
   const [searching, setSearching] = useState(false);
   const [menu, setMenu] = useState(false);
   const updates = useUpdateCheck();
-  const [prChip, setPrChip] = useState('all');
-  const [issueChip, setIssueChip] = useState('all');
+  const [prFilters, setPrFilters] = useState<FilterSet>(() => new Set());
+  const [issueFilters, setIssueFilters] = useState<FilterSet>(() => new Set());
+  const [filterSheet, setFilterSheet] = useState(false);
+  const keyboard = useKeyboardInset();
   const [open, setOpen] = useState(loadOpen);
   const [, setTick] = useState(0);
   const apk = useApkUpdate();
@@ -166,39 +173,43 @@ export function PhoneApp(p: PhoneAppProps) {
       total,
     });
 
-  const prTotal =
-    prChip === 'all' ? prAllTotal(prSections) : (prSections.find((s) => s.key === prChip)?.count ?? 0);
-  const issueTotal = issueSections.find((s) => s.key === (issueChip === 'all' ? 'all' : issueChip))?.count ?? 0;
+  const prShown = prSections.filter((s) => sectionShown(prFilters, s.key));
+  const issueShown = issueSections.filter((s) => sectionShown(issueFilters, s.key));
+  const prTotal = prFilters.size === 0 ? prAllTotal(prSections) : shownTotal(prShown.map((s) => ({ items: s.prs })));
+  const issueTotal =
+    issueFilters.size === 0
+      ? (issueSections.find((s) => s.key === 'all')?.count ?? 0)
+      : shownTotal(issueShown.map((s) => ({ items: s.issues })));
   const prStatus = statusFor(inbox.data !== undefined, prTotal);
   const issueStatus = statusFor(issues.data !== undefined, issueTotal);
 
   const prOpen = resolveOpen(prSections, open, CLOSED_BY_DEFAULT);
-  const isPrOpen = (key: string) => prChip !== 'all' || (prOpen[key] ?? true);
+  const isPrOpen = (key: string) => prFilters.size > 0 || (prOpen[key] ?? true);
   const isIssueOpen = (key: string) =>
-    issueChip !== 'all' || (open[key] ?? !CLOSED_BY_DEFAULT.has(key));
+    issueFilters.size > 0 || (open[key] ?? !CLOSED_BY_DEFAULT.has(key));
 
-  const prViews: InboxSectionView[] = prSections
-    .filter((s) => prChip === 'all' || s.key === prChip)
-    .map((s) => ({
-      key: s.key,
-      title: s.title,
-      count: s.count,
-      open: isPrOpen(s.key),
-      rows: s.prs.map((pr) => (
-        <PrRow key={pr.id} pr={pr} onOpen={(x) => openRoot({ kind: 'pr', id: x.id })} />
-      )),
-    }));
-  const issueViews: InboxSectionView[] = issueSections
-    .filter((s) => issueChip === 'all' || s.key === issueChip)
-    .map((s) => ({
-      key: s.key,
-      title: s.title,
-      count: s.count,
-      open: isIssueOpen(s.key),
-      rows: s.issues.map((i) => (
-        <IssueRow key={i.id} issue={i} showStatus={issues.data?.projectStatus === true} onOpen={(x) => openRoot({ kind: 'issue', id: x.id })} />
-      )),
-    }));
+  const prRow = (pr: PrSummary) => <PrRow key={pr.id} pr={pr} onOpen={(x) => openRoot({ kind: 'pr', id: x.id })} />;
+  const issueRow = (i: IssueSummary) => (
+    <IssueRow key={i.id} issue={i} showStatus={issues.data?.projectStatus === true} onOpen={(x) => openRoot({ kind: 'issue', id: x.id })} />
+  );
+
+  const prViews: InboxSectionView[] = prShown.map((s) => ({
+    key: s.key,
+    title: s.title,
+    count: s.count,
+    open: isPrOpen(s.key),
+    rows: s.prs.map(prRow),
+  }));
+  const issueViews: InboxSectionView[] = issueShown.map((s) => ({
+    key: s.key,
+    title: s.title,
+    count: s.count,
+    open: isIssueOpen(s.key),
+    rows: s.issues.map(issueRow),
+  }));
+
+  const prFilterRows = prChips(inbox.data?.sections ?? []).filter((c) => c.key !== 'all');
+  const issueFilterRows = issueChips(issues.data?.sections ?? []).filter((c) => c.key !== 'all');
 
   const unseen = {
     prs: prStatus === 'loading' ? 0 : (inbox.data?.prs ?? []).filter((x) => x.seen !== 'seen' && !seenLocal.has(x.id)).length,
@@ -223,27 +234,63 @@ export function PhoneApp(p: PhoneAppProps) {
   useLargeTitle(shell, p.tab, searching);
 
   // Swiping the content moves between the bottom tabs exactly as tapping them does.
-  const pager = useTabPager(TAB_ORDER, p.tab, selectTab, { disabled: root !== undefined || menu });
+  const pager = useTabPager(TAB_ORDER, p.tab, selectTab, { disabled: root !== undefined || menu || searching });
 
   const openRoot = (t: SheetTarget) => {
     sheets.push(t);
     p.onSheet(t);
   };
 
-  // Search is a layer: Back and the close button both leave it and clear the query.
+  // Search is a layer: Back, Cancel and Escape all leave it, clear the query and return focus to the pill.
+  const leaveSearch = () => {
+    setQuery('');
+    setSearching(false);
+    requestAnimationFrame(() => shell.current?.querySelector<HTMLElement>('.ph-pill')?.focus({ preventScroll: true }));
+  };
   const setSearchingLayer = (on: boolean) => {
     if (on) {
-      sheets.openLayer('search', () => {
-        setQuery('');
-        setSearching(false);
-      });
+      sheets.openLayer('search', leaveSearch);
       setSearching(true);
     } else {
       sheets.closeLayer('search');
-      setQuery('');
-      setSearching(false);
+      leaveSearch();
     }
   };
+
+  // The filter sheet is a layer: Back, the scrim, Close and Done all shut it.
+  const setFilterLayer = (on: boolean) => {
+    if (on) {
+      sheets.openLayer('filter', () => setFilterSheet(false));
+      setFilterSheet(true);
+    } else {
+      sheets.closeLayer('filter');
+      setFilterSheet(false);
+    }
+  };
+
+  const onPrs = p.tab === 'prs';
+  const listTab = onPrs || p.tab === 'issues';
+  const filters = onPrs ? prFilters : issueFilters;
+  const setFilters = onPrs ? setPrFilters : setIssueFilters;
+  const filterRows = onPrs ? prFilterRows : issueFilterRows;
+  const filtersOn = filterRows.filter((r) => filters.has(r.key)).length;
+  const placeholder = onPrs ? 'Search pull requests' : 'Search issues';
+  useBarHide(shell, `${p.tab} ${searching} ${filterSheet} ${root ? 'sheet' : ''}`);
+
+  // A typed query swaps the active list for flat results, within the ticked filters.
+  const results =
+    listTab && searching && query.trim() ? (
+      <SearchResults
+        query={query}
+        filterLabels={filterRows.filter((r) => filters.has(r.key)).map((r) => r.label)}
+        onClearFilters={() => setFilters(new Set())}
+        onEscape={() => setSearchingLayer(false)}
+      >
+        {onPrs
+          ? flatResults(prShown.map((s) => ({ items: s.prs }))).map(prRow)
+          : flatResults(issueShown.map((s) => ({ items: s.issues }))).map(issueRow)}
+      </SearchResults>
+    ) : undefined;
 
   // The app bar menu is a layer too: Back and a tap outside both close it.
   const setMenuLayer = (on: boolean) => {
@@ -291,18 +338,20 @@ export function PhoneApp(p: PhoneAppProps) {
     p.onSheet(undefined);
   }, [root]);
 
+  // While searching, the shell ends on the keyboard so the search band sits on top of it.
   return (
-    <div ref={shell} className={`phone${searching ? ' is-searching' : ''}`} data-sheet={root ? 'open' : undefined}>
+    <div
+      ref={shell}
+      className={`phone${searching ? ' is-searching' : ''}${listTab ? ' has-bottombar' : ''}`}
+      data-sheet={root ? 'open' : undefined}
+      style={searching && keyboard ? { bottom: 'auto', height: keyboard } : undefined}
+    >
       {apk.shown ? <ApkBanner release={apk.shown} onDismiss={apk.dismiss} /> : null}
       <main className="ph-main">
         <AppBar
           title={tabTitle(p.tab)}
-          searching={searching}
-          query={query}
           density={p.density}
           theme={p.theme}
-          onQuery={setQuery}
-          onSearching={setSearchingLayer}
           menu={menu}
           onMenu={setMenuLayer}
           onRefresh={p.onRefresh}
@@ -314,9 +363,7 @@ export function PhoneApp(p: PhoneAppProps) {
           pager={pager}
           panes={[
             <PhoneInbox
-              chips={prChips(inbox.data?.sections ?? [])}
-              chip={prChip}
-              onChip={setPrChip}
+              results={onPrs ? results : undefined}
               sections={prViews}
               status={prStatus}
               skeletonTitles={['Needs my review', 'Mine']}
@@ -331,9 +378,7 @@ export function PhoneApp(p: PhoneAppProps) {
               onRefresh={p.onRefresh}
             />,
             <PhoneInbox
-              chips={issueChips(issues.data?.sections ?? [])}
-              chip={issueChip}
-              onChip={setIssueChip}
+              results={onPrs ? undefined : results}
               sections={issueViews}
               status={issueStatus}
               skeletonTitles={['Assigned to me', 'Created by me']}
@@ -358,8 +403,36 @@ export function PhoneApp(p: PhoneAppProps) {
             />,
           ]}
         />
+        {listTab && !searching ? (
+          <BottomBar
+            placeholder={placeholder}
+            filtersOn={filtersOn}
+            onSearch={() => setSearchingLayer(true)}
+            onFilters={() => setFilterLayer(true)}
+          />
+        ) : null}
       </main>
+      {searching ? (
+        <SearchBand
+          placeholder={placeholder}
+          query={query}
+          keyboard={keyboard !== undefined}
+          onQuery={setQuery}
+          onCancel={() => setSearchingLayer(false)}
+        />
+      ) : null}
       <TabBar tab={p.tab} counts={{ ...unseen, activity: activityUnseen }} onTab={selectTab} indicatorRef={pager.swipe.indicatorRef} />
+      {filterSheet && listTab ? (
+        <PhoneFilterSheet
+          title={onPrs ? 'Filter pull requests' : 'Filter issues'}
+          sub={onPrs ? 'A PR shows if it is in any ticked section' : 'An issue shows if it is in any ticked section'}
+          rows={filterRows}
+          value={filters}
+          onToggle={(k) => setFilters((s) => toggleFilter(s, k))}
+          onClear={() => setFilters(new Set())}
+          onClose={() => setFilterLayer(false)}
+        />
+      ) : null}
       {updates.toast ? (
         <div className={`ph-toast${updates.toast.ok ? '' : ' is-error'}`} role="status">
           {updates.toast.message}

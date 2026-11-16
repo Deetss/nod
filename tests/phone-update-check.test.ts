@@ -32,12 +32,8 @@ describe('phone menu Check for updates row', () => {
   function bar(onCheckUpdates: () => void, onMenu: (on: boolean) => void) {
     return createElement(AppBar, {
       title: 'PRs',
-      searching: false,
-      query: '',
       density: 'comfortable',
       theme: 'dark',
-      onQuery: () => undefined,
-      onSearching: () => undefined,
       menu: true,
       onMenu,
       onRefresh: () => undefined,

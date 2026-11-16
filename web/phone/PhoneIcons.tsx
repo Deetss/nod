@@ -27,6 +27,13 @@ export const SearchIcon = (p: IconProps) => (
   </Svg>
 );
 
+/** Three centred lines, 16, 10 and 4 wide. */
+export const FilterIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 6h16M7 12h10M10 18h4" />
+  </Svg>
+);
+
 export const MoreIcon = (p: IconProps) => (
   <Svg {...p}>
     <circle cx="5" cy="12" r="1" />

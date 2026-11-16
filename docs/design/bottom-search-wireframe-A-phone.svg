@@ -1,0 +1,591 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1412" height="2357" viewBox="0 0 1412 2357">
+<rect x="0.0" y="0.0" width="1412.0" height="2357.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="40.0" y="30.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="bold" fill="#222222" text-anchor="start">Layout A · one floating bar above the nav: search pill plus round filter button; hides on scroll down</text>
+<text x="40.0" y="52.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Round 1, greyscale. Phone 412x915, synthetic data only. Issue #32: bottom search and filter button instead of the chip row.</text>
+<text x="40.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">1 · PRs at rest, no filters</text>
+<rect x="42.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="40.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f40_92"><rect x="40" y="92" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f40_92)">
+<rect x="40.0" y="92.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="54.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="400.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="412.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="424.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="40.0" y="116.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="56.0" y="196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull requests</text>
+<circle cx="416.0" cy="152.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(404.0,140.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="40.0" y1="216.0" x2="452.0" y2="216.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="216.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="56.0" y="233.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="40.0" y="242.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="56.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEEDS MY REVIEW</text>
+<text x="436.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">2</text>
+<rect x="40.0" y="270.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="295.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: resolve duplicate webhook</text>
+<text x="56.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #365</text>
+<text x="436.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3h · +18 −4</text>
+<line x1="56.0" y1="330.0" x2="452.0" y2="330.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="330.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="355.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: retry failed webhook</text>
+<text x="56.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #371</text>
+<text x="436.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">5h · +89 −12</text>
+<line x1="56.0" y1="390.0" x2="452.0" y2="390.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="390.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="56.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">MINE</text>
+<text x="436.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">3</text>
+<rect x="40.0" y="418.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="443.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="56.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #11</text>
+<text x="436.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">12h · +54 −9</text>
+<line x1="56.0" y1="478.0" x2="452.0" y2="478.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="478.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="503.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: tidy swagger tags</text>
+<text x="56.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-co/orders-api #368</text>
+<text x="436.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">1d · +6 −6</text>
+<line x1="56.0" y1="538.0" x2="452.0" y2="538.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="538.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="563.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">docs: describe the API limits</text>
+<text x="56.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #10</text>
+<text x="436.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">20h · +48 −2</text>
+<line x1="56.0" y1="598.0" x2="452.0" y2="598.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="598.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="56.0" y="617.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">ORG OPEN</text>
+<text x="436.0" y="617.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">8</text>
+<rect x="40.0" y="626.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="651.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: log inbound vendor calls</text>
+<text x="56.0" y="673.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-dev/tools #12</text>
+<text x="436.0" y="673.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3d · +140 −7</text>
+<line x1="56.0" y1="686.0" x2="452.0" y2="686.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="686.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="711.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: remove unused icons</text>
+<text x="56.0" y="733.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #360</text>
+<text x="436.0" y="733.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">2d · +2 −64</text>
+<line x1="56.0" y1="746.0" x2="452.0" y2="746.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="746.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="771.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">test: cover token refresh</text>
+<text x="56.0" y="793.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-dev/tools #14</text>
+<text x="436.0" y="793.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">2d · +77 −3</text>
+<line x1="56.0" y1="806.0" x2="452.0" y2="806.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="935.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="935.0" x2="452.0" y2="935.0" stroke="#cfcfd2" stroke-width="1"/>
+<rect x="88.7" y="936.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="108.7" cy="961.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(98.5,950.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="118.7" y="941.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="130.7" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="108.7" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="246.0" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(235.8,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="256.0" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="265.0" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="246.0" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="383.3" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(373.1,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="393.3" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="402.3" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="383.3" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="56.0" y="873.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="56.0" y="871.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(71.2,884.2) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="102.0" y="900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search pull requests</text>
+<circle cx="412.0" cy="897.0" r="25" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<circle cx="412.0" cy="895.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(400.0,883.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+</g>
+<rect x="40.0" y="92.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="40.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">One floating bar 16px above the nav. Wide search pill,</text>
+<text x="40.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">round filter button at its right. No badge with no</text>
+<text x="40.0" y="1063.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">filters. Header keeps only the ··· menu.</text>
+<text x="500.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">2 · PRs, 2 filters active</text>
+<rect x="502.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="500.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f500_92"><rect x="500" y="92" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f500_92)">
+<rect x="500.0" y="92.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="514.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="860.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="872.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="884.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="500.0" y="116.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="516.0" y="196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull requests</text>
+<circle cx="876.0" cy="152.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(864.0,140.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="500.0" y1="216.0" x2="912.0" y2="216.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="216.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="516.0" y="233.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="500.0" y="242.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="516.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEEDS MY REVIEW</text>
+<text x="896.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">2</text>
+<rect x="500.0" y="270.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="295.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: resolve duplicate webhook</text>
+<text x="516.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #365</text>
+<text x="896.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3h · +18 −4</text>
+<line x1="516.0" y1="330.0" x2="912.0" y2="330.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="330.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="355.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: retry failed webhook</text>
+<text x="516.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #371</text>
+<text x="896.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">5h · +89 −12</text>
+<line x1="516.0" y1="390.0" x2="912.0" y2="390.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="390.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="516.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">MINE</text>
+<text x="896.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">3</text>
+<rect x="500.0" y="418.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="443.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="516.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #11</text>
+<text x="896.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">12h · +54 −9</text>
+<line x1="516.0" y1="478.0" x2="912.0" y2="478.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="478.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="503.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: tidy swagger tags</text>
+<text x="516.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-co/orders-api #368</text>
+<text x="896.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">1d · +6 −6</text>
+<line x1="516.0" y1="538.0" x2="912.0" y2="538.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="538.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="563.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">docs: describe the API limits</text>
+<text x="516.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #10</text>
+<text x="896.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">20h · +48 −2</text>
+<line x1="516.0" y1="598.0" x2="912.0" y2="598.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="935.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="500.0" y1="935.0" x2="912.0" y2="935.0" stroke="#cfcfd2" stroke-width="1"/>
+<rect x="548.7" y="936.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="568.7" cy="961.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(558.5,950.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="578.7" y="941.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="590.7" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="568.7" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="706.0" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(695.8,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="716.0" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="725.0" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="706.0" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="843.3" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(833.1,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="853.3" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="862.3" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="843.3" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="516.0" y="873.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="516.0" y="871.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(531.2,884.2) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="562.0" y="900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search pull requests</text>
+<circle cx="872.0" cy="897.0" r="25" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<circle cx="872.0" cy="895.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(860.0,883.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="880.0" y="865.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="889.0" y="878.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+</g>
+<rect x="500.0" y="92.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="500.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Needs me and Mine are on. The filter button shows a badge</text>
+<text x="500.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">of 2. The list keeps its sections; other sections drop</text>
+<text x="500.0" y="1063.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">out.</text>
+<text x="960.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3 · Filter sheet open</text>
+<rect x="962.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f960_92"><rect x="960" y="92" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f960_92)">
+<rect x="960.0" y="92.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="974.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="1320.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1332.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1344.0" y="99.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="960.0" y="116.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="976.0" y="196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Pull requests</text>
+<circle cx="1336.0" cy="152.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1324.0,140.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="960.0" y1="216.0" x2="1372.0" y2="216.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="216.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="976.0" y="233.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="960.0" y="242.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="976.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">NEEDS MY REVIEW</text>
+<text x="1356.0" y="261.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">2</text>
+<rect x="960.0" y="270.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="295.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: resolve duplicate webhook</text>
+<text x="976.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #365</text>
+<text x="1356.0" y="317.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3h · +18 −4</text>
+<line x1="976.0" y1="330.0" x2="1372.0" y2="330.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="330.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="355.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: retry failed webhook</text>
+<text x="976.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #371</text>
+<text x="1356.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">5h · +89 −12</text>
+<line x1="976.0" y1="390.0" x2="1372.0" y2="390.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="390.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="976.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">MINE</text>
+<text x="1356.0" y="409.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">3</text>
+<rect x="960.0" y="418.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="443.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="976.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #11</text>
+<text x="1356.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">12h · +54 −9</text>
+<line x1="976.0" y1="478.0" x2="1372.0" y2="478.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="478.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="503.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: tidy swagger tags</text>
+<text x="976.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-co/orders-api #368</text>
+<text x="1356.0" y="525.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">1d · +6 −6</text>
+<line x1="976.0" y1="538.0" x2="1372.0" y2="538.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="538.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="563.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">docs: describe the API limits</text>
+<text x="976.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #10</text>
+<text x="1356.0" y="585.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">20h · +48 −2</text>
+<line x1="976.0" y1="598.0" x2="1372.0" y2="598.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="935.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="935.0" x2="1372.0" y2="935.0" stroke="#cfcfd2" stroke-width="1"/>
+<rect x="1008.7" y="936.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="1028.7" cy="961.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1018.5,950.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="1038.7" y="941.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1050.7" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="1028.7" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="1166.0" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1155.8,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="1176.0" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1185.0" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="1166.0" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="1303.3" cy="961.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1293.1,950.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="1313.3" y="941.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1322.3" y="954.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="1303.3" y="997.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="976.0" y="873.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="976.0" y="871.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(991.2,884.2) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="1022.0" y="900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search pull requests</text>
+<circle cx="1332.0" cy="897.0" r="25" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<circle cx="1332.0" cy="895.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1320.0,883.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+<rect x="1340.0" y="865.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1349.0" y="878.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="0" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.35"/>
+<rect x="960.0" y="579.0" width="412.0" height="448.0" rx="16" fill="#ffffff" stroke="none" stroke-width="1" />
+<rect x="1146.0" y="587.0" width="40.0" height="4.0" rx="2" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<text x="976.0" y="625.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" fill="#3a3a3a" text-anchor="start">Filter pull requests</text>
+<text x="1356.0" y="625.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#6a6a6a" text-anchor="end">Clear</text>
+<line x1="1310.0" y1="630.0" x2="1356.0" y2="630.0" stroke="#6a6a6a" stroke-width="1"/>
+<line x1="960.0" y1="643.0" x2="1372.0" y2="643.0" stroke="#dcdcde" stroke-width="1"/>
+<text x="976.0" y="677.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Needs me</text>
+<text x="1064.8" y="677.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2</text>
+<rect x="1334.0" y="660.0" width="22.0" height="22.0" rx="4" fill="#3a3a3a" stroke="#3a3a3a" stroke-width="1" />
+<path d="M1339 671.5 l4.5 4.5 l8 -9" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="976.0" y1="699.0" x2="1372.0" y2="699.0" stroke="#dcdcde" stroke-width="1"/>
+<text x="976.0" y="733.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="1026.4" y="733.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3</text>
+<rect x="1334.0" y="716.0" width="22.0" height="22.0" rx="4" fill="#3a3a3a" stroke="#3a3a3a" stroke-width="1" />
+<path d="M1339 727.5 l4.5 4.5 l8 -9" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="976.0" y1="755.0" x2="1372.0" y2="755.0" stroke="#dcdcde" stroke-width="1"/>
+<text x="976.0" y="789.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="normal" fill="#3a3a3a" text-anchor="start">Org</text>
+<text x="1016.8" y="789.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">8</text>
+<rect x="1334.0" y="772.0" width="22.0" height="22.0" rx="4" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<line x1="976.0" y1="811.0" x2="1372.0" y2="811.0" stroke="#dcdcde" stroke-width="1"/>
+<text x="976.0" y="845.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="normal" fill="#3a3a3a" text-anchor="start">Dependabot</text>
+<text x="1084.0" y="845.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1</text>
+<rect x="1334.0" y="828.0" width="22.0" height="22.0" rx="4" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<line x1="976.0" y1="867.0" x2="1372.0" y2="867.0" stroke="#dcdcde" stroke-width="1"/>
+<text x="976.0" y="891.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Rows combine: a PR shows if it matches any.</text>
+<rect x="976.0" y="907.0" width="380.0" height="48.0" rx="24" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1166.0" y="936.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">Done · 2 filters</text>
+</g>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="960.0" y="1031.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Tapping the filter button opens a bottom sheet. Each chip</text>
+<text x="960.0" y="1047.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">from today becomes a checkbox row with its count. Clear</text>
+<text x="960.0" y="1063.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">resets; Done closes.</text>
+<text x="40.0" y="1105.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">4 · Search active</text>
+<rect x="42.0" y="1120.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="40.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f40_1117"><rect x="40" y="1117" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f40_1117)">
+<rect x="40.0" y="1117.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="54.0" y="1134.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="400.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="412.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="424.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="40.0" y="1141.0" width="412.0" height="30.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="56.0" y="1161.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">7 results for “webhook” · Needs me, Mine</text>
+<rect x="40.0" y="1171.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1196.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: resolve duplicate webhook</text>
+<text x="56.0" y="1218.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #365</text>
+<text x="436.0" y="1218.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3h</text>
+<line x1="56.0" y1="1231.0" x2="452.0" y2="1231.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1231.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1256.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: retry failed webhook</text>
+<text x="56.0" y="1278.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #371</text>
+<text x="436.0" y="1278.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">5h</text>
+<line x1="56.0" y1="1291.0" x2="452.0" y2="1291.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1291.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1316.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">test: webhook signature check</text>
+<text x="56.0" y="1338.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #17</text>
+<text x="436.0" y="1338.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">1d</text>
+<line x1="56.0" y1="1351.0" x2="452.0" y2="1351.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1351.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1376.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">docs: webhook setup steps</text>
+<text x="56.0" y="1398.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-dev/tools #18</text>
+<text x="436.0" y="1398.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">2d</text>
+<line x1="56.0" y1="1411.0" x2="452.0" y2="1411.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1411.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1436.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: rename webhook env vars</text>
+<text x="56.0" y="1458.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #349</text>
+<text x="436.0" y="1458.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">6d</text>
+<line x1="56.0" y1="1471.0" x2="452.0" y2="1471.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1471.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1496.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: webhook timeout handling</text>
+<text x="56.0" y="1518.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #9</text>
+<text x="436.0" y="1518.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">8d</text>
+<line x1="56.0" y1="1531.0" x2="452.0" y2="1531.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1531.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="56.0" y="1556.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: webhook replay button</text>
+<text x="56.0" y="1578.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #344</text>
+<text x="436.0" y="1578.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">9d</text>
+<line x1="56.0" y1="1591.0" x2="452.0" y2="1591.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1594.0" width="412.0" height="72.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<line x1="40.0" y1="1594.0" x2="452.0" y2="1594.0" stroke="#cfcfd2" stroke-width="1"/>
+<rect x="56.0" y="1606.0" width="300.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1.5" />
+<g transform="translate(69.2,1619.2) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="100.0" y="1635.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="normal" fill="#3a3a3a" text-anchor="start">webhook</text>
+<line x1="169.0" y1="1618.0" x2="169.0" y2="1642.0" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="436.0" y="1635.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="end">Cancel</text>
+<rect x="40.0" y="1666.0" width="412.0" height="366.0" rx="0" fill="#d6d6d9" stroke="none" stroke-width="1" />
+<text x="246.0" y="1688.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="middle">Keyboard (about 40% of the screen)</text>
+<rect x="46.0" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="86.6" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="127.2" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="167.8" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="208.4" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="249.0" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="289.6" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="330.2" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="370.8" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="411.4" y="1702.0" width="34.6" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="64.0" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="105.1" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="146.2" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="187.3" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="228.4" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="269.6" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="310.7" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="351.8" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="392.9" y="1772.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="64.0" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="105.1" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="146.2" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="187.3" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="228.4" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="269.6" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="310.7" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="351.8" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="392.9" y="1842.0" width="35.1" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="46.0" y="1912.0" width="56.0" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="108.0" y="1912.0" width="40.0" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="154.0" y="1912.0" width="176.0" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="336.0" y="1912.0" width="40.0" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+<rect x="382.0" y="1912.0" width="56.0" height="58.0" rx="6" fill="#f4f4f6" stroke="#bdbdc0" stroke-width="1" />
+</g>
+<rect x="40.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="40.0" y="2056.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Tapping the pill moves it up to sit on the keyboard.</text>
+<text x="40.0" y="2072.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Results replace the list and fill the space above. Cancel</text>
+<text x="40.0" y="2088.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">clears and drops the keyboard.</text>
+<text x="500.0" y="1105.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">5 · Scrolled down</text>
+<rect x="502.0" y="1120.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="500.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f500_1117"><rect x="500" y="1117" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f500_1117)">
+<rect x="500.0" y="1117.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="514.0" y="1134.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="860.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="872.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="884.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="500.0" y="1141.0" width="412.0" height="56.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="706.0" y="1175.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="bold" fill="#3a3a3a" text-anchor="middle">Pull requests</text>
+<circle cx="876.0" cy="1169.0" r="18" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(864.0,1157.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="500.0" y1="1197.0" x2="912.0" y2="1197.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1197.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="516.0" y="1216.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">MINE</text>
+<text x="896.0" y="1216.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">3</text>
+<rect x="500.0" y="1225.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1250.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: reject unsigned vendor calls</text>
+<text x="516.0" y="1272.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #11</text>
+<text x="896.0" y="1272.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">12h · +54 −9</text>
+<line x1="516.0" y1="1285.0" x2="912.0" y2="1285.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1285.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1310.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: tidy swagger tags</text>
+<text x="516.0" y="1332.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-co/orders-api #368</text>
+<text x="896.0" y="1332.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">1d · +6 −6</text>
+<line x1="516.0" y1="1345.0" x2="912.0" y2="1345.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1345.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1370.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">docs: describe the API limits</text>
+<text x="516.0" y="1392.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #10</text>
+<text x="896.0" y="1392.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">20h · +48 −2</text>
+<line x1="516.0" y1="1405.0" x2="912.0" y2="1405.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1405.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="516.0" y="1424.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">ORG OPEN</text>
+<text x="896.0" y="1424.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">8</text>
+<rect x="500.0" y="1433.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1458.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: log inbound vendor calls</text>
+<text x="516.0" y="1480.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-dev/tools #12</text>
+<text x="896.0" y="1480.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">3d · +140 −7</text>
+<line x1="516.0" y1="1493.0" x2="912.0" y2="1493.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1493.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1518.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">chore: remove unused icons</text>
+<text x="516.0" y="1540.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #360</text>
+<text x="896.0" y="1540.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">2d · +2 −64</text>
+<line x1="516.0" y1="1553.0" x2="912.0" y2="1553.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1553.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1578.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">test: cover token refresh</text>
+<text x="516.0" y="1600.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-dev/tools #14</text>
+<text x="896.0" y="1600.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">2d · +77 −3</text>
+<line x1="516.0" y1="1613.0" x2="912.0" y2="1613.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1613.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1638.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">build: bump node to 22</text>
+<text x="516.0" y="1660.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-co/orders-api #358</text>
+<text x="896.0" y="1660.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">4d · +3 −3</text>
+<line x1="516.0" y1="1673.0" x2="912.0" y2="1673.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1673.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1698.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: trim queue retry delay</text>
+<text x="516.0" y="1720.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-dev/tools #15</text>
+<text x="896.0" y="1720.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">4d · +9 −5</text>
+<line x1="516.0" y1="1733.0" x2="912.0" y2="1733.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1733.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1758.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">refactor: split order mapper</text>
+<text x="516.0" y="1780.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee · acme-co/orders-api #355</text>
+<text x="896.0" y="1780.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">5d · +21 −18</text>
+<line x1="516.0" y1="1793.0" x2="912.0" y2="1793.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1793.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1818.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">ci: cache test fixtures</text>
+<text x="516.0" y="1840.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build-bot · acme-dev/tools #16</text>
+<text x="896.0" y="1840.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">6d · +12 −1</text>
+<line x1="516.0" y1="1853.0" x2="912.0" y2="1853.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1853.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="516.0" y="1878.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">fix: log missing vendor id</text>
+<text x="516.0" y="1900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">acme-dev · acme-co/orders-api #352</text>
+<text x="896.0" y="1900.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">6d · +4 −1</text>
+<line x1="516.0" y1="1913.0" x2="912.0" y2="1913.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1960.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="500.0" y1="1960.0" x2="912.0" y2="1960.0" stroke="#cfcfd2" stroke-width="1"/>
+<rect x="548.7" y="1961.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="568.7" cy="1986.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(558.5,1975.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="578.7" y="1966.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="590.7" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="568.7" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">PRs</text>
+<circle cx="706.0" cy="1986.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(695.8,1975.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="716.0" y="1966.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="725.0" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="706.0" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Issues</text>
+<circle cx="843.3" cy="1986.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(833.1,1975.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="853.3" y="1966.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="862.3" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="843.3" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+</g>
+<rect x="500.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="500.0" y="2056.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Scrolling down slides the bar away so rows reach the nav.</text>
+<text x="500.0" y="2072.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Any scroll up brings it back. The header collapses as</text>
+<text x="500.0" y="2088.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">built in #31.</text>
+<text x="960.0" y="1105.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">6 · Issues tab at rest</text>
+<rect x="962.0" y="1120.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.10"/>
+<rect x="960.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1" />
+<clipPath id="f960_1117"><rect x="960" y="1117" width="412" height="915" rx="14"/></clipPath>
+<g clip-path="url(#f960_1117)">
+<rect x="960.0" y="1117.0" width="412.0" height="24.0" rx="0" fill="#ececee" stroke="none" stroke-width="1" />
+<text x="974.0" y="1134.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="1320.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1332.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="1344.0" y="1124.0" width="8.0" height="10.0" rx="1" fill="#9a9a9a" stroke="none" stroke-width="1" />
+<rect x="960.0" y="1141.0" width="412.0" height="100.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1" />
+<text x="976.0" y="1221.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="bold" fill="#3a3a3a" text-anchor="start">Issues</text>
+<circle cx="1336.0" cy="1177.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1324.0,1165.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></g>
+<line x1="960.0" y1="1241.0" x2="1372.0" y2="1241.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1241.0" width="412.0" height="26.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1" />
+<text x="976.0" y="1258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Synced 10s ago · API 4,909 left</text>
+<rect x="960.0" y="1267.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="976.0" y="1286.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">IN PROGRESS</text>
+<text x="1356.0" y="1286.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">2</text>
+<rect x="960.0" y="1295.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1320.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Status filter ignores closed items</text>
+<rect x="976.0" y="1329.0" width="101.4" height="20.0" rx="10" fill="#ffffff" stroke="#6a6a6a" stroke-width="1" />
+<text x="1026.7" y="1343.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#3a3a3a" text-anchor="middle">In progress</text>
+<text x="1356.0" y="1343.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-co/orders-api #412</text>
+<line x1="976.0" y1="1355.0" x2="1372.0" y2="1355.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1355.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1380.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Rotate agent token on restart</text>
+<rect x="976.0" y="1389.0" width="101.4" height="20.0" rx="10" fill="#ffffff" stroke="#6a6a6a" stroke-width="1" />
+<text x="1026.7" y="1403.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#3a3a3a" text-anchor="middle">In progress</text>
+<text x="1356.0" y="1403.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-dev/tools #9</text>
+<line x1="976.0" y1="1415.0" x2="1372.0" y2="1415.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1415.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="976.0" y="1434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">ASSIGNED</text>
+<text x="1356.0" y="1434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">5</text>
+<rect x="960.0" y="1443.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1468.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Retry webhook deliveries after 5xx</text>
+<rect x="976.0" y="1477.0" width="79.2" height="20.0" rx="10" fill="#ffffff" stroke="#6a6a6a" stroke-width="1" />
+<text x="1015.6" y="1491.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#3a3a3a" text-anchor="middle">security</text>
+<text x="1356.0" y="1491.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-co/orders-api #402</text>
+<line x1="976.0" y1="1503.0" x2="1372.0" y2="1503.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1503.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1528.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Worker report omits the branch</text>
+<text x="976.0" y="1551.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 comment · 3 open</text>
+<text x="1356.0" y="1551.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-dev/tools #63</text>
+<line x1="976.0" y1="1563.0" x2="1372.0" y2="1563.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1563.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1588.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Sync line shows stale API count</text>
+<text x="976.0" y="1611.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 comment · 3 open</text>
+<text x="1356.0" y="1611.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-co/orders-api #398</text>
+<line x1="976.0" y1="1623.0" x2="1372.0" y2="1623.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1623.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1648.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Order export drops the vendor id</text>
+<rect x="976.0" y="1657.0" width="42.2" height="20.0" rx="10" fill="#ffffff" stroke="#6a6a6a" stroke-width="1" />
+<text x="997.1" y="1671.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#3a3a3a" text-anchor="middle">bug</text>
+<text x="1356.0" y="1671.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-co/orders-api #395</text>
+<line x1="976.0" y1="1683.0" x2="1372.0" y2="1683.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1683.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1708.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Add retry budget to the client</text>
+<text x="976.0" y="1731.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">1 comment · 3 open</text>
+<text x="1356.0" y="1731.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-dev/tools #58</text>
+<line x1="976.0" y1="1743.0" x2="1372.0" y2="1743.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1743.0" width="412.0" height="28.0" rx="0" fill="#e6e6e8" stroke="none" stroke-width="1" />
+<text x="976.0" y="1762.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">UNTRIAGED</text>
+<text x="1356.0" y="1762.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="end">3</text>
+<rect x="960.0" y="1771.0" width="412.0" height="60.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1" />
+<text x="976.0" y="1796.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Crash when the token is revoked</text>
+<rect x="976.0" y="1805.0" width="86.6" height="20.0" rx="10" fill="#ffffff" stroke="#6a6a6a" stroke-width="1" />
+<text x="1019.3" y="1819.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#3a3a3a" text-anchor="middle">Untriaged</text>
+<text x="1356.0" y="1819.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="end">acme-dev/tools #71</text>
+<line x1="976.0" y1="1831.0" x2="1372.0" y2="1831.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1960.0" width="412.0" height="72.0" rx="0" fill="#efeff1" stroke="none" stroke-width="1" />
+<line x1="960.0" y1="1960.0" x2="1372.0" y2="1960.0" stroke="#cfcfd2" stroke-width="1"/>
+<circle cx="1028.7" cy="1986.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1018.5,1975.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.4"/><circle cx="7" cy="18" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M7 8.4v7.2M17 15.6V10a3 3 0 0 0-3-3h-3"/></g>
+<rect x="1038.7" y="1966.0" width="24.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1050.7" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">12</text>
+<text x="1028.7" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">PRs</text>
+<rect x="1146.0" y="1961.0" width="40.0" height="3.0" rx="1.5" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<circle cx="1166.0" cy="1986.0" r="16" fill="#e4e4e6" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1155.8,1975.8) scale(0.85)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="1.5"/></g>
+<rect x="1176.0" y="1966.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1185.0" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+<text x="1166.0" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#3a3a3a" text-anchor="middle">Issues</text>
+<circle cx="1303.3" cy="1986.0" r="16" fill="#f7f7f8" stroke="#9a9a9a" stroke-width="1" />
+<g transform="translate(1293.1,1975.8) scale(0.85)" stroke="#7a7a7a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 12h3.5L8 4.6l2.6 14.8 2.9-14.8h3.4"/></g>
+<rect x="1313.3" y="1966.0" width="18.0" height="18.0" rx="9" fill="#3a3a3a" stroke="none" stroke-width="1" />
+<text x="1322.3" y="1979.5" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="1303.3" y="2022.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#6f6f6f" text-anchor="middle">Activity</text>
+<rect x="976.0" y="1898.0" width="324.0" height="48.0" rx="24" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<rect x="976.0" y="1896.0" width="324.0" height="48.0" rx="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(991.2,1909.2) scale(0.9)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></g>
+<text x="1022.0" y="1925.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Search issues</text>
+<circle cx="1332.0" cy="1922.0" r="25" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.12"/>
+<circle cx="1332.0" cy="1920.0" r="24" fill="#ffffff" stroke="#3a3a3a" stroke-width="1" />
+<g transform="translate(1320.0,1908.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M7 12h10M10 17h4"/></g>
+</g>
+<rect x="960.0" y="1117.0" width="412.0" height="915.0" rx="14" fill="none" stroke="#9a9a9a" stroke-width="1" />
+<text x="960.0" y="2056.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Same bar on Issues. The sheet lists the Issues chips: In</text>
+<text x="960.0" y="2072.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">progress, Assigned, Created, Mentioned, Untriaged and the</text>
+<text x="960.0" y="2088.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">bot section.</text>
+<text x="40.0" y="2136.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Layout A: a single floating bar holds both search and filter, so the two related actions sit together in thumb reach. It slides away on scroll down to give rows the full height and returns on scroll up. The nav</text>
+<text x="40.0" y="2153.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">keeps three tabs.</text>
+<text x="40.0" y="2187.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Setup: every frame is a 412x915 Android phone with the status bar at the top and the bottom nav (PRs / Issues / Activity with badges) at the bottom. The large-title header from #31, the sync line, section headers</text>
+<text x="40.0" y="2204.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">and rows stay as they are today; #33, #34 and #39 change those later. The chip row is gone on phone, which removes the horizontal scroll and the cut-off last chip.</text>
+<text x="40.0" y="2238.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Header search button: removed in both layouts. The bottom control is the one way into search, and it sits in thumb reach; keeping both would give two entry points in different places. The ··· menu stays.</text>
+<text x="40.0" y="2272.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Filter sheet rows come from the real chip sets in web/phone/phone-logic.ts. PRs: Needs me, Mine, Org, Dependabot. Issues: In progress, Assigned, Created, Mentioned, Untriaged, plus the bot section when present. The</text>
+<text x="40.0" y="2289.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">badge counts rows that are on; All is the state with none on.</text>
+<text x="40.0" y="2323.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Sample data only: repos acme-co/orders-api and acme-dev/tools; authors acme-dev, build-bot and sam-lee. Greyscale labelled boxes, minimum 12px text, no colour or styling.</text>
+</svg>
