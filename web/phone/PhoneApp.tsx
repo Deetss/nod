@@ -36,6 +36,7 @@ import { projectOff } from '../../shared/connection';
 import { clockOf, tokenBlocks } from '../Banner';
 import type { ConnectionView } from '../settings/useConnection';
 import { PhoneConnectionSheet } from './PhoneConnectionSheet';
+import { useUpdateCheck } from './useUpdateCheck';
 import { PhoneQuietNote, SyncFailedBanner, TokenBannerPhone } from './PhoneStates';
 
 interface PhoneAppProps {
@@ -71,6 +72,7 @@ export function PhoneApp(p: PhoneAppProps) {
   const [query, setQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [menu, setMenu] = useState(false);
+  const updates = useUpdateCheck();
   const [prChip, setPrChip] = useState('all');
   const [issueChip, setIssueChip] = useState('all');
   const [open, setOpen] = useState(loadOpen);
@@ -306,6 +308,7 @@ export function PhoneApp(p: PhoneAppProps) {
           onRefresh={p.onRefresh}
           onDensity={p.onDensity}
           onToggleTheme={p.onToggleTheme}
+          onCheckUpdates={updates.check}
         />
         <SwipePager
           pager={pager}
@@ -357,6 +360,11 @@ export function PhoneApp(p: PhoneAppProps) {
         />
       </main>
       <TabBar tab={p.tab} counts={{ ...unseen, activity: activityUnseen }} onTab={selectTab} indicatorRef={pager.swipe.indicatorRef} />
+      {updates.toast ? (
+        <div className={`ph-toast${updates.toast.ok ? '' : ' is-error'}`} role="status">
+          {updates.toast.message}
+        </div>
+      ) : null}
       <LinkRouterContext.Provider value={routeLink}>
       <PhoneSheets
         sheets={sheets}

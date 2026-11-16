@@ -4,7 +4,7 @@ An Electron shell around the same server and front end. It starts the server in-
 
 ## Install and updates
 
-Install from the [releases page](https://github.com/Deetss/nod/releases/latest): download `nod-<version>.AppImage`, make it executable and run it. It installs itself under `~/.local/opt/nod` and puts `nod` on your path. It checks once a day and installs the next release itself, so the copy you downloaded stops being the one you run.
+Install from the [releases page](https://github.com/Deetss/nod/releases/latest): download `nod-<version>.AppImage`, make it executable and run it. It installs itself under `~/.local/opt/nod` and puts `nod` on your path. It installs each new release itself, so the copy you downloaded stops being the one you run.
 
 ```bash
 chmod +x nod-<version>.AppImage
@@ -13,7 +13,7 @@ chmod +x nod-<version>.AppImage
 
 `scripts/install-desktop.sh` does the same: it copies the newest AppImage to `~/.local/opt/nod/nod.AppImage`, writes `~/.local/bin/nod`, a `.desktop` file (`StartupWMClass=nod`) and the icon under `~/.local/share/icons/hicolor/`. AppImages need FUSE 2 (`fuse2` on Arch, `libfuse2` on Debian and Ubuntu). Use `--install-service` for the service (see [Phone](phone.md#service)) and `--restart` to relaunch a running copy.
 
-Only the process that owns the server checks for updates, at start and every hour. Settings > Updates > Check for updates checks now.
+Only the process that owns the server checks for updates, at start, every hour, and when a window or phone opens Nod (at most once every 10 minutes). Settings > Updates > Check for updates checks now, and so does `nod update` in a terminal, which asks the server on port 4477 and prints the answer.
 
 - The service installs a new release as soon as it downloads and exits. systemd restarts it on the new build, and open windows and phones reload onto it.
 - A window running its own server installs on quit (`Ctrl+Q`).
@@ -22,7 +22,7 @@ Only the process that owns the server checks for updates, at start and every hou
 
 The unit's `ExecStop` stops Nod before the AppImage's FUSE daemon. Stopping both at once crashes Nod with SIGBUS and leaves a dead `/tmp/.mount_nod.*` mount. Rerunning the install script refreshes an installed unit. Dead mounts from older units clear with `fusermount -u` or a reboot.
 
-To cut a release, bump `version` in `package.json` in a PR. After it merges, tag `main` (`git tag v0.2.1 && git push origin v0.2.1`). The tag must match the version. It runs `.github/workflows/release.yml`, which tests, builds and publishes `nod-<version>.AppImage` and `nod-<version>.apk`.
+Every merge to `main` that changes more than docs and Markdown ships a release. `.github/workflows/release.yml` bumps the patch of the newest `v*` tag, tests, tags, then publishes `nod-<version>.AppImage`, `latest-linux.yml` and `nod-<version>.apk`. For a minor or major release, raise `version` in `package.json` in the PR; the workflow uses it when it is higher. Actions > Release > Run workflow releases by hand.
 
 The window class is `nod`, so Hyprland window rules can match it. Fixtures work too: `NOD_FIXTURES=1 nod`.
 
