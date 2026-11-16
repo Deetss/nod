@@ -131,6 +131,12 @@ interface Copy {
 }
 
 const CONFIRM_COPY: Record<Exclude<ConfirmKind, 'bot'>, Copy> = {
+  'discard-review': {
+    title: 'Discard pending review?',
+    body: 'Deletes your draft comments on this PR. This cannot be undone.',
+    ok: 'Discard',
+    danger: true,
+  },
   'auto-merge': {
     title: 'Enable auto-merge?',
     body: 'GitHub merges when the required checks and reviews pass.',
@@ -185,6 +191,7 @@ const BUSY_LABEL: Partial<Record<ConfirmKind, string>> = {
   'auto-merge': 'Enabling auto-merge...',
   'admin-merge': 'Merging...',
   ready: 'Marking ready...',
+  'discard-review': 'Discarding...',
   'fix-checks': 'Dispatching...',
   'fix-conflicts': 'Dispatching...',
 };

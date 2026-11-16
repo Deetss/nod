@@ -4,6 +4,8 @@ export type Level =
   | { kind: 'issue'; id: string }
   | { kind: 'diff'; path: string }
   | { kind: 'actions' }
+  | { kind: 'comment' }
+  | { kind: 'finish-review' }
   | { kind: 'confirm'; action: ConfirmKind }
   | { kind: 'composer'; mode: ComposerMode }
   | { kind: 'picker'; field: 'labels' | 'assignees' | 'milestone' }
@@ -19,7 +21,7 @@ export type Level =
   | { kind: 'form-picker'; field: 'repository' | 'labels' | 'assignees' };
 
 export type FixMode = 'checks' | 'conflicts';
-export type ConfirmKind = 'auto-merge' | 'admin-merge' | 'ready' | 'dispatch' | 'bot' | `fix-${FixMode}`;
+export type ConfirmKind = 'auto-merge' | 'admin-merge' | 'ready' | 'dispatch' | 'bot' | 'discard-review' | `fix-${FixMode}`;
 export type ComposerMode = 'comment' | 'request' | 'description';
 
 export type StackAction =

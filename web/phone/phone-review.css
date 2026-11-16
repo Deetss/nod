@@ -1,0 +1,179 @@
+/* Review on phone: line selection, the comment sheet, drafts in the diff, the pending bar, Finish review. */
+
+/* The number cells are the tap target: the desktop's gutter button, stretched over them and invisible. */
+.ph-diff .dl-num {
+  position: relative;
+}
+
+.ph-diff .dl-add-btn {
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  opacity: 0;
+}
+
+.ph-diff .dl-thread-btn {
+  display: none;
+}
+
+/* Selected rows: accent tint over the line colour and a 2px accent bar at the left edge. */
+.ph-diff .dl-cursor,
+.ph-diff .dl-cursor > span:not(.dl-code) {
+  background-image: linear-gradient(var(--bgColor-accent-muted), var(--bgColor-accent-muted));
+}
+
+.ph-diff .dl-cursor {
+  box-shadow: inset 2px 0 0 var(--fgColor-accent);
+}
+
+.ph-diff .dl-cursor .dl-code {
+  box-shadow: none;
+}
+
+/* Drafts sit under their line, pinned to the visible width with 12px each side. */
+.ph-diff .thread-card {
+  left: 12px;
+  width: calc(100cqw - 24px);
+  margin: 8px 12px;
+}
+
+.ph-diff .thread-body {
+  padding: 4px 12px;
+}
+
+/* Comment sheet: Add to review and Comment share a row, Cancel takes the next. */
+.ph-comment-bar {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ph-comment-bar .ph-btn.is-wide {
+  grid-column: 1 / -1;
+}
+
+.ph-fit-form .ph-comment-text {
+  height: 120px;
+  max-height: 152px;
+  padding: 12px;
+  font-size: 15px;
+  line-height: 22px;
+  resize: none;
+}
+
+.ph-fit-form .ph-comment-text:focus {
+  border-color: var(--fgColor-accent);
+  outline: none;
+}
+
+/* Pending bar: a full-width row above the PR bar while drafts exist. */
+.ph-actionbar:has(.ph-pending-bar) {
+  flex-wrap: wrap;
+}
+
+.ph-pending-bar {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 64px;
+  padding: 0 10px 0 14px;
+  box-sizing: border-box;
+  background: var(--bgColor-attention-muted);
+  border: 1px solid var(--borderColor-attention-emphasis);
+  border-radius: 12px;
+}
+
+.ph-pending-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: var(--fgColor-muted);
+}
+
+.ph-pending-text strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fgColor-default);
+}
+
+.ph-actionbar .ph-pending-bar .ph-btn {
+  flex: none;
+  min-height: 44px;
+  padding: 0 14px;
+}
+
+/* Finish review: three radio rows and the summary. */
+.ph-finish-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ph-finish-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 14px;
+  text-align: left;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 10px;
+  color: var(--fgColor-default);
+  font: inherit;
+}
+
+.ph-finish-option.is-on {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--fgColor-accent);
+}
+
+.ph-finish-option:disabled {
+  opacity: 0.55;
+}
+
+.ph-finish-dot {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid var(--borderColor-default);
+  border-radius: 50%;
+}
+
+.ph-finish-option.is-on .ph-finish-dot {
+  border-color: var(--fgColor-accent);
+  background: radial-gradient(var(--fgColor-accent) 0 4.5px, transparent 5px);
+}
+
+.ph-finish-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ph-finish-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ph-finish-sub {
+  font-size: 13px;
+  color: var(--fgColor-muted);
+}
+
+.ph-fit-form .ph-finish-body {
+  height: 76px;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 15px;
+  resize: none;
+}

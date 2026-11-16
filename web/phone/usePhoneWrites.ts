@@ -19,6 +19,7 @@ export interface PhoneWrites {
   autoMerge: (pr: PrSummary) => Promise<boolean>;
   adminMerge: (pr: PrSummary) => Promise<boolean>;
   markReady: (pr: PrSummary) => Promise<boolean>;
+  discardReview: (pr: PrSummary) => Promise<boolean>;
   /** `fail` prefixes the server message when the call fails: `Could not rename x: <message>`. */
   issue: (action: IssueAction, done: string, fail?: string) => Promise<boolean>;
   closeIssue: (repo: string, number: number, reason: CloseReason) => Promise<boolean>;
@@ -69,6 +70,10 @@ export function usePhoneWrites(onChanged: () => void): PhoneWrites {
     [run],
   );
   const markReady = useCallback((pr: PrSummary) => run(() => api.markReady(pr.repo, pr.number)), [run]);
+  const discardReview = useCallback(
+    (pr: PrSummary) => run(() => api.discardReview(pr.repo, pr.number), 'Pending review discarded', 'Could not discard'),
+    [run],
+  );
   const issue = useCallback(
     (action: IssueAction, done: string, fail?: string) => run(() => api.issueAction(action), done, fail),
     [run],
@@ -96,5 +101,5 @@ export function usePhoneWrites(onChanged: () => void): PhoneWrites {
     [run],
   );
 
-  return { toast, busy, notify, review, autoMerge, adminMerge, markReady, issue, closeIssue, createIssue };
+  return { toast, busy, notify, review, autoMerge, adminMerge, markReady, discardReview, issue, closeIssue, createIssue };
 }

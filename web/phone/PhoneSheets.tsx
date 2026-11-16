@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { issueRepos } from '../issues/issue-filter';
 import { createAction, descriptionDraftKey, emptyForm, type NewIssueForm } from './new-issue';
 import { PhoneNewIssue } from './PhoneNewIssue';
@@ -28,6 +28,11 @@ import { useRemote } from '../useRemote';
 import { actionItems, type ActionContext, type ActionItem } from './action-items';
 import { PhoneActionSheet, PhoneConfirm } from './PhoneActionSheet';
 import { PhoneComposer, clearDraft } from './PhoneComposer';
+import { PhoneCommentSheet } from './PhoneCommentSheet';
+import { PhoneFinishReview } from './PhoneFinishReview';
+import { draftsOnly, usePhoneComments } from './usePhoneComments';
+import { groupThreads } from '../inline/group-threads';
+import { splitPath } from '../FilesTree';
 import { PhoneDiffSheet } from './PhoneDiffSheet';
 import { PhoneEditTitle } from './PhoneEditTitle';
 import { PhoneFormPicker, PhoneIssuePicker } from './PhoneIssuePicker';
@@ -85,6 +90,17 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const writes = usePhoneWrites(changed);
   const { notify } = writes;
   const prData = usePhonePr(pr, (m) => writes.notify(m, false));
+  const comments = usePhoneComments(pr, prData.reload);
+  const drafts = useMemo(() => draftsOnly(groupThreads(prData.detail.data?.thread)), [prData.detail.data?.thread]);
+  const pendingCount = prData.detail.data?.pendingReview?.drafts ?? 0;
+
+  // A comment that posts closes its sheet; a failed one keeps it open with the text.
+  const commentWas = useRef(comments.state.status);
+  useEffect(() => {
+    const was = commentWas.current;
+    commentWas.current = comments.state.status;
+    if (was === 'posting' && comments.state.status === 'closed' && stack.at(-1)?.kind === 'comment') pop();
+  }, [comments.state.status, stack, pop]);
   const orca = useOrcaInfo();
   const findingResult = useRef<FindingControls['onSendResult']>(undefined);
   const findingDispatched = useRef<FindingControls['onDispatched']>(undefined);
@@ -161,7 +177,12 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   const prInOrca = !!prSessions && (prSessions.related.length > 0 || prSessions.chosen !== undefined);
   const prDispatchable = !!pr && !!detail && orcaFix === 'ready' && detail.isOpen !== false;
 
+  // The actions menu opened from a diff offers a comment on that file.
+  const under = stack.at(-1)?.kind === 'actions' ? stack.at(-2) : undefined;
+  const diffUnder = under?.kind === 'diff' && !writesOff ? under.path : undefined;
+
   const ctx: ActionContext = {
+    ...(diffUnder ? { commentFile: splitPath(diffUnder).name } : {}),
     fix: fixable ? { count: failing.length, orca: orcaFix !== 'absent' } : undefined,
     conflicts: conflicting,
     ...(prDispatchable
@@ -261,6 +282,10 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   };
 
   const runRow = (item: ActionItem) => {
+    if (item.id === 'comment-file' && diffUnder) {
+      comments.openFile(diffUnder);
+      return replaceTop({ kind: 'comment' });
+    }
     if (item.id === 'comment') return replaceTop({ kind: 'composer', mode: 'comment' });
     if (item.id === 'request-changes') return replaceTop({ kind: 'composer', mode: 'request' });
     if (item.id === 'auto-merge' || item.id === 'admin-merge' || item.id === 'ready' || item.id === 'dispatch') {
@@ -454,7 +479,8 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
       await dispatchFix(kind === 'fix-checks' ? 'checks' : 'conflicts');
       return;
     }
-    if (kind === 'dispatch') await dispatch();
+    if (kind === 'discard-review' && pr) await writes.discardReview(pr);
+    else if (kind === 'dispatch') await dispatch();
     else if (kind === 'auto-merge' && pr) await writes.autoMerge(pr);
     else if (kind === 'admin-merge' && pr && access.admin === 'ready') await writes.adminMerge(pr);
     else if (kind === 'ready' && pr && access.draft) await writes.markReady(pr);
@@ -501,6 +527,15 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 onMore={() => push({ kind: 'actions' })}
                 onApprove={() => void writes.review(pr, 'APPROVE', '')}
                 onComment={() => push({ kind: 'composer', mode: 'comment' })}
+                pending={
+                  pendingCount > 0
+                    ? {
+                        drafts: pendingCount,
+                        onFinish: () => push({ kind: 'finish-review' }),
+                        onDiscard: () => push({ kind: 'confirm', action: 'discard-review' }),
+                      }
+                    : undefined
+                }
                 {...(fixable ? { onFixChecks: () => push({ kind: 'fix', mode: 'checks' }) } : {})}
                 {...(conflicting ? { onFixConflicts: () => push({ kind: 'fix', mode: 'conflicts' }) } : {})}
               />
@@ -658,10 +693,61 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                   saveWrap(!wrap);
                   setWrap(!wrap);
                 }}
-                onSelect={(path) => replaceTop({ kind: 'diff', path })}
+                onSelect={(path) => {
+                  comments.clear();
+                  replaceTop({ kind: 'diff', path });
+                }}
                 onViewed={(path, v) => void prData.toggleViewed(path, v)}
-                onClose={pop}
+                onClose={() => {
+                  comments.clear();
+                  pop();
+                }}
                 onMore={() => push({ kind: 'actions' })}
+                {...(!writesOff && prData.detail.data
+                  ? {
+                      comments: {
+                        flow: comments,
+                        host: { repo: pr.repo, number: pr.number, onPosted: prData.reload },
+                        drafts,
+                        pendingCount,
+                        onCompose: () => push({ kind: 'comment' }),
+                        onPending: () => {
+                          comments.clear();
+                          pop();
+                        },
+                      },
+                    }
+                  : {})}
+              />
+            ) : null;
+          case 'comment':
+            return pr && comments.state.target ? (
+              <PhoneCommentSheet
+                key="comment"
+                state={comments.state}
+                sub={comments.state.target.subject === 'file' ? 'Whole file' : comments.state.target.path}
+                onText={comments.edit}
+                onSubmit={comments.submit}
+                onCancel={() => {
+                  comments.clear();
+                  pop();
+                }}
+              />
+            ) : null;
+          case 'finish-review':
+            return pr ? (
+              <PhoneFinishReview
+                key="finish-review"
+                repo={pr.repo}
+                number={pr.number}
+                drafts={pendingCount}
+                ownPr={access.ownPr}
+                onDone={() => {
+                  pop();
+                  prData.reload();
+                  notify('Review submitted');
+                }}
+                onCancel={pop}
               />
             ) : null;
           case 'actions':
