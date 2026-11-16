@@ -533,8 +533,8 @@ export function createApp(opts: AppOptions): Hono {
     ),
   );
 
-  // Settings > Updates. Loopback only, so a phone cannot restart the service.
-  mutating.post('/updates/check', loopbackOnly, async (c) =>
+  // Settings > Updates and the phone menu. The tailnet pairing guard keeps unpaired devices out.
+  mutating.post('/updates/check', async (c) =>
     c.json<UpdateCheckResult>(opts.updates ? await opts.updates.check() : { state: 'unsupported' }),
   );
 
