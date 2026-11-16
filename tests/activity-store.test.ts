@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { createApp } from '../server/app';
 import { ActivityStore, clampDays } from '../server/activity-store';
+import { buildActivityView } from '../shared/activity';
 import { FixtureProvider } from '../server/fixture-provider';
 import type { IssueInboxData, IssueSummary } from '../shared/issue-types';
 import type { InboxData, PrSummary } from '../shared/types';
@@ -205,6 +206,40 @@ describe('ActivityStore.feed', () => {
     s.observe(inbox([pr()]), issues([issue()]), NOW);
     s.observe(inbox([pr()]), issues([issue({ commentCount: 1, updatedAt: iso(NOW + MIN) })]), NOW + MIN);
     expect(s.feed(7, NOW + MIN).groups[0]?.item.id).toBe('acme-api#7');
+  });
+
+  describe('issue comment events', () => {
+    const commented = (lastComment?: IssueSummary['lastComment']) => {
+      const s = ActivityStore.memory();
+      s.observe(inbox([pr()]), issues([issue()]), NOW);
+      const next = issue({ commentCount: 1, updatedAt: iso(NOW + 5 * MIN), lastComment });
+      s.observe(inbox([pr()]), issues([next]), NOW + 5 * MIN);
+      return s.feed(7, NOW + 5 * MIN);
+    };
+    const commentOf = (f: ReturnType<typeof commented>) =>
+      f.groups.flatMap((g) => g.events).find((e) => e.kind === 'comment');
+
+    it('names the commenter and uses the comment time', () => {
+      const e = commentOf(commented({ author: 'sam-lee', createdAt: iso(NOW + 2 * MIN) }));
+      expect(e?.actor).toBe('sam-lee');
+      expect(e?.at).toBe(iso(NOW + 2 * MIN));
+    });
+
+    it('hides the viewer own comment when Mine is hidden', () => {
+      const feed = commented({ author: 'acme-dev', createdAt: iso(NOW + 2 * MIN) });
+      const base = { viewer: 'acme-dev', filter: 'all' as const, lastVisit: 0 };
+      const hidden = buildActivityView(feed.groups, { ...base, showMine: false });
+      const kinds = (v: typeof hidden) => v.rows.flatMap((r) => r.events.map((e) => e.kind));
+      expect(kinds(hidden)).not.toContain('comment');
+      const shown = buildActivityView(feed.groups, { ...base, showMine: true });
+      expect(kinds(shown)).toContain('comment');
+    });
+
+    it('still emits an event when the author is gone', () => {
+      const e = commentOf(commented({ createdAt: iso(NOW + 2 * MIN) }));
+      expect(e).toBeDefined();
+      expect(e?.actor).toBeUndefined();
+    });
   });
 
   it('keeps the last visit time', () => {

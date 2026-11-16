@@ -339,7 +339,10 @@ function diffIssue(
     return out;
   }
   const at = Date.parse(issue.updatedAt) || now;
-  if ((next.comments ?? 0) > (prev.comments ?? 0)) out.push(make(item, 'comment', at, { needsMe: false }));
+  if ((next.comments ?? 0) > (prev.comments ?? 0)) {
+    const last = issue.lastComment;
+    out.push(make(item, 'comment', (last && Date.parse(last.createdAt)) || at, { actor: last?.author, needsMe: false }));
+  }
   if (next.mentioned && !prev.mentioned) out.push(make(item, 'mention', at, { needsMe: true }));
   if (next.assigned && !prev.assigned) out.push(make(item, 'assigned', now, { needsMe: true }));
   const before = new Set(prev.labels ?? []);
