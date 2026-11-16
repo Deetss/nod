@@ -12,6 +12,7 @@ import {
   prChips,
   pullOffset,
   resolveOpen,
+  sectionStates,
   shouldRefresh,
   snapTarget,
   steppedProgress,
@@ -161,7 +162,7 @@ describe('All chip with only an org PR', () => {
 
 describe('resolveOpen', () => {
   const closed = new Set(['org', 'dependabot']);
-  const sec = (key: string, n: number) => ({ key, prs: Array.from({ length: n }, () => 0) });
+  const sec = (key: string, rows: number) => ({ key, rows });
 
   it('opens the first non-empty default-closed section when all else is empty', () => {
     const out = resolveOpen([sec('needs', 0), sec('mine', 0), sec('org', 1), sec('dependabot', 2)], {}, closed);
@@ -176,6 +177,53 @@ describe('resolveOpen', () => {
   it('keeps a section the user closed explicitly closed', () => {
     const out = resolveOpen([sec('needs', 0), sec('org', 1), sec('dependabot', 1)], { org: false }, closed);
     expect(out).toMatchObject({ org: false, dependabot: true });
+  });
+
+  it('renders an empty section closed even when it was saved open', () => {
+    const out = resolveOpen([sec('needs', 0), sec('mine', 2)], { needs: true }, closed);
+    expect(out).toMatchObject({ needs: false, mine: true });
+  });
+
+  it('opens an empty section only while it is peeked', () => {
+    const out = resolveOpen([sec('needs', 0), sec('mine', 2)], { needs: false }, closed, new Set(['needs']));
+    expect(out).toMatchObject({ needs: true, mine: true });
+  });
+
+  it('applies the saved choice again once the section has rows', () => {
+    expect(resolveOpen([sec('mine', 0), sec('needs', 1)], { mine: false }, closed).mine).toBe(false);
+    expect(resolveOpen([sec('mine', 3), sec('needs', 1)], { mine: false }, closed).mine).toBe(false);
+    expect(resolveOpen([sec('org', 0), sec('needs', 1)], { org: true }, closed).org).toBe(false);
+    expect(resolveOpen([sec('org', 4), sec('needs', 1)], { org: true }, closed).org).toBe(true);
+  });
+});
+
+describe('sectionStates', () => {
+  const closed = new Set(['org']);
+  const input = { saved: {}, closedByDefault: closed, peeked: new Set<string>(), filtered: false };
+  const sections = [
+    { key: 'needs', prs: [pr(1), pr(2)] },
+    { key: 'mine', prs: [pr(3), pr(4), pr(5)] },
+  ];
+  const search = (q: string) => sections.map((s) => ({ ...s, prs: s.prs.filter((p) => p.title.includes(q)) }));
+
+  it('counts the rows the search leaves, not the section total', () => {
+    const out = sectionStates(search('PR 3'), (s) => s.prs.length, input);
+    expect(out.map((s) => [s.key, s.rows, s.empty])).toEqual([
+      ['needs', 0, true],
+      ['mine', 1, false],
+    ]);
+  });
+
+  it('closes a section the search empties and reopens it when the search clears', () => {
+    const during = sectionStates(search('PR 3'), (s) => s.prs.length, input);
+    expect(during.find((s) => s.key === 'needs')?.open).toBe(false);
+    const after = sectionStates(search(''), (s) => s.prs.length, input);
+    expect(after.find((s) => s.key === 'needs')).toMatchObject({ rows: 2, open: true });
+  });
+
+  it('opens a filtered section with rows, but keeps an empty one closed', () => {
+    const one = sectionStates(search('PR 3'), (s) => s.prs.length, { ...input, filtered: true, saved: { mine: false } });
+    expect(one.map((s) => s.open)).toEqual([false, true]);
   });
 });
 

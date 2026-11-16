@@ -105,19 +105,31 @@ export function IssueRow({
 export function SectionHeader({
   title,
   count,
+  noun,
   open,
   onToggle,
 }: {
   title: string;
   count: number;
+  /** Singular, as in `pull request`. */
+  noun: string;
   open: boolean;
   onToggle: () => void;
 }) {
   return (
-    <button type="button" className="ph-section" aria-expanded={open} onClick={onToggle}>
-      <ChevronIcon open={open} size={16} />
-      <span>{title}</span>
+    <button
+      type="button"
+      className="ph-section"
+      aria-expanded={open}
+      aria-label={`${title}, ${count} ${count === 1 ? noun : `${noun}s`}`}
+      onClick={onToggle}
+    >
+      <span className="ph-section-chev">
+        <ChevronIcon open size={16} />
+      </span>
+      <span className="ph-section-title">{title}</span>
       <span className="ph-section-count">{count}</span>
+      <span className="ph-section-rule" aria-hidden="true" />
     </button>
   );
 }

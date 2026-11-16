@@ -8,6 +8,8 @@ export interface InboxSectionView {
   title: string;
   count: number;
   open: boolean;
+  /** No rows after search and filters. Opening it shows `emptyLine` and is not saved. */
+  empty: boolean;
   rows: ReactNode;
 }
 
@@ -28,7 +30,11 @@ interface PhoneInboxProps {
   refreshing: boolean;
   emptyTitle: string;
   emptyBody: string;
-  onToggle: (key: string) => void;
+  /** The line an empty section shows when tapped open. */
+  emptyLine: string;
+  /** Singular item noun for the header's accessible count. */
+  noun: string;
+  onToggle: (s: InboxSectionView) => void;
   onRefresh: () => void;
 }
 
@@ -62,9 +68,9 @@ export function PhoneInbox(p: PhoneInboxProps) {
         <SkeletonSections titles={p.skeletonTitles} />
       ) : (
         p.sections.map((s) => (
-          <div key={s.key}>
-            <SectionHeader title={s.title} count={s.count} open={s.open} onToggle={() => p.onToggle(s.key)} />
-            {s.open ? s.rows : null}
+          <div key={s.key} className="ph-section-group">
+            <SectionHeader title={s.title} count={s.count} noun={p.noun} open={s.open} onToggle={() => p.onToggle(s)} />
+            {!s.open ? null : s.empty ? <div className="ph-section-empty">{p.emptyLine}</div> : s.rows}
           </div>
         ))
       )}
