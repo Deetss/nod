@@ -51,6 +51,8 @@ export interface InlineCommentProps {
   threads?: FileThreads;
   /** The PR the thread actions post to. */
   host?: ThreadHost;
+  /** Marks every row of the open line range, not only the cursor row. The phone has no cursor. */
+  showRange?: boolean;
 }
 
 const MARKER: Record<DiffLine['kind'], string> = { add: '+', del: '-', ctx: ' ' };
@@ -152,7 +154,9 @@ function LineRow({
         ) : null}
       </>
     ) : undefined;
-  const cursor = target && comment?.cursor && comment.cursor.side === target.side && comment.cursor.line === target.line;
+  const cursor =
+    (target && comment?.cursor && comment.cursor.side === target.side && comment.cursor.line === target.line) ||
+    (target && comment?.showRange && inOpenRange(comment.state, target));
   return (
     <div>
       <Line line={line} yaml={yaml} marks={marks} gutter={gutter} cursor={!!cursor} />
@@ -162,6 +166,13 @@ function LineRow({
         : null}
     </div>
   );
+}
+
+/** True when this row lies in the open composer's line range, on its side. */
+function inOpenRange(state: ComposerState, ref: LineRef): boolean {
+  const t = state.target;
+  if (!t || t.subject !== 'line' || state.status === 'closed' || t.side !== ref.side) return false;
+  return ref.line >= (t.startLine ?? t.line) && ref.line <= t.line;
 }
 
 /** The threads on one line and side of a file. */

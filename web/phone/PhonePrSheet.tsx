@@ -32,6 +32,8 @@ interface PrSheetProps {
   onMore: () => void;
   onApprove: () => void;
   onComment: () => void;
+  /** The viewer's pending review on this PR. Absent while there are no drafts. */
+  pending?: { drafts: number; onFinish: () => void; onDiscard: () => void } | undefined;
   /** Set when the checks can be fixed: the checks row opens the fix sheet instead of the Checks tab. */
   onFixChecks?: () => void;
   /** Set when the PR conflicts: the conflicts row opens the fix sheet instead of GitHub. */
@@ -177,6 +179,22 @@ export function PhonePrSheet(p: PrSheetProps) {
       onMore={p.onMore}
       bar={
         <>
+          {p.pending ? (
+            <div className="ph-pending-bar" role="status">
+              <span className="ph-pending-text">
+                <strong>
+                  {p.pending.drafts} pending {p.pending.drafts === 1 ? 'comment' : 'comments'}
+                </strong>
+                <span>Visible only to you</span>
+              </span>
+              <button type="button" className="ph-btn" disabled={p.writesOff || p.busy} onClick={p.pending.onDiscard}>
+                Discard
+              </button>
+              <button type="button" className="ph-btn is-primary" disabled={p.writesOff || p.busy} onClick={p.pending.onFinish}>
+                Finish
+              </button>
+            </div>
+          ) : null}
           <button type="button" className="ph-btn is-primary" disabled={!!blocked || p.busy} onClick={p.onApprove}>
             Approve
           </button>

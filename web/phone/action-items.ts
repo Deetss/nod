@@ -19,6 +19,7 @@ export type ActionId =
   | 'stop-work'
   | 'reopen'
   | 'request-changes'
+  | 'comment-file'
   | 'auto-merge'
   | 'admin-merge'
   | 'ready'
@@ -80,6 +81,8 @@ export interface ActionContext {
   botState?: PhoneBotState;
   /** A write request is running. */
   busy?: boolean;
+  /** Name of the file whose diff opened this menu; shows Comment on file. */
+  commentFile?: string;
   /** Failing checks on an open PR; absent or zero hides the Fix row. `orca` is true when Orca can take the PR. */
   fix?: { count: number; orca: boolean };
   /** The open PR conflicts with its base, so the Fix conflicts row shows. */
@@ -137,6 +140,7 @@ export function approveDisabled(ctx: Pick<ActionContext, 'ownPr' | 'writesOff'>)
 
 function prItems(ctx: ActionContext): ActionItem[] {
   const items: ActionItem[] = [
+    ...(ctx.commentFile ? [{ id: 'comment-file' as const, label: 'Comment on file', sub: ctx.commentFile, opens: true }] : []),
     {
       id: 'request-changes',
       label: 'Request changes',
