@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { BellIcon, BellSlashIcon } from '@primer/octicons-react';
 import { TRIGGER_DESCRIPTIONS, TRIGGER_KEYS, TRIGGER_LABELS, type NotifySettings } from '../shared/notify-rules';
 import type { Density } from './density';
 import type { OrcaMenu } from './orca/useOrca';
@@ -104,18 +105,7 @@ export function NotifyMenu({ settings, onChange, density, onDensity, orca }: Not
         title={settings.muted ? 'Notifications muted' : 'Notification settings'}
         onClick={() => setOpen((o) => !o)}
       >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M8 2.5a4 4 0 0 0-4 4v2.2L2.8 11h10.4L12 8.7V6.5a4 4 0 0 0-4-4zM6.5 12.8a1.5 1.5 0 0 0 3 0"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          {settings.muted ? (
-            <path d="M3 13L13 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-          ) : null}
-        </svg>
+        {settings.muted ? <BellSlashIcon size={14} /> : <BellIcon size={14} />}
       </button>
       {open ? (
         <div className="notify-pop" role="dialog" aria-label="Settings">

@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
+import { PlusIcon } from '@primer/octicons-react';
 import { usePickerState, type PickerItem } from '../issues/picker-state';
 import { CloseIcon } from './PhoneIcons';
 import { PhoneSheet } from './PhoneSheet';
@@ -39,11 +40,7 @@ export const applyText = (changed: number): string =>
   changed === 0 ? 'Apply' : `Apply (${changed} ${changed === 1 ? 'change' : 'changes'})`;
 
 function PlusGlyph() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M8 2.5v11M2.5 8h11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
+  return <PlusIcon size={12} />;
 }
 
 /** Sticky filter, option rows, create row and a pinned Apply bar. One sheet for labels, assignees and milestone. */

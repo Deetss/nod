@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode, type Ref } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@primer/octicons-react';
 import type { IssueDetail, IssueSummary } from '../../shared/issue-types';
 import { retryCommand, splitCommand, splitHeld, type RetryState, type SplitState } from '../../shared/bot';
 import { bot } from '../org-settings';
@@ -17,17 +18,7 @@ import { MentionTextarea } from '../mentions/MentionTextarea';
 import { screenPeople } from '../mentions/mention-logic';
 
 function ArrowIcon({ up }: { up?: boolean }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d={up ? 'M4 10l4-4 4 4' : 'M4 6l4 4 4-4'}
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return up ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />;
 }
 
 function threadOf(d: IssueDetail): ThreadItem[] {

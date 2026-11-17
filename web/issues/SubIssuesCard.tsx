@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { ArrowUpIcon } from '@primer/octicons-react';
 import { SUB_ISSUE_LIMIT, type ParentIssue, type SubIssue } from '../../shared/issue-types';
 import { progressOf, subRef, type MoveTarget } from '../../shared/sub-issues';
 import { CopyLinkButton } from '../copy-link';
@@ -132,9 +133,7 @@ function RowMenu({ anchor, rows, label, onClose }: { anchor: HTMLElement; rows: 
 export function ParentStrip({ parent, onOpen }: { parent: ParentIssue; onOpen: () => void }) {
   return (
     <button type="button" className="meta-strip sub-parent" onClick={onOpen} title={`${repoLabel(parent.repo)} #${parent.number} ${parent.title}`}>
-      <svg className="sub-parent-up" width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      <ArrowUpIcon className="sub-parent-up" size={12} />
       <span className="muted">Parent</span>
       <span className="sub-parent-ref">
         <SubStateGlyph state={parent.state} size={14} />

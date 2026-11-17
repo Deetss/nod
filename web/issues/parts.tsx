@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { GitPullRequestIcon, IssueClosedIcon, IssueOpenedIcon, SkipIcon } from '@primer/octicons-react';
 import { chipColors } from '../../shared/label-chip';
 import type { CloseReason, IssueLabel, IssueStateKind, SubIssueCount, SubIssueState } from '../../shared/issue-types';
 import { statusSlug, type ProjectStatus } from '../../shared/project-status';
@@ -40,41 +41,19 @@ export function Avatar({ login, url, size = 18 }: { login: string; url?: string;
 }
 
 export function CircleDotIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="8" cy="8" r="2" fill="currentColor" />
-    </svg>
-  );
+  return <IssueOpenedIcon size={size} />;
 }
 
 export function CircleCheckIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M5.4 8.2l1.8 1.8 3.4-3.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <IssueClosedIcon size={size} />;
 }
 
 export function SlashCircleIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M4.2 11.8l7.6-7.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
+  return <SkipIcon size={size} />;
 }
 
 export function PrIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="4.5" cy="3.5" r="1.6" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="4.5" cy="12.5" r="1.6" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="11.5" cy="12.5" r="1.6" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M4.5 5.1v5.8M11.5 10.9V6.5a2 2 0 0 0-2-2H8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
+  return <GitPullRequestIcon size={size} />;
 }
 
 const STATE_WORD: Record<SubIssueState, string> = { open: 'Open', completed: 'Closed as completed', 'not-planned': 'Closed as not planned' };

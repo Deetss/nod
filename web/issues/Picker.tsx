@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { PlusIcon } from '@primer/octicons-react';
 import { Btn } from '../ui';
 import { useFocusTrap } from '../useFocusTrap';
 import { usePickerState, type PickerItem, type PickerOrder } from './picker-state';
@@ -28,11 +29,7 @@ interface PickerProps {
 }
 
 function PlusGlyph() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M8 2.5v11M2.5 8h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
+  return <PlusIcon size={12} />;
 }
 
 /**
