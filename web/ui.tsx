@@ -1,4 +1,26 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import {
+  AlertIcon as OcticonAlert,
+  CheckCircleIcon,
+  CheckIcon as OcticonCheck,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  ClockIcon as OcticonClock,
+  CommentIcon,
+  CopyIcon as OcticonCopy,
+  DiffIcon as OcticonDiff,
+  EyeIcon as OcticonEye,
+  GitCommitIcon,
+  GitMergeIcon,
+  InfoIcon as OcticonInfo,
+  LinkExternalIcon,
+  LinkIcon as OcticonLink,
+  SkipIcon,
+  TagIcon as OcticonTag,
+  XCircleIcon,
+  XIcon as OcticonX,
+} from '@primer/octicons-react';
 import type { CiState } from '../shared/types';
 
 interface IconProps {
@@ -6,83 +28,29 @@ interface IconProps {
 }
 
 export function CheckIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M3.5 8.5l3 3 6-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <OcticonCheck size={size} />;
 }
 
 export function CopyIcon({ size = 16 }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinejoin="round"
-    >
-      <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" />
-      <path d="M10.5 3.5v-.5a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h.5" strokeLinecap="round" />
-    </svg>
-  );
+  return <OcticonCopy size={size} />;
 }
 
-/** Two chain links, drawn with the same stroke as the other icons. */
 export function LinkIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6.75 9.25l2.5-2.5" />
-      <path d="M8.5 4.75l.9-.9a2.4 2.4 0 0 1 3.4 3.4l-.9.9" />
-      <path d="M7.5 11.25l-.9.9a2.4 2.4 0 0 1-3.4-3.4l.9-.9" />
-    </svg>
-  );
+  return <OcticonLink size={size} />;
 }
 
 /** Leading glyph of a toast: a circled check on success, a circled cross on error. */
 export function ToastIcon({ ok }: { ok: boolean }) {
-  return (
-    <svg
-      className={`toast-icon ${ok ? 'toast-icon-ok' : 'toast-icon-err'}`}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="8" cy="8" r="6.25" />
-      <path d={ok ? 'M5.3 8.3l1.9 1.9 3.5-4.2' : 'M5.7 5.7l4.6 4.6M10.3 5.7l-4.6 4.6'} />
-    </svg>
-  );
+  const Icon = ok ? CheckCircleIcon : XCircleIcon;
+  return <Icon className={`toast-icon ${ok ? 'toast-icon-ok' : 'toast-icon-err'}`} size={16} />;
 }
 
 export function XIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
+  return <OcticonX size={size} />;
 }
 
 export function ExternalIcon({ size = 14 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M9 3h4v4M13 3L7.5 8.5M11 9.5V13H3V5h3.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <LinkExternalIcon size={size} />;
 }
 
 /** Icon-only link to GitHub. Stops the click reaching a clickable row or header. */
@@ -121,125 +89,56 @@ export function RingIcon({ size = 16, motion }: IconProps & { motion?: 'spin' | 
 }
 
 export function AlertIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M8 2l6.5 11.5h-13z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M8 6.5v3M8 11.2v.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
+  return <OcticonAlert size={size} />;
 }
 
-/** A circle with a dot over a stem. Quiet notices and neutral toasts. */
+/** Quiet notices and neutral toasts. */
 export function InfoIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M8 7.2v3.6M8 5v.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
+  return <OcticonInfo size={size} />;
 }
 
 /** A circle with a slash through it. Automatic messages off. */
 export function SlashIcon({ size = 14 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M3.6 12.4l8.8-8.8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
+  return <SkipIcon size={size} />;
 }
 
 export function ClockIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M8 4.5V8l2.5 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
+  return <OcticonClock size={size} />;
 }
 
 export function BubbleIcon({ size = 14 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M3 3.5h10v7H8.5L5.5 13v-2.5H3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-    </svg>
-  );
+  return <CommentIcon size={size} />;
 }
 
-const glyph = {
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: 1.6,
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round',
-} as const;
-
-/** Plain geometric glyphs for the status box and timeline, drawn in the app's stroke style. */
+/** Glyphs for the status box and timeline. */
 export function DiffIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph}>
-      <rect x="2.5" y="2.5" width="11" height="11" rx="2" />
-      <path d="M8 5v4M6 7h4M6 11.2h4" />
-    </svg>
-  );
+  return <OcticonDiff size={size} />;
 }
 
 export function EyeIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph}>
-      <path d="M1.8 8s2.2-4 6.2-4 6.2 4 6.2 4-2.2 4-6.2 4-6.2-4-6.2-4z" />
-      <circle cx="8" cy="8" r="1.8" />
-    </svg>
-  );
+  return <OcticonEye size={size} />;
 }
 
 export function CommitIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph}>
-      <circle cx="8" cy="8" r="2.6" />
-      <path d="M1.5 8h3.9M10.6 8h3.9" />
-    </svg>
-  );
+  return <GitCommitIcon size={size} />;
 }
 
 export function TagIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph}>
-      <path d="M2.5 2.5h5.2l6 6-5.2 5.2-6-6z" />
-      <circle cx="5.3" cy="5.3" r=".6" />
-    </svg>
-  );
+  return <OcticonTag size={size} />;
 }
 
 export function MergeIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph}>
-      <circle cx="4.5" cy="3.5" r="1.6" />
-      <circle cx="4.5" cy="12.5" r="1.6" />
-      <circle cx="11.5" cy="8" r="1.6" />
-      <path d="M4.5 5.1v5.8M4.5 5.1c0 2.2 2.4 2.9 5.4 2.9" />
-    </svg>
-  );
+  return <GitMergeIcon size={size} />;
 }
 
 /** Ringed X, for a cancelled check. */
 export function CancelledIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph} strokeWidth={1.4}>
-      <circle cx="8" cy="8" r="6" />
-      <path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" />
-    </svg>
-  );
+  return <XCircleIcon size={size} />;
 }
 
 /** Ringed slash, for a skipped check. */
 export function SkippedIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" {...glyph} strokeWidth={1.4}>
-      <circle cx="8" cy="8" r="6" />
-      <path d="M4.2 11.8l7.6-7.6" />
-    </svg>
-  );
+  return <SkipIcon size={size} />;
 }
 
 /** The status row glyph for a row model's `glyph` name. */
@@ -294,17 +193,7 @@ export function ChecksRing({ segments, centre }: RingProps) {
 }
 
 export function Chevron({ open, size = 16 }: IconProps & { open: boolean }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d={open ? 'M4 6l4 4 4-4' : 'M6 4l4 4-4 4'}
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return open ? <ChevronDownIcon size={size} /> : <ChevronRightIcon size={size} />;
 }
 
 interface ExpandToggleProps {
@@ -319,15 +208,7 @@ export function ExpandToggle({ open, controls, onToggle }: ExpandToggleProps) {
   return (
     <button type="button" className="expand-toggle" aria-expanded={open} aria-controls={controls} onClick={onToggle}>
       <span>{open ? 'Hide full description' : 'Show full description'}</span>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path
-          d={open ? 'M4 10l4-4 4 4' : 'M4 6l4 4 4-4'}
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      {open ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
     </button>
   );
 }
