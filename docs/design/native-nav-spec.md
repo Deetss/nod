@@ -39,17 +39,17 @@ The list does not move. The sync line's `marginTop: pullOffset(dy)` goes.
 
 ### States
 
-| State | Visual | Sync line (`role="status"`) | Timing | Frame |
+| State | Visual | Pill text (`role="status"`) | Timing | Frame |
 |---|---|---|---|---|
-| Pulling | partial arc, `progress` of the ring | `syncLine` | follows the finger, no transition | anatomy |
+| Pulling | partial arc, `progress` of the ring | `Synced 2m ago` (the ··· menu's healthy title, Activity included) | follows the finger, no transition | anatomy |
 | At threshold | ring closed (full circle) | `Release to refresh` | one `buzz(5)` on crossing 72 upward. Dropping back below re-arms it | 1 |
-| Released below 72 | | `syncLine` | travel to 0 in 150ms, `cubic-bezier(0.3, 0, 1, 1)` | |
-| Syncing | quarter arc on the track, spinning (`ph-spin` 0.9s linear, as `.ph-spinner`) | `Refreshing…`, without the inline `.ph-spinner` | settles to travel 40 in 180ms, `cubic-bezier(0.2, 0, 0, 1)`. Spins until the refresh settles | 2 |
-| Done | ring closed | new `syncLine` | `scale(0)` and `opacity: 0` in 150ms, `cubic-bezier(0.3, 0, 1, 1)`, then travel resets to 0 | anatomy |
-| Failed | border `borderColor-danger-emphasis`, `AlertIcon` 16 in `fgColor-danger`, no ring | `Sync failed` | holds 1000ms, then the Done shrink (150ms), then the existing `SyncFailedBanner` shows | 3 |
-| Rate limited | border `1px dashed borderColor-emphasis` (3 3), two pause bars 3x10 r 1 in `fgColor-muted`, 4 apart, no ring | `syncLine` | follows the finger, never fills, no tick, no request. Holds 1000ms after release, then the Done shrink | 4 |
+| Released below 72 | | `Synced 2m ago` | travel to 0 in 150ms, `cubic-bezier(0.3, 0, 1, 1)` | |
+| Syncing | quarter arc on the track, spinning (`ph-spin` 0.9s linear, as `.ph-spinner`) | `Refreshing…` | settles to travel 40 in 180ms, `cubic-bezier(0.2, 0, 0, 1)`. Spins until the refresh settles | 2 |
+| Done | ring closed | `Synced just now` | holds `PULL_DONE_HOLD_MS` (1000ms), then the shrink: `scale(0)` and `opacity: 0` in 150ms, `cubic-bezier(0.3, 0, 1, 1)`, then travel resets to 0 | anatomy |
+| Failed | border `borderColor-danger-emphasis`, `AlertIcon` 16 in `fgColor-danger`, no ring | `Sync failed` | holds 1000ms, then the shrink (150ms), then the existing `SyncFailedBanner` shows | 3 |
+| Rate limited | border `1px dashed borderColor-emphasis` (3 3), two pause bars 3x10 r 1 in `fgColor-muted`, 4 apart, no ring | `No request sent` | follows the finger, never fills, no tick, no request. Holds 1000ms after release, then the shrink | 4 |
 
-Rate-limited pill: `No request sent`, to the right of the disc (x = disc right + 8), 24 tall, padding `0 10px`, `bgColor-muted`, `1px solid borderColor-default`, `borderRadius-full`, 12/16 `fgColor-muted`. It carries `role="status"` and leaves with the disc.
+Pill (#39, `sync-line-spec.md`): shows in every disc state, to the right of the disc (x = disc right + 8), 24 tall, padding `0 10px`, `bgColor-muted`, `1px solid borderColor-default`, `borderRadius-full`, 12/16 `fgColor-muted`. It carries `role="status"`, keeps its text while it shrinks, and leaves with the disc. The list has no sync line.
 
 State never rides on colour alone: ring shape, motion, icon, dash and the status text carry it.
 
@@ -58,7 +58,7 @@ State never rides on colour alone: ring shape, motion, icon, dash and the status
 - Syncing: released at `dy >= PULL_THRESHOLD` and not rate limited. Calls `onRefresh()`.
 - Failed: `onRefresh()` resolves `false` (the POST rejected or the refetched inbox carries `stale`).
 - Rate limited: `rateLimited(stale, now)` is true, so `stale?.kind === 'ratelimit'` and `resetAt` is in the future. The server skips the poll during backoff and answers ok, so the client must decide before sending.
-- Scrolling during a sync (`scrollTop > 0`) hides the disc at once. The sync line keeps `Refreshing…`.
+- Scrolling during a sync (`scrollTop > 0`) hides the disc and its pill at once.
 
 ## Swipe down to close
 
@@ -97,6 +97,7 @@ Under `prefers-reduced-motion: reduce`:
 
 - Finger tracking (disc and sheet) stays, since it is direct manipulation.
 - Settle, spring back, slide out and shrink take 0ms. The sheet closes on release.
+- The 1000ms done, failed and rate-limited holds stay. They are reading time, not motion.
 - The syncing disc does not spin. It shows the static quarter arc (as `.ph-spinner` today), and `Refreshing…` carries the state.
 - Haptics are unchanged.
 
@@ -147,7 +148,7 @@ There is no "press back again to exit". Swipe close and Close call the same `onC
 | new `sheetScrimOpacity(dy)` | | `max(0, 1 - dy / 240)` |
 | new `rateLimited(stale, now)` | | as above |
 | `SWIPE_CLOSE_PX`, `shouldCloseSwipe` | 120, fling 40 in 200ms | unchanged |
-| `PullList` (`PhoneList.tsx`) | moves the sync line, swaps its text | returns a fragment: `.ph-pull-disc` plus the scroller. Owns the disc state (`idle`, `pulling`, `syncing`, `done`, `failed`, `limited`). `onRefresh` becomes `() => Promise<boolean>`. New prop `limited`. Drops the inline `.ph-spinner` while the disc shows |
+| `PullList` (`PhoneList.tsx`) | moves the sync line, swaps its text | returns a fragment: `.ph-pull-disc` plus the scroller. Owns the disc state (`idle`, `pulling`, `returning`, `syncing`, `done`, `failed`, `limited`, `leaving`). `PULL_DONE_HOLD_MS = 1000` sits beside `PULL_THRESHOLD`. `onRefresh` becomes `() => Promise<boolean>`. New prop `limited`. Drops the inline `.ph-spinner` while the disc shows |
 | `PhoneApp.tsx` | `onRefresh` returns void | returns the reload promise as ok or failed. Passes `limited={rateLimited(stale, now)}` |
 | `useInbox` `reload(true)` | void | returns `Promise<boolean>` |
 | `PhoneSheet` (`PhoneSheet.tsx`) | drag state inline, instant snap back | drag moves to new `useSwipeClose(onClose, { disabled })`, returning `{ bind, sheet, scrimStyle }`. Adds the scrim, springs and tick. Springs are inline transitions; reduced motion skips them in the hook |
@@ -177,7 +178,7 @@ There is no "press back again to exit". Swipe close and Close call the same `onC
 ## Invented copy
 
 - `No request sent` (from the brief).
-- `Sync failed` in the sync line for the 1s failed hold.
+- `Sync failed` in the pill for the 1s failed hold, and `Synced just now` for the 1s done hold.
 
 ## Decisions
 

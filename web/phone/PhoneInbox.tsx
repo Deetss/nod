@@ -20,8 +20,10 @@ interface PhoneInboxProps {
   status: PhoneStatus;
   /** Section titles the skeleton shows while loading. */
   skeletonTitles: string[];
+  /** `EmptyBlock`'s own sync line. */
   syncLine: string;
-  cachedLine: string;
+  /** The pull pill short of the line. */
+  synced: string;
   errorDetail: string;
   /** The error-state banner: a token state or a sync failure. Without one, Can't reach Nod. */
   banner?: ReactNode;
@@ -63,13 +65,15 @@ export function PhoneInbox(p: PhoneInboxProps) {
       locked={loading}
       short={p.status === 'error'}
       banner={p.status === 'error' ? (p.banner ?? <ReachBanner detail={p.errorDetail} onRetry={p.onRefresh} />) : (p.notice ?? null)}
-      refreshing={p.refreshing && !loading}
       onRefresh={p.onRefresh}
       limited={p.limited}
-      syncLine={loading ? <LoadingLine /> : p.status === 'error' ? p.cachedLine : p.syncLine}
+      synced={p.synced}
     >
       {loading ? (
-        <SkeletonSections titles={p.skeletonTitles} />
+        <>
+          <LoadingLine />
+          <SkeletonSections titles={p.skeletonTitles} />
+        </>
       ) : (
         p.sections.map((s) => (
           <div key={s.key} className="ph-section-group">

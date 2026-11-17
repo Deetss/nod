@@ -30,7 +30,7 @@ function mount(sections: InboxSectionView[], onToggle = vi.fn()) {
         status: 'ready',
         skeletonTitles: [],
         syncLine: 'Synced',
-        cachedLine: '',
+        synced: 'Synced 2m ago',
         errorDetail: '',
         refreshing: false,
         emptyTitle: '',
@@ -80,5 +80,13 @@ describe('phone section header', () => {
     const onToggle = mount([empty, view({})]);
     act(() => header('Needs my review')?.click());
     expect(onToggle).toHaveBeenCalledWith(empty);
+  });
+
+  it('renders no sync line, so the first section header leads the list body', () => {
+    mount([view({ key: 'needs', title: 'Needs my review' }), view({})]);
+    expect(host?.querySelector('.ph-syncline')).toBeNull();
+    const body = host?.querySelector('.ph-list-body');
+    expect(body?.firstElementChild?.firstElementChild?.className).toBe('ph-section');
+    expect(body?.textContent).not.toContain('Synced');
   });
 });

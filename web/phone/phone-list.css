@@ -32,19 +32,6 @@
   min-height: 0;
 }
 
-.ph-syncline {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 28px;
-  padding: 5px 16px;
-  box-sizing: border-box;
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--fgColor-muted);
-  white-space: nowrap;
-}
-
 /* Beats `.phone button { font: inherit; color: inherit }`. */
 .phone .ph-section {
   position: sticky;
