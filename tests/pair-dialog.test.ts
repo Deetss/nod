@@ -34,7 +34,8 @@ async function mount(devices: DevicesResponse, calls: string[] = []): Promise<HT
     root?.render(createElement(PairDialog, { onClose: () => {} }));
   });
   await act(async () => {});
-  return host;
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return document.body;
 }
 
 afterEach(() => {

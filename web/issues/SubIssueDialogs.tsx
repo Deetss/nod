@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SUB_ISSUE_LIMIT, type IssueSummary, type SubIssue } from '../../shared/issue-types';
 import { parseNumberQuery } from '../../shared/number-query';
 import { subRef } from '../../shared/sub-issues';
+import { AppDialog } from '../AppDialog';
 import { Btn } from '../ui';
 import { useFocusTrap } from '../useFocusTrap';
 import { useNumberLookup } from '../useNumberLookup';
@@ -33,7 +34,6 @@ export function CreateSubIssueDialog(p: CreateProps) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const titleRef = useRef<HTMLInputElement>(null);
-  const trap = useFocusTrap();
   useEffect(() => titleRef.current?.focus(), []);
   const repos = p.repos.includes(p.parent.repo) ? p.repos : [p.parent.repo, ...p.repos];
   const ready = title.trim() !== '' && !busy;
@@ -55,70 +55,61 @@ export function CreateSubIssueDialog(p: CreateProps) {
   };
 
   return (
-    <div className="scrim" onMouseDown={p.onCancel}>
-      <div
-        ref={trap}
-        className="dialog sub-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Create sub-issue"
-        aria-busy={busy || undefined}
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') p.onCancel();
-          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) void create();
-        }}
-      >
-        <div className="dialog-head">
-          <h2>
-            Create sub-issue <span className="muted sub-under">under {refText(p.parent)}</span>
-          </h2>
-          <span className="muted small">Esc</span>
-        </div>
-        <label className="field-label" htmlFor="si-repo">
-          Repository
+    <AppDialog
+      title="Create sub-issue"
+      onClose={p.onCancel}
+      busy={busy}
+      className="sub-dialog"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) void create();
+      }}
+      footerNote={
+        <label className="sub-another">
+          <input type="checkbox" checked={another} onChange={(e) => setAnother(e.target.checked)} /> Create another
         </label>
-        <select id="si-repo" value={repo} onChange={(e) => setRepo(e.target.value)}>
-          {repos.map((r) => (
-            <option key={r} value={r}>
-              {repoLabel(r)}
-            </option>
-          ))}
-        </select>
-        <label className="field-label" htmlFor="si-title">
-          Title
-        </label>
-        <input id="si-title" ref={titleRef} value={title} onChange={(e) => setTitle(e.target.value)} />
-        <label className="field-label" htmlFor="si-body">
-          Body <span className="muted">optional</span>
-        </label>
-        <textarea id="si-body" className="sub-body" value={body} placeholder="Markdown supported." onChange={(e) => setBody(e.target.value)} />
-        <div className="sub-dialog-foot">
-          <label className="sub-another">
-            <input type="checkbox" checked={another} onChange={(e) => setAnother(e.target.checked)} /> Create another
-          </label>
-          <div className="dialog-actions">
-            <Btn keyHint="Esc" onClick={p.onCancel}>
-              Cancel
-            </Btn>
-            <Btn primary keyHint={busy ? undefined : 'Ctrl+Enter'} disabled={!ready} onClick={() => void create()}>
-              {busy ? (
-                <>
-                  <span className="spinner" aria-hidden="true" /> Creating...
-                </>
-              ) : (
-                'Create'
-              )}
-            </Btn>
-          </div>
-        </div>
-        {error ? (
-          <p className="sub-error" role="alert">
-            {error}
-          </p>
-        ) : null}
-      </div>
-    </div>
+      }
+      footer={
+        <>
+          <Btn onClick={p.onCancel} disabled={busy}>
+            Cancel
+          </Btn>
+          <Btn primary keyHint={busy ? undefined : 'Ctrl+Enter'} disabled={!ready} onClick={() => void create()}>
+            {busy ? (
+              <>
+                <span className="spinner" aria-hidden="true" /> Creating...
+              </>
+            ) : (
+              'Create'
+            )}
+          </Btn>
+        </>
+      }
+    >
+      <p className="muted small">Under {refText(p.parent)}</p>
+      <label className="field-label" htmlFor="si-repo">
+        Repository
+      </label>
+      <select id="si-repo" value={repo} onChange={(e) => setRepo(e.target.value)}>
+        {repos.map((r) => (
+          <option key={r} value={r}>
+            {repoLabel(r)}
+          </option>
+        ))}
+      </select>
+      <label className="field-label" htmlFor="si-title">
+        Title
+      </label>
+      <input id="si-title" ref={titleRef} value={title} onChange={(e) => setTitle(e.target.value)} />
+      <label className="field-label" htmlFor="si-body">
+        Body <span className="muted">optional</span>
+      </label>
+      <textarea id="si-body" className="sub-body" value={body} placeholder="Markdown supported." onChange={(e) => setBody(e.target.value)} />
+      {error ? (
+        <p className="sub-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </AppDialog>
   );
 }
 
@@ -277,39 +268,27 @@ interface RemoveProps {
 
 /** State 6: unlinking only. The child keeps its state and history. */
 export function RemoveSubIssueDialog(p: RemoveProps) {
-  const trap = useFocusTrap();
   const removeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => removeRef.current?.focus(), []);
   const keeps = p.child.state === 'open' ? 'stays open' : 'stays closed';
   return (
-    <div className="scrim" onMouseDown={p.onCancel}>
-      <div
-        ref={trap}
-        className="dialog sub-dialog"
-        role="alertdialog"
-        aria-modal="true"
-        aria-label="Remove sub-issue?"
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') p.onCancel();
-        }}
-      >
-        <div className="dialog-head">
-          <h2>Remove sub-issue?</h2>
-          <span className="muted small">Esc</span>
-        </div>
-        <p>
-          {repoLabel(p.child.repo)} {subRef(p.child, p.child.repo)} “{p.child.title}” {keeps} and keeps its history. Only its link to #{p.parent.number} is removed.
-        </p>
-        <div className="dialog-actions">
-          <Btn keyHint="Esc" onClick={p.onCancel}>
-            Cancel
-          </Btn>
+    <AppDialog
+      title="Remove sub-issue?"
+      role="alertdialog"
+      onClose={p.onCancel}
+      className="sub-dialog"
+      footer={
+        <>
+          <Btn onClick={p.onCancel}>Cancel</Btn>
           <button ref={removeRef} type="button" className="btn btn-danger" onClick={p.onConfirm}>
             Remove <span className="kbd">Enter</span>
           </button>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <p>
+        {repoLabel(p.child.repo)} {subRef(p.child, p.child.repo)} “{p.child.title}” {keeps} and keeps its history. Only its link to #{p.parent.number} is removed.
+      </p>
+    </AppDialog>
   );
 }
