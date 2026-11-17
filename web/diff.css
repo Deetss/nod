@@ -727,6 +727,6 @@
   border-radius: 3px;
   background: var(--bgColor-default);
   color: var(--fgColor-muted);
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
 }

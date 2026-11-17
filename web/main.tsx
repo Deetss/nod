@@ -4,7 +4,11 @@ import { STATE_PARAM, api } from './api';
 import { rememberApk } from './apk-version';
 import { App } from './App';
 import { setFirstRun, setOrgSettings } from './org-settings';
+import { PrimerRoot } from './PrimerRoot';
 import { migrateStorageKeys } from './storage-migrate';
+import '@primer/primitives/dist/css/primitives.css';
+import '@primer/primitives/dist/css/functional/themes/dark.css';
+import '@primer/primitives/dist/css/functional/themes/light.css';
 import './tokens.css';
 import './base.css';
 import './inbox.css';
@@ -61,7 +65,9 @@ if (root) {
   void Promise.all([loaded, saved]).then(() =>
     createRoot(root).render(
       <StrictMode>
-        <App />
+        <PrimerRoot>
+          <App />
+        </PrimerRoot>
       </StrictMode>,
     ),
   );
