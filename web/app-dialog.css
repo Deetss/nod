@@ -1,0 +1,96 @@
+/* Shared dialog shell (see docs/design/dialog-spec.md). Loaded after detail.css so it wins over `.dialog`. */
+
+/* The scrim is the same in both themes. The selector outranks Primer's per-theme value. */
+html[data-color-mode][data-dark-theme][data-light-theme] {
+  --overlay-backdrop-bgColor: #010409b3;
+}
+
+/* Primer inlines z-index 1 on each portal, which sits under the topbar and pane handles. */
+[data-component='Portal'] {
+  z-index: 50 !important;
+}
+
+.app-dialog-root {
+  display: contents;
+}
+
+.dialog.app-dialog {
+  width: var(--dialog-width);
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 64px);
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.app-dialog .app-dialog-header {
+  flex: none;
+  height: 56px;
+  max-height: none;
+  padding: 0 12px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: visible;
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+  box-shadow: none;
+}
+
+.app-dialog .app-dialog-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: 600 16px/24px var(--fontStack-system);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-dialog .app-dialog-close {
+  width: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+.app-dialog .app-dialog-body {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  background: var(--bgColor-default);
+}
+
+.app-dialog .app-dialog-footer {
+  flex: none;
+  height: 64px;
+  padding: 0 16px;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.app-dialog .app-dialog-note {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+/* A disabled primary or danger button reads at normal weight; busy keeps its bold. */
+.app-dialog .btn[disabled]:not(.is-busy) {
+  font-weight: 400;
+}
+
+.app-dialog .app-dialog-footer .dialog-actions {
+  margin-left: auto;
+}

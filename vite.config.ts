@@ -30,6 +30,12 @@ export default defineConfig(({ command }) => {
     define: { __NOD_BUILD__: JSON.stringify(build) },
     build: { outDir: '../dist/web', emptyOutDir: true },
     server: { proxy: { '/api': 'http://127.0.0.1:4477' } },
-    test: { root: '.', include: ['tests/**/*.test.ts'], setupFiles: ['tests/setup.ts'] },
+    test: {
+      root: '.',
+      include: ['tests/**/*.test.ts'],
+      setupFiles: ['tests/setup.ts'],
+      // Primer imports its own CSS; Vite has to process it, since Node cannot load `.css`.
+      server: { deps: { inline: [/@primer\/react/] } },
+    },
   };
 });
