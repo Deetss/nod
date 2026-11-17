@@ -79,10 +79,10 @@ export function SendDialog({ session, options, initialText, busy, onSend, onCanc
         </>
       }
     >
-      <p className="muted small">
+      <span className={`orca-state orca-state-${session.state}`}>
         <StateGlyph state={session.state} />
         {STATE_WORD[session.state]}
-      </p>
+      </span>
       <div className="orca-startfrom">
         <span className="orca-label">Start from</span>
         {options.map((o) => {
