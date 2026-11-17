@@ -84,6 +84,7 @@ export function SendDialog({ session, options, initialText, busy, onSend, onCanc
         {STATE_WORD[session.state]}
       </p>
       <div className="orca-startfrom">
+        <span className="orca-label">Start from</span>
         {options.map((o) => {
           const off = o.text === undefined;
           return (
