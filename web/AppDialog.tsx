@@ -12,6 +12,8 @@ export interface AppDialogProps {
   /** Esc, the close button and a scrim click all land here. Ignored while `busy`. */
   onClose: () => void;
   busy?: boolean;
+  /** `alertdialog` for a destructive confirmation. */
+  role?: 'dialog' | 'alertdialog';
   width?: Size | number;
   /** The footer buttons, right aligned. */
   footer?: ReactNode;
@@ -71,6 +73,7 @@ export function AppDialog(p: AppDialogProps) {
         ref={box}
         className={`dialog app-dialog${p.className ? ` ${p.className}` : ''}`}
         title={p.title}
+        role={p.role}
         width={`min(${px}px, calc(100vw - 32px))`}
         onClose={close}
         initialFocusRef={p.initialFocusRef}

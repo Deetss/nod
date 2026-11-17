@@ -2,13 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SUB_ISSUE_LIMIT, type IssueSummary, type SubIssue } from '../../shared/issue-types';
 import { parseNumberQuery } from '../../shared/number-query';
 import { subRef } from '../../shared/sub-issues';
+import { AppDialog } from '../AppDialog';
 import { Btn } from '../ui';
 import { useFocusTrap } from '../useFocusTrap';
 import { useNumberLookup } from '../useNumberLookup';
 import type { AddCandidate } from './useSubIssues';
 import { CircleDotIcon } from './parts';
 import { repoLabel } from '../repo-label';
-import { AppDialog } from '../AppDialog';
 
 interface ParentRef {
   repo: string;
@@ -34,6 +34,7 @@ export function CreateSubIssueDialog(p: CreateProps) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const titleRef = useRef<HTMLInputElement>(null);
+  useEffect(() => titleRef.current?.focus(), []);
   const repos = p.repos.includes(p.parent.repo) ? p.repos : [p.parent.repo, ...p.repos];
   const ready = title.trim() !== '' && !busy;
 
@@ -53,26 +54,38 @@ export function CreateSubIssueDialog(p: CreateProps) {
     }
   };
 
-  const footerNote = !busy && title.trim() === '' ? 'Add a title to continue' : undefined;
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      void create();
-    }
-  };
-
-  useEffect(() => titleRef.current?.focus(), []);
-
   return (
     <AppDialog
       title="Create sub-issue"
       onClose={p.onCancel}
       busy={busy}
-      footerNote={footerNote}
-      onKeyDown={onKeyDown}
       className="sub-dialog"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) void create();
+      }}
+      footerNote={
+        <label className="sub-another">
+          <input type="checkbox" checked={another} onChange={(e) => setAnother(e.target.checked)} /> Create another
+        </label>
+      }
+      footer={
+        <>
+          <Btn onClick={p.onCancel} disabled={busy}>
+            Cancel
+          </Btn>
+          <Btn primary keyHint={busy ? undefined : 'Ctrl+Enter'} disabled={!ready} onClick={() => void create()}>
+            {busy ? (
+              <>
+                <span className="spinner" aria-hidden="true" /> Creating...
+              </>
+            ) : (
+              'Create'
+            )}
+          </Btn>
+        </>
+      }
     >
-      <p className="muted small">under {refText(p.parent)}</p>
+      <p className="muted small">Under {refText(p.parent)}</p>
       <label className="field-label" htmlFor="si-repo">
         Repository
       </label>
@@ -91,11 +104,6 @@ export function CreateSubIssueDialog(p: CreateProps) {
         Body <span className="muted">optional</span>
       </label>
       <textarea id="si-body" className="sub-body" value={body} placeholder="Markdown supported." onChange={(e) => setBody(e.target.value)} />
-      <div className="sub-dialog-foot">
-        <label className="sub-another">
-          <input type="checkbox" checked={another} onChange={(e) => setAnother(e.target.checked)} /> Create another
-        </label>
-      </div>
       {error ? (
         <p className="sub-error" role="alert">
           {error}
@@ -137,11 +145,7 @@ export function addRows(
         number: i.number,
         title: i.title,
         moves,
-        note: under
-          ? `Already a sub-issue of #${parent.number}`
-          : moves && i.parent
-            ? `Has parent ${refText(i.parent)}. Adding moves it here.`
-            : 'No parent',
+        note: under ? `Already a sub-issue of #${parent.number}` : moves && i.parent ? `Has parent ${refText(i.parent)}. Adding moves it here.` : 'No parent',
         tone: under ? 'inert' : moves ? 'attention' : 'plain',
       };
     });
@@ -216,9 +220,7 @@ export function AddExistingPicker(p: AddProps) {
             setFocus(0);
           }}
         />
-        <p className="muted small sub-caption">
-          Title matches in tracked repos. Type #421 or acme-api#421 to look up any issue by number.
-        </p>
+        <p className="muted small sub-caption">Title matches in tracked repos. Type #421 or acme-api#421 to look up any issue by number.</p>
         <div className="picker-list sub-picker-list" role="listbox" aria-label="Issues">
           {rows.length === 0 ? (
             <div className="muted picker-msg">{num && !lookup.done ? 'Looking up...' : lookup.error ?? 'No matching issues.'}</div>
@@ -266,38 +268,27 @@ interface RemoveProps {
 
 /** State 6: unlinking only. The child keeps its state and history. */
 export function RemoveSubIssueDialog(p: RemoveProps) {
-  const [busy, setBusy] = useState(false);
   const removeRef = useRef<HTMLButtonElement>(null);
-  const keeps = p.child.state === 'open' ? 'stays open' : 'stays closed';
-
-  const footerNote = undefined; // No specific note for this dialog
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    // No custom key handling needed; Escape is handled by AppDialog, Enter is on the button.
-    return undefined;
-  };
-
   useEffect(() => removeRef.current?.focus(), []);
-
+  const keeps = p.child.state === 'open' ? 'stays open' : 'stays closed';
   return (
     <AppDialog
       title="Remove sub-issue?"
+      role="alertdialog"
       onClose={p.onCancel}
-      busy={busy}
-      footerNote={footerNote}
-      onKeyDown={onKeyDown}
       className="sub-dialog"
+      footer={
+        <>
+          <Btn onClick={p.onCancel}>Cancel</Btn>
+          <button ref={removeRef} type="button" className="btn btn-danger" onClick={p.onConfirm}>
+            Remove <span className="kbd">Enter</span>
+          </button>
+        </>
+      }
     >
       <p>
         {repoLabel(p.child.repo)} {subRef(p.child, p.child.repo)} “{p.child.title}” {keeps} and keeps its history. Only its link to #{p.parent.number} is removed.
       </p>
-      <div className="dialog-actions">
-        <Btn keyHint="Esc" onClick={p.onCancel}>
-          Cancel
-        </Btn>
-        <button ref={removeRef} type="button" className="btn btn-danger" onClick={p.onConfirm}>
-          Remove <span className="kbd">Enter</span>
-        </button>
-      </div>
     </AppDialog>
   );
 }
