@@ -132,15 +132,14 @@ export function SectionHeader({
 }
 
 interface PullListProps {
-  /** Replaces the sync line while a refresh runs. */
-  syncLine: ReactNode;
-  refreshing: boolean;
+  /** The pull pill short of the line, `Synced 2m ago`. */
+  synced: string;
   locked?: boolean;
   /** The header stays expanded: no spare scroll distance for the collapse. */
   short?: boolean;
   /** The chip row, the first thing in the scroll. */
   chips?: ReactNode;
-  /** Sits between the chip row and the sync line. */
+  /** Sits between the chip row and the rows. */
   banner?: ReactNode;
   /** Resolves false when the sync failed. */
   onRefresh: () => Promise<boolean>;
@@ -150,9 +149,9 @@ interface PullListProps {
 }
 
 /** The one vertical scroller on a tab. A touch drag from the top past 72px refreshes. */
-export function PullList({ syncLine, refreshing, locked, short, chips, banner, onRefresh, limited, children }: PullListProps) {
+export function PullList({ synced, locked, short, chips, banner, onRefresh, limited, children }: PullListProps) {
   const el = useRef<HTMLDivElement>(null);
-  const pull = usePullToRefresh({ scroller: el, onRefresh, limited });
+  const pull = usePullToRefresh({ scroller: el, onRefresh, limited, synced });
   const heldBanner = useRef(banner);
   if (!pull.holding) heldBanner.current = banner;
 
@@ -180,10 +179,6 @@ export function PullList({ syncLine, refreshing, locked, short, chips, banner, o
         <div className="ph-list-body">
           {chips}
           {heldBanner.current}
-          <div className="ph-syncline" role="status">
-            {refreshing && !pull.discShown ? <span className="ph-spinner" aria-hidden="true" /> : null}
-            {pull.line ?? (refreshing ? 'Refreshing…' : syncLine)}
-          </div>
           {children}
         </div>
       </div>

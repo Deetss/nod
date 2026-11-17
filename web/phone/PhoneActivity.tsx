@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { buildActivityView, groupKey, rowTail, type ActivityFilter, type ActivityRow } from '../../shared/activity';
 import {
   FILTER_HINTS,
@@ -16,12 +16,14 @@ import { ageWords } from '../ui';
 import { ListRow } from './ListRow';
 import { Chips } from './PhoneBars';
 import { PullList } from './PhoneList';
+import { LoadingLine } from './PhoneStates';
 import { CrossCircleIcon, CheckCircleIcon } from './PhoneIcons';
 import type { ActivityItemRef } from '../../shared/activity-types';
 
 interface PhoneActivityProps {
   activity: ActivityHandle;
-  refreshing: boolean;
+  /** Reports `Synced 14:02 · 10 items moved` for the ··· menu's status block. */
+  onSyncLine?: (line: string) => void;
   /** Resolves false when the sync failed. */
   onRefresh: () => Promise<boolean>;
   limited?: boolean;
@@ -94,7 +96,7 @@ function SkeletonRows() {
 }
 
 /** B1 to B7: the item-grouped Activity feed. */
-export function PhoneActivity({ activity, refreshing, onRefresh, limited, onOpen, expanded, onExpand }: PhoneActivityProps) {
+export function PhoneActivity({ activity, onSyncLine, onRefresh, limited, onOpen, expanded, onExpand }: PhoneActivityProps) {
   const { feed, error, lastVisit } = activity;
   const [filter, setFilter] = useState<ActivityFilter>('all');
   const [showMine, setShowMine] = useState(false);
@@ -105,7 +107,9 @@ export function PhoneActivity({ activity, refreshing, onRefresh, limited, onOpen
   );
   const status = activityStatus({ feed, error, view, filter });
   const chips = activityChipViews(status === 'loading' ? undefined : view);
-  const syncLine = status === 'loading' ? 'Loading activity…' : activitySyncLine(feed, view);
+  const menuLine = activitySyncLine(feed, view);
+  const syncLine = status === 'loading' ? 'Loading activity…' : menuLine;
+  useEffect(() => onSyncLine?.(menuLine), [menuLine, onSyncLine]);
   const cached = feed !== undefined && error !== undefined;
   const hiddenMine = view?.hiddenMine ?? 0;
 
@@ -113,7 +117,12 @@ export function PhoneActivity({ activity, refreshing, onRefresh, limited, onOpen
 
   let body;
   if (status === 'loading') {
-    body = <SkeletonRows />;
+    body = (
+      <>
+        <LoadingLine label="Loading activity…" />
+        <SkeletonRows />
+      </>
+    );
   } else if (status === 'error') {
     body = (
       <div className="ph-error ph-aerror" role="alert">
@@ -212,8 +221,7 @@ export function PhoneActivity({ activity, refreshing, onRefresh, limited, onOpen
       <PullList
         chips={<Chips chips={chips} value={filter} onChange={pick} />}
         short={status !== 'ready'}
-        syncLine={syncLine}
-        refreshing={refreshing}
+        synced={syncLine}
         onRefresh={onRefresh}
         limited={limited}
       >

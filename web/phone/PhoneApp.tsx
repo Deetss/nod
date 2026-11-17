@@ -28,6 +28,8 @@ import {
   prChips,
   rateLimited,
   sectionStates,
+  syncedTitle,
+  syncStatus,
   syncText,
   tabTitle,
   type PhoneTab,
@@ -158,6 +160,19 @@ export function PhoneApp(p: PhoneAppProps) {
   const errorDetail = inbox.error ?? issues.error ?? stale?.message ?? '';
   const refreshing = inbox.loading && inbox.data !== undefined;
   const limited = rateLimited(stale, now);
+  const [activityLine, setActivityLine] = useState<string>();
+  const sync = syncStatus(
+    {
+      syncedAt: inbox.data?.syncedAt,
+      rate,
+      stale,
+      unreachable: !!inbox.error,
+      cachedLine,
+      activityLine: p.tab === 'activity' ? activityLine : undefined,
+    },
+    now,
+  );
+  const synced = syncedTitle(inbox.data?.syncedAt, now);
 
   const [connSheet, setConnSheet] = useState(false);
   const setConnLayer = (on: boolean) => {
@@ -356,6 +371,8 @@ export function PhoneApp(p: PhoneAppProps) {
           theme={p.theme}
           menu={menu}
           onMenu={setMenuLayer}
+          sync={sync}
+          syncing={refreshing}
           onRefresh={p.onRefresh}
           onDensity={p.onDensity}
           onToggleTheme={p.onToggleTheme}
@@ -370,7 +387,7 @@ export function PhoneApp(p: PhoneAppProps) {
               status={prStatus}
               skeletonTitles={['Needs my review', 'Mine']}
               syncLine={syncLine}
-              cachedLine={cachedLine}
+              synced={synced}
               errorDetail={errorDetail}
               banner={listBanner}
               refreshing={refreshing}
@@ -388,7 +405,7 @@ export function PhoneApp(p: PhoneAppProps) {
               status={issueStatus}
               skeletonTitles={['Assigned to me', 'Created by me']}
               syncLine={syncLine}
-              cachedLine={cachedLine}
+              synced={synced}
               errorDetail={errorDetail}
               banner={listBanner}
               notice={issueNotice}
@@ -403,7 +420,7 @@ export function PhoneApp(p: PhoneAppProps) {
             />,
             <PhoneActivity
               activity={p.activity}
-              refreshing={refreshing}
+              onSyncLine={setActivityLine}
               onRefresh={p.onRefresh}
               limited={limited}
               onOpen={(i) => openRoot({ kind: i.kind, id: i.id })}

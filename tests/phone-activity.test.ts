@@ -192,6 +192,16 @@ describe('B1 default', () => {
   });
 });
 
+describe('sync status', () => {
+  it('has no sync line in the list; the ··· menu block carries the Activity line', () => {
+    mount();
+    expect(host.querySelector('.ph-syncline')).toBeNull();
+    expect(host.querySelector('.ph-list')?.textContent).not.toMatch(/Synced/);
+    click(host.querySelector('button[aria-label^="More"]'));
+    expect(host.querySelector('.ph-menu-status-title')?.textContent).toMatch(/^Synced \d\d:\d\d · \d+ items? moved$/);
+  });
+});
+
 describe('B2 filter', () => {
   it('filters to a chip, explains it, and clears by tapping the chip again', () => {
     mount();
@@ -271,12 +281,13 @@ describe('B5 loading', () => {
 describe('B6 error', () => {
   it('without a cache shows the failure and retries', () => {
     mount({ feed: undefined, error: 'GitHub did not answer' });
-    expect(text()).toContain('Not synced yet');
     expect(text()).toContain("Couldn't load activity");
     expect(text()).toContain('Showing nothing because no cache exists yet.');
     expect(text()).toContain('All --');
     click(button('Retry'));
     expect(reload).toHaveBeenCalled();
+    click(host.querySelector('button[aria-label^="More"]'));
+    expect(host.querySelector('.ph-menu-status-title')?.textContent).toBe('Not synced yet');
   });
 
   it('with a cache keeps the rows under a banner', () => {

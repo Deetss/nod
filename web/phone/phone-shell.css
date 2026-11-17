@@ -104,7 +104,7 @@
   z-index: 11;
   top: calc(var(--ph-top) + 52px);
   right: 8px;
-  min-width: 220px;
+  min-width: 288px;
   background: var(--bgColor-muted);
   border: 1px solid var(--borderColor-default);
   border-radius: 12px;
@@ -125,6 +125,95 @@
 
 .ph-menu button:last-child {
   border-bottom: 0;
+}
+
+/* Sync status at the top of the ··· menu. Spec: docs/design/sync-line-spec.md. */
+.ph-menu-status {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  column-gap: 8px;
+  padding: 12px 16px 16px;
+  border-bottom: 1px solid var(--borderColor-hairline);
+}
+
+.ph-menu-status-icon {
+  display: grid;
+  margin-top: 3px;
+  color: var(--fgColor-muted);
+}
+
+.ph-menu-status-icon[data-tone='attention'] {
+  color: var(--fgColor-attention);
+}
+
+.ph-menu-status-icon[data-tone='danger'] {
+  color: var(--fgColor-danger);
+}
+
+.ph-menu-status-text > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fgColor-muted);
+}
+
+.ph-menu-status-title {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+.ph-menu-status-text > .ph-menu-status-title {
+  color: var(--fgColor-default);
+}
+
+.ph-menu-status-api {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.ph-menu-status-reset {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* Beats `.ph-menu button`, so Sync now keeps the #35 pill. */
+.ph-menu .ph-menu-sync {
+  grid-column: 1 / -1;
+  display: flex;
+  width: 100%;
+  margin-top: 12px;
+  padding: 0 20px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: var(--borderRadius-full);
+  background: var(--button-default-bgColor-rest);
+  text-align: center;
+}
+
+.ph-menu .ph-menu-sync:disabled {
+  background: transparent;
+  border-style: dashed;
+  color: var(--fgColor-muted);
+}
+
+/* The ··· dot: a sync problem waits in the menu. */
+.ph-more {
+  position: relative;
+}
+
+.ph-sync-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--borderRadius-full);
+  box-shadow: 0 0 0 2px var(--bgColor-inset);
+  background: var(--fgColor-attention);
+}
+
+.ph-sync-dot[data-tone='danger'] {
+  background: var(--fgColor-danger);
 }
 
 .ph-main {

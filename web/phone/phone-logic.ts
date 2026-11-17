@@ -1,5 +1,6 @@
 import type { IssueSection } from '../../shared/issue-types';
 import type { Section } from '../../shared/types';
+import { clock } from '../activity-ui';
 
 export const PHONE_MAX_WIDTH = 700;
 
@@ -149,8 +150,82 @@ export function syncText(syncedAt: number | undefined, remaining: number | undef
   return `Synced ${ago(now - syncedAt)}${api}`;
 }
 
+/** No sync for this long marks the data stale. */
+export const STALE_SYNC_MS = 15 * 60_000;
+/** Remaining API points under this share of the limit count as low. */
+export const LOW_API_RATIO = 0.1;
+
+export type SyncProblem = 'none' | 'unreachable' | 'limited' | 'failed' | 'stale' | 'low';
+
+export interface SyncStatusInput {
+  syncedAt: number | undefined;
+  rate: { limit: number; remaining: number; resetAt: string; cost?: number } | undefined;
+  stale: { kind: string; resetAt?: string } | undefined;
+  /** Can't reach Nod: the inbox request itself failed. */
+  unreachable: boolean;
+  /** `Cached 14:02 · actions off`. */
+  cachedLine: string;
+  /** The Activity tab's own healthy title, `Synced 14:02 · 10 items moved`. */
+  activityLine?: string;
+}
+
+export interface SyncStatus {
+  problem: SyncProblem;
+  title: string;
+  api?: string;
+  reset?: string;
+}
+
+/** `2m`, `3h`, or undefined under a minute. */
+function span(ms: number): string | undefined {
+  const m = Math.round(Math.max(0, ms) / 60_000);
+  if (m < 1) return undefined;
+  return m < 60 ? `${m}m` : `${Math.round(m / 60)}h`;
+}
+
+/** `Synced 2m ago`, `Synced just now` or `Not synced yet`. */
+export function syncedTitle(syncedAt: number | undefined, now: number): string {
+  if (!syncedAt) return 'Not synced yet';
+  const s = span(now - syncedAt);
+  return s ? `Synced ${s} ago` : 'Synced just now';
+}
+
+/** The ··· menu's status block and the dot rule. The first matching problem leads. */
+export function syncStatus(i: SyncStatusInput, now: number): SyncStatus {
+  const { rate } = i;
+  const n = (x: number) => x.toLocaleString('en-US');
+  const api = rate ? `API ${n(rate.remaining)} of ${n(rate.limit)} left` : undefined;
+  const cost = rate?.cost === undefined ? '' : ` · last sync cost ${rate.cost}`;
+  const at = (iso: string) => clock(Date.parse(iso));
+  const resetsIn = (iso: string) => `Resets ${at(iso)}, in ${span(Date.parse(iso) - now) ?? '1m'}.`;
+  const reset = rate ? `Resets ${at(rate.resetAt)}${cost}` : undefined;
+  const synced = syncedTitle(i.syncedAt, now);
+
+  if (i.unreachable) return { problem: 'unreachable', title: i.cachedLine, api, reset };
+  if (rateLimited(i.stale, now)) {
+    const until = i.stale?.resetAt ?? rate?.resetAt;
+    return { problem: 'limited', title: 'Rate limited', api, reset: until ? resetsIn(until) : undefined };
+  }
+  if (i.stale?.kind === 'error' || i.stale?.kind === 'ratelimit') {
+    return { problem: 'failed', title: 'Sync failed', api: i.cachedLine, reset: api };
+  }
+  if (i.syncedAt && now - i.syncedAt >= STALE_SYNC_MS) return { problem: 'stale', title: `${synced} · Stale`, api, reset };
+  if (rate && rate.remaining < rate.limit * LOW_API_RATIO) {
+    return { problem: 'low', title: `${api} · Low`, api: resetsIn(rate.resetAt), reset: `${synced}${cost}` };
+  }
+  return { problem: 'none', title: i.activityLine ?? synced, api, reset };
+}
+
+/** Problems that stop sync and turn writes off show the danger tone; the rest show attention. */
+export function syncTone(p: SyncProblem): 'danger' | 'attention' | undefined {
+  if (p === 'none') return undefined;
+  return p === 'stale' || p === 'low' ? 'attention' : 'danger';
+}
+
 /** Pull distance in px past which releasing refreshes. */
 export const PULL_THRESHOLD = 72;
+/** A finished pull (done, failed or rate limited) holds its disc and pill this long before they shrink out. */
+export const PULL_DONE_HOLD_MS = 1000;
 
 export function shouldRefresh(dy: number): boolean {
   return dy >= PULL_THRESHOLD;

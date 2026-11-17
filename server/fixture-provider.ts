@@ -196,7 +196,8 @@ export class FixtureProvider implements Provider {
     const shown = live
       ? prs.map((p) => (this.isLive({ repo: p.repo, number: p.number }, state) ? { ...p, ci: live } : p))
       : prs;
-    const out: InboxData = { ...base, prs: shown, rate: this.rate(4812) };
+    const out: InboxData = { ...base, prs: shown, rate: { ...this.rate(state === 'sync-low' ? 312 : 4812), cost: 12 } };
+    if (state === 'sync-stale') out.syncedAt = Date.now() - 47 * 60_000;
     if (state === 'error') {
       out.stale = {
         kind: 'error',

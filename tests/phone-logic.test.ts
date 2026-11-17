@@ -26,7 +26,13 @@ import {
   snapTarget,
   steppedProgress,
   tabTitle,
+  LOW_API_RATIO,
+  STALE_SYNC_MS,
+  syncStatus,
+  syncTone,
+  type SyncStatusInput,
 } from '../web/phone/phone-logic';
+import { clock } from '../web/activity-ui';
 
 const pr = (n: number, over: Partial<PrSummary> = {}): PrSummary => ({
   id: `acme-api#${n}`,
@@ -304,5 +310,107 @@ describe('large title collapse', () => {
     expect(tabTitle('prs')).toBe('Pull requests');
     expect(tabTitle('issues')).toBe('Issues');
     expect(tabTitle('activity')).toBe('Activity');
+  });
+});
+
+describe('syncStatus', () => {
+  const now = Date.parse('2026-11-16T14:18:00Z');
+  const resetAt = new Date(now + 22 * 60_000).toISOString();
+  const at = clock(Date.parse(resetAt));
+  const input = (over: Partial<SyncStatusInput> = {}): SyncStatusInput => ({
+    syncedAt: now - 2 * 60_000,
+    rate: { limit: 5000, remaining: 4812, resetAt, cost: 12 },
+    stale: undefined,
+    unreachable: false,
+    cachedLine: 'Cached 14:02 · actions off',
+    ...over,
+  });
+
+  it('names the thresholds', () => {
+    expect(STALE_SYNC_MS).toBe(15 * 60_000);
+    expect(LOW_API_RATIO).toBe(0.1);
+  });
+
+  it('is healthy with a clock title, the budget and the reset', () => {
+    expect(syncStatus(input(), now)).toEqual({
+      problem: 'none',
+      title: 'Synced 2m ago',
+      api: 'API 4,812 of 5,000 left',
+      reset: `Resets ${at} · last sync cost 12`,
+    });
+    expect(syncStatus(input({ syncedAt: now - 10_000 }), now).title).toBe('Synced just now');
+  });
+
+  it('uses the Activity line as the healthy title on that tab', () => {
+    const s = syncStatus(input({ activityLine: 'Synced 14:02 · 10 items moved' }), now);
+    expect(s).toMatchObject({ problem: 'none', title: 'Synced 14:02 · 10 items moved' });
+  });
+
+  it('says Not synced yet without a sync', () => {
+    expect(syncStatus(input({ syncedAt: undefined }), now)).toMatchObject({ problem: 'none', title: 'Not synced yet' });
+  });
+
+  it('leads with Can not reach Nod as the cached line', () => {
+    const s = syncStatus(input({ unreachable: true }), now);
+    expect(s).toMatchObject({ problem: 'unreachable', title: 'Cached 14:02 · actions off', api: 'API 4,812 of 5,000 left' });
+  });
+
+  it('reads rate limited while the reset is ahead', () => {
+    const s = syncStatus(input({ rate: { limit: 5000, remaining: 0, resetAt }, stale: { kind: 'ratelimit', resetAt } }), now);
+    expect(s).toEqual({ problem: 'limited', title: 'Rate limited', api: 'API 0 of 5,000 left', reset: `Resets ${at}, in 22m.` });
+  });
+
+  it('reads failed for an error, and for a rate limit whose reset has passed', () => {
+    const failed = { problem: 'failed', title: 'Sync failed', api: 'Cached 14:02 · actions off', reset: 'API 4,812 of 5,000 left' };
+    expect(syncStatus(input({ stale: { kind: 'error' } }), now)).toEqual(failed);
+    const past = new Date(now - 60_000).toISOString();
+    expect(syncStatus(input({ stale: { kind: 'ratelimit', resetAt: past } }), now)).toEqual(failed);
+  });
+
+  it('marks stale at 15 minutes, not at 14m59s', () => {
+    expect(syncStatus(input({ syncedAt: now - STALE_SYNC_MS + 1000 }), now).problem).toBe('none');
+    const s = syncStatus(input({ syncedAt: now - 47 * 60_000 }), now);
+    expect(s).toEqual({
+      problem: 'stale',
+      title: 'Synced 47m ago · Stale',
+      api: 'API 4,812 of 5,000 left',
+      reset: `Resets ${at} · last sync cost 12`,
+    });
+  });
+
+  it('marks the budget low under a tenth of the limit: 499 of 5,000 is low, 500 is not', () => {
+    const rate = (remaining: number) => ({ limit: 5000, remaining, resetAt, cost: 12 });
+    expect(syncStatus(input({ rate: rate(500) }), now).problem).toBe('none');
+    expect(syncStatus(input({ rate: rate(499) }), now).problem).toBe('low');
+    expect(syncStatus(input({ rate: rate(312), syncedAt: now - 60_000 }), now)).toEqual({
+      problem: 'low',
+      title: 'API 312 of 5,000 left · Low',
+      api: `Resets ${at}, in 22m.`,
+      reset: 'Synced 1m ago · last sync cost 12',
+    });
+  });
+
+  it('lets the first matching problem lead', () => {
+    const limited = input({ syncedAt: now - 47 * 60_000, rate: { limit: 5000, remaining: 0, resetAt }, stale: { kind: 'ratelimit', resetAt } });
+    expect(syncStatus(limited, now).problem).toBe('limited');
+    expect(syncStatus({ ...limited, unreachable: true }, now).problem).toBe('unreachable');
+    const staleAndLow = input({ syncedAt: now - 20 * 60_000, rate: { limit: 5000, remaining: 10, resetAt } });
+    expect(syncStatus(staleAndLow, now).problem).toBe('stale');
+  });
+
+  it('omits the cost when unknown, and both lines without a rate', () => {
+    expect(syncStatus(input({ rate: { limit: 5000, remaining: 4812, resetAt } }), now).reset).toBe(`Resets ${at}`);
+    const s = syncStatus(input({ rate: undefined }), now);
+    expect(s.api).toBeUndefined();
+    expect(s.reset).toBeUndefined();
+  });
+
+  it('puts the dot on every problem: danger stops sync, attention only warns', () => {
+    expect(syncTone('none')).toBeUndefined();
+    expect(syncTone('stale')).toBe('attention');
+    expect(syncTone('low')).toBe('attention');
+    expect(syncTone('failed')).toBe('danger');
+    expect(syncTone('limited')).toBe('danger');
+    expect(syncTone('unreachable')).toBe('danger');
   });
 });

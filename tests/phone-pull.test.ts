@@ -7,6 +7,7 @@ vi.mock('../web/phone/haptics', () => ({ BUZZ: { success: 10, tick: 5 }, buzz: v
 
 import { buzz } from '../web/phone/haptics';
 import { PullList } from '../web/phone/PhoneList';
+import { PULL_DONE_HOLD_MS } from '../web/phone/phone-logic';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -17,14 +18,12 @@ function mount(onRefresh: () => Promise<boolean>, limited = false) {
   host = document.createElement('div');
   document.body.append(host);
   root = createRoot(host);
-  act(() =>
-    root?.render(createElement(PullList, { syncLine: 'Synced 4 min ago', refreshing: false, onRefresh, limited, children: 'rows' })),
-  );
+  act(() => root?.render(createElement(PullList, { synced: 'Synced 4m ago', onRefresh, limited, children: 'rows' })));
 }
 
 const list = () => host?.querySelector('.ph-list') as HTMLElement;
 const disc = () => host?.querySelector('.ph-pull-disc') as HTMLElement;
-const line = () => host?.querySelector('.ph-syncline')?.textContent;
+const pill = () => host?.querySelector('.ph-pull-pill')?.textContent;
 
 function touch(type: string, y?: number) {
   const e = new Event(type, { bubbles: true });
@@ -61,16 +60,24 @@ describe('pull to refresh', () => {
     release();
     expect(onRefresh).not.toHaveBeenCalled();
     expect(disc().className).toContain('is-idle');
+    expect(pill()).toBe('');
+  });
+
+  it('has no sync line; the pill beside the disc carries the words', () => {
+    mount(vi.fn(() => Promise.resolve(true)));
+    expect(host?.querySelector('.ph-syncline')).toBeNull();
+    expect(host?.querySelector('.ph-list')?.textContent).toBe('rows');
+    expect(host?.querySelector('.ph-pull-pill')?.getAttribute('role')).toBe('status');
   });
 
   it('follows the finger, damped and capped, and says release past the line', () => {
     mount(vi.fn(() => Promise.resolve(true)));
     pull(50);
     expect(disc().style.transform).toBe('translateY(30px)');
-    expect(line()).toBe('Synced 4 min ago');
+    expect(pill()).toBe('Synced 4m ago');
     pull(50, 100);
     expect(disc().style.transform).toBe('translateY(56px)');
-    expect(line()).toBe('Release to refresh');
+    expect(pill()).toBe('Release to refresh');
   });
 
   it('ticks once when crossing 72, and again only after dropping back', () => {
@@ -102,9 +109,43 @@ describe('pull to refresh', () => {
     expect(onRefresh).toHaveBeenCalledTimes(1);
     expect(disc().className).toContain('is-syncing');
     expect(disc().style.transform).toBe('translateY(40px)');
-    expect(line()).toBe('Refreshing…');
+    expect(pill()).toBe('Refreshing…');
     await act(async () => done(true));
     expect(disc().className).toContain('is-done');
+  });
+
+  it('holds Synced just now for 1000ms after a good sync, then disc and pill leave', async () => {
+    vi.useFakeTimers();
+    mount(() => Promise.resolve(true));
+    pull(100);
+    release();
+    await act(async () => undefined);
+    expect(PULL_DONE_HOLD_MS).toBe(1000);
+    expect(disc().className).toBe('ph-pull-disc is-done');
+    expect(pill()).toBe('Synced just now');
+    act(() => vi.advanceTimersByTime(999));
+    expect(disc().className).toBe('ph-pull-disc is-done');
+    act(() => vi.advanceTimersByTime(1));
+    expect(disc().className).toContain('is-leaving');
+    expect(disc().style.transform).toContain('scale(0)');
+    expect(pill()).toBe('Synced just now');
+    act(() => vi.advanceTimersByTime(150));
+    expect(disc().className).toContain('is-idle');
+  });
+
+  it('keeps the hold under reduced motion, then leaves at once', async () => {
+    vi.useFakeTimers();
+    window.matchMedia = vi.fn(() => ({ matches: true }) as MediaQueryList);
+    mount(() => Promise.resolve(true));
+    pull(100);
+    release();
+    await act(async () => undefined);
+    act(() => vi.advanceTimersByTime(999));
+    expect(pill()).toBe('Synced just now');
+    act(() => vi.advanceTimersByTime(1));
+    expect(disc().className).toContain('is-leaving');
+    act(() => vi.advanceTimersByTime(1));
+    expect(disc().className).toContain('is-idle');
   });
 
   it('shows Sync failed when the refresh resolves false, then the disc leaves after 1s', async () => {
@@ -114,15 +155,14 @@ describe('pull to refresh', () => {
     release();
     await act(async () => undefined);
     expect(disc().className).toContain('is-failed');
-    expect(line()).toBe('Sync failed');
+    expect(pill()).toBe('Sync failed');
     expect(buzz).toHaveBeenCalledTimes(1);
     act(() => vi.advanceTimersByTime(999));
     expect(disc().className).toContain('is-failed');
     act(() => vi.advanceTimersByTime(1));
-    expect(disc().className).toContain('is-done');
+    expect(disc().className).toBe('ph-pull-disc is-failed is-leaving');
     act(() => vi.advanceTimersByTime(150));
     expect(disc().className).toContain('is-idle');
-    expect(line()).toBe('Synced 4 min ago');
   });
 
   it('sends no request and never ticks while rate limited', () => {
@@ -131,13 +171,12 @@ describe('pull to refresh', () => {
     mount(onRefresh, true);
     pull(50, 100);
     expect(disc().className).toContain('is-limited');
-    expect(host?.querySelector('.ph-pull-pill')?.textContent).toBe('No request sent');
+    expect(pill()).toBe('No request sent');
     expect(host?.querySelector('.ph-pull-arc')).toBeNull();
-    expect(line()).toBe('Synced 4 min ago');
     release();
     expect(onRefresh).not.toHaveBeenCalled();
     expect(buzz).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(1000));
-    expect(disc().className).toContain('is-done');
+    expect(disc().className).toContain('is-leaving');
   });
 });
