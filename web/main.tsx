@@ -13,6 +13,7 @@ import './tokens.css';
 import './base.css';
 import './inbox.css';
 import './detail.css';
+import './app-dialog.css';
 import './ci.css';
 import './diff.css';
 import './issues.css';

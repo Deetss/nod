@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PrSummary } from '../shared/types';
+import { AppDialog } from './AppDialog';
 import type { ActionKind } from './DetailBody';
 import { HELP_KEYS, type KeyDef } from './keys';
 import { Btn, Legend } from './ui';
-import { useFocusTrap } from './useFocusTrap';
 import { useImagePaste } from './useImagePaste';
 import { repoLabel } from './repo-label';
 import { MentionTextarea } from './mentions/MentionTextarea';
@@ -45,77 +45,37 @@ export function ActionDialog(p: ActionDialogProps) {
   const typedOk = !admin || typed.trim() === String(p.pr.number);
   const blocked = p.busy || !typedOk || (copy.needsBody && body.trim() === '');
   const typedInput = useRef<HTMLInputElement>(null);
-  const trap = useFocusTrap();
 
   useEffect(() => {
     (area.current ?? typedInput.current ?? confirmBtn.current)?.focus();
   }, []);
 
+  const note = p.busy
+    ? undefined
+    : !typedOk
+      ? `Type ${p.pr.number} to confirm`
+      : copy.needsBody && body.trim() === ''
+        ? 'Add a comment to continue'
+        : undefined;
+
   return (
-    <div className="scrim" onMouseDown={() => !p.busy && p.onCancel()}>
-      <div
-        ref={trap}
-        className="dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label={`${copy.title} ${repoLabel(p.pr.repo)} #${p.pr.number}`}
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape' && !p.busy) p.onCancel();
-          if (e.key !== 'Enter' || e.nativeEvent.isComposing || blocked) return;
-          const modified = e.metaKey || e.ctrlKey;
-          // Buttons handle Enter themselves, so Cancel cancels and Confirm does not fire twice.
-          const plain = !(e.target instanceof HTMLButtonElement || e.target instanceof HTMLTextAreaElement);
-          if (modified || plain) {
-            e.preventDefault();
-            p.onConfirm(admin ? typed.trim() : body);
-          }
-        }}
-      >
-        <h2>
-          {copy.title} {repoLabel(p.pr.repo)} #{p.pr.number}?
-        </h2>
-        <p className="muted ellipsis">{p.pr.title}</p>
-        {admin ? (
-          <>
-            <p>
-              <strong>Bypasses required review.</strong> Merges now with <strong>{p.methodLabel}</strong>.
-              This cannot be undone.
-            </p>
-            <input
-              ref={typedInput}
-              className="confirm-input mono"
-              value={typed}
-              inputMode="numeric"
-              placeholder={`Type ${p.pr.number} to confirm`}
-              aria-label={`Type the PR number ${p.pr.number} to confirm`}
-              onChange={(e) => setTyped(e.target.value)}
-            />
-          </>
-        ) : null}
-        {p.kind === 'ready' ? (
-          <p>This takes the PR out of draft and lets GitHub notify reviewers. Merging is blocked until you do.</p>
-        ) : null}
-        {p.kind === 'merge' ? (
-          <p>
-            GitHub merges when required checks and reviews pass. Method: <strong>{p.methodLabel}</strong>.
-          </p>
-        ) : null}
-        {hasBox ? (
-          <MentionTextarea
-            textareaRef={area}
-            repo={p.pr.repo}
-            people={p.mentionPeople}
-            teams={p.mentionTeams}
-            value={body}
-            onValueChange={setBody}
-            rows={6}
-            placeholder={copy.needsBody ? 'Review comment (required)' : 'Optional comment'}
-            aria-label="Review comment"
-            {...images}
-          />
-        ) : null}
-        <div className="dialog-actions">
+    <AppDialog
+      title={`${copy.title} ${repoLabel(p.pr.repo)} #${p.pr.number}?`}
+      onClose={p.onCancel}
+      busy={p.busy}
+      footerNote={note}
+      onKeyDown={(e) => {
+        if (e.key !== 'Enter' || e.nativeEvent.isComposing || blocked) return;
+        const modified = e.metaKey || e.ctrlKey;
+        // Buttons handle Enter themselves, so Cancel cancels and Confirm does not fire twice.
+        const plain = !(e.target instanceof HTMLButtonElement || e.target instanceof HTMLTextAreaElement);
+        if (modified || plain) {
+          e.preventDefault();
+          p.onConfirm(admin ? typed.trim() : body);
+        }
+      }}
+      footer={
+        <>
           <Btn onClick={p.onCancel} disabled={p.busy}>
             Cancel
           </Btn>
@@ -131,12 +91,53 @@ export function ActionDialog(p: ActionDialogProps) {
             {p.busy ? <span className="spinner" aria-hidden="true" /> : null}
             {p.busy ? copy.busy : copy.confirm}
           </button>
-        </div>
-        <span className="sr-only" role="status">
-          {p.busy ? `${copy.busy.replace('...', '')} ${repoLabel(p.pr.repo)} #${p.pr.number}` : ''}
-        </span>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <p className="muted ellipsis">{p.pr.title}</p>
+      {admin ? (
+        <>
+          <p>
+            <strong>Bypasses required review.</strong> Merges now with <strong>{p.methodLabel}</strong>.
+            This cannot be undone.
+          </p>
+          <input
+            ref={typedInput}
+            className="confirm-input mono"
+            value={typed}
+            inputMode="numeric"
+            placeholder={`Type ${p.pr.number} to confirm`}
+            aria-label={`Type the PR number ${p.pr.number} to confirm`}
+            onChange={(e) => setTyped(e.target.value)}
+          />
+        </>
+      ) : null}
+      {p.kind === 'ready' ? (
+        <p>This takes the PR out of draft and lets GitHub notify reviewers. Merging is blocked until you do.</p>
+      ) : null}
+      {p.kind === 'merge' ? (
+        <p>
+          GitHub merges when required checks and reviews pass. Method: <strong>{p.methodLabel}</strong>.
+        </p>
+      ) : null}
+      {hasBox ? (
+        <MentionTextarea
+          textareaRef={area}
+          repo={p.pr.repo}
+          people={p.mentionPeople}
+          teams={p.mentionTeams}
+          value={body}
+          onValueChange={setBody}
+          rows={6}
+          placeholder={copy.needsBody ? 'Review comment (required)' : 'Optional comment'}
+          aria-label="Review comment"
+          {...images}
+        />
+      ) : null}
+      <span className="sr-only" role="status">
+        {p.busy ? `${copy.busy.replace('...', '')} ${repoLabel(p.pr.repo)} #${p.pr.number}` : ''}
+      </span>
+    </AppDialog>
   );
 }
 
@@ -170,42 +171,31 @@ export function KeyChips({ keys }: { keys: string }) {
 }
 
 export function HelpSheet({ onClose, keys = HELP_KEYS }: { onClose: () => void; keys?: KeyDef[] }) {
+  // Esc and the close button are the dialog's own; `?` toggles it too.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key === '?') onClose();
+      if (e.key === '?') onClose();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
   const half = Math.ceil(keys.length / 2);
-  const trap = useFocusTrap();
   return (
-    <div className="scrim" onMouseDown={onClose}>
-      <div
-        ref={trap}
-        tabIndex={-1}
-        className="dialog help"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Keyboard help"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <h2>Keyboard help</h2>
-        <div className="help-cols">
-          {[keys.slice(0, half), keys.slice(half)].map((col, i) => (
-            <div key={i}>
-              {col.map((k) => (
-                <div className="help-row" key={k.keys}>
-                  <KeyChips keys={k.keys} />
-                  <span className="help-label">{k.label}</span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-        <Legend className="legend help-legend" />
-        <p className="muted small">Every key has a visible button. Mouse covers all of it.</p>
+    <AppDialog title="Keyboard help" onClose={onClose} width={760}>
+      <div className="help-cols">
+        {[keys.slice(0, half), keys.slice(half)].map((col, i) => (
+          <div key={i}>
+            {col.map((k) => (
+              <div className="help-row" key={k.keys}>
+                <KeyChips keys={k.keys} />
+                <span className="help-label">{k.label}</span>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-    </div>
+      <Legend className="legend help-legend" />
+      <p className="muted small">Every key has a visible button. Mouse covers all of it.</p>
+    </AppDialog>
   );
 }

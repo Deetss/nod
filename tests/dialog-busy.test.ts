@@ -20,7 +20,8 @@ function mount(kind: ActionKind, busy: boolean, onConfirm = () => {}, onCancel =
   act(() => {
     root?.render(createElement(ActionDialog, { kind, pr: PR, methodLabel: 'Squash and merge', busy, onConfirm, onCancel, onUploadError: () => {} }));
   });
-  return host;
+  // Primer renders the dialog in a portal on document.body, outside the host.
+  return document.body;
 }
 
 afterEach(() => {

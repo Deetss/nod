@@ -187,7 +187,8 @@ describe('desktop review dialog', () => {
         }),
       ),
     );
-    const box = host.querySelector('textarea');
+    // Primer renders the dialog in a portal on document.body, outside the host.
+    const box = document.querySelector('textarea');
     if (!box) throw new Error('no field');
     paste(box, [png('dialog.png')]);
     expect(box.value).toBe('![Uploading dialog.png...]()');
