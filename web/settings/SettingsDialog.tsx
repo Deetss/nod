@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState, type KeyboardEvent } from 'react';
-import { XIcon } from '@primer/octicons-react';
 import { attentionTone, projectOff } from '../../shared/connection';
 import type { Settings } from '../../shared/settings';
+import { AppDialog } from '../AppDialog';
 import { Btn, CheckIcon } from '../ui';
-import { useFocusTrap } from '../useFocusTrap';
 import {
   errorCount,
   fixText,
@@ -72,7 +71,6 @@ export function SettingsDialog({ initial, onClose, initialSection, connection, f
   const close = useCallback(() => {
     if (!busy) onClose();
   }, [busy, onClose]);
-  const trap = useFocusTrap(close);
 
   const errors = useMemo(() => validateForm(form), [form]);
   const invalid = errorCount(errors);
@@ -132,77 +130,75 @@ export function SettingsDialog({ initial, onClose, initialSection, connection, f
     );
 
   return (
-    <div className="scrim settings-scrim">
-      <div ref={trap} className="dialog settings-dialog" role="dialog" aria-modal="true" aria-label="Settings">
-        <div className="settings-head">
-          <h2>Settings</h2>
-          <button type="button" className="btn settings-close" aria-label="Close settings" title="Close (Esc)" disabled={busy} onClick={close}>
-            <XIcon size={16} />
-          </button>
-        </div>
-        <div className="settings-body">
-          <nav className="settings-nav" aria-label="Settings sections" onKeyDown={moveSection}>
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                id={`settings-nav-${s.id}`}
-                type="button"
-                className={`settings-nav-item${s.id === section ? ' is-active' : ''}`}
-                aria-current={s.id === section ? 'page' : undefined}
-                onClick={() => setSection(s.id)}
+    <AppDialog
+      title="Settings"
+      width={880}
+      className="settings-dialog"
+      busy={busy}
+      onClose={close}
+      footerNote={status}
+      footer={
+        <div className="settings-foot-actions">
+          {done ? (
+            <Btn onClick={onClose}>Close</Btn>
+          ) : (
+            <>
+              <Btn disabled={busy} onClick={close}>
+                Cancel
+              </Btn>
+              <Btn
+                primary
+                className={busy ? 'is-busy' : undefined}
+                disabled={invalid > 0}
+                aria-disabled={busy || undefined}
+                aria-busy={busy || undefined}
+                onClick={submit}
               >
-                {s.label}
-                {s.id === 'github' && tone ? (
-                  <NavMark tone={tone} />
-                ) : s.id === 'project' && statusOff ? (
-                  <span className="settings-nav-note">Status off</span>
-                ) : failing.has(s.id) && s.id !== section ? (
-                  <span className="settings-nav-alert">
-                    <ErrorIcon size={12} />
-                    <span className="sr-only">has an invalid field</span>
-                  </span>
-                ) : null}
-              </button>
-            ))}
-          </nav>
-          <div className="settings-pane">
-            <SettingsPane
-              section={section}
-              form={form}
-              errors={errors}
-              patch={patch}
-              onEnter={submit}
-              connection={connection}
-              focusCheck={focusCheck}
-            />
-          </div>
+                {busy ? <span className="spinner" aria-hidden="true" /> : null}
+                Save
+              </Btn>
+            </>
+          )}
         </div>
-        <div className="settings-foot">
-          {status}
-          <div className="settings-foot-actions">
-            {done ? (
-              <Btn onClick={onClose}>Close</Btn>
-            ) : (
-              <>
-                <Btn disabled={busy} onClick={close}>
-                  Cancel
-                </Btn>
-                <Btn
-                  primary
-                  className={busy ? 'is-busy' : undefined}
-                  disabled={invalid > 0}
-                  aria-disabled={busy || undefined}
-                  aria-busy={busy || undefined}
-                  onClick={submit}
-                >
-                  {busy ? <span className="spinner" aria-hidden="true" /> : null}
-                  Save
-                </Btn>
-              </>
-            )}
-          </div>
+      }
+    >
+      <div className="settings-body">
+        <nav className="settings-nav" aria-label="Settings sections" onKeyDown={moveSection}>
+          {SECTIONS.map((s) => (
+            <button
+              key={s.id}
+              id={`settings-nav-${s.id}`}
+              type="button"
+              className={`settings-nav-item${s.id === section ? ' is-active' : ''}`}
+              aria-current={s.id === section ? 'page' : undefined}
+              onClick={() => setSection(s.id)}
+            >
+              {s.label}
+              {s.id === 'github' && tone ? (
+                <NavMark tone={tone} />
+              ) : s.id === 'project' && statusOff ? (
+                <span className="settings-nav-note">Status off</span>
+              ) : failing.has(s.id) && s.id !== section ? (
+                <span className="settings-nav-alert">
+                  <ErrorIcon size={12} />
+                  <span className="sr-only">has an invalid field</span>
+                </span>
+              ) : null}
+            </button>
+          ))}
+        </nav>
+        <div className="settings-pane">
+          <SettingsPane
+            section={section}
+            form={form}
+            errors={errors}
+            patch={patch}
+            onEnter={submit}
+            connection={connection}
+            focusCheck={focusCheck}
+          />
         </div>
       </div>
-    </div>
+    </AppDialog>
   );
 }

@@ -1,34 +1,23 @@
 /* Settings dialog and first-run welcome (docs/design/settings-spec.md on dev/crew-nod-settings-mockup) */
 
-.settings-dialog {
-  width: min(880px, calc(100vw - 32px));
+/* Fixed-height shell: the body holds its own two scrolling columns. */
+.dialog.app-dialog.settings-dialog {
   height: min(640px, calc(100vh - 32px));
-  padding: 0;
-  gap: 0;
-  border-radius: 10px;
+  max-height: none;
+}
+
+/* Primer wraps the body in a scroll region; give it a definite height for the two columns. */
+.settings-dialog [class*='DialogOverflowWrapper'] {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   overflow: hidden;
 }
 
-.settings-head {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 15px 24px;
-  border-bottom: 1px solid var(--borderColor-default);
-}
-
-.settings-head h2 {
-  position: relative;
-  top: -2px;
-  font: 600 20px/28px var(--fontStack-system);
-}
-
-.settings-close {
-  width: 28px;
-  height: 28px;
+.settings-dialog .app-dialog-body {
   padding: 0;
-  justify-content: center;
+  gap: 0;
+  overflow: hidden;
 }
 
 .settings-body {
@@ -279,18 +268,6 @@
 }
 
 /* Footer */
-.settings-foot {
-  flex: none;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 16px;
-  background: var(--bgColor-muted);
-  border-top: 1px solid var(--borderColor-default);
-}
-
 .settings-status {
   display: flex;
   align-items: center;
@@ -333,17 +310,6 @@
 }
 
 /* Welcome: 520 x 300 */
-.welcome-dialog {
-  width: min(520px, calc(100vw - 32px));
-  min-height: 300px;
-  padding: 20px;
-  gap: 0;
-  border-radius: 10px;
-}
-
-.welcome-dialog h2 {
-  font: 600 20px/28px var(--fontStack-system);
-}
 
 .welcome-dialog .welcome-sub {
   margin: 5px 0 0;
@@ -364,21 +330,12 @@
   color: var(--fgColor-danger);
 }
 
-.welcome-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 24px;
-  padding-bottom: 10px;
-}
-
-.welcome-actions .btn-primary {
+.welcome-dialog .dialog-actions .btn-primary {
   min-width: 120px;
   justify-content: center;
 }
 
-.welcome-actions .btn:not(.btn-primary) {
+.welcome-dialog .dialog-actions .btn:not(.btn-primary) {
   min-width: 176px;
   justify-content: center;
 }
