@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { deriveIssueSections } from '../shared/issue-sections';
 import { deriveSections } from '../shared/sections';
-import type { IssueSummary } from '../shared/issue-types';
-import type { PrSummary } from '../shared/types';
+import type { IssueSection, IssueSummary } from '../shared/issue-types';
+import type { PrSummary, Section } from '../shared/types';
 import {
+  badgeText,
   isPhoneWidth,
+  issueBadge,
   issueChips,
+  prBadge,
+  tabName,
   phoneStatus,
   prAllTotal,
   collapseProgress,
@@ -412,5 +416,59 @@ describe('syncStatus', () => {
     expect(syncTone('failed')).toBe('danger');
     expect(syncTone('limited')).toBe('danger');
     expect(syncTone('unreachable')).toBe('danger');
+  });
+});
+
+describe('tab badges', () => {
+  const sec = (key: Section['key'], prs: PrSummary[]): Section => ({ key, title: key, count: prs.length, prs });
+  const isec = (key: IssueSection['key'], issues: IssueSummary[]): IssueSection => ({
+    key,
+    title: key,
+    count: issues.length,
+    issues,
+  });
+
+  it('counts unseen PRs in Needs and updated PRs in Mine', () => {
+    const sections = [
+      sec('needs', [pr(1, { seen: 'new' }), pr(2, { seen: 'updated' }), pr(3)]),
+      sec('mine', [pr(4, { seen: 'updated' }), pr(5, { seen: 'new' }), pr(6)]),
+      sec('org', [pr(7, { seen: 'new' })]),
+      sec('dependabot', [pr(8, { seen: 'updated' })]),
+    ];
+    expect(prBadge(sections, new Set())).toBe(3);
+  });
+
+  it('drops a PR opened this session and counts a PR in two sections once', () => {
+    const both = pr(1, { seen: 'updated' });
+    const sections = [sec('needs', [both, pr(2, { seen: 'new' })]), sec('mine', [both])];
+    expect(prBadge(sections, new Set())).toBe(2);
+    expect(prBadge(sections, new Set([both.id]))).toBe(1);
+  });
+
+  it('counts unseen issues in progress, assigned and mentioned, never the bot section', () => {
+    const sections = [
+      isec('progress', [issue(1, { seen: 'updated' })]),
+      isec('bot', [issue(2, { seen: 'new', assignees: ['acme-dev'] })]),
+      isec('assigned', [issue(3, { seen: 'new' }), issue(4)]),
+      isec('created', [issue(5, { seen: 'new' })]),
+      isec('mentioned', [issue(6, { seen: 'new' })]),
+      isec('untriaged', [issue(7, { seen: 'new' })]),
+      isec('all', [1, 2, 3, 4, 5, 6, 7].map((n) => issue(n, { seen: 'new' }))),
+    ];
+    expect(issueBadge(sections, new Set())).toBe(3);
+    expect(issueBadge(sections, new Set([issue(3).id]))).toBe(2);
+  });
+
+  it('hides the badge at 0 and caps it at 99+', () => {
+    expect(badgeText(0)).toBeUndefined();
+    expect(badgeText(9)).toBe('9');
+    expect(badgeText(99)).toBe('99');
+    expect(badgeText(100)).toBe('99+');
+  });
+
+  it('names the tab with its badge', () => {
+    expect(tabName('Issues', 3)).toBe('Issues, 3 need you');
+    expect(tabName('Issues', 100)).toBe('Issues, more than 99 need you');
+    expect(tabName('Activity', 'dot')).toBe('Activity, new items need you');
   });
 });
