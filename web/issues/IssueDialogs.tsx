@@ -155,7 +155,6 @@ export function NewIssueDialog(p: NewIssueDialogProps) {
   const create = () => ready && p.onCreate({ repo, title: title.trim(), body, labels, assignees });
 
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === 'Escape') p.onCancel();
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) create();
   };
 
@@ -176,10 +175,6 @@ export function NewIssueDialog(p: NewIssueDialogProps) {
         </Btn>,
       ]}
     >
-      <div className="dialog-head">
-        <h2>New issue</h2>
-        <span className="muted small">Esc cancels</span>
-      </div>
       <label className="field-label" htmlFor="ni-repo">
         Repository
       </label>
@@ -347,7 +342,6 @@ export function DispatchDialog(p: DispatchDialogProps) {
   };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === 'Escape') p.onCancel();
     if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
       e.preventDefault();
       go();
@@ -380,12 +374,9 @@ export function DispatchDialog(p: DispatchDialogProps) {
         </button>,
       ]}
     >
-      <div className="dialog-head">
-        <h2>Dispatch with Orca</h2>
-        <span className="muted small">
-          {repoLabel(repo)} #{number}
-        </span>
-      </div>
+      <p className="muted small">
+        {repoLabel(repo)} #{number}
+      </p>
       <DispatchFields f={f} agents={p.agents} />
       {p.pr ? (
         <>
