@@ -12,7 +12,7 @@ import {
   type ScopeMark,
 } from '../../shared/connection';
 import { CopyCommandButton } from '../copy-link';
-import { AlertIcon, CheckIcon, KeyCap } from '../ui';
+import { AlertIcon, CheckIcon, KeyCap, XIcon } from '../ui';
 import type { ConnectionView } from './useConnection';
 
 const INSTALL_LINE = 'Install gh from cli.github.com if it is missing, then log in with the scopes Nod uses.';
@@ -30,7 +30,6 @@ export function ConnectionPill({ state }: { state: ConnectionState }) {
 
 /** Fill, ring and dashed ring tell the marks apart without colour. */
 export function ScopeMarkIcon({ mark, size }: { mark: ScopeMark; size: number }) {
-  const ring = mark === 'missing-optional' || mark === 'unknown';
   return (
     <span className={`conn-mark is-${mark}`} style={{ width: size, height: size }} role="img" aria-label={MARK_LABELS[mark]}>
       {mark === 'unknown' ? (
@@ -38,18 +37,7 @@ export function ScopeMarkIcon({ mark, size }: { mark: ScopeMark; size: number })
           ?
         </span>
       ) : (
-        <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          {mark === 'granted' ? (
-            <path d="M4.5 8.3l2.4 2.4 4.6-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          ) : (
-            <path
-              d={ring ? 'M5.6 5.6l4.8 4.8M10.4 5.6l-4.8 4.8' : 'M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4'}
-              stroke="currentColor"
-              strokeWidth={ring ? 1.5 : 1.8}
-              strokeLinecap="round"
-            />
-          )}
-        </svg>
+        mark === 'granted' ? <CheckIcon size={size} /> : <XIcon size={size} />
       )}
     </span>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowUpIcon } from '@primer/octicons-react';
+import { ArrowUpIcon, GrabberIcon } from '@primer/octicons-react';
 import { SUB_ISSUE_LIMIT, type ParentIssue, type SubIssue } from '../../shared/issue-types';
 import { progressOf, subRef, type MoveTarget } from '../../shared/sub-issues';
 import { CopyLinkButton } from '../copy-link';
@@ -26,11 +26,7 @@ export interface SubIssuesCardProps {
 }
 
 function GripIcon() {
-  return (
-    <svg width="8" height="12" viewBox="0 0 8 12" fill="currentColor" aria-hidden="true">
-      {[2, 6, 10].flatMap((y) => [<circle key={`a${y}`} cx="2" cy={y} r="1.2" />, <circle key={`b${y}`} cx="6" cy={y} r="1.2" />])}
-    </svg>
-  );
+  return <GrabberIcon size={12} />;
 }
 
 interface MenuRow {

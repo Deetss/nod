@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from '@primer/octicons-react';
 import { latestChecks } from '../shared/fix-checks';
 import {
   bucketChecks,
@@ -70,18 +71,11 @@ function CheckIconFor({ status }: { status: CheckItem['status'] }) {
 
 type Direction = 'up' | 'down' | 'right';
 
-const CHEVRON: Record<Direction, string> = {
-  up: 'M4 10l4-4 4 4',
-  down: 'M4 6l4 4 4-4',
-  right: 'M6 4l4 4-4 4',
-};
+const CHEVRON = { up: ChevronUpIcon, down: ChevronDownIcon, right: ChevronRightIcon } as const;
 
 function RowChevron({ dir }: { dir: Direction }) {
-  return (
-    <svg className="msb-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d={CHEVRON[dir]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  const Icon = CHEVRON[dir];
+  return <Icon className="msb-chevron" size={16} />;
 }
 
 interface StatusRowProps {
