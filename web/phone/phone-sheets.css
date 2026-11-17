@@ -208,6 +208,16 @@
   background: var(--bgColor-neutral-muted);
 }
 
+/* The search pill's `.ph-pill` rules (phone-search.css) load later; keep header state pills compact. */
+.ph-pills .ph-pill {
+  flex: none;
+  height: auto;
+  padding: 2px 10px;
+  border: 0;
+  border-radius: 13px;
+  cursor: default;
+}
+
 .ph-pill.is-open {
   background: var(--bgColor-open-emphasis, var(--bgColor-success-emphasis));
   color: var(--fgColor-onEmphasis);

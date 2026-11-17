@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { CloseReason, IssueAction } from '../../shared/issue-types';
-import type { PrSummary, ReviewEvent } from '../../shared/types';
+import type { ActionResult, PrSummary, ReviewEvent } from '../../shared/types';
 import { api } from '../api';
 import { BUZZ, buzz } from './haptics';
 
@@ -19,6 +19,7 @@ export interface PhoneWrites {
   review: (pr: PrSummary, event: ReviewEvent, body: string) => Promise<boolean>;
   autoMerge: (pr: PrSummary) => Promise<boolean>;
   adminMerge: (pr: PrSummary) => Promise<boolean>;
+  bypassMerge: (pr: PrSummary) => Promise<ActionResult>;
   markReady: (pr: PrSummary) => Promise<boolean>;
   discardReview: (pr: PrSummary) => Promise<boolean>;
   /** `fail` prefixes the server message when the call fails: `Could not rename x: <message>`. */
@@ -73,6 +74,26 @@ export function usePhoneWrites(onChanged: () => void): PhoneWrites {
     (pr: PrSummary) => run(() => api.adminMerge(pr.repo, pr.number, pr.number)),
     [run],
   );
+  /** A refusal returns GitHub's text for the error strip instead of a toast. */
+  const bypassMerge = useCallback(
+    async (pr: PrSummary): Promise<ActionResult> => {
+      setBusy(true);
+      try {
+        const res = await api.bypassMerge(pr.repo, pr.number);
+        if (res.ok) {
+          setToast({ ok: true, message: res.message });
+          buzz(BUZZ.success);
+          onChanged();
+        }
+        return res;
+      } catch (e) {
+        return { ok: false, message: e instanceof Error ? e.message : 'Merge failed' };
+      } finally {
+        setBusy(false);
+      }
+    },
+    [onChanged],
+  );
   const markReady = useCallback((pr: PrSummary) => run(() => api.markReady(pr.repo, pr.number)), [run]);
   const discardReview = useCallback(
     (pr: PrSummary) => run(() => api.discardReview(pr.repo, pr.number), 'Pending review discarded', 'Could not discard'),
@@ -105,5 +126,18 @@ export function usePhoneWrites(onChanged: () => void): PhoneWrites {
     [run],
   );
 
-  return { toast, busy, notify, review, autoMerge, adminMerge, markReady, discardReview, issue, closeIssue, createIssue };
+  return {
+    toast,
+    busy,
+    notify,
+    review,
+    autoMerge,
+    adminMerge,
+    bypassMerge,
+    markReady,
+    discardReview,
+    issue,
+    closeIssue,
+    createIssue,
+  };
 }

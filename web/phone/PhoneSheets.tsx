@@ -9,7 +9,8 @@ import { useBotCheck, useBotTrim } from '../issues/useBotCheck';
 import { phoneBotState } from './bot-check-phone';
 import { PhoneBotSplit } from './PhoneBotSplit';
 import type { PrSummary } from '../../shared/types';
-import { NO_ACCESS, reviewAccess } from '../../shared/pr-actions';
+import { bypassFields, NO_ACCESS, reviewAccess } from '../../shared/pr-actions';
+import { usePhoneBypass } from './PhoneBypass';
 import { DEFAULT_AGENT, dispatchPrompt, prDispatchPrompt, prWorktreeName, repoInOrca, worktreeName } from '../../shared/orca';
 import { hasBotLabel } from '../../shared/bot';
 import { canFix, checksDispatch, failingChecks, botComment } from '../../shared/fix-checks';
@@ -167,8 +168,16 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
         headCommitLogins: prData.detail.data?.headCommitLogins,
         ci: prData.detail.data?.summary.ci ?? 'none',
         isDraft: prData.detail.data?.summary.isDraft ?? pr.isDraft,
+        ...(prData.detail.data ? bypassFields(prData.detail.data) : {}),
       })
     : NO_ACCESS;
+  const bypass = usePhoneBypass({
+    pr,
+    detail: prData.detail.data,
+    allowed: access.bypass && !writesOff,
+    writes,
+    sheets,
+  });
   // Until the detail loads there are no checks to read, so Admin merge stays off.
   const adminKnown = !!prData.detail.data;
 
@@ -527,6 +536,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                 findings={findings}
                 writesOff={writesOff}
                 busy={writes.busy}
+                bypass={bypass}
                 depth={i}
                 covered={covered}
                 onClose={pop}

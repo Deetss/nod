@@ -42,6 +42,7 @@ export type OrcaEventKind =
   | 'comment'
   | 'merge'
   | 'admin-merge'
+  | 'bypass-merge'
   | 'auto-merge-on'
   | 'auto-merge-off'
   | 'ready'
@@ -66,6 +67,7 @@ export const EVENT_WORD: Record<OrcaEventKind, string> = {
   comment: 'commented',
   merge: 'merged',
   'admin-merge': 'admin merged',
+  'bypass-merge': 'merged without review',
   'auto-merge-on': 'auto-merge on',
   'auto-merge-off': 'auto-merge off',
   ready: 'ready for review',
@@ -74,7 +76,8 @@ export const EVENT_WORD: Record<OrcaEventKind, string> = {
 };
 
 export const isIssueEvent = (kind: OrcaEventKind): boolean => kind === 'issue-close' || kind === 'issue-reopen';
-export const isMergeEvent = (kind: OrcaEventKind): boolean => kind === 'merge' || kind === 'admin-merge';
+export const isMergeEvent = (kind: OrcaEventKind): boolean =>
+  kind === 'merge' || kind === 'admin-merge' || kind === 'bypass-merge';
 
 /** How an automatic message for `kind` starts. Always `MESSAGE_TAG` first. */
 export const autoPrefix = (kind: OrcaEventKind): string => (isMergeEvent(kind) ? MERGE_PREFIX : AUTO_PREFIX);
@@ -99,6 +102,8 @@ function sentence(kind: OrcaEventKind, c: EventContext): string {
       return `${pr} was merged by ${actor}${c.method ? ` (${c.method})` : ''}.`;
     case 'admin-merge':
       return `${pr} was admin merged by ${actor}.`;
+    case 'bypass-merge':
+      return `${pr} was merged without review by ${actor}.`;
     case 'auto-merge-on':
       return `Auto-merge was turned on for ${pr} by ${actor}.`;
     case 'auto-merge-off':

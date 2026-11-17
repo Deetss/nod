@@ -9,6 +9,7 @@ import { DEFAULT_SETTINGS, type Settings } from '../shared/settings';
 import { ProjectConfig } from './project-config';
 import type { Provider } from './provider';
 import { consoleSink } from './request-log';
+import { RulesetBypass } from './ruleset-bypass';
 import { SeenStore } from './seen';
 
 /**
@@ -33,5 +34,6 @@ export async function buildProvider(fixtures: boolean, settings: Settings = DEFA
     new IssueCache(disk),
     project,
     connection,
+    new RulesetBypass(client, disk),
   );
 }

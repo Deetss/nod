@@ -23,7 +23,7 @@
 | `Ctrl+Enter` | submit review (in Finish review body) |
 | `↑` / `↓` / `Enter` / `Esc` | move, choose or close the Finish review menu |
 | `m` | auto-merge (in Issues, `m` is milestone) |
-| `M` | admin merge |
+| `M` | admin merge, or merge (bypass) on your own PR |
 | `y` | ready for review |
 | `F` | fix failing checks |
 | `b` | hand finding to the bot (on a finding card) |

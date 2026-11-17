@@ -649,6 +649,16 @@ export function createApp(opts: AppOptions): Hono {
     return c.json(notify(await provider.adminMerge(ref), { kind: 'admin-merge', ...ref, state: state(c) }));
   });
 
+  // No typed confirmation: the gate already proved checks and threads, and the provider re-checks it.
+  mutating.post('/bypass-merge', async (c) => {
+    const parsed = mergeBody.safeParse(await c.req.json().catch(() => null));
+    if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
+    const ref = parseRef(parsed.data.repo, String(parsed.data.number));
+    if (!ref) return c.json({ error: 'Bad PR reference' }, 400);
+    const res = await provider.bypassMerge(ref, state(c));
+    return c.json(notify(res, { kind: 'bypass-merge', ...ref, state: state(c) }));
+  });
+
   mutating.post('/ready', async (c) => {
     const parsed = mergeBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);

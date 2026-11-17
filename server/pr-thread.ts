@@ -47,7 +47,7 @@ interface RawReviewThread {
 export interface RawPrThread {
   comments: { nodes: RawThreadComment[] };
   threadReviews: { nodes: RawReview[] };
-  reviewThreads: { nodes: RawReviewThread[] };
+  reviewThreads: { totalCount?: number; nodes: RawReviewThread[] };
 }
 
 const toComment = (c: RawThreadComment): IssueComment => {

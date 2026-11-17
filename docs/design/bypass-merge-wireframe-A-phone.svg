@@ -1,0 +1,564 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1412" height="3148" viewBox="0 0 1412 3148">
+<rect x="0" y="0" width="1412" height="3148" fill="#ffffff"/>
+<text x="40.0" y="30.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="bold" fill="#222222" text-anchor="start">Layout A · Merge (bypass) pill takes the Approve slot, inline confirm strip</text>
+<text x="40.0" y="52.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#444444" text-anchor="start">Round 1, greyscale. Phone 412x915, synthetic data only. Viewer sam-lee authored acme-co/orders-api #372. Dashed outline marks what is new.</text>
+<text x="40.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">1 · Where it appears: PR sheet action bar</text>
+<rect x="42.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="40.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c1"><rect x="40" y="92" width="412" height="915" rx="14"/></clipPath><g clip-path="url(#c1)">
+<text x="56.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="412.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="420.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="428.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="40.0" y="116.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="76.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(64.0,134.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="106.0" y="142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="106.0" y="160.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="416.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="410.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="416.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="422.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="40.0" y1="176.0" x2="452.0" y2="176.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="177.0" width="412.0" height="830.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="56.0" y="212.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="56.0" y="234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="56.0" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="63.0" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="107.7" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="114.7" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="56.0" y="286.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: you can&#x27;t approve it, but you may skip</text>
+<text x="56.0" y="304.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">review.</text>
+<text x="56.0" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="56.0" y1="356.0" x2="121.9" y2="356.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="149.9" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="234.6" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="40.0" y1="357.0" x2="452.0" y2="357.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="56.0" y="372.0" width="380.0" height="208.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(68.0,383.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(68.0,383.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="96.0" y="395.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="96.0" y="413.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="96.0" y1="424.0" x2="436.0" y2="424.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="76.0" cy="443.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(68.0,435.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="96.0" y="447.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="96.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="96.0" y1="476.0" x2="436.0" y2="476.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="76.0" cy="495.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(68.0,487.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="96.0" y="499.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="96.0" y="517.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<line x1="96.0" y1="528.0" x2="436.0" y2="528.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="76.0" cy="547.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(68.0,539.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="96.0" y="551.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">No conflicts with main</text>
+<text x="96.0" y="569.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Blocked by the review above</text>
+<rect x="40.0" y="931.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="40.0" y1="931.0" x2="452.0" y2="931.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="56.0" y="947.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="59.5" y="950.5" width="153.0" height="37.0" rx="19.0" fill="none" stroke="#3a3a3a" stroke-width="0.8"/>
+<text x="71.3" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Merge (bypass)</text>
+<rect x="52.0" y="943.0" width="168.0" height="52.0" rx="6" fill="none" stroke="#3a3a3a" stroke-width="1.4" stroke-dasharray="5 3"/>
+<rect x="224.0" y="947.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="274.6" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Comment</text>
+<circle cx="414.0" cy="969.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="408.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="414.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="500.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">2 · Confirm: strip names what is skipped</text>
+<rect x="502.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="500.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c2"><rect x="500" y="92" width="412" height="915" rx="14"/></clipPath><g clip-path="url(#c2)">
+<text x="516.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="872.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="880.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="888.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="500.0" y="116.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="536.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(524.0,134.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="566.0" y="142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="566.0" y="160.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="876.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="870.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="876.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="882.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="176.0" x2="912.0" y2="176.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="177.0" width="412.0" height="830.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="516.0" y="212.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="516.0" y="234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="516.0" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="523.0" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="567.7" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="574.7" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="516.0" y="286.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: you can&#x27;t approve it, but you may skip</text>
+<text x="516.0" y="304.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">review.</text>
+<text x="516.0" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="516.0" y1="356.0" x2="581.9" y2="356.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="609.9" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="694.6" y="344.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="500.0" y1="357.0" x2="912.0" y2="357.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="516.0" y="372.0" width="380.0" height="208.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(528.0,383.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(528.0,383.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="556.0" y="395.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="556.0" y="413.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="556.0" y1="424.0" x2="896.0" y2="424.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="443.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,435.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="447.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="556.0" y="465.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="556.0" y1="476.0" x2="896.0" y2="476.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="495.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,487.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="499.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="556.0" y="517.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<line x1="556.0" y1="528.0" x2="896.0" y2="528.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="547.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,539.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="551.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">No conflicts with main</text>
+<text x="556.0" y="569.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Blocked by the review above</text>
+<rect x="500.0" y="931.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="931.0" x2="912.0" y2="931.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="500.0" y="833.0" width="412.0" height="82.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="833.0" x2="912.0" y2="833.0" stroke="#9a9a9a" stroke-width="1"/>
+<text x="516.0" y="859.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Merge #372 without review?</text>
+<text x="516.0" y="879.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Skips the required review (0 of 1).</text>
+<text x="516.0" y="899.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Squash and merge, deletes feat/refunds.</text>
+<rect x="516.0" y="947.0" width="130.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="555.8" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Cancel</text>
+<rect x="654.0" y="947.0" width="242.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="657.5" y="950.5" width="235.0" height="37.0" rx="19.0" fill="none" stroke="#3a3a3a" stroke-width="0.8"/>
+<text x="733.4" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Merge now</text>
+</g>
+<text x="960.0" y="80.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3a · Busy</text>
+<rect x="962.0" y="95.0" width="412.0" height="915.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="960.0" y="92.0" width="412.0" height="915.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c3"><rect x="960" y="92" width="412" height="915" rx="14"/></clipPath><g clip-path="url(#c3)">
+<text x="976.0" y="109.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="1332.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="1340.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="1348.0" y="100.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="960.0" y="116.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="996.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(984.0,134.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="1026.0" y="142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="1026.0" y="160.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="1336.0" cy="146.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="1330.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1336.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1342.0" cy="146.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="960.0" y1="176.0" x2="1372.0" y2="176.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="177.0" width="412.0" height="830.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="976.0" y="212.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="976.0" y="234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="976.0" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="983.0" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="1027.7" y="244.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="1034.7" y="258.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="976.0" y="286.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Merging #372 without review...</text>
+<text x="976.0" y="326.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="976.0" y1="338.0" x2="1041.9" y2="338.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="1069.9" y="326.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="1154.6" y="326.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="960.0" y1="339.0" x2="1372.0" y2="339.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="976.0" y="354.0" width="380.0" height="208.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(988.0,365.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(988.0,365.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="1016.0" y="377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="1016.0" y="395.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="1016.0" y1="406.0" x2="1356.0" y2="406.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="996.0" cy="425.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(988.0,417.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="1016.0" y="429.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="1016.0" y="447.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="1016.0" y1="458.0" x2="1356.0" y2="458.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="996.0" cy="477.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(988.0,469.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="1016.0" y="481.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="1016.0" y="499.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<line x1="1016.0" y1="510.0" x2="1356.0" y2="510.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="996.0" cy="529.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(988.0,521.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="1016.0" y="533.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">No conflicts with main</text>
+<text x="1016.0" y="551.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Blocked by the review above</text>
+<rect x="960.0" y="931.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="960.0" y1="931.0" x2="1372.0" y2="931.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="976.0" y="947.0" width="160.0" height="44.0" rx="22.0" fill="#ebebed" stroke="#9a9a9a" stroke-width="1"/>
+<circle cx="994.0" cy="969.0" r="7" fill="none" stroke="#dcdcde" stroke-width="2"/>
+<path d="M994.0 962.0 A7 7 0 0 1 1001.0 969.0" stroke="#3a3a3a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<text x="1025.0" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Merging...</text>
+<rect x="1144.0" y="947.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1194.6" y="974.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#8c8c8c" text-anchor="start">Comment</text>
+<circle cx="1334.0" cy="969.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="1328.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1334.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1340.0" cy="969.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="40.0" y="1029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Own PR with bypass: the disabled Approve pill gives its</text>
+<text x="40.0" y="1046.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">slot to Merge (bypass). Comment and the round More stay.</text>
+<text x="500.0" y="1029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Tap shows a strip over the bar, like the pending-comments</text>
+<text x="500.0" y="1046.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">bar. Cancel or Merge now. No typed number: the gate</text>
+<text x="500.0" y="1063.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">already proved checks and threads.</text>
+<text x="960.0" y="1029.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Merge pill spins, Comment disables, More stays open for</text>
+<text x="960.0" y="1046.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Copy link.</text>
+<text x="40.0" y="1113.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3b · Success (shortened sheet)</text>
+<rect x="42.0" y="1128.0" width="412.0" height="640.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="40.0" y="1125.0" width="412.0" height="640.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c4"><rect x="40" y="1125" width="412" height="640" rx="14"/></clipPath><g clip-path="url(#c4)">
+<text x="56.0" y="1142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="412.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="420.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="428.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="40.0" y="1149.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="76.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(64.0,1167.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="106.0" y="1175.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="106.0" y="1193.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="416.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="410.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="416.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="422.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="40.0" y1="1209.0" x2="452.0" y2="1209.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1210.0" width="412.0" height="555.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="56.0" y="1245.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="56.0" y="1267.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="56.0" y="1277.0" width="61.5" height="20.0" rx="10" fill="#3a3a3a" stroke="#3a3a3a" stroke-width="1"/>
+<text x="63.0" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Merged</text>
+<rect x="123.5" y="1277.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="130.5" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="56.0" y="1341.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="56.0" y1="1353.0" x2="121.9" y2="1353.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="149.9" y="1341.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="234.6" y="1341.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="40.0" y1="1354.0" x2="452.0" y2="1354.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="56.0" y="1369.0" width="380.0" height="64.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<circle cx="76.0" cy="1391.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(68.0,1383.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="94.0" y="1396.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Merged by sam-lee just now</text>
+<text x="94.0" y="1416.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Review skipped · feat/refunds deleted</text>
+<text x="56.0" y="1461.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">A merged PR has no action bar.</text>
+<rect x="56.0" y="1693.0" width="380.0" height="48.0" rx="24" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<text x="246.0" y="1722.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Merged #372 without review</text>
+</g>
+<text x="500.0" y="1113.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3c · Failure: GitHub&#x27;s text, retry stays</text>
+<rect x="502.0" y="1128.0" width="412.0" height="640.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="500.0" y="1125.0" width="412.0" height="640.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c5"><rect x="500" y="1125" width="412" height="640" rx="14"/></clipPath><g clip-path="url(#c5)">
+<text x="516.0" y="1142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="872.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="880.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="888.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="500.0" y="1149.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="536.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(524.0,1167.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="566.0" y="1175.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="566.0" y="1193.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="876.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="870.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="876.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="882.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="1209.0" x2="912.0" y2="1209.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1210.0" width="412.0" height="555.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="516.0" y="1245.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="516.0" y="1267.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="516.0" y="1277.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="523.0" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="567.7" y="1277.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="574.7" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="516.0" y="1319.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: you can&#x27;t approve it, but you may skip</text>
+<text x="516.0" y="1337.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">review.</text>
+<text x="516.0" y="1377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="516.0" y1="1389.0" x2="581.9" y2="1389.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="609.9" y="1377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="694.6" y="1377.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="500.0" y1="1390.0" x2="912.0" y2="1390.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="516.0" y="1405.0" width="380.0" height="156.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(528.0,1416.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(528.0,1416.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="556.0" y="1428.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="556.0" y="1446.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="556.0" y1="1457.0" x2="896.0" y2="1457.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="1476.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,1468.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="1480.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="556.0" y="1498.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="556.0" y1="1509.0" x2="896.0" y2="1509.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="1528.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,1520.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="1532.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="556.0" y="1550.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<rect x="500.0" y="1689.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="1689.0" x2="912.0" y2="1689.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="500.0" y="1611.0" width="412.0" height="62.0" rx="0" fill="#ebebed" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="1611.0" x2="912.0" y2="1611.0" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(516.0,1624.0) scale(1.0)" stroke="none" stroke-width="1.7" fill="#3a3a3a" stroke-linecap="round" stroke-linejoin="round"><path d="M5 0h6l5 5v6l-5 5H5l-5-5V5z"/></g>
+<g transform="translate(516.0,1624.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 5.5l5 5M10.5 5.5l-5 5"/></g>
+<text x="542.0" y="1637.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">405: Repository rule violations found</text>
+<text x="542.0" y="1657.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">GitHub refused the merge. Nothing changed.</text>
+<rect x="516.0" y="1705.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#3a3a3a" stroke-width="2.5"/>
+<rect x="519.5" y="1708.5" width="153.0" height="37.0" rx="19.0" fill="none" stroke="#3a3a3a" stroke-width="0.8"/>
+<text x="531.3" y="1732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Merge (bypass)</text>
+<rect x="684.0" y="1705.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="734.6" y="1732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Comment</text>
+<circle cx="874.0" cy="1727.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="868.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="874.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="880.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="960.0" y="1113.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3d · Hidden: a check is failing</text>
+<rect x="962.0" y="1128.0" width="412.0" height="640.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="960.0" y="1125.0" width="412.0" height="640.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c6"><rect x="960" y="1125" width="412" height="640" rx="14"/></clipPath><g clip-path="url(#c6)">
+<text x="976.0" y="1142.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="1332.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="1340.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="1348.0" y="1133.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="960.0" y="1149.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="996.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(984.0,1167.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="1026.0" y="1175.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="1026.0" y="1193.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="1336.0" cy="1179.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="1330.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1336.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1342.0" cy="1179.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="960.0" y1="1209.0" x2="1372.0" y2="1209.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="960.0" y="1210.0" width="412.0" height="555.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="976.0" y="1245.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="976.0" y="1267.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="976.0" y="1277.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="983.0" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="1027.7" y="1277.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="1034.7" y="1291.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="976.0" y="1319.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: GitHub only allows comments</text>
+<text x="976.0" y="1359.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="976.0" y1="1371.0" x2="1041.9" y2="1371.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="1069.9" y="1359.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="1154.6" y="1359.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="960.0" y1="1372.0" x2="1372.0" y2="1372.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="976.0" y="1387.0" width="380.0" height="156.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(988.0,1398.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(988.0,1398.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="1016.0" y="1410.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="1016.0" y="1428.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="1016.0" y1="1439.0" x2="1356.0" y2="1439.0" stroke="#dcdcde" stroke-width="1"/>
+<g transform="translate(988.0,1450.0) scale(1.0)" stroke="none" stroke-width="1.7" fill="#3a3a3a" stroke-linecap="round" stroke-linejoin="round"><path d="M5 0h6l5 5v6l-5 5H5l-5-5V5z"/></g>
+<g transform="translate(988.0,1450.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 5.5l5 5M10.5 5.5l-5 5"/></g>
+<text x="1016.0" y="1462.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">1 check failing</text>
+<text x="1016.0" y="1480.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">build / test failed</text>
+<line x1="1016.0" y1="1491.0" x2="1356.0" y2="1491.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="996.0" cy="1510.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(988.0,1502.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="1016.0" y="1514.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="1016.0" y="1532.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<rect x="960.0" y="1689.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="960.0" y1="1689.0" x2="1372.0" y2="1689.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="976.0" y="1705.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1026.6" y="1732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#8c8c8c" text-anchor="start">Approve</text>
+<rect x="1144.0" y="1705.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="1194.6" y="1732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Comment</text>
+<circle cx="1334.0" cy="1727.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="1328.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1334.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="1340.0" cy="1727.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="40.0" y="1815.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3e · Hidden: a thread is unresolved</text>
+<rect x="42.0" y="1830.0" width="412.0" height="640.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="40.0" y="1827.0" width="412.0" height="640.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c7"><rect x="40" y="1827" width="412" height="640" rx="14"/></clipPath><g clip-path="url(#c7)">
+<text x="56.0" y="1844.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="412.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="420.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="428.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="40.0" y="1851.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="76.0" cy="1881.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(64.0,1869.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="106.0" y="1877.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="106.0" y="1895.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="416.0" cy="1881.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="410.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="416.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="422.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="40.0" y1="1911.0" x2="452.0" y2="1911.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="40.0" y="1912.0" width="412.0" height="555.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="56.0" y="1947.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="56.0" y="1969.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="56.0" y="1979.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="63.0" y="1993.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="107.7" y="1979.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="114.7" y="1993.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="56.0" y="2021.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: GitHub only allows comments</text>
+<text x="56.0" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="56.0" y1="2073.0" x2="121.9" y2="2073.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="149.9" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="234.6" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="40.0" y1="2074.0" x2="452.0" y2="2074.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="56.0" y="2089.0" width="380.0" height="156.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(68.0,2100.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(68.0,2100.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="96.0" y="2112.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="96.0" y="2130.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="96.0" y1="2141.0" x2="436.0" y2="2141.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="76.0" cy="2160.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(68.0,2152.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="96.0" y="2164.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="96.0" y="2182.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="96.0" y1="2193.0" x2="436.0" y2="2193.0" stroke="#dcdcde" stroke-width="1"/>
+<g transform="translate(68.0,2204.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12v8H7l-3 3v-3H2z"/></g>
+<text x="96.0" y="2216.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">1 unresolved thread</text>
+<text x="96.0" y="2234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">2 of 3 resolved</text>
+<rect x="40.0" y="2391.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="40.0" y1="2391.0" x2="452.0" y2="2391.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="56.0" y="2407.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="106.6" y="2434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#8c8c8c" text-anchor="start">Approve</text>
+<rect x="224.0" y="2407.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="274.6" y="2434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Comment</text>
+<circle cx="414.0" cy="2429.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="408.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="414.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="500.0" y="1815.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">3f · Hidden: ruleset says never</text>
+<rect x="502.0" y="1830.0" width="412.0" height="640.0" rx="16" fill="#000000" stroke="none" stroke-width="1" fill-opacity="0.1"/>
+<rect x="500.0" y="1827.0" width="412.0" height="640.0" rx="14" fill="#f4f4f6" stroke="#9a9a9a" stroke-width="1"/>
+<clipPath id="c8"><rect x="500" y="1827" width="412" height="640" rx="14"/></clipPath><g clip-path="url(#c8)">
+<text x="516.0" y="1844.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#6a6a6a" text-anchor="start">9:41</text>
+<rect x="872.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="880.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="888.0" y="1835.0" width="5.0" height="10.0" rx="1" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<rect x="500.0" y="1851.0" width="412.0" height="60.0" rx="0" fill="#f4f4f6" stroke="none" stroke-width="1"/>
+<circle cx="536.0" cy="1881.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<g transform="translate(524.0,1869.0) scale(1.0)" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></g>
+<text x="566.0" y="1877.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">orders-api #372</text>
+<text x="566.0" y="1895.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">feat: add refund endpoint</text>
+<circle cx="876.0" cy="1881.0" r="20" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="870.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="876.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="882.0" cy="1881.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="1911.0" x2="912.0" y2="1911.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="500.0" y="1912.0" width="412.0" height="555.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="516.0" y="1947.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="bold" fill="#3a3a3a" text-anchor="start">feat: add refund endpoint</text>
+<text x="516.0" y="1969.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">sam-lee (you) · opened 3h ago</text>
+<rect x="516.0" y="1979.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="523.0" y="1993.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Open</text>
+<rect x="567.7" y="1979.0" width="45.7" height="20.0" rx="10" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<text x="574.7" y="1993.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#3a3a3a" text-anchor="start">Mine</text>
+<text x="516.0" y="2021.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: GitHub only allows comments</text>
+<text x="516.0" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Overview</text>
+<line x1="516.0" y1="2073.0" x2="581.9" y2="2073.0" stroke="#3a3a3a" stroke-width="3"/>
+<text x="609.9" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Files 4</text>
+<text x="694.6" y="2061.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#6a6a6a" text-anchor="start">Commits 3</text>
+<line x1="500.0" y1="2074.0" x2="912.0" y2="2074.0" stroke="#dcdcde" stroke-width="1"/>
+<rect x="516.0" y="2089.0" width="380.0" height="156.0" rx="10" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<g transform="translate(528.0,2100.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l7 13H1z"/></g>
+<g transform="translate(528.0,2100.0) scale(1.0)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v3.5M8 12v.2"/></g>
+<text x="556.0" y="2112.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">Review required</text>
+<text x="556.0" y="2130.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">0 of 1 approvals, ruleset needs 1</text>
+<line x1="556.0" y1="2141.0" x2="896.0" y2="2141.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="2160.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,2152.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="2164.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All checks have passed</text>
+<text x="556.0" y="2182.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">6 of 6 successful</text>
+<line x1="556.0" y1="2193.0" x2="896.0" y2="2193.0" stroke="#dcdcde" stroke-width="1"/>
+<circle cx="536.0" cy="2212.0" r="8" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<g transform="translate(528.0,2204.0) scale(1.0)" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 8.5l2.5 2.5 4.5-5"/></g>
+<text x="556.0" y="2216.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" fill="#3a3a3a" text-anchor="start">All threads resolved</text>
+<text x="556.0" y="2234.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">3 of 3 resolved</text>
+<rect x="500.0" y="2391.0" width="412.0" height="76.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<line x1="500.0" y1="2391.0" x2="912.0" y2="2391.0" stroke="#9a9a9a" stroke-width="1"/>
+<rect x="516.0" y="2407.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="566.6" y="2434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#8c8c8c" text-anchor="start">Approve</text>
+<rect x="684.0" y="2407.0" width="160.0" height="44.0" rx="22.0" fill="#ffffff" stroke="#9a9a9a" stroke-width="1"/>
+<text x="734.6" y="2434.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" fill="#3a3a3a" text-anchor="start">Comment</text>
+<circle cx="874.0" cy="2429.0" r="22" fill="#ffffff" stroke="#3a3a3a" stroke-width="1"/>
+<circle cx="868.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="874.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+<circle cx="880.0" cy="2429.0" r="1.6" fill="#3a3a3a" stroke="none" stroke-width="1"/>
+</g>
+<text x="960.0" y="1815.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">4 · Keeping the own-PR note honest</text>
+<rect x="960.0" y="1827.0" width="412.0" height="640.0" rx="8" fill="#fafafa" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="976.0" y="1855.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444444" text-anchor="start">Bypass available (body line)</text>
+<text x="976.0" y="1873.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: you can&#x27;t approve it, but you may skip</text>
+<text x="976.0" y="1891.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">review.</text>
+<text x="976.0" y="1921.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444444" text-anchor="start">Merging</text>
+<text x="976.0" y="1939.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Merging #372 without review...</text>
+<text x="976.0" y="1969.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444444" text-anchor="start">Hidden</text>
+<text x="976.0" y="1987.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Your PR: GitHub only allows comments (unchanged)</text>
+<text x="976.0" y="2017.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="bold" fill="#444444" text-anchor="start">Bar</text>
+<text x="976.0" y="2035.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Approve leaves the bar on your own PR only while</text>
+<text x="976.0" y="2053.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">Merge (bypass) shows. It was disabled there</text>
+<text x="976.0" y="2071.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" fill="#3a3a3a" text-anchor="start">anyway.</text>
+<text x="976.0" y="2101.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">The note stays true: GitHub still refuses your</text>
+<text x="976.0" y="2118.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">approval. It now also says when a merge is possible.</text>
+<rect x="40.0" y="2517.0" width="1332.0" height="591.0" rx="4" fill="#fafafa" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="60.0" y="2547.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="bold" fill="#3a3a3a" text-anchor="start">Research · merging your own PR when a ruleset lets you bypass review</text>
+<text x="60.0" y="2579.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">How Nod gates merge today</text>
+<circle cx="64.0" cy="2597.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2601.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Nod already has Admin merge: desktop review bar (M) and the phone More sheet. It runs</text>
+<text x="74.0" y="2618.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">gh pr merge --admin (shared/pr-actions.ts, adminMergeArgs).</text>
+<circle cx="64.0" cy="2635.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2639.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">It shows only on your own PR (or one whose head commit you pushed), and only when</text>
+<text x="74.0" y="2656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">canAdminMerge() is true: viewerCanMergeAsAdmin, or repo permission ADMIN</text>
+<text x="74.0" y="2673.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">(server/github-map.ts).</text>
+<circle cx="64.0" cy="2690.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2694.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">The server re-checks author, permission, open, not draft and check rollup SUCCESS</text>
+<text x="74.0" y="2711.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">before it runs gh (adminMerge in server/github-provider.ts).</text>
+<circle cx="64.0" cy="2728.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">OWN_PR_HINT, &quot;Your PR: GitHub only allows comments&quot;, shows whenever ownPr, whatever</text>
+<text x="74.0" y="2749.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">the merge options (DetailPane ReviewBar, ReviewPane, phone body line).</text>
+<text x="60.0" y="2780.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Does viewerCanMergeAsAdmin cover this case? No</text>
+<circle cx="64.0" cy="2798.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2802.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">GraphQL docs: &quot;Indicates whether the viewer can bypass branch protections and merge</text>
+<text x="74.0" y="2819.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">the pull request immediately.&quot; It names branch protections, not rulesets.</text>
+<circle cx="64.0" cy="2836.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2840.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Nod&#x27;s own comment says the field ignores ruleset bypass lists, and this case agrees:</text>
+<text x="74.0" y="2857.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">a team bypass actor without ADMIN saw only Comment.</text>
+<circle cx="64.0" cy="2874.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2878.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Whether GitHub ever sets it for ruleset bypass actors: unverified. Treat it as not</text>
+<text x="74.0" y="2895.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">covering team bypass, so a ruleset check is needed.</text>
+<text x="60.0" y="2926.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">How the merge is sent</text>
+<circle cx="64.0" cy="2944.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="2948.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">GraphQL mergePullRequest has no admin flag. gh --admin skips the merge queue and</text>
+<text x="74.0" y="2965.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">auto-merge and calls mergePullRequest directly. GitHub applies the bypass on its side</text>
+<text x="74.0" y="2982.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">when the viewer is a bypass actor (from gh source, unverified this session).</text>
+<circle cx="64.0" cy="2999.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="3003.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">So the send path exists: reuse adminMerge and gh pr merge --admin. Only the gate is</text>
+<text x="74.0" y="3020.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">new.</text>
+<circle cx="64.0" cy="3037.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="74.0" y="3041.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Method today comes from the title rule (squash + delete branch, merge for release</text>
+<text x="74.0" y="3058.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">titles). For the repo&#x27;s allowed method, add squashMergeAllowed, mergeCommitAllowed,</text>
+<text x="74.0" y="3075.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">rebaseMergeAllowed and deleteBranchOnMerge to the detail query. No extra call.</text>
+<text x="721.0" y="2579.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">Telling &quot;only review required&quot; apart</text>
+<circle cx="725.0" cy="2597.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2601.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Show when all hold: own PR, OPEN, not draft, mergeable MERGEABLE, mergeStateStatus</text>
+<text x="735.0" y="2618.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">BLOCKED, check rollup SUCCESS, reviewDecision REVIEW_REQUIRED, zero unresolved</text>
+<text x="735.0" y="2635.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">threads (reviewThreads isResolved, already fetched).</text>
+<circle cx="725.0" cy="2652.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2656.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Hide on CHANGES_REQUESTED, BEHIND, DIRTY, failing or pending checks, or any</text>
+<text x="735.0" y="2673.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">unresolved thread.</text>
+<circle cx="725.0" cy="2690.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2694.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">BLOCKED can also hide rules Nod cannot see (signed commits, deployments). GitHub</text>
+<text x="735.0" y="2711.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">refuses those and Nod shows its text.</text>
+<circle cx="725.0" cy="2728.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2732.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">reviewThreads reads the last 50. A PR with more threads should hide the action.</text>
+<text x="721.0" y="2763.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#444444" text-anchor="start">REST ruleset calls, cost and caching</text>
+<circle cx="725.0" cy="2781.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2785.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Only when the gate passes: GET /repos/{o}/{r}/rules/branches/{base} (1 call) lists</text>
+<text x="735.0" y="2802.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">rules with ruleset_id.</text>
+<circle cx="725.0" cy="2819.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2823.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Keep pull_request rules with required_approving_review_count of 1 or more. The org</text>
+<text x="735.0" y="2840.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">threads ruleset (0 approvals) drops out.</text>
+<circle cx="725.0" cy="2857.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2861.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Then GET /repos/{o}/{r}/rulesets/{id} per kept id, usually 1. current_user_can_bypass</text>
+<text x="735.0" y="2878.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">always or pull_requests_only shows the action; never hides it.</text>
+<circle cx="725.0" cy="2895.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2899.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Uses the REST core budget (5,000 an hour), not GraphQL points. Send If-None-Match; a</text>
+<text x="735.0" y="2916.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">304 is free.</text>
+<circle cx="725.0" cy="2933.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2937.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Cache per repo and base for 1 hour in repo-meta, like teams. Worst case about 2 calls</text>
+<text x="735.0" y="2954.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">per repo per hour. A 403 or 404 counts as no bypass.</text>
+<circle cx="725.0" cy="2971.0" r="2" fill="#6a6a6a" stroke="none" stroke-width="1"/>
+<text x="735.0" y="2975.0" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" fill="#6a6a6a" text-anchor="start">Whether the repo endpoint returns org-level rulesets for a non-admin: unverified.</text>
+</svg>

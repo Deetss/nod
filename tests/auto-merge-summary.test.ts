@@ -100,7 +100,7 @@ describe('auto-merge chip from GitHub state', () => {
 });
 
 describe('auto-merge button', () => {
-  const access = { ownPr: false, admin: 'hidden', draft: false } as const;
+  const access = { ownPr: false, admin: 'hidden', draft: false, bypass: false } as const;
 
   function bar(autoMerge: boolean, density: 'comfortable' | 'compact'): HTMLElement {
     const detail = { summary: { ...PR, autoMerge }, mergeMethod: 'squash' } as unknown as PrDetail;
@@ -130,7 +130,7 @@ describe('auto-merge button', () => {
 });
 
 describe('review bar', () => {
-  const access = { ownPr: false, admin: 'hidden', draft: false } as const;
+  const access = { ownPr: false, admin: 'hidden', draft: false, bypass: false } as const;
   const detail = (extra: Partial<PrDetail> = {}) =>
     ({ summary: { ...PR, autoMerge: false }, mergeMethod: 'squash', isOpen: true, ...extra }) as unknown as PrDetail;
   const bar = (d: PrDetail, a: ReviewAccess = access, onAction: (k: ActionKind) => void = () => {}) =>
@@ -151,7 +151,7 @@ describe('review bar', () => {
   });
 
   it('shows the own-PR hint and disables Approve on your own PR', () => {
-    const el = bar(detail(), { ownPr: true, admin: 'hidden', draft: false });
+    const el = bar(detail(), { ownPr: true, admin: 'hidden', draft: false, bypass: false });
     expect(el.textContent).toContain('GitHub');
     const approve = [...el.querySelectorAll('button')].find((b) => b.textContent?.startsWith('Approve'));
     expect(approve?.disabled).toBe(true);

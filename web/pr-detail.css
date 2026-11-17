@@ -277,6 +277,84 @@
   margin-left: auto;
 }
 
+/* The own-PR note: a full-width row of its own, so it never squeezes the buttons. */
+.review-bar-note {
+  flex: 0 0 100%;
+  min-width: 0;
+  line-height: 18px;
+}
+
+/* Merge (bypass) keeps its width while busy. */
+.review-bar .bypass-btn {
+  min-width: 158px;
+  justify-content: center;
+}
+
+.review-bar-error {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  border: 1px solid var(--borderColor-danger-emphasis);
+  border-radius: 6px;
+  background: var(--bgColor-danger-muted);
+  color: var(--fgColor-danger);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.review-bar-error .toast-icon {
+  flex: none;
+  color: var(--fgColor-danger);
+}
+
+/* Confirm strip: the bar itself, tinted, naming what Merge (bypass) skips. */
+.review-bar.is-confirm {
+  background: linear-gradient(var(--bgColor-attention-muted), var(--bgColor-attention-muted)), var(--bgColor-muted);
+  border-top-color: var(--borderColor-attention-emphasis);
+}
+
+.bypass-strip {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.bypass-strip-icon {
+  flex: none;
+  display: flex;
+  padding-top: 2px;
+  color: var(--fgColor-attention);
+}
+
+.bypass-strip-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.bypass-strip-title {
+  margin-bottom: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--fgColor-default);
+}
+
+.bypass-strip-line {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.bypass-strip-line.is-lead {
+  color: var(--fgColor-default);
+}
+
 /* The merge method stays in the Auto-merge tooltip when the pane is too narrow for one row. */
 .detail-pane {
   container-type: inline-size;

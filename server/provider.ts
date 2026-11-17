@@ -96,6 +96,8 @@ export interface Provider {
   merge(ref: PrRef): Promise<ActionResult>;
   /** `gh pr merge --admin`. The HTTP layer has already checked the typed PR number. */
   adminMerge(ref: PrRef): Promise<ActionResult>;
+  /** `gh pr merge --admin` on the viewer's own PR, after re-checking the whole Merge (bypass) gate. */
+  bypassMerge(ref: PrRef, query?: StateQuery): Promise<ActionResult>;
   /** GraphQL `markPullRequestReadyForReview`: takes a draft PR out of draft. */
   markReady(ref: PrRef): Promise<ActionResult>;
   /** Re-runs a workflow run's failed jobs (`failed`) or all of its jobs (`all`). `repo` is a bare name in the org. */

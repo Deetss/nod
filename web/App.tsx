@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   mergeMethodLabel,
   type DiffMode,
+  type ActionResult,
   type FileItem,
   type PrSummary,
   type SectionKey,
@@ -53,7 +54,8 @@ import { LinkRouterContext, isKnownRepo, openExternal, resolveItemLink, type Ite
 const CHECKS_POLL_MS = 5000;
 import { DEFAULT_COLLAPSED, allPrs, filterPrs, visibleSections, walkOrder } from './inbox-utils';
 import type { NotifyTarget } from '../shared/notify-rules';
-import { NO_ACCESS, reviewAccess } from '../shared/pr-actions';
+import { bypassFields, NO_ACCESS, reviewAccess } from '../shared/pr-actions';
+import { useBypassMerge } from './BypassMerge';
 import { useInbox } from './useInbox';
 import { setKnownRepos } from './repo-label';
 import { parseOpenParam, reloadUrl, type OpenRef } from '../shared/build-update';
@@ -435,10 +437,20 @@ export function App() {
             headCommitLogins: detail.data.headCommitLogins,
             ci: detail.data.summary.ci,
             isDraft: detail.data.summary.isDraft,
+            ...bypassFields(detail.data),
           })
         : NO_ACCESS,
     [detail.data, viewer],
   );
+  const bypassDone = useCallback(
+    (res: ActionResult) => {
+      setToast(res);
+      noticeRef.current?.(res, true);
+      reloadAll();
+    },
+    [setToast, reloadAll],
+  );
+  const bypass = useBypassMerge({ pr: selected, enabled: access.bypass && !limited, onDone: bypassDone });
 
   const startAction = useCallback(
     (kind: ActionKind) => {
@@ -563,7 +575,7 @@ export function App() {
       request: () => startAction('request'),
       comment: () => startAction('comment'),
       merge: () => startAction('merge'),
-      adminMerge: () => startAction('admin'),
+      adminMerge: () => (access.bypass ? bypass.open() : startAction('admin')),
       ready: () => startAction('ready'),
       openGithub: () => selected && openExternal(selected.url),
       copyLink: () => selected && void copyUrl(selected.url),
@@ -584,7 +596,7 @@ export function App() {
       goIssues,
       goActivity,
     },
-    !action && !help && !pairing && !settingsShown && !fixOpen && !findings?.bulk && !orcaUi.modalOpen && listView === 'prs',
+    !action && bypass.phase === 'idle' && !help && !pairing && !settingsShown && !fixOpen && !findings?.bulk && !orcaUi.modalOpen && listView === 'prs',
   );
   useSettingsKey(!phone, () => setSettingsOpen(true));
 
@@ -979,7 +991,14 @@ export function App() {
                 )}
               </div>
               {d ? (
-                <ReviewBar detail={d} disabled={limited} access={access} onAction={startAction} onChanged={reloadAll} />
+                <ReviewBar
+                  detail={d}
+                  disabled={limited}
+                  access={access}
+                  onAction={startAction}
+                  onChanged={reloadAll}
+                  bypass={bypass}
+                />
               ) : null}
             </section>
             {handle(1, 'Resize Detail')}
@@ -1000,6 +1019,7 @@ export function App() {
             diff={diffList}
             drawer={bodyProps ? <DetailBody {...bodyProps} /> : null}
             onAction={startAction}
+            bypass={bypass}
             onBack={() => setView('inbox')}
             onToggleDrawer={() => setDrawer((o) => !o)}
           />

@@ -3,7 +3,7 @@ import { orcaEnabledFor, type OrcaPrefs } from './orca-prefs';
 import type { SessionState } from './orca-sessions';
 
 /** Events that start a turn in an idle (`done`) session. See docs/design/orca-sessions-spec.md section 12.3. */
-const IDLE_OK: ReadonlySet<OrcaEventKind> = new Set(['request-changes', 'merge', 'admin-merge', 'issue-close']);
+const IDLE_OK: ReadonlySet<OrcaEventKind> = new Set(['request-changes', 'merge', 'admin-merge', 'bypass-merge', 'issue-close']);
 
 /** Working and waiting sessions always get the message, done sessions only for `IDLE_OK`, unknown never. */
 export function stateReceives(kind: OrcaEventKind, state: SessionState): boolean {

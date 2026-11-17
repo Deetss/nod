@@ -36,7 +36,14 @@ const CLOSES: Record<string, number[]> = { 'acme-co/acme-api#309': [412] };
 /** Mirrors the head refs the fixture provider reports in PR detail. */
 function headRefOf(s: PrSeed): string {
   if (s.title.toLowerCase().includes(DEFAULT_SETTINGS.releaseMerge.titleContains)) return DEFAULT_SETTINGS.releaseMerge.head;
-  return s.repo === 'acme-co/acme-api' && s.number === 310 ? 'crew/acmeapi-data-read-bonus' : `feature/${s.number}`;
+  return fixtureHead(s.repo, s.number);
+}
+
+/** Head branch of a non-release fixture PR. */
+export function fixtureHead(repo: string, number: number): string {
+  if (repo === 'acme-co/acme-api' && number === 310) return 'crew/acmeapi-data-read-bonus';
+  if (repo === 'acme-co/orders-api' && number >= 372 && number <= 374) return 'feat/refunds';
+  return `feature/${number}`;
 }
 
 function summary(s: PrSeed, now: number): PrSummary {
@@ -78,6 +85,10 @@ const MINE: PrSeed[] = [
   { repo: 'acme-co/acme-web', number: 1343, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 1284, del: 312, files: 38, ci: 'running', review: 'no reviews yet', seen: 'new', comments: 2, conflicting: true },
   { repo: 'acme-co/acme-api', number: 307, title: 'feat: release staging to main (2026-11-06)', author: FIXTURE_VIEWER, ageH: 5, add: 96, del: 14, files: 11, ci: 'pass', review: '1 approval', seen: 'seen', comments: 1 },
   { repo: 'acme-co/acme-web', number: 1352, title: 'feat: color sheet print layout', author: FIXTURE_VIEWER, ageH: 3, add: 214, del: 38, files: 9, ci: 'pass', review: 'no reviews yet', seen: 'seen', draft: true },
+  // Merge (bypass): 372 passes the gate; 373 has a failing check; 374 has no ruleset bypass.
+  { repo: 'acme-co/orders-api', number: 372, title: 'feat: add refund endpoint', author: FIXTURE_VIEWER, ageH: 3, add: 21, del: 0, files: 2, ci: 'pass', review: 'review required', seen: 'seen', comments: 3 },
+  { repo: 'acme-co/orders-api', number: 373, title: 'feat: retry refund webhooks', author: FIXTURE_VIEWER, ageH: 4, add: 21, del: 0, files: 2, ci: 'fail', review: 'review required', seen: 'seen' },
+  { repo: 'acme-co/orders-api', number: 374, title: 'docs: describe the refund limits', author: FIXTURE_VIEWER, ageH: 6, add: 21, del: 0, files: 2, ci: 'pass', review: 'review required', seen: 'seen' },
 ];
 const ORG: PrSeed[] = [
   { repo: 'acme-co/acme-api', number: 309, title: 'chore: tidy swagger tags', author: 'build-bot', ageH: 8, add: 12, del: 12, files: 2, ci: 'pass', review: 'no reviews yet', seen: 'seen' },
@@ -117,7 +128,7 @@ export function fixtureSections(now: number): FixtureSections {
 
 type Row = [DiffLine['kind'], number | null, number | null, string];
 
-function hunk(header: string, rows: Row[]): Hunk {
+export function hunk(header: string, rows: Row[]): Hunk {
   return {
     header,
     lines: rows.map(([kind, o, n, text]) => ({
@@ -200,7 +211,7 @@ const swaggerSince = hunk('@@ -214,3 +214,5 @@ paths:', [
   ['ctx', 215, 217, '      responses:'],
 ]);
 
-function file(path: string, additions: number, deletions: number, hunks: Hunk[]): DiffFile {
+export function file(path: string, additions: number, deletions: number, hunks: Hunk[]): DiffFile {
   return { path, additions, deletions, hunks };
 }
 

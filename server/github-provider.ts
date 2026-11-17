@@ -19,10 +19,29 @@ import {
 import { GithubConnection, isProjectScopeError } from './connection';
 import { parsePatch } from '../shared/patch';
 import { repoName, repoOwner } from '../shared/repo-name';
-import { adminMergeArgs, adminMergeState, DRAFT_HINT, isOwnPr, mergeFlags, sameLogin } from '../shared/pr-actions';
+import {
+  adminMergeArgs,
+  adminMergeState,
+  bypassDoneMessage,
+  bypassFields,
+  bypassMergeArgs,
+  bypassMethodFor,
+  bypassRefusal,
+  canBypassMerge,
+  deletesBranch,
+  DRAFT_HINT,
+  isOwnPr,
+  mergeFlags,
+  methodFlags,
+  NO_METHOD,
+  sameLogin,
+  THREAD_LIMIT,
+} from '../shared/pr-actions';
+import { RulesetBypass } from './ruleset-bypass';
 import {
   mergeMethodFor,
   type ActionResult,
+  type MergeAllowed,
   type CommitItem,
   type DiffData,
   type DiffFile,
@@ -258,7 +277,35 @@ interface RawMergeState {
   mergeStateStatus?: string;
   mergeable?: string;
   reviewDecision?: string | null;
+  reviewThreads?: { totalCount?: number; nodes: { isResolved: boolean }[] };
   commits: { nodes: { commit: RawHeadCommit & { statusCheckRollup: RawRollup | null } }[] };
+}
+
+/** Repository merge settings, read with the detail and before Merge (bypass). */
+interface RawRepoMerge {
+  viewerPermission?: string;
+  squashMergeAllowed?: boolean;
+  mergeCommitAllowed?: boolean;
+  rebaseMergeAllowed?: boolean;
+  deleteBranchOnMerge?: boolean;
+}
+
+/** Absent fields (an older query shape) leave the allowed methods unknown. */
+function mergeSettingsOf(r: RawRepoMerge | null | undefined): Pick<PrDetail, 'mergeAllowed' | 'deleteBranchOnMerge'> {
+  if (!r || r.squashMergeAllowed === undefined) return {};
+  const mergeAllowed: MergeAllowed = {
+    squash: r.squashMergeAllowed === true,
+    merge: r.mergeCommitAllowed === true,
+    rebase: r.rebaseMergeAllowed === true,
+  };
+  return { mergeAllowed, deleteBranchOnMerge: r.deleteBranchOnMerge === true };
+}
+
+function threadCountsOf(
+  t: { totalCount?: number; nodes: { isResolved: boolean }[] } | undefined,
+): Pick<PrDetail, 'reviewThreadTotal' | 'unresolvedThreads'> {
+  if (!t || t.totalCount === undefined) return {};
+  return { reviewThreadTotal: t.totalCount, unresolvedThreads: t.nodes.filter((n) => !n.isResolved).length };
 }
 
 /** The head commit's author and committer, as GitHub logins (null when the email has no account). */
@@ -286,7 +333,7 @@ interface ChecksResponse {
 
 interface MergeStateResponse {
   viewer: { login: string };
-  repository: { viewerPermission?: string; pullRequest: RawMergeState | null } | null;
+  repository: (RawRepoMerge & { pullRequest: RawMergeState | null }) | null;
 }
 interface FollowResponse {
   repository: { pullRequest: (RawPr & { autoMergeRequest: { enabledAt: string } | null }) | null } | null;
@@ -295,7 +342,7 @@ interface FollowResponse {
 interface DetailResponse {
   viewer: { login: string };
   rateLimit: RateInfo;
-  repository: { viewerPermission?: string; pullRequest: RawDetailPr | null } | null;
+  repository: (RawRepoMerge & { pullRequest: RawDetailPr | null }) | null;
 }
 
 interface RestFile {
@@ -359,6 +406,7 @@ export class GithubProvider implements Provider {
     issueStore: IssueCache = new IssueCache(),
     project: ProjectConfig = new ProjectConfig(undefined, undefined, log),
     private readonly conn: GithubConnection = new GithubConnection(client, undefined, undefined, log),
+    private readonly rulesets: RulesetBypass = new RulesetBypass(client),
   ) {
     this.issueSvc = new IssueService(client, seen, issueStore, now, project);
     this.attachments = AttachmentImages.over(client, log, now);
@@ -833,7 +881,21 @@ export class GithubProvider implements Provider {
   }
 
   async detail(ref: PrRef): Promise<PrDetail> {
-    return this.attachments.prDetail(await this.loadDetail(ref));
+    return this.attachments.prDetail(await this.withBypass(ref, await this.loadDetail(ref)));
+  }
+
+  /** Asks the rulesets only when every other Merge (bypass) row holds, so most PRs cost no REST call. */
+  private async withBypass(ref: PrRef, d: PrDetail): Promise<PrDetail> {
+    const input = {
+      author: d.summary.author,
+      viewer: this.state.viewer,
+      ci: d.summary.ci,
+      isDraft: d.summary.isDraft,
+      ...bypassFields(d),
+    };
+    if (!canBypassMerge({ ...input, rulesetBypass: true })) return { ...d, rulesetBypass: false };
+    const verdict = await this.rulesets.check(ref.repo, d.baseRef);
+    return { ...d, rulesetBypass: verdict.bypass, requiredApprovals: verdict.required };
   }
 
   private loadDetail(ref: PrRef): Promise<PrDetail> {
@@ -871,13 +933,7 @@ export class GithubProvider implements Provider {
       });
       const pr = data.repository?.pullRequest;
       if (!pr) throw new ApiError('Pull request not found', 'http', 404);
-      const detail = await this.buildDetail(
-        ref,
-        data.viewer.login,
-        pr,
-        data.rateLimit,
-        data.repository?.viewerPermission,
-      );
+      const detail = await this.buildDetail(ref, data.viewer.login, pr, data.rateLimit, data.repository);
       const base = this.bases.get(prKey);
       if (base) {
         await this.store.putDetail({
@@ -897,8 +953,9 @@ export class GithubProvider implements Provider {
     viewer: string,
     pr: RawDetailPr,
     rate: RateInfo,
-    viewerPermission?: string,
+    repo?: RawRepoMerge | null,
   ): Promise<PrDetail> {
+    const viewerPermission = repo?.viewerPermission;
     const mine = pr.myReviews.nodes.filter((r) => r.author?.login === viewer && r.commit);
     const last = mine[mine.length - 1];
     const lastSha = last?.commit?.oid;
@@ -991,6 +1048,8 @@ export class GithubProvider implements Provider {
       ...(pr.closedAt ? { closedAt: pr.closedAt } : {}),
       ...(pr.mergedBy ? { mergedBy: pr.mergedBy.login } : {}),
       reviewDecision: pr.reviewDecision ?? undefined,
+      ...threadCountsOf(pr.reviewThreads),
+      ...mergeSettingsOf(repo),
       thread: toPrThread(pr),
       ...pendingReviewOf(pr.pendingReview),
       rate,
@@ -1281,15 +1340,15 @@ export class GithubProvider implements Provider {
   /** Fresh author, permission, checks, refs and title. Never read from a cache. */
   private async mergeState(
     ref: PrRef,
-  ): Promise<{ viewer: string; pr: RawMergeState; viewerPermission?: string }> {
+  ): Promise<{ viewer: string; pr: RawMergeState; viewerPermission?: string; repo: RawRepoMerge }> {
     const data = await this.client.graphql<MergeStateResponse>(
       MERGE_STATE_QUERY,
       { owner: repoOwner(ref.repo), name: repoName(ref.repo), number: ref.number },
       'MergeState',
     );
     const pr = data.repository?.pullRequest;
-    if (!pr) throw new ApiError('Pull request not found', 'http', 404);
-    return { viewer: data.viewer.login, pr, viewerPermission: data.repository?.viewerPermission };
+    if (!data.repository || !pr) throw new ApiError('Pull request not found', 'http', 404);
+    return { viewer: data.viewer.login, pr, viewerPermission: data.repository.viewerPermission, repo: data.repository };
   }
 
   /** Takes a draft PR out of draft through the GraphQL mutation. */
@@ -1358,6 +1417,49 @@ export class GithubProvider implements Provider {
       this.setFollow(ref, 'merging');
       return { ok: true, message: 'Merged with admin rights' };
     } catch (e) {
+      return this.fail(e);
+    }
+  }
+
+  /** Re-checks the whole gate on fresh data, then merges through the Admin merge send path. */
+  async bypassMerge(ref: PrRef): Promise<ActionResult> {
+    let base: string | undefined;
+    try {
+      const { viewer, pr, repo } = await this.mergeState(ref);
+      base = pr.baseRefName;
+      const threads = threadCountsOf(pr.reviewThreads);
+      const input = {
+        author: pr.author?.login ?? '',
+        viewer,
+        ci: ciFromRollup(pr.commits.nodes[0]?.commit.statusCheckRollup?.state),
+        isDraft: pr.isDraft === true,
+        state: pr.state,
+        mergeable: pr.mergeable,
+        mergeStateStatus: pr.mergeStateStatus,
+        reviewDecision: pr.reviewDecision ?? undefined,
+        unresolvedThreads: threads.unresolvedThreads ?? 0,
+        threadsComplete: threads.reviewThreadTotal !== undefined && threads.reviewThreadTotal <= THREAD_LIMIT,
+      };
+      const early = bypassRefusal({ ...input, rulesetBypass: true });
+      if (early) return { ok: false, message: `Merge (bypass) refused: ${early}` };
+      const verdict = await this.rulesets.check(ref.repo, base, { fresh: true });
+      const late = bypassRefusal({ ...input, rulesetBypass: verdict.bypass });
+      if (late) return { ok: false, message: `Merge (bypass) refused: ${late}` };
+      const settings = mergeSettingsOf(repo);
+      const preferred = mergeMethodFor(pr.title, pr.baseRefName, pr.headRefName, this.settings);
+      const method = bypassMethodFor(preferred, settings.mergeAllowed);
+      if (!method) return { ok: false, message: `Merge (bypass) refused: ${NO_METHOD}` };
+      const deleted = deletesBranch(method, settings.deleteBranchOnMerge);
+      await this.gh(bypassMergeArgs(ref.repo, ref.number, methodFlags(method)));
+      await this.store.invalidate(keyOf(ref));
+      this.follow(ref);
+      this.setFollow(ref, 'merging');
+      return { ok: true, message: bypassDoneMessage(ref.number, deleted) };
+    } catch (e) {
+      // GitHub refused what the cache allowed, so the next look asks the rulesets again.
+      if (base !== undefined && (e as { stderr?: unknown } | null)?.stderr !== undefined) {
+        await this.rulesets.drop(ref.repo, base);
+      }
       return this.fail(e);
     }
   }
