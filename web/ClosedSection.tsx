@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
+import { GitMergeIcon, XCircleIcon } from '@primer/octicons-react';
 import {
   CLOSED_PILL,
   CLOSED_WINDOWS,
@@ -21,48 +22,16 @@ import { RowMeta } from './RowMeta';
 import { Btn, Chevron, KeyCap, formatAge } from './ui';
 import { captureScrollsClosed } from './useClosed';
 
-/** Merge glyph, the same mark as the Auto-merge chip in `PrChip.tsx`. */
-function MergeIcon({ size }: { size: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="4.5" cy="3.5" r="1.6" />
-      <circle cx="4.5" cy="12.5" r="1.6" />
-      <circle cx="11.5" cy="8.5" r="1.6" />
-      <path d="M4.5 5.1v5.8M4.5 5.5c0 2.2 2.6 3 5.4 3" />
-    </svg>
-  );
-}
-
-/** A ring with a cross inside: closed without merging. */
-function CrossCircleIcon({ size }: { size: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-      <circle cx="8" cy="8" r="6" />
-      <path d="M5.6 5.6l4.8 4.8M10.4 5.6l-4.8 4.8" />
-    </svg>
-  );
-}
-
-/** A dashed ring with a slash: closed as not planned. */
-function DashedSlashIcon({ size }: { size: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-      <circle cx="8" cy="8" r="6" strokeDasharray="2.4 2.2" />
-      <path d="M4.2 11.8l7.6-7.6" />
-    </svg>
-  );
-}
-
 export function ClosedIcon({ state, size = 12 }: { state: ClosedState; size?: number }) {
   switch (state) {
     case 'merged':
-      return <MergeIcon size={size} />;
+      return <GitMergeIcon size={size} />;
     case 'closed':
-      return <CrossCircleIcon size={size} />;
+      return <XCircleIcon size={size} />;
     case 'completed':
       return <CircleCheckIcon size={size} />;
     case 'not-planned':
-      return size === 12 ? <DashedSlashIcon size={size} /> : <SlashCircleIcon size={size} />;
+      return <SlashCircleIcon size={size} />;
   }
 }
 

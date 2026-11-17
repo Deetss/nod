@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type KeyboardEvent } from 'react';
+import { XIcon } from '@primer/octicons-react';
 import { attentionTone, projectOff } from '../../shared/connection';
 import type { Settings } from '../../shared/settings';
 import { Btn, CheckIcon } from '../ui';
@@ -136,9 +137,7 @@ export function SettingsDialog({ initial, onClose, initialSection, connection, f
         <div className="settings-head">
           <h2>Settings</h2>
           <button type="button" className="btn settings-close" aria-label="Close settings" title="Close (Esc)" disabled={busy} onClick={close}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-            </svg>
+            <XIcon size={16} />
           </button>
         </div>
         <div className="settings-body">

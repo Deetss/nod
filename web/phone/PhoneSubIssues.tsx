@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { ArrowUpIcon } from '@primer/octicons-react';
 import type { ParentIssue, SubIssue } from '../../shared/issue-types';
 import { progressOf, subRef } from '../../shared/sub-issues';
 import { SubStateGlyph } from '../issues/parts';
@@ -117,9 +118,7 @@ export function PhoneSubIssuesSection(p: SectionProps) {
 export function PhoneParentRow({ parent, onOpen }: { parent: ParentIssue; onOpen: () => void }) {
   return (
     <button type="button" className="ph-parent" onClick={onOpen} aria-label={`Parent ${repoLabel(parent.repo)} #${parent.number} ${parent.title}`}>
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      <ArrowUpIcon size={14} />
       <span className="ph-parent-key">Parent</span>
       <SubStateGlyph state={parent.state} size={14} />
       <strong className="ph-parent-num">#{parent.number}</strong>

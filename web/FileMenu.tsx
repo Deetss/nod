@@ -1,18 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { KebabHorizontalIcon } from '@primer/octicons-react';
 import type { DiffFile } from '../shared/types';
 import { fileActions, type FileHead } from './file-actions';
 import { placeUnder } from './FixMenu';
 import { openExternal } from './links';
 
 export function DotsIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
-      <circle cx="3" cy="8" r="1.5" />
-      <circle cx="8" cy="8" r="1.5" />
-      <circle cx="13" cy="8" r="1.5" />
-    </svg>
-  );
+  return <KebabHorizontalIcon size={16} />;
 }
 
 interface MenuProps {
