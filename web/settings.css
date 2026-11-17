@@ -302,17 +302,6 @@
 }
 
 /* Welcome: 520 x 300 */
-.welcome-dialog {
-  width: min(520px, calc(100vw - 32px));
-  min-height: 300px;
-  padding: 20px;
-  gap: 0;
-  border-radius: 10px;
-}
-
-.welcome-dialog h2 {
-  font: 600 20px/28px var(--fontStack-system);
-}
 
 .welcome-dialog .welcome-sub {
   margin: 5px 0 0;
@@ -333,21 +322,12 @@
   color: var(--fgColor-danger);
 }
 
-.welcome-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 24px;
-  padding-bottom: 10px;
-}
-
-.welcome-actions .btn-primary {
+.welcome-dialog .dialog-actions .btn-primary {
   min-width: 120px;
   justify-content: center;
 }
 
-.welcome-actions .btn:not(.btn-primary) {
+.welcome-dialog .dialog-actions .btn:not(.btn-primary) {
   min-width: 176px;
   justify-content: center;
 }
