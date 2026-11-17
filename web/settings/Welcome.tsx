@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Settings } from '../../shared/settings';
 import { Btn } from '../ui';
-import { useFocusTrap } from '../useFocusTrap';
+import { AppDialog } from '../AppDialog';
 import { toForm, toRaw, validateForm } from './form';
 import { FieldError, errorId } from './SettingsFields';
 import { useSaveSettings } from './useSaveSettings';
@@ -15,9 +15,6 @@ export function Welcome({ current, onClose }: { current: Settings; onClose: () =
   const { state, save } = useSaveSettings();
   const busy = state.phase === 'saving';
   const done = state.phase === 'done';
-  const trap = useFocusTrap(() => {
-    if (!busy && !done) onClose();
-  });
 
   const orgs = useMemo(() => (org.trim() === '' ? [] : [org.trim()]), [org]);
   const errors = useMemo(() => validateForm({ ...toForm(current), orgs }), [current, orgs]);
@@ -27,41 +24,16 @@ export function Welcome({ current, onClose }: { current: Settings; onClose: () =
   const message = done ? state.message : state.phase === 'error' ? state.message : undefined;
 
   return (
-    <div className="scrim settings-scrim">
-      <div ref={trap} className="dialog welcome-dialog" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
-        <h2 id="welcome-title">Welcome to Nod</h2>
-        <p className="welcome-sub">Pick the GitHub org to watch. Everything else can wait.</p>
-        <label className="field-label" htmlFor="welcome-org">
-          GitHub org (optional)
-        </label>
-        <input
-          type="text"
-          id="welcome-org"
-          autoFocus
-          value={org}
-          placeholder="e.g. acme-web"
-          className={orgError ? 'is-invalid' : undefined}
-          aria-invalid={orgError ? true : undefined}
-          aria-describedby={orgError ? errorId('orgs.0') : undefined}
-          autoComplete="off"
-          spellCheck={false}
-          disabled={busy || done}
-          onChange={(e) => setOrg(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !orgError && !busy && !done) run(orgs);
-          }}
-        />
-        {orgError ? (
-          <FieldError id={errorId('orgs.0')} message={orgError} />
-        ) : (
-          <p className="settings-help">Leave it empty to watch your own repos. Add orgs later under the gear (,).</p>
-        )}
-        {message ? (
-          <p className={`welcome-note${state.phase === 'error' ? ' is-error' : ''}`} role="status">
-            {message}
-          </p>
-        ) : null}
-        <div className="welcome-actions">
+    <AppDialog
+      title="Welcome to Nod"
+      width={520}
+      className="welcome-dialog"
+      busy={busy}
+      onClose={() => {
+        if (!done) onClose();
+      }}
+      footer={
+        <>
           <Btn
             primary
             className={busy ? 'is-busy' : undefined}
@@ -75,8 +47,40 @@ export function Welcome({ current, onClose }: { current: Settings; onClose: () =
           <Btn disabled={busy || done} onClick={() => run([])}>
             Skip, just my repos
           </Btn>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <p className="welcome-sub">Pick the GitHub org to watch. Everything else can wait.</p>
+      <label className="field-label" htmlFor="welcome-org">
+        GitHub org (optional)
+      </label>
+      <input
+        type="text"
+        id="welcome-org"
+        autoFocus
+        value={org}
+        placeholder="e.g. acme-web"
+        className={orgError ? 'is-invalid' : undefined}
+        aria-invalid={orgError ? true : undefined}
+        aria-describedby={orgError ? errorId('orgs.0') : undefined}
+        autoComplete="off"
+        spellCheck={false}
+        disabled={busy || done}
+        onChange={(e) => setOrg(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !orgError && !busy && !done) run(orgs);
+        }}
+      />
+      {orgError ? (
+        <FieldError id={errorId('orgs.0')} message={orgError} />
+      ) : (
+        <p className="settings-help">Leave it empty to watch your own repos. Add orgs later under the gear (,).</p>
+      )}
+      {message ? (
+        <p className={`welcome-note${state.phase === 'error' ? ' is-error' : ''}`} role="status">
+          {message}
+        </p>
+      ) : null}
+    </AppDialog>
   );
 }
