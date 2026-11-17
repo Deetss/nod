@@ -6,7 +6,6 @@ import { DispatchFields, useDispatchFields } from '../orca/DispatchFields';
 import { bot } from '../org-settings';
 import { Btn, KeyCap } from '../ui';
 import { AppDialog } from '../AppDialog';
-import { useFocusTrap } from '../useFocusTrap';
 import { CircleCheckIcon, CircleDotIcon, LabelChip, SlashCircleIcon } from './parts';
 import { repoLabel } from '../repo-label';
 
@@ -434,15 +433,10 @@ interface BulkReportProps {
 
 /** Shown after a bulk run that had failures. Successes stay applied. */
 export function BulkReport(p: BulkReportProps) {
-  const trap = useFocusTrap<HTMLDivElement>(p.onDismiss);
-  useEffect(() => trap.current?.focus(), [trap]);
-
   return (
     <AppDialog
       title={p.title}
       onClose={p.onDismiss}
-      busy={false}
-      initialFocusRef={trap}
       footer={[
         <Btn key="dismiss" onClick={p.onDismiss}>
           Dismiss <KeyCap>Esc</KeyCap>

@@ -61,7 +61,8 @@ function render(node: ReturnType<typeof createElement>): HTMLElement {
   document.body.append(host);
   root = createRoot(host);
   act(() => root?.render(node));
-  return host;
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return document.body;
 }
 
 afterEach(() => {

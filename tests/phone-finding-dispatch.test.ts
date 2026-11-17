@@ -84,7 +84,8 @@ function mount(phone: boolean) {
     });
     return started;
   };
-  return { el: host, send, onFindingDispatched, onFindingResult };
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return { el: document.body, send, onFindingDispatched, onFindingResult };
 }
 
 const btn = (el: HTMLElement, label: string) =>

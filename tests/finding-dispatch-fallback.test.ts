@@ -50,7 +50,8 @@ function mount(): { ctl: () => OrcaController; el: HTMLElement } {
   document.body.append(host);
   root = createRoot(host);
   act(() => root?.render(createElement(Harness)));
-  return { ctl: () => ctl as OrcaController, el: host };
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return { ctl: () => ctl as OrcaController, el: document.body };
 }
 
 describe('finding dispatch with no linked session', () => {

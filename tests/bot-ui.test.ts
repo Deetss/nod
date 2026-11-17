@@ -24,7 +24,8 @@ function render(node: ReturnType<typeof createElement>): HTMLElement {
   document.body.append(host);
   root = createRoot(host);
   act(() => root?.render(node));
-  return host;
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return document.body;
 }
 
 afterEach(() => {
@@ -74,7 +75,7 @@ describe('BotDialog', () => {
 
   it('uses the spec copy', () => {
     const el = render(createElement(BotDialog, { issue, busy: false, onConfirm: noop, onCancel: noop }));
-    expect(el.querySelector('h2')?.textContent).toBe('Hand #42 to Bot?');
+    expect(el.querySelector('.app-dialog-title')?.textContent).toBe('Hand #42 to Bot?');
     expect(el.textContent).toContain('Adds the bot label to acme-web #42');
   });
 
