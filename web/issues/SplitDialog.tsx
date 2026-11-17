@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import type { SplitPart } from '../../shared/issue-types';
 import { splitCommand } from '../../shared/bot';
 import { Btn } from '../ui';
-import { useFocusTrap } from '../useFocusTrap';
 import { bot } from '../org-settings';
 import { repoLabel } from '../repo-label';
+import { AppDialog } from '../AppDialog';
 
 export const splitHeading = (count: number, number: number): string =>
   `${bot().name} will open ${count} ${count === 1 ? 'issue' : 'issues'} as sub-issues of #${number}`;
@@ -51,39 +51,36 @@ interface SplitDialogProps {
 /** Previews the bot's split. Split posts the split command; the bot opens the issues, never Nod. */
 export function SplitDialog(p: SplitDialogProps) {
   const { repo, number, title } = p.issue;
-  const confirm = useRef<HTMLButtonElement>(null);
-  useEffect(() => confirm.current?.focus(), []);
-  const trap = useFocusTrap();
+  const confirmBtn = useRef<HTMLButtonElement>(null);
   const heading = splitHeading(p.parts.length, number);
 
   return (
-    <div className="scrim" onMouseDown={p.onCancel}>
-      <div
-        ref={trap}
-        className="dialog split-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label={heading}
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') p.onCancel();
-        }}
-      >
-        <h2>{heading}</h2>
-        <p className="muted ellipsis">
-          {repoLabel(repo)} #{number} {title}
-        </p>
-        <SplitParts parts={p.parts} />
-        <p className="muted small">Posts {splitCommand(bot())}. Each new issue starts unlabelled; use Start work on it when it is ready.</p>
-        <div className="dialog-actions">
-          <Btn keyHint="Esc" onClick={p.onCancel}>
-            Cancel
-          </Btn>
-          <button ref={confirm} type="button" className="btn btn-primary" onClick={p.onConfirm}>
-            Split
-          </button>
-        </div>
-      </div>
-    </div>
+    <AppDialog
+      title={heading}
+      onClose={p.onCancel}
+      width={560}
+      className="split-dialog"
+      initialFocusRef={confirmBtn}
+      footer={[
+        <Btn key="cancel" keyHint="Esc" onClick={p.onCancel}>
+          Cancel
+        </Btn>,
+        <button
+          key="split"
+          ref={confirmBtn}
+          type="button"
+          className="btn btn-primary"
+          onClick={p.onConfirm}
+        >
+          Split
+        </button>
+      ]}
+    >
+      <p className="muted ellipsis">
+        {repoLabel(repo)} #{number} {title}
+      </p>
+      <SplitParts parts={p.parts} />
+      <p className="muted small">Posts {splitCommand(bot())}. Each new issue starts unlabelled; use Start work on it when it is ready.</p>
+    </AppDialog>
   );
 }

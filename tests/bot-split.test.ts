@@ -36,7 +36,8 @@ function render(node: ReturnType<typeof createElement>): HTMLElement {
   document.body.append(host);
   root = createRoot(host);
   act(() => root?.render(node));
-  return host;
+  // Primer renders dialogs in a portal on document.body, outside the host.
+  return document.body;
 }
 
 afterEach(() => {
@@ -210,7 +211,7 @@ describe('preview', () => {
   it('names the count and issue, and collapses criteria', () => {
     const onConfirm = vi.fn();
     const el = render(createElement(SplitDialog, { issue: { repo: 'acme-co/acme-api', number: 7, title: 't' }, parts: PARTS, onConfirm, onCancel: () => {} }));
-    expect(el.querySelector('h2')?.textContent).toBe('Helper will open 2 issues as sub-issues of #7');
+    expect(el.querySelector('.app-dialog-title')?.textContent).toBe('Helper will open 2 issues as sub-issues of #7');
     expect(el.querySelectorAll('.split-parts > li')).toHaveLength(2);
     expect(el.querySelector('details')?.open).toBe(false);
     act(() => [...el.querySelectorAll('button')].find((b) => b.textContent === 'Split')?.click());
