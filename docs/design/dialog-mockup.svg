@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="870" viewBox="0 0 1660 870">
+  <rect x="0" y="0" width="1660" height="870" fill="#0d1117"/>
+  <rect x="0" y="0" width="1660" height="48" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+  <rect x="0" y="48" width="420" height="822" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="420" y="48" width="958" height="822" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="1378" y="48" width="280" height="822" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="0" y="0" width="1660" height="870" fill="#010409" opacity="0.7"/>
+  <text x="16" y="26" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#f0f6fc" text-anchor="start">Shared dialog, layout A (dark, 1660x870). Colours from web/tokens.css.</text><text x="16" y="44" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#9198a1" text-anchor="start">1 empty + disabled, 2 typed + busy, 3 typed + danger confirmation. Sample data synthetic.</text>
+  <text x="70" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">1 Request changes, empty (confirm disabled)</text>
+  <rect x="70" y="90" width="480" height="322" rx="6" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="70" y="90" width="480" height="56" fill="#151b23"/><line x1="70" y1="146" x2="550" y2="146" stroke="#3d444d" stroke-width="1"/>
+  <text x="86" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#f0f6fc" text-anchor="start">Request changes on acme-co/acme-api #310?</text>
+  <rect x="506" y="102.0" width="32" height="32" rx="6" fill="#212830" stroke="#3d444d" stroke-width="1"/><text x="522.0" y="122.66666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="middle"></text>
+  <line x1="514.0" y1="110.0" x2="530.0" y2="126.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/><line x1="514.0" y1="126.0" x2="530.0" y2="110.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="472" y="109.0" width="26" height="18" rx="4" fill="#0d1117" stroke="#3d444d" stroke-width="1"/><text x="485.0" y="122.0" font-family="DejaVu Sans Mono, DejaVu Sans, monospace" font-size="12" font-weight="400" fill="#9198a1" text-anchor="middle">Esc</text>
+  <text x="86" y="176" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="start">fix: hide sale bonus from data:read</text>
+  <rect x="86" y="188" width="448" height="144" rx="6" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <text x="98" y="212" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="start">Review comment (required)</text>
+  <line x1="70" y1="348" x2="550" y2="348" stroke="#3d444d" stroke-width="1"/><rect x="70" y="348" width="480" height="64" fill="#151b23"/>
+  <text x="86" y="384" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#9198a1" text-anchor="start">Add a comment to continue</text>
+  <rect x="320" y="364.0" width="70" height="32" rx="6" fill="#212830" stroke="#3d444d" stroke-width="1"/><text x="355.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="middle">Cancel</text>
+  <rect x="398" y="364.0" width="136" height="32" rx="6" fill="none" stroke="#656c76" stroke-width="1" stroke-dasharray="4 3"/><text x="466.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="middle">Request changes</text>
+  <text x="590" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">2 Approve, busy (Cancel disabled, primary busy)</text>
+  <rect x="590" y="90" width="480" height="322" rx="6" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="590" y="90" width="480" height="56" fill="#151b23"/><line x1="590" y1="146" x2="1070" y2="146" stroke="#3d444d" stroke-width="1"/>
+  <text x="606" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#f0f6fc" text-anchor="start">Approve acme-co/acme-api #310?</text>
+  <rect x="1026" y="102.0" width="32" height="32" rx="6" fill="#212830" stroke="#3d444d" stroke-width="1"/><text x="1042.0" y="122.66666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="middle"></text>
+  <line x1="1034.0" y1="110.0" x2="1050.0" y2="126.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/><line x1="1034.0" y1="126.0" x2="1050.0" y2="110.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="992" y="109.0" width="26" height="18" rx="4" fill="#0d1117" stroke="#3d444d" stroke-width="1"/><text x="1005.0" y="122.0" font-family="DejaVu Sans Mono, DejaVu Sans, monospace" font-size="12" font-weight="400" fill="#9198a1" text-anchor="middle">Esc</text>
+  <text x="606" y="176" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="start">fix: hide sale bonus from data:read</text>
+  <rect x="606" y="188" width="448" height="144" rx="6" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <text x="618" y="212" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="start">Looks good. The scope check covers</text>
+  <text x="618" y="232" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="start">the new field.</text>
+  <line x1="725" y1="202" x2="725" y2="222" stroke="#f0f6fc" stroke-width="1.5"/>
+  <line x1="590" y1="348" x2="1070" y2="348" stroke="#3d444d" stroke-width="1"/><rect x="590" y="348" width="480" height="64" fill="#151b23"/>
+  <rect x="840" y="364.0" width="70" height="32" rx="6" fill="none" stroke="#656c76" stroke-width="1" stroke-dasharray="4 3"/><text x="875.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="middle">Cancel</text>
+  <rect x="918" y="364.0" width="136" height="32" rx="6" fill="#238636" stroke="#238636" stroke-width="1"/><circle cx="930" cy="380.0" r="7.0" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="3 2"/><text x="998" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Approving...</text>
+  <text x="1110" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">3 Admin merge, typed 31 of 310 (Admin merge disabled)</text>
+  <rect x="1110" y="90" width="480" height="280" rx="6" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+  <rect x="1110" y="90" width="480" height="56" fill="#151b23"/><line x1="1110" y1="146" x2="1590" y2="146" stroke="#3d444d" stroke-width="1"/>
+  <text x="1126" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#f0f6fc" text-anchor="start">Admin merge acme-co/acme-api #310?</text>
+  <rect x="1546" y="102.0" width="32" height="32" rx="6" fill="#212830" stroke="#3d444d" stroke-width="1"/><text x="1562.0" y="122.66666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="middle"></text>
+  <line x1="1554.0" y1="110.0" x2="1570.0" y2="126.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/><line x1="1554.0" y1="126.0" x2="1570.0" y2="110.0" stroke="#f0f6fc" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="1512" y="109.0" width="26" height="18" rx="4" fill="#0d1117" stroke="#3d444d" stroke-width="1"/><text x="1525.0" y="122.0" font-family="DejaVu Sans Mono, DejaVu Sans, monospace" font-size="12" font-weight="400" fill="#9198a1" text-anchor="middle">Esc</text>
+  <text x="1126" y="176" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="start">fix: hide sale bonus from data:read</text>
+  <text x="1126" y="202" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" fill="#f0f6fc" text-anchor="start">Bypasses required review. Merges now with Squash</text>
+  <text x="1126" y="222" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" fill="#f0f6fc" text-anchor="start">and merge.</text>
+  <text x="1126" y="242" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="start">This cannot be undone.</text>
+  <rect x="1126" y="254" width="448" height="36" rx="6" fill="#0d1117" stroke="#da3633" stroke-width="1"/>
+  <text x="1138" y="278" font-family="DejaVu Sans Mono, DejaVu Sans, monospace" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="start">31</text>
+  <line x1="1154.8" y1="262" x2="1154.8" y2="282" stroke="#f0f6fc" stroke-width="1.5"/>
+  <line x1="1110" y1="306" x2="1590" y2="306" stroke="#3d444d" stroke-width="1"/><rect x="1110" y="306" width="480" height="64" fill="#151b23"/>
+  <text x="1126" y="342" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#9198a1" text-anchor="start">Type 310 to confirm</text>
+  <rect x="1390" y="322.0" width="70" height="32" rx="6" fill="#212830" stroke="#3d444d" stroke-width="1"/><text x="1425.0" y="342.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#f0f6fc" text-anchor="middle">Cancel</text>
+  <rect x="1468" y="322.0" width="106" height="32" rx="6" fill="none" stroke="#656c76" stroke-width="1" stroke-dasharray="4 3"/><text x="1521.0" y="342.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#9198a1" text-anchor="middle">Admin merge</text>
+  </svg>
