@@ -111,6 +111,64 @@
   padding: 0 14px;
 }
 
+/* Merge (bypass): the pill in the Approve slot, its confirm strip and its failure strip. */
+.ph-btn.is-bypass {
+  background: var(--bgColor-danger-muted);
+  border: 1px solid var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+  font-weight: 600;
+}
+
+.ph-btn.is-bypass:active {
+  background: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
+}
+
+.ph-btn.is-bypass.is-busy {
+  cursor: progress;
+}
+
+.ph-btn.is-bypass .spinner {
+  width: 14px;
+  height: 14px;
+}
+
+.ph-pending-bar.ph-bypass-strip {
+  padding: 12px 14px;
+}
+
+.ph-bypass-strip .ph-pending-text span {
+  line-height: 18px;
+}
+
+.ph-bypass-strip .ph-pending-text strong {
+  line-height: 22px;
+}
+
+.ph-bypass-strip .ph-pending-text .is-lead {
+  color: var(--fgColor-default);
+}
+
+.ph-actionbar .ph-btn.ph-bypass-now {
+  margin: 0;
+  box-shadow: none;
+}
+
+.ph-pending-bar.is-error {
+  gap: 10px;
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+}
+
+.ph-pending-bar.is-error .toast-icon {
+  flex: none;
+  color: var(--fgColor-danger);
+}
+
+.ph-pending-bar.is-error .ph-pending-text span {
+  line-height: 18px;
+}
+
 /* Finish review: three radio rows and the summary. */
 .ph-finish-options {
   display: flex;

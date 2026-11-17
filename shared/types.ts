@@ -245,6 +245,18 @@ export interface PrDetail {
   /** More than the 100 files shown exist. */
   filesTruncated?: boolean;
   reviewDecision?: string;
+  /** Review threads on the PR (GitHub `totalCount`). Absent in older cached details. */
+  reviewThreadTotal?: number;
+  /** Review threads among the last 50 that are not resolved. Absent in older cached details. */
+  unresolvedThreads?: number;
+  /** Merge methods the repository allows. Absent in older cached details. */
+  mergeAllowed?: MergeAllowed;
+  /** The repository deletes head branches after a merge. */
+  deleteBranchOnMerge?: boolean;
+  /** A ruleset lets the viewer skip its required review. Looked up only when every other bypass row holds. */
+  rulesetBypass?: boolean;
+  /** The highest approval count a pull_request rule on the base requires. Set with `rulesetBypass`. */
+  requiredApprovals?: number;
   /** Conversation, reviews and review threads, oldest first. Absent in older cached details. */
   thread?: PrThreadItem[];
   /** The viewer's pending review and its draft count. Absent when there is none and in older cached details. */
@@ -254,6 +266,11 @@ export interface PrDetail {
 }
 
 export type MergeMethod = 'merge' | 'squash';
+
+/** Every method GitHub can merge with. Merge (bypass) picks one the repository allows. */
+export type AnyMergeMethod = MergeMethod | 'rebase';
+
+export type MergeAllowed = Record<AnyMergeMethod, boolean>;
 
 export type LineKind = 'add' | 'del' | 'ctx';
 

@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react';
 import { mergeMethodLabel, type PrDetail } from '../shared/types';
 import type { ActionKind } from './DetailBody';
-import { AUTO_MERGE_ON, OWN_PR_HINT, type ReviewAccess } from '../shared/pr-actions';
-import { AdminMergeBtn, AutoMergeBtn, Branches, PrMeta, ReviewButtons } from './DetailPane';
+import { AUTO_MERGE_ON, type ReviewAccess } from '../shared/pr-actions';
+import { BypassError, BypassMergeBtn, BypassStrip, type BypassControl } from './BypassMerge';
+import { AdminMergeBtn, AutoMergeBtn, Branches, ownPrNote, PrMeta, ReviewButtons } from './DetailPane';
 import { Btn, CiPill, formatNum } from './ui';
 import { EmptyPane } from './Logo';
 
@@ -11,10 +12,14 @@ interface SummaryProps {
   disabled: boolean;
   access: ReviewAccess;
   onAction: (kind: ActionKind) => void;
+  bypass?: BypassControl | undefined;
 }
 
-function Summary({ detail, disabled, access, onAction }: SummaryProps) {
+function Summary({ detail, disabled, access, onAction, bypass }: SummaryProps) {
   const s = detail.summary;
+  const control = access.bypass ? bypass : undefined;
+  const busy = control?.phase === 'busy';
+  const off = disabled || busy;
   return (
     <div className="summary">
       <h1 className="pr-title clamp2" title={s.title}>
@@ -34,20 +39,28 @@ function Summary({ detail, disabled, access, onAction }: SummaryProps) {
           {detail.commitTotal} commits, {detail.newCommits} new
         </span>
       </div>
-      <div className="action-row">
-        <ReviewButtons disabled={disabled} access={access} onAction={onAction} />
-        <AutoMergeBtn detail={detail} disabled={disabled} access={access} onAction={onAction} />
-        <AdminMergeBtn disabled={disabled} access={access} onAction={onAction} />
-      </div>
-      <div className="muted small">
-        {disabled
-          ? 'Actions are disabled until reset.'
-          : access.ownPr
-            ? OWN_PR_HINT
-            : detail.summary.autoMerge
-              ? AUTO_MERGE_ON
-              : `Auto-merge method: ${mergeMethodLabel(detail.mergeMethod)}`}
-      </div>
+      {control?.phase === 'confirm' ? (
+        <BypassStrip detail={detail} control={control} />
+      ) : (
+        <>
+          {control?.error !== undefined ? <BypassError message={control.error} /> : null}
+          <div className="action-row">
+            <ReviewButtons disabled={off} access={access} onAction={onAction} />
+            <AutoMergeBtn detail={detail} disabled={off} access={access} onAction={onAction} />
+            <AdminMergeBtn disabled={off} access={access} onAction={onAction} />
+            {control ? <BypassMergeBtn detail={detail} control={control} disabled={disabled} /> : null}
+          </div>
+          <div className="muted small">
+            {disabled
+              ? 'Actions are disabled until reset.'
+              : access.ownPr
+                ? ownPrNote(detail, access, busy)
+                : detail.summary.autoMerge
+                  ? AUTO_MERGE_ON
+                  : `Auto-merge method: ${mergeMethodLabel(detail.mergeMethod)}`}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -63,6 +76,7 @@ interface ReviewPaneProps {
   diff: ReactNode;
   drawer: ReactNode;
   onAction: (kind: ActionKind) => void;
+  bypass?: BypassControl;
   onBack: () => void;
   onToggleDrawer: () => void;
 }
@@ -83,7 +97,7 @@ export function ReviewPane(p: ReviewPaneProps) {
         </Btn>
       </div>
       {p.detail ? (
-        <Summary detail={p.detail} disabled={p.disabled} access={p.access} onAction={p.onAction} />
+        <Summary detail={p.detail} disabled={p.disabled} access={p.access} onAction={p.onAction} bypass={p.bypass} />
       ) : (
         p.error ? (
           <div className="summary muted">{p.error}</div>

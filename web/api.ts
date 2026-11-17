@@ -200,6 +200,8 @@ export const api = {
   merge: (repo: string, number: number) => post<ActionResult>('/api/merge', { repo, number }),
   adminMerge: (repo: string, number: number, confirm: number) =>
     post<ActionResult>('/api/admin-merge', { repo, number, confirm }),
+  bypassMerge: (repo: string, number: number) =>
+    post<ActionResult>(withState('/api/bypass-merge'), { repo, number }),
   prComment: (repo: string, number: number, body: string) =>
     post<ActionResult>('/api/pr-comment', { repo, number, body }),
   /** Uploads a comment image through the server, which holds the GitHub token. */

@@ -70,7 +70,7 @@ query Detail($owner: String!, $name: String!, $number: Int!, $viewer: String!) {
   viewer { login }
   rateLimit { limit cost remaining resetAt }
   repository(owner: $owner, name: $name) {
-    viewerPermission
+    viewerPermission squashMergeAllowed mergeCommitAllowed rebaseMergeAllowed deleteBranchOnMerge
     pullRequest(number: $number) {
       ${PR_FIELDS}
       body bodyHTML baseRefName headRefName isCrossRepository mergedBy { login }
@@ -81,7 +81,7 @@ query Detail($owner: String!, $name: String!, $number: Int!, $viewer: String!) {
       pendingReview: reviews(author: $viewer, states: [PENDING], last: 1) { nodes { id comments { totalCount } } }
       comments(last: 50) { nodes { id author { login avatarUrl } bodyHTML createdAt url isMinimized minimizedReason } }
       threadReviews: reviews(last: 50) { nodes { id author { login avatarUrl } state bodyHTML submittedAt url isMinimized minimizedReason } }
-      reviewThreads(last: 50) { nodes { id isResolved isOutdated path line diffSide startLine startDiffSide comments(first: 20) { nodes { id author { login avatarUrl } bodyHTML body state createdAt url isMinimized minimizedReason } } } }
+      reviewThreads(last: 50) { totalCount nodes { id isResolved isOutdated path line diffSide startLine startDiffSide comments(first: 20) { nodes { id author { login avatarUrl } bodyHTML body state createdAt url isMinimized minimizedReason } } } }
       files(first: 100) { pageInfo { hasNextPage } nodes { path additions deletions viewerViewedState } }
       commits(last: 1) { nodes { commit { author { user { login } } committer { user { login } } } } }
       checkCommit: commits(last: 1) {
@@ -100,11 +100,12 @@ export const MERGE_STATE_QUERY = `
 query MergeState($owner: String!, $name: String!, $number: Int!) {
   viewer { login }
   repository(owner: $owner, name: $name) {
-    viewerPermission
+    viewerPermission squashMergeAllowed mergeCommitAllowed rebaseMergeAllowed deleteBranchOnMerge
     pullRequest(number: $number) {
       id title state isDraft baseRefName headRefName
       author { login }
-      viewerCanMergeAsAdmin mergeStateStatus reviewDecision
+      viewerCanMergeAsAdmin mergeStateStatus mergeable reviewDecision
+      reviewThreads(last: 50) { totalCount nodes { isResolved } }
       commits(last: 1) {
         nodes { commit { author { user { login } } committer { user { login } } statusCheckRollup { state contexts(first: 50) { pageInfo { hasNextPage } nodes {
           __typename

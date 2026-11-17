@@ -24,7 +24,19 @@ import {
 import type { FetchedImage, ImageTarget } from '../shared/image-url';
 import type { UploadResult, UploadType } from '../shared/image-upload';
 import type { NumberHit } from '../shared/number-query';
-import { adminMergeArgs, githubErrorText, OWN_APPROVAL_422 } from '../shared/pr-actions';
+import {
+  adminMergeArgs,
+  bypassDoneMessage,
+  bypassFields,
+  bypassMergeArgs,
+  bypassMethodFor,
+  bypassRefusal,
+  deletesBranch,
+  githubErrorText,
+  methodFlags,
+  NO_METHOD,
+  OWN_APPROVAL_422,
+} from '../shared/pr-actions';
 import {
   fixtureSections,
   genericDiff,
@@ -33,7 +45,9 @@ import {
   LONG_LINES_DIFF,
   manyFilesDiff,
   FIXTURE_VIEWER,
+  fixtureHead,
 } from './fixture-data';
+import { BYPASS_DIFF, bypassFixtureDetail, isBypassFixture } from './bypass-fixtures';
 import { DEFAULT_SETTINGS, type Settings } from '../shared/settings';
 import { canAdminMerge } from './github-map';
 import { liveCi, liveChecks } from './fixture-live-ci';
@@ -100,6 +114,9 @@ function headCommitLoginsFor(ref: PrRef, author: string): string[] {
   if (isOtherPushFixture(ref)) return ['mlopez'];
   return [author];
 }
+
+/** How long `?state=bypass-slow` holds a Merge (bypass). */
+const SLOW_MERGE_MS = 60_000;
 
 function log(what: string): ActionResult {
   console.log(`[fixtures] would ${what}`);
@@ -231,6 +248,8 @@ export class FixtureProvider implements Provider {
 
   /** Draft fixtures marked ready this session. */
   private readonly readied = new Set<string>();
+  /** PRs merged with Merge (bypass), by `repo#number`, with the merge time. */
+  private readonly bypassed = new Map<string, string>();
 
   /** `?state=ci-live`: acme-co/acme-web #1343's checks run to completion over about 30 s. */
   private liveOrigin = Date.now();
@@ -252,6 +271,7 @@ export class FixtureProvider implements Provider {
 
   private diffFiles(ref: PrRef, pr: PrSummary): DiffFile[] {
     if (is310(ref)) return UNITS_API_310_ALL;
+    if (isBypassFixture(ref)) return BYPASS_DIFF;
     if (ref.repo === 'acme-co/acme-web' && ref.number === 1343) return manyFilesDiff();
     return genericDiff(pr);
   }
@@ -264,6 +284,8 @@ export class FixtureProvider implements Provider {
 
   async detail(ref: PrRef, state: StateQuery): Promise<PrDetail> {
     const open = await this.openDetail(ref, state);
+    const bypassed = this.bypassed.get(`${ref.repo}#${ref.number}`);
+    if (bypassed) return { ...open, isOpen: false, merged: true, closedAt: bypassed, mergedBy: VIEWER };
     const closed = closedFixturePrs(this.born).find((p) => p.repo === ref.repo && p.number === ref.number);
     if (!closed) return open;
     return {
@@ -309,6 +331,17 @@ export class FixtureProvider implements Provider {
       stale,
       rate: this.rate(state === 'ratelimit' ? 0 : 4812),
     };
+    if (isBypassFixture(ref)) {
+      return {
+        ...common,
+        commits: [
+          { sha: summary.headSha.slice(0, 7), message: 'update', isNew: false, lastReviewed: false, url: commitUrl(ref.repo, summary.headSha) },
+        ],
+        commitTotal: 1,
+        newCommits: 0,
+        ...bypassFixtureDetail(ref),
+      };
+    }
     if (this.isLive(ref, state)) {
       const checks = liveChecks(this.liveOrigin, Date.now());
       return {
@@ -553,8 +586,7 @@ export class FixtureProvider implements Provider {
   private refsOf(ref: PrRef, title: string): { title: string; base: string; head: string } {
     const { base, head: releaseHead, titleContains } = this.settings.releaseMerge;
     if (title.toLowerCase().includes(titleContains.toLowerCase())) return { title, base, head: releaseHead };
-    const head = is310(ref) ? 'crew/acmeapi-data-read-bonus' : `feature/${ref.number}`;
-    return { title, base: releaseHead, head };
+    return { title, base: releaseHead, head: fixtureHead(ref.repo, ref.number) };
   }
 
   async merge(ref: PrRef): Promise<ActionResult> {
@@ -589,6 +621,31 @@ export class FixtureProvider implements Provider {
     const refs = this.refsOf(ref, this.find(ref).title);
     const args = adminMergeArgs(ref.repo, ref.number, refs, this.settings);
     return log(`run gh ${args.join(' ')}`);
+  }
+
+  /**
+   * Re-checks the gate like the live provider. `?state=bypass-fail` refuses like GitHub's 405,
+   * and `?state=bypass-slow` holds the busy state for a minute, so both can be seen offline.
+   */
+  async bypassMerge(ref: PrRef, state?: StateQuery): Promise<ActionResult> {
+    const d = await this.detail(ref, state);
+    const refused = bypassRefusal({
+      author: d.summary.author,
+      viewer: VIEWER,
+      ci: d.summary.ci,
+      isDraft: d.summary.isDraft,
+      ...bypassFields(d),
+    });
+    if (refused) return { ok: false, message: `Merge (bypass) refused: ${refused}` };
+    if (state === 'bypass-fail') {
+      return { ok: false, message: githubErrorText(405, JSON.stringify({ message: 'Repository rule violations found' })) };
+    }
+    if (state === 'bypass-slow') await new Promise((r) => setTimeout(r, SLOW_MERGE_MS));
+    const method = bypassMethodFor(d.mergeMethod, d.mergeAllowed);
+    if (!method) return { ok: false, message: `Merge (bypass) refused: ${NO_METHOD}` };
+    console.log(`[fixtures] would run gh ${bypassMergeArgs(ref.repo, ref.number, methodFlags(method)).join(' ')}`);
+    this.bypassed.set(`${ref.repo}#${ref.number}`, new Date().toISOString());
+    return { ok: true, message: bypassDoneMessage(ref.number, deletesBranch(method, d.deleteBranchOnMerge)) };
   }
 
   async markSeen(mark: SeenMark): Promise<void> {

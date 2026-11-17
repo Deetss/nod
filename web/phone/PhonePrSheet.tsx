@@ -8,7 +8,9 @@ import { FindingList } from '../FindingList';
 import { PrThreadList } from '../PrThread';
 import type { FindingControls } from '../useFindings';
 import { CancelledIcon, CheckIcon, RingIcon, SkippedIcon, XIcon, formatAge } from '../ui';
+import { BYPASS_NOTE, bypassBusyNote } from '../../shared/pr-actions';
 import { approveDisabled } from './action-items';
+import { PhoneBypassConfirm, PhoneBypassError, PhoneBypassPill, type PhoneBypass } from './PhoneBypass';
 import { MoreIcon } from './PhoneIcons';
 import { PhoneSheet } from './PhoneSheet';
 import { SheetTabs, SwipePager, useTabPager } from './SwipePager';
@@ -27,6 +29,8 @@ interface PrSheetProps {
   findings?: FindingControls | undefined;
   writesOff: boolean;
   busy: boolean;
+  /** Present when Merge (bypass) takes the Approve slot. */
+  bypass?: PhoneBypass | undefined;
   depth: number;
   covered: boolean;
   onClose: () => void;
@@ -181,6 +185,16 @@ export function PhonePrSheet(p: PrSheetProps) {
   ];
   const bodyRef = useRef<HTMLDivElement>(null);
   const pager = useTabPager(TAB_ORDER, tab, setTab, { disabled: p.covered, scroller: bodyRef });
+  const { bypass } = p;
+  const merged = data.detail.data?.isOpen === false && data.detail.data.merged === true;
+  const bypassBusy = bypass?.phase === 'busy';
+  const note = bypass
+    ? bypassBusy
+      ? bypassBusyNote(pr.number)
+      : BYPASS_NOTE
+    : blocked && !p.writesOff
+      ? blocked
+      : undefined;
 
   return (
     <PhoneSheet
@@ -192,7 +206,11 @@ export function PhonePrSheet(p: PrSheetProps) {
       onClose={p.onClose}
       onMore={p.onMore}
       bar={
+        merged ? undefined : bypass?.phase === 'confirm' ? (
+          <PhoneBypassConfirm bypass={bypass} />
+        ) : (
         <>
+          {bypass?.error !== undefined ? <PhoneBypassError message={bypass.error} onClear={bypass.clearError} /> : null}
           {p.pending ? (
             <div className="ph-pending-bar" role="status">
               <span className="ph-pending-text">
@@ -209,16 +227,26 @@ export function PhonePrSheet(p: PrSheetProps) {
               </button>
             </div>
           ) : null}
-          <button type="button" className="ph-btn is-primary" disabled={!!blocked || p.busy} onClick={p.onApprove}>
-            Approve
-          </button>
-          <button type="button" className={`ph-btn${p.writesOff ? ' is-off' : ''}`} disabled={p.writesOff} onClick={p.onComment}>
+          {bypass ? (
+            <PhoneBypassPill bypass={bypass} off={p.writesOff} />
+          ) : (
+            <button type="button" className="ph-btn is-primary" disabled={!!blocked || p.busy} onClick={p.onApprove}>
+              Approve
+            </button>
+          )}
+          <button
+            type="button"
+            className={`ph-btn${p.writesOff ? ' is-off' : ''}`}
+            disabled={p.writesOff || bypassBusy}
+            onClick={p.onComment}
+          >
             Comment
           </button>
           <button type="button" className="ph-btn is-narrow is-round" aria-label="More actions" onClick={p.onMore}>
             <MoreIcon />
           </button>
         </>
+        )
       }
     >
       <div className="ph-pad" style={{ paddingBottom: 8 }}>
@@ -227,10 +255,10 @@ export function PhonePrSheet(p: PrSheetProps) {
           {pr.author} · opened {formatAge(pr.createdAt)}
         </p>
         <div className="ph-pills">
-          <span className="ph-pill is-open">Open</span>
+          {merged ? <span className="ph-pill is-done">Merged</span> : <span className="ph-pill is-open">Open</span>}
           {pr.isDraft ? <span className="ph-pill">Draft</span> : null}
         </div>
-        {blocked && !p.writesOff ? <p className="ph-meta">{blocked}</p> : null}
+        {note && !merged ? <p className="ph-meta ellipsis">{note}</p> : null}
       </div>
       <SheetTabs tabs={tabs} value={tab} onChange={setTab} pager={pager} sticky />
       <SwipePager

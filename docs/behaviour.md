@@ -19,7 +19,7 @@
 
 ## After an action
 
-- After a review, auto-merge, mark ready or admin merge, the server re-reads that one PR directly. It does this at 3, 10, 30, 60 and 120 seconds. Direct reads never go through search, which lags.
+- After a review, auto-merge, mark ready, admin merge or merge (bypass), the server re-reads that one PR directly. It does this at 3, 10, 30, 60 and 120 seconds. Direct reads never go through search, which lags.
 - While the PR stays open with auto-merge set, it keeps checking every 60 seconds, up to 30 minutes after the action.
 - A new action on the same PR restarts the schedule.
 - Each check updates the saved list without moving the last sync time. It sends a `sync` event only when the PR changed.
@@ -62,6 +62,13 @@ Needs my review also includes PRs that request a review from one of your teams i
 - Admin merge runs `gh pr merge --admin` with the same method rule. It shows only on a PR you authored, or whose head commit you authored or committed. Your approval no longer counts after your push. It shows when GitHub reports `viewerCanMergeAsAdmin` or your repository permission is `ADMIN`. The permission check covers ruleset bypass lists, which the field ignores. GitHub still decides the merge, and its message is shown on refusal. It enables once GitHub's check rollup is SUCCESS.
 - The dialog says "Bypasses required review" and needs the PR number typed.
 - The server re-fetches the PR and refuses unless you authored it or pushed its head commit (`only the PR author or the latest pusher can admin merge`). It also refuses unless GitHub reports `viewerCanMergeAsAdmin` or your repository permission is `ADMIN`, the PR is open and the rollup is SUCCESS. It rejects a request whose `confirm` differs from `number`.
+- Merge (bypass) lets you merge your own PR without its required review when a repository ruleset allows you to bypass it. It replaces Admin merge in the same slot (key `M`) and never shows beside it. It shows only when all of these hold: you authored the PR, it is open, not a draft, `mergeable` is MERGEABLE, `mergeStateStatus` is BLOCKED, the check rollup is SUCCESS, `reviewDecision` is REVIEW_REQUIRED, every review thread is resolved (at most 50), and the rulesets let you bypass.
+- The ruleset lookup runs only when every other row holds. It reads `GET /repos/{owner}/{repo}/rules/branches/{base}`, keeps `pull_request` rules that require at least one approval, then reads each `GET /repos/{owner}/{repo}/rulesets/{id}`. Bypass needs every kept ruleset to report `current_user_can_bypass` as `always`, `pull_requests_only` or `exempt`. No kept rule (classic branch protection), a missing field, 403 or 404 all read as no bypass.
+- The answer is cached per repo and base for an hour, in memory and on disk, with each path's ETag sent as `If-None-Match`. A 403 or 404 caches no bypass. A 5xx, network or rate-limit error reads as no bypass and is not cached. A merge GitHub refuses drops the entry.
+- Merge (bypass) confirms inline. The bar turns into a strip naming the skipped review, the method, branch deletion, and the checks and threads met (`Enter` merges, `Esc` cancels). While it runs every bar button is disabled. On success the PR shows merged and a toast reads `Merged #372 without review. Branch deleted.` On failure GitHub's text shows in the bar and the button stays enabled for a retry.
+- The method follows the Auto-merge rule (merge commit for a release title, else squash), falling back to the first the repository allows in the order squash, merge, rebase. Squash and rebase delete the branch; a merge commit keeps it unless the repository deletes branches on merge.
+- The server (`POST /api/bypass-merge`) re-reads the PR, its threads and the repository merge settings, re-checks every row (the ruleset step skips the cache TTL), and refuses with `Merge (bypass) refused: <reason>` before running `gh pr merge --admin` with the chosen flags.
+- On your own PR the note `Your PR: GitHub only allows comments` sits on its own row of the review bar. While Merge (bypass) shows it reads `Your PR: you can't approve it, but you may skip review`.
 - Checks and merge state are fetched fresh each time a PR is opened, never from the detail cache.
 
 ## Drafts and reviews
@@ -70,7 +77,7 @@ Needs my review also includes PRs that request a review from one of your teams i
 - Auto-merge and Admin merge read "Draft: mark ready first" and stay disabled. The server refuses both with the same text.
 - **Ready for review** (`y`, or the phone action sheet) asks to confirm. It then calls GraphQL `markPullRequestReadyForReview` through the mutation guard and refreshes the PR.
 - GitHub refuses approvals and change requests on your own PR (422). Approve and Request changes are disabled there with "Your PR: GitHub only allows comments". Comment and Auto-merge stay on.
-- The PR detail pane reads top to bottom as header, status summary, description, Orca session, Thread, Commits and Files. The review bar (Approve, Request changes, Comment, Auto-merge, Admin merge) is pinned below the scroll.
+- The PR detail pane reads top to bottom as header, status summary, description, Orca session, Thread, Commits and Files. The review bar (Approve, Request changes, Comment, Auto-merge, and Admin merge or Merge (bypass)) is pinned below the scroll.
 - While the viewer has pending draft comments, the bar also shows their count, Discard (a second click confirms) and Finish review. Finish review submits the pending review as Comment, Approve or Request changes, with an optional body. The body is required for Request changes.
 - The status summary gives one verdict line over Checks, Threads and Approvals bars. Conflicts replaces Approvals on a conflicting branch. Failing checks and conflicts open their detail on first view.
 - The description starts open and caps a long body at 400px until `e` shows it all.

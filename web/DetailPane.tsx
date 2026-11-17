@@ -1,4 +1,12 @@
-import { AUTO_MERGE_ON, DRAFT_HINT, OWN_PR_HINT, type ReviewAccess } from '../shared/pr-actions';
+import {
+  AUTO_MERGE_ON,
+  BYPASS_NOTE,
+  bypassBusyNote,
+  DRAFT_HINT,
+  OWN_PR_HINT,
+  type ReviewAccess,
+} from '../shared/pr-actions';
+import { BypassError, BypassMergeBtn, BypassStrip, type BypassControl } from './BypassMerge';
 import { mergeMethodLabel, type PrDetail, type PrSummary } from '../shared/types';
 import type { ActionKind } from './DetailBody';
 import { CopyLinkButton } from './copy-link';
@@ -163,8 +171,19 @@ export function ReviewButtons({ disabled, access, onAction }: Omit<ActionBarProp
  * Pinned under the PR detail pane (docs/design/pr-detail-spec.md): review buttons at the left,
  * merge buttons at the right. A merged or closed PR has none.
  */
-export function ReviewBar({ detail, disabled, access, onAction, onChanged }: ActionBarProps & { onChanged?: () => void }) {
+export function ReviewBar({
+  detail,
+  disabled,
+  access,
+  onAction,
+  onChanged,
+  bypass,
+}: ActionBarProps & { onChanged?: () => void; bypass?: BypassControl }) {
   if (detail.isOpen === false) return null;
+  const control = access.bypass ? bypass : undefined;
+  if (control?.phase === 'confirm') return <BypassStrip detail={detail} control={control} />;
+  const busy = control?.phase === 'busy';
+  const off = disabled || busy;
   const method = disabled
     ? 'Actions are disabled until reset.'
     : detail.summary.autoMerge
@@ -172,17 +191,25 @@ export function ReviewBar({ detail, disabled, access, onAction, onChanged }: Act
       : mergeMethodLabel(detail.mergeMethod);
   return (
     <div className="review-bar" role="toolbar" aria-label="Review">
-      <PendingDrafts detail={detail} disabled={disabled} onChanged={onChanged ?? noop} />
+      {control?.error !== undefined ? <BypassError message={control.error} /> : null}
+      <PendingDrafts detail={detail} disabled={off} onChanged={onChanged ?? noop} />
       <div className="review-bar-side">
-        <ReviewButtons disabled={disabled} access={access} onAction={onAction} />
-        {access.ownPr ? <span className="muted small">{OWN_PR_HINT}</span> : null}
+        <ReviewButtons disabled={off} access={access} onAction={onAction} />
       </div>
+      {access.ownPr ? <div className="review-bar-note muted small ellipsis">{ownPrNote(detail, access, busy)}</div> : null}
       <div className="review-bar-side review-bar-merge">
-        <ReadyBtn disabled={disabled} access={access} onAction={onAction} />
-        <AutoMergeBtn detail={detail} disabled={disabled} access={access} onAction={onAction} />
-        <AdminMergeBtn disabled={disabled} access={access} onAction={onAction} />
+        <ReadyBtn disabled={off} access={access} onAction={onAction} />
+        <AutoMergeBtn detail={detail} disabled={off} access={access} onAction={onAction} />
+        <AdminMergeBtn disabled={off} access={access} onAction={onAction} />
+        {control ? <BypassMergeBtn detail={detail} control={control} disabled={disabled} /> : null}
         {method ? <span className="merge-method muted small">{method}</span> : null}
       </div>
     </div>
   );
+}
+
+/** The own-PR line: today's hint, or the bypass wording while Merge (bypass) shows. */
+export function ownPrNote(detail: PrDetail, access: ReviewAccess, busy: boolean): string {
+  if (!access.bypass) return OWN_PR_HINT;
+  return busy ? bypassBusyNote(detail.summary.number) : BYPASS_NOTE;
 }
