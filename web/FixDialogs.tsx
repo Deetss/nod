@@ -3,9 +3,9 @@ import { botComment, checksNoun, COMMENT_MAX, commentProblem, fixPrompt, fixWork
 import { DispatchDialog } from './issues/IssueDialogs';
 import { bot } from './org-settings';
 import { Btn, KeyCap } from './ui';
-import { useFocusTrap } from './useFocusTrap';
 import type { FixDialogState } from './useFixChecks';
 import { repoLabel } from './repo-label';
+import { AppDialog } from './AppDialog';
 
 type Props = Pick<FixDialogState, 'repo' | 'number' | 'scope' | 'busy' | 'close'> & {
   onConfirm: (comment: string) => void;
@@ -17,7 +17,7 @@ export function AskBotDialog(p: Props) {
   const [comment, setComment] = useState(() => botComment(p.scope, b));
   const confirm = useRef<HTMLButtonElement>(null);
   useEffect(() => confirm.current?.focus(), []);
-  const trap = useFocusTrap();
+
   const ref = `${repoLabel(p.repo)} #${p.number}`;
   const title = `Ask ${b.name} to fix ${checksNoun(p.scope.length)}?`;
   const problem = commentProblem(comment, b);
@@ -26,48 +26,23 @@ export function AskBotDialog(p: Props) {
   };
 
   return (
-    <div className="scrim" onMouseDown={() => !p.busy && p.close()}>
-      <div
-        ref={trap}
-        className="dialog fix-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape' && !p.busy) p.close();
-          if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
-          const inText = e.target instanceof HTMLTextAreaElement;
-          // Buttons handle Enter themselves; the textarea needs Ctrl+Enter.
-          if (inText ? e.ctrlKey : !(e.target instanceof HTMLButtonElement)) {
-            e.preventDefault();
-            go();
-          }
-        }}
-      >
-        <div className="dialog-head">
-          <h2>{title}</h2>
-          <span className="muted small">{ref}</span>
-        </div>
-        <label className="field-label" htmlFor="fx-comment">
-          Comment to post
-        </label>
-        <textarea
-          id="fx-comment"
-          className="mono"
-          rows={4}
-          value={comment}
-          readOnly={p.busy}
-          aria-invalid={problem !== undefined}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <span className="muted small fix-count">
-          {comment.length} / {COMMENT_MAX}
-        </span>
-        <p className="muted small">
-          {problem === mustStartWith(b) ? problem : `Posts as you on ${ref}. ${b.name} starts on its own.`}
-        </p>
-        <div className="dialog-actions">
+    <AppDialog
+      title={title}
+      onClose={p.close}
+      busy={p.busy}
+      width={520}
+      className="fix-dialog"
+      onKeyDown={(e) => {
+        if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
+        const inText = e.target instanceof HTMLTextAreaElement;
+        // Buttons handle Enter themselves; the textarea needs Ctrl+Enter.
+        if (inText ? e.ctrlKey : !(e.target instanceof HTMLButtonElement)) {
+          e.preventDefault();
+          go();
+        }
+      }}
+      footer={
+        <>
           <Btn disabled={p.busy} onClick={p.close}>
             Cancel <KeyCap>Esc</KeyCap>
           </Btn>
@@ -84,12 +59,32 @@ export function AskBotDialog(p: Props) {
             {p.busy ? 'Posting comment...' : 'Post comment'}
             <KeyCap>Enter</KeyCap>
           </button>
-        </div>
-        <span className="sr-only" role="status">
-          {p.busy ? `Posting comment on ${ref}` : ''}
-        </span>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <p className="muted small">{ref}</p>
+      <label className="field-label" htmlFor="fx-comment">
+        Comment to post
+      </label>
+      <textarea
+        id="fx-comment"
+        className="mono"
+        rows={4}
+        value={comment}
+        readOnly={p.busy}
+        aria-invalid={problem !== undefined}
+        onChange={(e) => setComment(e.target.value)}
+      />
+      <span className="muted small fix-count">
+        {comment.length} / {COMMENT_MAX}
+      </span>
+      <p className="muted small">
+        {problem === mustStartWith(b) ? problem : `Posts as you on ${ref}. ${b.name} starts on its own.`}
+      </p>
+      <span className="sr-only" role="status">
+        {p.busy ? `Posting comment on ${ref}` : ''}
+      </span>
+    </AppDialog>
   );
 }
 

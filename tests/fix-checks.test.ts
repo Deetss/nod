@@ -337,7 +337,7 @@ describe('Ask Bot dialog', () => {
 
   it('prefills the template and uses the spec title', () => {
     const { el } = dialog();
-    expect(el.querySelector('h2')?.textContent).toBe('Ask Bot to fix 2 checks?');
+    expect(el.querySelector('.app-dialog-title')?.textContent).toBe('Ask Bot to fix 2 checks?');
     expect(el.querySelector<HTMLTextAreaElement>('textarea')?.value).toBe(botComment(scope, TEST_BOT));
     expect(el.textContent).toContain('Posts as you on acme-web #42. Bot starts on its own.');
   });

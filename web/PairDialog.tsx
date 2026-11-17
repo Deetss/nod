@@ -5,7 +5,7 @@ import { api } from './api';
 import { qrModules } from './qr';
 import { TestNotifications } from './TestNotifications';
 import { Btn } from './ui';
-import { useFocusTrap } from './useFocusTrap';
+import { AppDialog } from './AppDialog';
 
 const QUIET_ZONE = 4;
 const DEVICE_POLL_MS = 3000;
@@ -130,7 +130,6 @@ export function PairDialog({ onClose }: { onClose: () => void }) {
   const [justPaired, setJustPaired] = useState(false);
 
   const knownCount = useRef<number | undefined>(undefined);
-  const trap = useFocusTrap();
 
   const refresh = useCallback(async () => {
     try {
@@ -172,14 +171,6 @@ export function PairDialog({ onClose }: { onClose: () => void }) {
     if (phoneOn) void newCode();
   }, [phoneOn, newCode]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
-
   const remaining = code ? Date.parse(code.expiresAt) - now : 0;
   const live = code !== undefined && remaining > 0;
 
@@ -195,71 +186,63 @@ export function PairDialog({ onClose }: { onClose: () => void }) {
     action().then(refresh, (e: unknown) => setError(errorText(e)));
 
   return (
-    <div className="scrim" onMouseDown={onClose}>
-      <div
-        ref={trap}
-        className="dialog pair-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Pair phone"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <div className="dialog-head">
-          <h2>Pair phone</h2>
-          <Btn onClick={onClose}>Close</Btn>
-        </div>
-        {info && !phoneOn ? (
-          <p>
-            Phone access is off. Turn on Settings &gt; Phone access in the desktop app and restart, or run
-            <span className="mono"> nod serve</span>.
+    <AppDialog
+      title="Pair phone"
+      onClose={onClose}
+      width={480}
+      className="pair-dialog"
+    >
+      {info && !phoneOn ? (
+        <p>
+          Phone access is off. Turn on Settings &gt; Phone access in the desktop app and restart, or run
+          <span className="mono"> nod serve</span>.
+        </p>
+      ) : null}
+      {phoneOn && live && code ? (
+        <div className="pair-code">
+          <QrCode text={code.link} />
+          <p className="muted small">
+            Scan with the phone camera. The code works once and expires in{' '}
+            <strong>{countdown(remaining)}</strong>.
           </p>
-        ) : null}
-        {phoneOn && live && code ? (
-          <div className="pair-code">
-            <QrCode text={code.link} />
-            <p className="muted small">
-              Scan with the phone camera. The code works once and expires in{' '}
-              <strong>{countdown(remaining)}</strong>.
-            </p>
-            <div className="pair-link">
-              <input type="text" readOnly className="mono" value={code.link} aria-label="Pairing link" />
-              <Btn onClick={copy}>{copied ? 'Copied' : 'Copy'}</Btn>
-            </div>
+          <div className="pair-link">
+            <input type="text" readOnly className="mono" value={code.link} aria-label="Pairing link" />
+            <Btn onClick={copy}>{copied ? 'Copied' : 'Copy'}</Btn>
           </div>
-        ) : null}
-        {phoneOn && !live ? (
-          <div className="pair-code">
-            <p>{justPaired ? 'Phone paired.' : code ? 'The code expired.' : 'Making a code...'}</p>
-            <Btn primary onClick={() => void newCode()}>
-              {justPaired ? 'Pair another phone' : 'New code'}
-            </Btn>
-          </div>
-        ) : null}
-        {error ? (
-          <p className="dispatch-error" role="alert">
-            {error}
-          </p>
-        ) : null}
-        <div className="pair-devices-head">
-          <div className="notify-title">Paired phones</div>
-          {phoneOn ? <UpdatePhones /> : null}
         </div>
-        {info && info.devices.length > 0 ? (
-          <ul className="pair-devices">
-            {info.devices.map((d) => (
-              <DeviceRow
-                key={d.id}
-                device={d}
-                onRename={(id, name) => run(() => api.renameDevice(id, name))}
-                onRevoke={(id) => run(() => api.revokeDevice(id))}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p className="muted">{info ? 'No phones paired yet.' : 'Loading...'}</p>
-        )}
-        <TestNotifications />
+      ) : null}
+      {phoneOn && !live ? (
+        <div className="pair-code">
+          <p>{justPaired ? 'Phone paired.' : code ? 'The code expired.' : 'Making a code...'}</p>
+          <Btn primary onClick={() => void newCode()}>
+            {justPaired ? 'Pair another phone' : 'New code'}
+          </Btn>
+        </div>
+      ) : null}
+      {error ? (
+        <p className="dispatch-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+      <div className="pair-devices-head">
+        <div className="notify-title">Paired phones</div>
+        {phoneOn ? <UpdatePhones /> : null}
       </div>
-    </div>
+      {info && info.devices.length > 0 ? (
+        <ul className="pair-devices">
+          {info.devices.map((d) => (
+            <DeviceRow
+              key={d.id}
+              device={d}
+              onRename={(id, name) => run(() => api.renameDevice(id, name))}
+              onRevoke={(id) => run(() => api.revokeDevice(id))}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="muted">{info ? 'No phones paired yet.' : 'Loading...'}</p>
+      )}
+      <TestNotifications />
+    </AppDialog>
   );
 }
