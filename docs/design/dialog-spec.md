@@ -18,6 +18,7 @@ geometry is the same, only the body and footer buttons change.
   else the confirm button, and returns to the opener on close. Tab stays inside. Page scroll is locked.
 - Enter and Ctrl+Enter submit exactly as today (`ActionDialog` rules in `web/Dialogs.tsx`).
 - While `busy`: Cancel and X are disabled, the confirm button shows `.spinner` plus the busy word, `aria-busy` is set.
+- Disabled buttons keep their label and the dashed border; the footer note says why. The note never replaces the dashed border.
 - The scrim stays `#010409b3`. Dialog z-index stays above the app (50).
 - Phone sheets and `NotifyMenu` do not use this wrapper.
 
@@ -40,7 +41,7 @@ geometry is the same, only the body and footer buttons change.
 | Footer note | `AppDialog` (`footerNote` prop) | 16 left of footer, vertically centred (baseline 36 below footer top) | 12/18 400 | `fgColor-muted` |
 | Cancel | `.btn` default | 32 tall, 70 wide, right-aligned with 16 right padding | 14/20 400 | `button-default-bgColor-rest` fill, `borderColor-default` 1px stroke, radius 6; text `fgColor-default` |
 | Confirm (primary) | `.btn.btn-primary` | 32 tall, width by label, 8 gap left of Cancel | 14/20 600 | `button-primary-bgColor-rest` fill, `borderColor-success-emphasis` 1px stroke, radius 6; text `fgColor-onEmphasis` |
-| Admin merge (danger) | `.btn.btn-danger` | 32 tall, 106 wide | 14/20 600 | `bgColor-danger-emphasis` fill, `borderColor-danger-emphasis` 1px stroke, radius 6; text `fgColor-onEmphasis` |
+| Admin merge (danger) | `.btn.btn-danger` | 32 tall, 106 wide | 14/20 600 | `bgColor-danger-muted` fill, `borderColor-danger-emphasis` 1px stroke, radius 6; text `fgColor-danger`; hover fill `borderColor-danger-emphasis`, text `fgColor-onEmphasis`. The mockup shows it disabled. |
 | Disabled button | `.btn[disabled]` | same box | 14/20 400 | fill `none`, 1px dashed `borderColor-emphasis`, text `fgColor-muted` |
 | Busy button | `.btn.is-busy` | same box as primary, 14 spinner at 12 from left, label centred at button_x + 80 | 14/20 600 | `button-primary-bgColor-rest` fill, `borderColor-success-emphasis` 1px stroke; spinner and text `fgColor-onEmphasis` |
 
@@ -74,7 +75,7 @@ pinned. Dialog max height is `100vh - 64px`. The page never scrolls.
 - `web/Dialogs.tsx` (`ActionDialog`, `HelpDialog`)
 - `web/FixDialogs.tsx`
 - `web/PairDialog.tsx`
-- `web/settings/SettingsDialog.tsx` (width `large`, see note)
+- `web/settings/SettingsDialog.tsx` (custom width 840, see note)
 - `web/settings/Welcome.tsx`
 - `web/issues/IssueDialogs.tsx`
 - `web/issues/SplitDialog.tsx`

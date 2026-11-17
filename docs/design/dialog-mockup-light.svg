@@ -4,9 +4,6 @@
   <rect x="0" y="48" width="420" height="822" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
   <rect x="420" y="48" width="958" height="822" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
   <rect x="1378" y="48" width="280" height="822" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
-  <rect x="0" y="0" width="1660" height="870" fill="#010409" opacity="0.7"/>
-  <text x="16" y="26" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">Shared dialog, layout A (dark, 1660x870). Colours from web/tokens.css.</text><text x="16" y="44" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">1 empty + disabled, 2 typed + busy, 3 typed + danger confirmation. Sample data synthetic.</text>
-  <text x="70" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#1f2328" text-anchor="start">1 Request changes, empty (confirm disabled)</text>
   <rect x="70" y="90" width="480" height="322" rx="6" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
   <rect x="70" y="90" width="480" height="56" fill="#f6f8fa"/><line x1="70" y1="146" x2="550" y2="146" stroke="#d1d9e0" stroke-width="1"/>
   <text x="86" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">Request changes on acme-co/acme-api #310?</text>
@@ -20,7 +17,6 @@
   <text x="86" y="384" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">Add a comment to continue</text>
   <rect x="320" y="364.0" width="70" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/><text x="355.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="middle">Cancel</text>
   <rect x="398" y="364.0" width="136" height="32" rx="6" fill="none" stroke="#818b98" stroke-width="1" stroke-dasharray="4 3"/><text x="466.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#59636e" text-anchor="middle">Request changes</text>
-  <text x="590" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#1f2328" text-anchor="start">2 Approve, busy (Cancel disabled, primary busy)</text>
   <rect x="590" y="90" width="480" height="322" rx="6" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
   <rect x="590" y="90" width="480" height="56" fill="#f6f8fa"/><line x1="590" y1="146" x2="1070" y2="146" stroke="#d1d9e0" stroke-width="1"/>
   <text x="606" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">Approve acme-co/acme-api #310?</text>
@@ -35,7 +31,6 @@
   <line x1="590" y1="348" x2="1070" y2="348" stroke="#d1d9e0" stroke-width="1"/><rect x="590" y="348" width="480" height="64" fill="#f6f8fa"/>
   <rect x="840" y="364.0" width="70" height="32" rx="6" fill="none" stroke="#818b98" stroke-width="1" stroke-dasharray="4 3"/><text x="875.0" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#59636e" text-anchor="middle">Cancel</text>
   <rect x="918" y="364.0" width="136" height="32" rx="6" fill="#1f883d" stroke="#1f883d" stroke-width="1"/><circle cx="930" cy="380.0" r="7.0" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="3 2"/><text x="998" y="384.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">Approving...</text>
-  <text x="1110" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#1f2328" text-anchor="start">3 Admin merge, typed 31 of 310 (Admin merge disabled)</text>
   <rect x="1110" y="90" width="480" height="280" rx="6" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
   <rect x="1110" y="90" width="480" height="56" fill="#f6f8fa"/><line x1="1110" y1="146" x2="1590" y2="146" stroke="#d1d9e0" stroke-width="1"/>
   <text x="1126" y="123" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#1f2328" text-anchor="start">Admin merge acme-co/acme-api #310?</text>
@@ -53,4 +48,9 @@
   <text x="1126" y="342" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#59636e" text-anchor="start">Type 310 to confirm</text>
   <rect x="1390" y="322.0" width="70" height="32" rx="6" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/><text x="1425.0" y="342.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#1f2328" text-anchor="middle">Cancel</text>
   <rect x="1468" y="322.0" width="106" height="32" rx="6" fill="none" stroke="#818b98" stroke-width="1" stroke-dasharray="4 3"/><text x="1521.0" y="342.6666666666667" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#59636e" text-anchor="middle">Admin merge</text>
-  </svg>
+  <rect x="0" y="0" width="1660" height="870" fill="#010409" opacity="0.7"/>
+  <text x="16" y="26" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="600" fill="#f0f6fc" text-anchor="start">Shared dialog, layout A (light, 1660x870). Colours from web/tokens.css.</text><text x="16" y="44" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#9198a1" text-anchor="start">1 empty + disabled, 2 typed + busy, 3 typed + danger confirmation. Sample data synthetic.</text>
+  <text x="70" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">1 Request changes, empty (confirm disabled)</text>
+  <text x="590" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">2 Approve, busy (Cancel disabled, primary busy)</text>
+  <text x="1110" y="84" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="bold" fill="#f0f6fc" text-anchor="start">3 Admin merge, typed 31 of 310 (Admin merge disabled)</text>
+</svg>
