@@ -20,11 +20,14 @@
   "dependencies": {
     "@hono/node-server": "^2.1.6",
     "@primer/octicons-react": "^19.42.0",
+    "@primer/react": "^38.46.0",
+    "@types/react-is": "^19.3.0",
     "dompurify": "^3.4.17",
     "electron-updater": "^6.8.11",
     "hono": "^4.13.16",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-is": "^19.3.1",
     "web-push": "4.0.0",
     "zod": "^4.6.7"
   },

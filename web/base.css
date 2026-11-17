@@ -10,6 +10,11 @@ body,
   overflow: hidden;
 }
 
+/* Primer's ThemeProvider renders a wrapper div; keep it out of the full-height layout. */
+[data-component='ThemeProvider'] {
+  display: contents;
+}
+
 body {
   background: var(--bgColor-default);
   color: var(--fgColor-default);

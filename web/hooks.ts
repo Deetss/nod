@@ -37,7 +37,12 @@ function initialTheme(): Theme {
 export function useTheme(): [Theme, () => void] {
   const [theme, setTheme] = useState<Theme>(initialTheme);
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    const root = document.documentElement.dataset;
+    root.theme = theme;
+    // Primer components pick their palette from these attributes.
+    root.colorMode = theme;
+    root.lightTheme = 'light';
+    root.darkTheme = 'dark';
   }, [theme]);
   const toggle = useCallback(() => {
     setTheme((t) => {
