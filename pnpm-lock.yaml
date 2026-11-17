@@ -15,6 +15,9 @@ importers:
       '@hono/node-server':
         specifier: ^2.1.6
         version: 2.1.6(hono@4.13.16)
+      '@primer/octicons-react':
+        specifier: ^19.42.0
+        version: 19.42.0(react@19.3.1)
       dompurify:
         specifier: ^3.4.17
         version: 3.4.17
@@ -346,6 +349,11 @@ packages:
   '@peculiar/webcrypto@1.7.2':
     resolution: {integrity: sha512-ktTSACRJ5WdpfjHjFT2EWJQQPacGv1cPCDfEbdmpAHOxdFiYqPe4lfnXGA3D8Dg9/0kHPYSvyRlgujIOVlTdvQ==}
     engines: {node: '>=14.18.0'}
+
+  '@primer/octicons-react@19.42.0':
+    resolution: {integrity: sha512-KLGHFBK28ubfEhRf1+B4OzfLDO3ItXwqYsPAdrfOPPzN3uD2Jp7rYdE5rLkdCHCzkyjh14eH5vL0pHq8dyJmsA==}
+    peerDependencies:
+      react: '>=16.3'
 
   '@primer/primitives@11.10.0':
     resolution: {integrity: sha512-ihZxIst4Izry284StKFjpbYvX6R/IBFTLu+qiuAmR93PsKF2hdjoabhSYwKI8iCxOUx94jVP55bI3NoY7STjYQ==}
@@ -2235,6 +2243,10 @@ snapshots:
       '@peculiar/utils': 2.0.3
       tslib: 2.9.1
       webcrypto-core: 1.9.2
+
+  '@primer/octicons-react@19.42.0(react@19.3.1)':
+    dependencies:
+      react: 19.3.1
 
   '@primer/primitives@11.10.0': {}
 

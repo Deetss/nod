@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import { GearIcon } from '@primer/octicons-react';
 import type { RateInfo } from '../shared/types';
 import type { NotifySettings } from '../shared/notify-rules';
 import { formatReset } from './inbox-utils';
@@ -220,8 +221,7 @@ function usePairedCount(dialogOpen: boolean): number | undefined {
   return count;
 }
 
-/** Opens the settings dialog (`,`). */
-/** The gear. `mark` adds the `!` when the GitHub token needs attention. */
+/** Opens the settings dialog (`,`). The gear. `mark` adds the `!` when the GitHub token needs attention. */
 export function SettingsButton({ onClick, mark }: { onClick: () => void; mark?: 'danger' | 'attention' }) {
   return (
     <button
@@ -232,12 +232,7 @@ export function SettingsButton({ onClick, mark }: { onClick: () => void; mark?: 
       title="Settings (,)"
       onClick={onClick}
     >
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="8" cy="8" r="2.2" />
-          <path d="M8 1.8v1.7M8 12.5v1.7M1.8 8h1.7M12.5 8h1.7M3.6 3.6l1.2 1.2M11.2 11.2l1.2 1.2M12.4 3.6l-1.2 1.2M4.8 11.2l-1.2 1.2" />
-        </g>
-      </svg>
+      <GearIcon size={14} />
       {mark ? (
         <span className={`top-mark is-${mark}`} aria-hidden="true">
           !
