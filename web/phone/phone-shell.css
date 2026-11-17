@@ -65,6 +65,15 @@
   text-overflow: ellipsis;
 }
 
+/* Stays 13px while the title collapses. Line-height 1 keeps it from growing the title's line box. */
+.ph-apptitle-total {
+  margin-left: 8px;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--fgColor-muted);
+}
+
 .ph-iconbtn {
   flex: none;
   display: inline-flex;
@@ -236,7 +245,8 @@
   border-top: 1px solid var(--borderColor-default);
 }
 
-.ph-tab {
+/* Beats `.phone button { font: inherit; color: inherit }`. */
+.phone .ph-tab {
   position: relative;
   flex: 1;
   display: flex;
@@ -294,10 +304,12 @@
   background: var(--bgColor-accent-muted);
 }
 
+/* The left edge sits 4px right of the icon centre, so a wider number grows into the empty slot. */
 .ph-count {
   position: absolute;
   top: -2px;
-  right: 6px;
+  left: calc(50% + 4px);
+  right: auto;
   min-width: 18px;
   height: 18px;
   padding: 0 5px;
@@ -309,7 +321,17 @@
   font-size: 12px;
   line-height: 18px;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
   text-align: center;
+}
+
+.ph-count-dot {
+  top: 0;
+  width: 8px;
+  min-width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 4px;
 }
 
 /* Chip row: the only horizontal scroller on a tab. */

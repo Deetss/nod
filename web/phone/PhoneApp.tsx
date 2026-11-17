@@ -19,12 +19,15 @@ import { SwipePager, useTabPager } from './SwipePager';
 import { phoneLinkRouter } from './link-router';
 import { SheetHoldContext, useSheetStack } from './useSheetStack';
 import { loadOpen, saveOpen } from './phone-collapsed';
-import { activityBadge } from '../../shared/activity';
+import { activityBadge, activityNeedsMe } from '../../shared/activity';
 import type { ActivityHandle } from '../activity-ui';
+import { formatNum } from '../ui';
 import {
+  issueBadge,
   issueChips,
   phoneStatus,
   prAllTotal,
+  prBadge,
   prChips,
   rateLimited,
   sectionStates,
@@ -33,6 +36,7 @@ import {
   syncText,
   tabTitle,
   type PhoneTab,
+  type TabBadge,
 } from './phone-logic';
 import { useLargeTitle } from './useLargeTitle';
 import { useBarHide } from './useBarHide';
@@ -228,12 +232,23 @@ export function PhoneApp(p: PhoneAppProps) {
   const prFilterRows = prChips(inbox.data?.sections ?? []).filter((c) => c.key !== 'all');
   const issueFilterRows = issueChips(issues.data?.sections ?? []).filter((c) => c.key !== 'all');
 
-  const unseen = {
-    prs: prStatus === 'loading' ? 0 : (inbox.data?.prs ?? []).filter((x) => x.seen !== 'seen' && !seenLocal.has(x.id)).length,
-    issues: issueStatus === 'loading' ? 0 : (issues.data?.issues ?? []).filter((x) => x.seen !== 'seen' && !issueSeen.has(x.id)).length,
+  // Badges and header totals use the server's sections, before the query and the filters.
+  const prsLoading = prStatus === 'loading';
+  const issuesLoading = issueStatus === 'loading';
+  const badges: Record<PhoneTab, TabBadge> = {
+    prs: prsLoading ? 0 : prBadge(inbox.data?.sections ?? [], seenLocal),
+    issues: issuesLoading ? 0 : issueBadge(issues.data?.sections ?? [], issueSeen),
+    activity: activityNeedsMe(p.activity.feed, p.activity.lastVisit) ? 'dot' : 0,
   };
 
-  const activityUnseen = p.activity.feed ? activityBadge(p.activity.feed, p.activity.lastVisit) : 0;
+  const activityNew = activityBadge(p.activity.feed, p.activity.lastVisit);
+  const headerTotal: Record<PhoneTab, string | undefined> = {
+    prs: prsLoading ? undefined : `${formatNum(prAllTotal(inbox.data?.sections ?? []))} open`,
+    issues: issuesLoading
+      ? undefined
+      : `${formatNum(issues.data?.sections.find((s) => s.key === 'all')?.count ?? 0)} open`,
+    activity: activityNew > 0 ? `${formatNum(activityNew)} new` : undefined,
+  };
 
   const selectTab = (t: PhoneTab) => {
     if (expandedRow !== undefined && t !== p.tab) setExpanded(undefined);
@@ -367,6 +382,7 @@ export function PhoneApp(p: PhoneAppProps) {
       <main className="ph-main">
         <AppBar
           title={tabTitle(p.tab)}
+          total={headerTotal[p.tab]}
           density={p.density}
           theme={p.theme}
           menu={menu}
@@ -447,7 +463,7 @@ export function PhoneApp(p: PhoneAppProps) {
           onCancel={() => setSearchingLayer(false)}
         />
       ) : null}
-      <TabBar tab={p.tab} counts={{ ...unseen, activity: activityUnseen }} onTab={selectTab} indicatorRef={pager.swipe.indicatorRef} />
+      <TabBar tab={p.tab} badges={badges} onTab={selectTab} indicatorRef={pager.swipe.indicatorRef} />
       {filterSheet && listTab ? (
         <PhoneFilterSheet
           title={onPrs ? 'Filter pull requests' : 'Filter issues'}

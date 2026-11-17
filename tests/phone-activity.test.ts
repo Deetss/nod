@@ -186,9 +186,25 @@ describe('B1 default', () => {
     expect(rows().length).toBe(2);
   });
 
-  it('puts the unseen count on the Activity tab', () => {
+  it('puts a dot on the Activity tab when an unseen group needs you', () => {
     mount();
-    expect(host.querySelector('.ph-tab.is-active .ph-count')?.textContent).toBe('2');
+    const tab = host.querySelector('.ph-tab.is-active');
+    expect(tab?.querySelector('.ph-count-dot')?.getAttribute('aria-hidden')).toBe('true');
+    expect(tab?.querySelector('.ph-count-dot')?.textContent).toBe('');
+    expect(tab?.getAttribute('aria-label')).toBe('Activity, new items need you');
+  });
+
+  it('shows no dot when no unseen group needs you', () => {
+    mount({ feed: feedOf([groups[0] as ActivityGroup]) });
+    const tab = host.querySelector('.ph-tab.is-active');
+    expect(tab?.querySelector('.ph-count')).toBeNull();
+    expect(tab?.hasAttribute('aria-label')).toBe(false);
+  });
+
+  it('shows the new count after the title', () => {
+    mount();
+    expect(host.querySelector('.ph-apptitle')?.textContent).toBe('Activity2 new');
+    expect(host.querySelector('.ph-apptitle-total')?.textContent).toBe('2 new');
   });
 });
 
@@ -275,6 +291,8 @@ describe('B5 loading', () => {
     expect(text()).toContain('Needs me --');
     expect(host.querySelectorAll('.ph-askel').length).toBeGreaterThan(0);
     expect(host.querySelector('.ph-tab.is-active .ph-count')).toBeNull();
+    expect(host.querySelector('.ph-tab.is-active .ph-count-dot')).toBeNull();
+    expect(host.querySelector('.ph-apptitle-total')).toBeNull();
   });
 });
 

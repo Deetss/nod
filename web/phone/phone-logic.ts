@@ -50,6 +50,49 @@ export function prAllTotal(sections: readonly Section[]): number {
   return new Set(sections.flatMap((s) => s.prs.map((p) => p.id))).size;
 }
 
+/** A tab badge: a number, or a dot that says only that something needs you. */
+export type TabBadge = number | 'dot';
+
+const unseenIn = (seen: string, id: string, local: ReadonlySet<string>): boolean => seen !== 'seen' && !local.has(id);
+
+/** Unseen PRs in Needs my review, plus updated PRs in Mine. A PR in both counts once. */
+export function prBadge(sections: readonly Section[], seenLocal: ReadonlySet<string>): number {
+  const ids = new Set<string>();
+  for (const s of sections) {
+    for (const pr of s.prs) {
+      if (!unseenIn(pr.seen, pr.id, seenLocal)) continue;
+      if (s.key === 'needs' || (s.key === 'mine' && pr.seen === 'updated')) ids.add(pr.id);
+    }
+  }
+  return ids.size;
+}
+
+const ISSUE_BADGE_SECTIONS: ReadonlySet<string> = new Set(['progress', 'assigned', 'mentioned']);
+
+/** Unseen issues under In progress, Assigned to me and Mentioned. Sections are exclusive, so With bot stays out. */
+export function issueBadge(sections: readonly IssueSection[], issueSeen: ReadonlySet<string>): number {
+  const ids = new Set<string>();
+  for (const s of sections) {
+    if (!ISSUE_BADGE_SECTIONS.has(s.key)) continue;
+    for (const i of s.issues) if (unseenIn(i.seen, i.id, issueSeen)) ids.add(i.id);
+  }
+  return ids.size;
+}
+
+export const BADGE_CAP = 99;
+
+/** Undefined hides the badge. */
+export function badgeText(n: number): string | undefined {
+  if (n <= 0) return undefined;
+  return n > BADGE_CAP ? `${BADGE_CAP}+` : String(n);
+}
+
+/** The tab button's accessible name while it shows a badge. */
+export function tabName(label: string, badge: TabBadge): string {
+  if (badge === 'dot') return `${label}, new items need you`;
+  return badge > BADGE_CAP ? `${label}, more than ${BADGE_CAP} need you` : `${label}, ${badge} need you`;
+}
+
 /** The `All` chip count is `prAllTotal`, so the chip and the list status cannot disagree. */
 export function prChips(sections: readonly Section[]): ChipCount<Section['key']>[] {
   return chips(sections, prAllTotal(sections), PR_CHIP_LABELS);

@@ -152,10 +152,19 @@ export function buildActivityView(groups: readonly ActivityGroup[], o: ActivityO
   return { rows: sorted, counts, hiddenMine, unseen };
 }
 
-/** The number on the tab bar and the desktop segment. Hidden at 0 and while there is no feed. */
+/** The number on the desktop segment and the phone header's `N new`. Hidden at 0 and while there is no feed. */
 export function activityBadge(feed: ActivityFeed | undefined, lastVisit: number): number {
   if (!feed) return 0;
   return buildActivityView(feed.groups, { viewer: feed.viewer, filter: 'all', showMine: false, lastVisit }).unseen;
+}
+
+/** The phone tab dot: an unseen group that also holds a needsMe event by someone else. */
+export function activityNeedsMe(feed: ActivityFeed | undefined, lastVisit: number): boolean {
+  if (!feed) return false;
+  return feed.groups.some((g) => {
+    const theirs = g.events.filter((e) => !isOwnEvent(e, feed.viewer));
+    return theirs.some((e) => isUnread(e, lastVisit)) && theirs.some((e) => e.needsMe);
+  });
 }
 
 /** Row key for expanded and selected state. */

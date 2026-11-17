@@ -3,12 +3,14 @@ import type { Density } from '../density';
 import { AlertIcon, ClockIcon } from '../ui';
 import { ActivityIcon, IssueIcon, MoreIcon, PrIcon } from './PhoneIcons';
 import { orgUrl } from '../org-settings';
-import { syncTone, type PhoneTab, type SyncStatus } from './phone-logic';
+import { badgeText, syncTone, tabName, type PhoneTab, type SyncStatus, type TabBadge } from './phone-logic';
 import { PhoneNotifySheet } from './PhoneNotifySheet';
 import { usePush } from './usePush';
 
 interface AppBarProps {
   title: string;
+  /** Quiet total after the title, such as `14 open`. */
+  total?: string;
   density: Density;
   theme: 'dark' | 'light';
   menu: boolean;
@@ -52,7 +54,10 @@ export function AppBar(p: AppBarProps) {
     <>
       {notifySheet ? <PhoneNotifySheet push={push} onClose={() => setNotifySheet(false)} /> : null}
       <header className="ph-appbar">
-        <h1 className="ph-apptitle">{p.title}</h1>
+        <h1 className="ph-apptitle">
+          {p.title}
+          {p.total ? <span className="ph-apptitle-total">{p.total}</span> : null}
+        </h1>
         <button
           type="button"
           className="ph-iconbtn ph-more"
@@ -143,7 +148,7 @@ function SyncBlock({ sync, busy, onSync }: { sync: SyncStatus; busy: boolean; on
 
 interface TabBarProps {
   tab: PhoneTab;
-  counts: Record<PhoneTab, number>;
+  badges: Record<PhoneTab, TabBadge>;
   onTab: (t: PhoneTab) => void;
   /** The active pill, which a swipe moves. */
   indicatorRef: RefObject<HTMLDivElement | null>;
@@ -155,27 +160,34 @@ export const PHONE_TABS: { key: PhoneTab; label: string; Icon: typeof PrIcon }[]
   { key: 'activity', label: 'Activity', Icon: ActivityIcon },
 ];
 
-export function TabBar({ tab, counts, onTab, indicatorRef }: TabBarProps) {
+function Badge({ badge }: { badge: TabBadge }) {
+  if (badge === 'dot') return <span className="ph-count ph-count-dot" aria-hidden="true" />;
+  const text = badgeText(badge);
+  return text ? (
+    <span className="ph-count" aria-hidden="true">
+      {text}
+    </span>
+  ) : null;
+}
+
+export function TabBar({ tab, badges, onTab, indicatorRef }: TabBarProps) {
   return (
     <nav className="ph-tabbar" aria-label="Sections" style={{ '--tab-count': PHONE_TABS.length } as CSSProperties}>
       <div ref={indicatorRef} className="ph-tab-ind" aria-hidden="true" />
       {PHONE_TABS.map(({ key, label, Icon }) => {
-        const n = counts[key];
+        const badge = badges[key];
         return (
           <button
             key={key}
             type="button"
             className={`ph-tab${tab === key ? ' is-active' : ''}`}
             aria-current={tab === key ? 'page' : undefined}
+            aria-label={badge ? tabName(label, badge) : undefined}
             onClick={() => onTab(key)}
           >
             <span className="ph-tab-icon">
               <Icon size={24} />
-              {n > 0 ? (
-                <span className="ph-count" aria-label={`${n} unseen`}>
-                  {n}
-                </span>
-              ) : null}
+              <Badge badge={badge} />
             </span>
             <span className="ph-tab-label">{label}</span>
           </button>

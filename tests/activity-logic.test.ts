@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   activityBadge,
+  activityNeedsMe,
   buildActivityView,
   eventSentence,
   isOwnEvent,
@@ -193,6 +194,35 @@ describe('unread and badge', () => {
     const feed: ActivityFeed = { viewer: 'acme-dev', syncedAt: T0, days: 7, hasOlder: false, lastVisit: 0, groups };
     expect(activityBadge(feed, visit)).toBe(1);
     expect(activityBadge(feed, T0)).toBe(0);
+  });
+});
+
+describe('activityNeedsMe', () => {
+  const visit = T0 - 30 * MIN;
+  const feed = (groups: ActivityGroup[]): ActivityFeed => ({
+    viewer: 'acme-dev',
+    syncedAt: T0,
+    days: 7,
+    hasOlder: false,
+    lastVisit: 0,
+    groups,
+  });
+  it('is false with no feed', () => {
+    expect(activityNeedsMe(undefined, visit)).toBe(false);
+  });
+  it('is true for an unseen group with a needsMe event', () => {
+    const g = group(1, [ev('ci', 5, { detail: 'fail' }), ev('review-requested', 90, { actor: 'sam-lee', needsMe: true })]);
+    expect(activityNeedsMe(feed([g]), visit)).toBe(true);
+    expect(activityNeedsMe(feed([g]), T0)).toBe(false);
+  });
+  it('is false when the only unread event is the viewer own', () => {
+    const g = group(1, [ev('comment', 5, { actor: 'acme-dev' }), ev('mention', 90, { actor: 'sam-lee', needsMe: true })]);
+    expect(activityNeedsMe(feed([g]), visit)).toBe(false);
+  });
+  it('is false for an unseen CI-only group, which still counts toward the badge', () => {
+    const f = feed([group(1, [ev('ci', 5, { detail: 'fail' })])]);
+    expect(activityNeedsMe(f, visit)).toBe(false);
+    expect(activityBadge(f, visit)).toBe(1);
   });
 });
 
