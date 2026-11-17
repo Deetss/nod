@@ -1,34 +1,15 @@
 /* Settings dialog and first-run welcome (docs/design/settings-spec.md on dev/crew-nod-settings-mockup) */
 
-.settings-dialog {
-  width: min(880px, calc(100vw - 32px));
+/* Fixed-height shell: the body holds its own two scrolling columns. */
+.dialog.app-dialog.settings-dialog {
   height: min(640px, calc(100vh - 32px));
+  max-height: none;
+}
+
+.settings-dialog .app-dialog-body {
   padding: 0;
   gap: 0;
-  border-radius: 10px;
   overflow: hidden;
-}
-
-.settings-head {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 15px 24px;
-  border-bottom: 1px solid var(--borderColor-default);
-}
-
-.settings-head h2 {
-  position: relative;
-  top: -2px;
-  font: 600 20px/28px var(--fontStack-system);
-}
-
-.settings-close {
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  justify-content: center;
 }
 
 .settings-body {
@@ -279,18 +260,6 @@
 }
 
 /* Footer */
-.settings-foot {
-  flex: none;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 16px;
-  background: var(--bgColor-muted);
-  border-top: 1px solid var(--borderColor-default);
-}
-
 .settings-status {
   display: flex;
   align-items: center;

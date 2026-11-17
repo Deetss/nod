@@ -82,7 +82,7 @@ export function AppDialog(p: AppDialogProps) {
         renderFooter={() =>
           hasFooter ? (
             <Dialog.Footer className="app-dialog-footer">
-              {p.footerNote != null ? <span className="app-dialog-note">{p.footerNote}</span> : null}
+              {p.footerNote != null ? <div className="app-dialog-note">{p.footerNote}</div> : null}
               <div className="dialog-actions">{p.footer}</div>
             </Dialog.Footer>
           ) : null
