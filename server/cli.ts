@@ -15,12 +15,18 @@ interface ScopeSettings {
 
 type SettingsEdit = { orgs: string[] } | { includeInvolved: boolean };
 
+/** The words in Electron's argv. Chromium moves switches ahead of them, so position 1 may be a switch. */
+const words = (argv: readonly string[]): string[] => argv.slice(1).filter((a) => !a.startsWith('-'));
+
 /** The CLI command in Electron's argv, if any. Older wrappers pass `--update`. */
 export function cliCommand(argv: readonly string[]): CliCommand | undefined {
-  if (argv.includes('--update') || argv[1] === 'update') return 'update';
-  if (argv[1] === 'pair' || argv[1] === 'settings') return argv[1];
-  return undefined;
+  if (argv.includes('--update')) return 'update';
+  const [word] = words(argv);
+  return word === 'update' || word === 'pair' || word === 'settings' ? word : undefined;
 }
+
+/** The words after the command, such as `orgs Acme` for `nod settings orgs Acme`. */
+export const cliArgs = (argv: readonly string[]): string[] => words(argv).slice(1);
 
 /** Parses the words after `nod settings`. No edit means print only. Switches such as Chromium flags are skipped. */
 export function parseSettingsArgs(args: readonly string[]): { edit?: SettingsEdit } | { error: string } {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SETTINGS_USAGE, cliCommand, pairText, parseSettingsArgs, settingsText } from '../server/cli';
+import { SETTINGS_USAGE, cliArgs, cliCommand, pairText, parseSettingsArgs, settingsText } from '../server/cli';
 import { qrText } from '../server/qr-text';
 
 describe('cliCommand', () => {
@@ -10,6 +10,13 @@ describe('cliCommand', () => {
     expect(cliCommand(['nod', '--update'])).toBe('update');
     expect(cliCommand(['nod'])).toBeUndefined();
     expect(cliCommand(['nod', '--serve'])).toBeUndefined();
+  });
+
+  it('finds the command after switches Chromium moved ahead of it', () => {
+    expect(cliCommand(['nod', '--ozone-platform=headless', 'settings', 'orgs', 'a'])).toBe('settings');
+    expect(cliCommand(['nod', '--ozone-platform=headless', 'update'])).toBe('update');
+    expect(cliArgs(['nod', '--ozone-platform=headless', 'settings', 'orgs', 'a', 'b'])).toEqual(['orgs', 'a', 'b']);
+    expect(cliArgs(['nod', 'pair', '--ozone-platform=headless'])).toEqual([]);
   });
 });
 
