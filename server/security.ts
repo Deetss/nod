@@ -156,7 +156,20 @@ export function hostGuard(phone?: PhoneAccess): MiddlewareHandler {
   };
 }
 
+/**
+ * Clickjacking guard: HTML pages may be framed only by their own origin. `'self'` rather than
+ * `'none'`, because the design capture harness frames the app from the same server.
+ */
+export const frameGuard: MiddlewareHandler = async (c, next) => {
+  await next();
+  if (c.res.headers.get('content-type')?.includes('text/html')) {
+    c.res.headers.set('Content-Security-Policy', "frame-ancestors 'self'");
+    c.res.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  }
+};
+
 export function tokensMatch(a: string, b: string): boolean {
+
   const ab = Buffer.from(a);
   const bb = Buffer.from(b);
   return ab.length === bb.length && timingSafeEqual(ab, bb);
@@ -200,11 +213,28 @@ function isPublicPath(method: string, path: string): boolean {
   );
 }
 
-/** Rejects loopback-only routes (pairing admin) when the request came through the tailnet. */
+/** Rejects loopback-only routes (Update phones, test push) when the request came through the tailnet. */
 export const loopbackOnly: MiddlewareHandler = async (c, next) => {
   if (isTailnetRequest(c)) return c.text('Loopback only', 403);
   await next();
 };
+
+/**
+ * Device admin routes and the settings write: loopback, or a tailnet request whose
+ * device key belongs to an admin device. Phone and desktop keys are refused. Mutating
+ * routes still pass the mutation guard (token and Origin) first.
+ */
+export function adminOnly(devices: DeviceStore): MiddlewareHandler {
+  const logOnce = createLogOnce();
+  return async (c, next) => {
+    if (!isTailnetRequest(c)) return next();
+    const key = getCookie(c, DEVICE_COOKIE);
+    if (key && devices.roleForKey(key) === 'admin') return next();
+    logOnce(`[security] 403 Admin device only on ${c.req.path}`);
+    return c.text('Admin device only', 403);
+  };
+}
+
 
 /**
  * Tailnet requests also need a device key from a paired phone, on top of the

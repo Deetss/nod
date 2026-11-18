@@ -1,7 +1,7 @@
 import type { Context, Hono } from 'hono';
 import { z } from 'zod';
 import { DISPATCH_ALL_MAX } from '../shared/findings';
-import { LOCAL_HOST, hostName, type HostStatus } from '../shared/orca-hosts';
+import { LOCAL_HOST, hostName, type HostPrefs, type HostStatus } from '../shared/orca-hosts';
 import { matchSessions, relatedToIssue, type Matched } from '../shared/orca-match';
 import { prepareSend } from '../shared/orca-message';
 import { patchHost, prefsPatchBody, type OrcaPrefs } from '../shared/orca-prefs';
@@ -131,6 +131,13 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
   app.get('/api/orca/sessions', async (c) => c.json(await sessionsResponse(deps, state(c.req.query('state')))));
 
   app.get('/api/orca/hosts', async (c) => c.json(await hostList(deps.sessions)));
+
+  // Settings > Hub reads the saved host choices; writes go through POST /api/orca/prefs.
+  app.get('/api/orca/host-prefs', (c) => {
+    const { defaultHost, hosts } = deps.prefs.get();
+    const body: HostPrefs = { defaultHost: defaultHost ?? null, hosts };
+    return c.json(body);
+  });
 
   app.get('/api/orca/notice/:id', async (c) => {
     const res = await deps.notifier.result(c.req.param('id'), NOTICE_WAIT_MS);

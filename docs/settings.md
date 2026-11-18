@@ -6,7 +6,8 @@ Org-specific values live in one JSON file, `app-settings.json`.
 - Browser and headless mode (`pnpm start`, the service) read `~/.config/nod/app-settings.json`, the same file Electron uses on Linux. `XDG_CONFIG_HOME` is honoured.
 - Every key is optional. A missing file means the defaults below.
 - An invalid file logs one line and falls back to the defaults.
-- Changes are written from the app and the server restarts. The page reloads onto the new values.
+- Changes are written from the app and the server restarts. The page reloads onto the new values. Over the tailnet only an admin device may write them.
+
 
 | Key | Default | Meaning |
 | --- | --- | --- |
@@ -34,5 +35,14 @@ Org-specific values live in one JSON file, `app-settings.json`.
 | `reviewer.threadMarker` | `""` | The string a finding thread's first comment starts with, before its `**Blocker**:` or `**Major**:` severity prefix. Empty hides finding cards and actions. |
 | `push.contact` | `"mailto:admin@example.com"` | The Web Push contact used as the VAPID subject. A `mailto:` or `https:` URL push services can reach. |
 | `android.packageId` | `"io.github.reviewinbox"` | The Android app's package id: the APK's application id and the Digital Asset Links target. |
+
+## Hub
+
+Settings > Hub is the second section.
+
+- Hub URL is a desktop setting, kept in `hub.json` in the userData folder, not in `app-settings.json`. It must be an `https://` address with no path, user name or password. Check validates it, asks once to confirm a new hub, saves it and shows `Reachable · paired as <role> · v<version>`, `Reachable · not paired` or `Unreachable`. See [Desktop](desktop.md#hub-url).
+- Pair this desktop shows only while the hub answers and this desktop is not paired.
+- Orca hosts sets the default host and a host per repo seen in the inbox. Each change saves at once through `POST /api/orca/prefs`; the pane reads `GET /api/orca/hosts` and `GET /api/orca/host-prefs`. On the hub they are saved on the hub. A desktop-role device sees them read only. Without a Hub URL the section shows only when this machine's Orca has paired environments.
+- Only an admin device may save settings on the hub. A page from the hub cannot change the Hub URL.
 
 Related: [Orca](orca.md) for the Orca settings, [Issues](issues.md) for the bot and status features, [Phone](phone.md) for the Android package id.

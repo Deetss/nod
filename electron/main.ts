@@ -10,6 +10,7 @@ import {
   Menu,
   Notification,
   screen,
+  session,
   shell,
   type IpcMainInvokeEvent,
   type MenuItemConstructorOptions,
@@ -32,6 +33,19 @@ import { appImageRelaunch, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
 import { cliCommand, runCli, type CliCommand } from '../server/cli';
+import { pairTarget, parseHubUrl, type CheckResult, type HubView, type PairResult } from '../shared/hub';
+import {
+  chooseStart,
+  frameNavigationAllowed,
+  ipcAllowed,
+  isOrigin,
+  permissionAllowed,
+  probeHub,
+  rateGate,
+  readHubSetting,
+} from './hub';
+
+import { openPairWindow } from './pair-window';
 import { startUpdater, type Updater } from './updater';
 import {
   detectTailnet,
@@ -62,6 +76,8 @@ const FIXTURES = process.argv.includes('--fixtures') || appEnv('FIXTURES') === '
 const SERVICE = process.argv.includes('--serve');
 /** `nod update`, `nod pair`, `nod settings`: ask the running server, print the answer and exit. */
 const CLI = cliCommand(process.argv);
+/** `nod --local`: ignore the Hub URL for this run, so Settings > Hub can change or clear it. */
+const LOCAL = process.argv.includes('--local');
 const DEFAULT_SIZE = { width: 1500, height: 900 };
 const DIST_DIR = join(__dirname, '..', 'web');
 
@@ -82,8 +98,14 @@ if (SERVICE) {
 
 let win: BrowserWindow | undefined;
 let origin = '';
-/** True when the window talks to a service that was already running. */
+/** This machine's server, the only origin that may change the hub. Empty while started on the hub. */
+let localOrigin = '';
+/** True when the window talks to a service that was already running, or to the hub. */
 let attached = false;
+/** The saved Hub URL, or '' for none. */
+let hubUrl = '';
+/** True when the window shows the hub. */
+let onHub = false;
 let quitting = false;
 /** Set in the process that owns the server; an attached window leaves updates to the service. */
 let updater: Updater | undefined;
@@ -98,6 +120,8 @@ let settings: NotifySettings = DEFAULT_SETTINGS;
 let phoneAccess = false;
 let phone: PhoneAccess | undefined;
 const live = new Set<Notification>();
+/** A page from the hub gets at most one notification call a second; the rest are dropped. */
+const hubNotifyGate = rateGate(1000);
 
 const userFile = (name: string) => join(app.getPath('userData'), name);
 
@@ -163,6 +187,7 @@ async function startServer(): Promise<string> {
     vapidPublicKey: vapid?.publicKey,
     pushSender,
     buildId: await readBuildId(DIST_DIR),
+    version: app.getVersion(),
   });
   return new Promise((resolve, reject) => {
     const server = serve({ fetch: handler.fetch, port, hostname: '127.0.0.1' }, (info) => {
@@ -261,16 +286,28 @@ function trackBounds(w: BrowserWindow): void {
   w.on('close', save);
 }
 
+/** The window stays on its origin (this machine's server or the hub); only github.com links leave, to the browser. */
 function guardNavigation(w: BrowserWindow): void {
   w.webContents.setWindowOpenHandler(({ url }) => {
     if (isGithubUrl(url)) void shell.openExternal(url);
     return { action: 'deny' };
   });
-  w.webContents.on('will-navigate', (event, url) => {
-    if (new URL(url).origin === origin) return;
+  const lock = (event: Electron.Event, url: string) => {
+    if (isOrigin(url, origin)) return;
     event.preventDefault();
     if (isGithubUrl(url)) void shell.openExternal(url);
+  };
+  w.webContents.on('will-navigate', lock);
+  w.webContents.on('will-redirect', lock);
+  w.webContents.on('will-attach-webview', (event) => event.preventDefault());
+  w.webContents.on('will-frame-navigate', (details) => {
+    if (!details.isMainFrame && !frameNavigationAllowed(details.url, origin)) details.preventDefault();
   });
+  const ses = w.webContents.session;
+  ses.setPermissionRequestHandler((_wc, permission, callback, details) =>
+    callback(permissionAllowed(permission, details.requestingUrl, origin)),
+  );
+  ses.setPermissionCheckHandler((_wc, permission, requestingOrigin) => permissionAllowed(permission, requestingOrigin, origin));
 }
 
 async function createWindow(): Promise<BrowserWindow> {
@@ -313,8 +350,62 @@ async function createWindow(): Promise<BrowserWindow> {
   return w;
 }
 
-function fromApp(event: IpcMainInvokeEvent): boolean {
-  return win !== undefined && event.sender === win.webContents && event.senderFrame?.url.startsWith(origin) === true;
+/** The sender is the window's top frame on an origin `channel` accepts. Hub pages never reach the hub channels. */
+function fromApp(event: IpcMainInvokeEvent, channel: string): boolean {
+  const top = win !== undefined && event.sender === win.webContents && event.senderFrame === win.webContents.mainFrame;
+  return top && ipcAllowed(channel, event.senderFrame?.url, { current: origin, local: localOrigin });
+}
+
+/** A main-process question the page cannot answer for the user. */
+async function confirm(message: string, detail: string, yes: string): Promise<boolean> {
+  const opts = { type: 'question' as const, buttons: [yes, 'Cancel'], defaultId: 1, cancelId: 1, message, detail };
+  const { response } = win ? await dialog.showMessageBox(win, opts) : await dialog.showMessageBox(opts);
+  return response === 0;
+}
+
+/** Fetches with the window's session, so the hub sees this desktop's device cookie. */
+const sessionFetch = (url: string, init: RequestInit) => session.defaultSession.fetch(url, init);
+
+/** Moves the window onto the hub, as a paired desktop. */
+function attachToHub(): void {
+  origin = hubUrl;
+  attached = true;
+  onHub = true;
+  void win?.loadURL(hubUrl);
+}
+
+function registerHubIpc(): void {
+  ipcMain.handle('hub:get', (event): HubView => {
+    if (!fromApp(event, 'hub:get')) throw new Error('Untrusted sender');
+    return { url: hubUrl, attached: onHub };
+  });
+
+  ipcMain.handle('hub:check', async (event, raw: unknown): Promise<CheckResult> => {
+    if (!fromApp(event, 'hub:check')) throw new Error('Untrusted sender');
+    const parsed = parseHubUrl(typeof raw === 'string' ? raw : '');
+    if (!parsed.ok) return parsed;
+    if (parsed.url && parsed.url !== hubUrl) {
+      const detail = 'Nod will open this hub in its window at the next start, once this desktop is paired with it.';
+      if (!(await confirm(`Use ${parsed.url} as this desktop's hub?`, detail, 'Use this hub'))) {
+        return { ok: false, error: 'Not saved.' };
+      }
+    }
+    hubUrl = parsed.url;
+    await writeJson(userFile('hub.json'), { hubUrl });
+    return { ok: true, url: hubUrl, status: hubUrl ? await probeHub(hubUrl, sessionFetch) : undefined };
+  });
+
+  ipcMain.handle('hub:pair', async (event, input: unknown): Promise<PairResult> => {
+    if (!fromApp(event, 'hub:pair') || !win) throw new Error('Untrusted sender');
+    const target = pairTarget(hubUrl, typeof input === 'string' ? input : '');
+    if (!target.ok) return target;
+    if (!(await openPairWindow(win, target.url, hubUrl))) return { ok: false, error: 'Not paired. The pair window closed first.' };
+    // The page moving to `/` is only a hint; the hub itself must name this desktop's role.
+    const status = await probeHub(hubUrl, sessionFetch);
+    if (status.state !== 'paired') return { ok: false, error: 'The hub did not accept this desktop. Try a new code.' };
+    if (await confirm(`Open ${hubUrl} in this window?`, `Paired as ${status.role}.`, 'Open the hub')) setImmediate(attachToHub);
+    return { ok: true };
+  });
 }
 
 function openFromNotification(target: NotifyTarget | undefined): void {
@@ -345,9 +436,10 @@ function showDesktop(items: readonly NotifyItem[]): number {
 
 function registerIpc(): void {
   ipcMain.handle('notify', (event, payload: unknown) => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'notify')) throw new Error('Untrusted sender');
     const items = parseNotifyItems(payload);
     if (!items) throw new Error('Bad notification payload');
+    if (onHub && !hubNotifyGate()) return;
     if (win?.isFocused()) return;
     const { show, skipped } = gateDesktop(items, settings);
     for (const kind of skipped) consoleNotifyLog.info(`[notify] skipped ${kind} for Desktop (off)`);
@@ -355,29 +447,31 @@ function registerIpc(): void {
   });
 
   ipcMain.handle('notify:test', (event): NotifyTargetResult => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'notify:test')) throw new Error('Untrusted sender');
+    if (onHub && !hubNotifyGate()) return { target: 'Desktop', ok: false, detail: 'too many notifications' };
+
     const shown = showDesktop([TEST_NOTIFICATION]) > 0;
     return shown ? { target: 'Desktop', ok: true } : { target: 'Desktop', ok: false, detail: 'notifications unsupported' };
   });
 
   ipcMain.handle('settings:get', (event) => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'settings:get')) throw new Error('Untrusted sender');
     return settings;
   });
 
   ipcMain.handle('shell:build', (event) => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'shell:build')) throw new Error('Untrusted sender');
     return readBuildId(DIST_DIR);
   });
 
   ipcMain.handle('shell:relaunch', (event) => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'shell:relaunch')) throw new Error('Untrusted sender');
     relaunch();
     quit();
   });
 
   ipcMain.handle('settings:set', async (event, payload: unknown) => {
-    if (!fromApp(event)) throw new Error('Untrusted sender');
+    if (!fromApp(event, 'settings:set')) throw new Error('Untrusted sender');
     const next = parseSettings(payload);
     if (!next) throw new Error('Bad settings payload');
     settings = next;
@@ -425,9 +519,22 @@ async function main(): Promise<void> {
   await app.whenReady();
   settings = parseSettings(await readJson(userFile('notify-settings.json'))) ?? DEFAULT_SETTINGS;
   phoneAccess = readPhoneSetting(await readJson(userFile('app-settings.json')));
+  hubUrl = readHubSetting(await readJson(userFile('hub.json')));
   registerIpc();
-  ({ origin, attached } = await attachOrStart(startServer));
-  if (!attached && !SMOKE) updater = startUpdater({ service: false });
+  registerHubIpc();
+  const start = SMOKE || LOCAL ? { mode: 'local' as const } : await chooseStart(hubUrl, (o) => probeHub(o, sessionFetch));
+  if (start.mode === 'hub') {
+    ({ origin } = start);
+    attached = true;
+    onHub = true;
+  } else {
+    if (start.log) console.error(start.log);
+    ({ origin, attached } = await attachOrStart(startServer));
+    localOrigin = origin;
+  }
+  // On the hub nothing on this machine owns an updater, so the window updates its own AppImage on quit.
+  if ((!attached || onHub) && !SMOKE) updater = startUpdater({ service: false });
+
   buildMenu();
   win = await createWindow();
 

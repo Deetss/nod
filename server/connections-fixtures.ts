@@ -10,8 +10,8 @@ const ago = (now: number, ms: number) => new Date(now - ms).toISOString();
 
 function devices(now: number): DeviceLink[] {
   return [
-    { id: 'fx-phone', name: 'Android phone', lastSeen: ago(now, 2 * MIN), push: true, self: true },
-    { id: 'fx-laptop', name: 'Laptop browser', lastSeen: ago(now, 26 * MIN), push: false },
+    { id: 'fx-phone', name: 'Android phone', role: 'phone', lastSeen: ago(now, 2 * MIN), push: true, self: true },
+    { id: 'fx-laptop', name: 'Laptop browser', role: 'desktop', lastSeen: ago(now, 26 * MIN), push: false },
   ];
 }
 
@@ -71,7 +71,8 @@ export function fixtureConnections(state: StateQuery, now: number = Date.now()):
         ...base,
         devices: [
           ...base.devices,
-          ...MANY.map((name, i) => ({ id: `fx-${i}`, name, lastSeen: ago(now, (i + 2) * 40 * MIN), push: i % 2 === 0 })),
+          ...MANY.map((name, i): DeviceLink => ({ id: `fx-${i}`, name, role: 'phone', lastSeen: ago(now, (i + 2) * 40 * MIN), push: i % 2 === 0 })),
+
         ],
       };
     default:

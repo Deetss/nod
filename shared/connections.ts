@@ -1,6 +1,7 @@
 /** `GET /api/connections`: how this Nod reaches GitHub, Tailscale, paired devices and Orca. */
 
 import type { ConnectionState, ScopeName } from './connection';
+import type { DeviceRole } from './pairing';
 import type { RateInfo } from './types';
 
 /** `service` when this server is the shared Nod service, `own` when a window started it for itself. */
@@ -14,6 +15,7 @@ export interface DeviceLink {
   /** Sent to the desktop only, since rename needs it. */
   id?: string;
   name: string;
+  role: DeviceRole;
   /** ISO time. */
   lastSeen: string;
   push: boolean;

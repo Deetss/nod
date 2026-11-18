@@ -19,10 +19,12 @@ export interface FormState {
 /** The first message for each invalid field, keyed by its schema path (`bot.command`, `orgs.0`). */
 export type FieldErrors = Record<string, string>;
 
-export type SectionId = 'github' | 'bot' | 'project' | 'release' | 'orca' | 'phone' | 'updates';
+export type SectionId = 'github' | 'hub' | 'bot' | 'project' | 'release' | 'orca' | 'phone' | 'updates';
 
 export const SECTIONS: readonly { id: SectionId; label: string }[] = [
   { id: 'github', label: 'GitHub' },
+  { id: 'hub', label: 'Hub' },
+
   { id: 'bot', label: 'Bot' },
   { id: 'project', label: 'Project board' },
   { id: 'release', label: 'Release merge' },

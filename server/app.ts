@@ -31,7 +31,7 @@ import { TRIGGER_KEYS, type TriggerKey } from '../shared/notify-rules';
 import { LiveClients, updatePhones } from './phone-updates';
 import { checkOnOpen } from './update-on-open';
 import type { PushSender } from './push';
-import type { DevicesResponse, PairCode } from '../shared/pairing';
+import { DEVICE_ROLES, type DeviceSelf, type DevicesResponse, type PairCode } from '../shared/pairing';
 import { DeviceStore, deviceNameFromUserAgent } from './devices';
 import { PAIR_HTML } from './pair-pages';
 import { PairingCodes } from './pairing';
@@ -48,8 +48,10 @@ import type { SyncLoop } from './sync-loop';
 import { AgentModelCatalog } from './agent-models';
 import type { OrcaModelsResponse } from '../shared/agent-models';
 import {
+  adminOnly,
   DEVICE_COOKIE,
   deviceGuard,
+  frameGuard,
   hostGuard,
   isTailnetRequest,
   loopbackOnly,
@@ -79,6 +81,8 @@ export interface AppOptions {
   assetLinks?: AssetLinks;
   /** The id of the front end being served, reported on `/api/health` and `/api/events`. */
   buildId?: string;
+  /** The app version, reported on `/api/devices/me`. */
+  version?: string;
   /** Where `pnpm android:build` publishes the APK. Defaults to the state dir; tests pass a temp dir. */
   androidDir?: string;
   /** Built front end directory; omit in tests. */
@@ -136,6 +140,7 @@ const prCommentBodyFor = (command: string) =>
       .refine((v) => v.startsWith(command), `The comment must start with ${command}`),
   });
 const pairBody = z.object({ code: z.string().min(1).max(200) });
+const pairCodeBody = z.object({ role: z.enum(DEVICE_ROLES).default('phone') }).strict();
 const renameBody = z.object({ id: z.string().min(1).max(40), name: z.string().min(1).max(60) });
 const revokeBody = z.object({ id: z.string().min(1).max(40) });
 const pushSubscribeBody = z.object({
@@ -297,8 +302,12 @@ export function createApp(opts: AppOptions): Hono {
   const live = new LiveClients();
   const opened = checkOnOpen(opts.updates);
   const app = new Hono();
+  const admin = adminOnly(devices);
 
+  // First, so it also covers the guards' own HTML answers.
+  app.use('*', frameGuard);
   app.use('*', hostGuard(phone));
+
   app.use('*', deviceGuard(devices));
   app.use('/api/*', async (c, next) => {
     c.header('Cache-Control', 'no-store');
@@ -467,35 +476,46 @@ export function createApp(opts: AppOptions): Hono {
     if (!phone || !isTailnetRequest(c)) return c.json({ error: 'Phone pairing is off' }, 403);
     if (!codes.allow()) return c.json({ error: 'Too many tries. Wait a minute' }, 429);
     const parsed = pairBody.safeParse(await c.req.json().catch(() => null));
-    if (!parsed.success || !codes.consume(parsed.data.code)) {
-      return c.json({ error: 'That code is wrong or expired' }, 403);
-    }
-    const key = await devices.add(deviceNameFromUserAgent(c.req.header('user-agent')));
+    const role = parsed.success ? codes.take(parsed.data.code) : undefined;
+    if (!role) return c.json({ error: 'That code is wrong or expired' }, 403);
+    const key = await devices.add(deviceNameFromUserAgent(c.req.header('user-agent'), role), role);
     setDeviceCookie(c, key);
     return c.json({ ok: true });
   });
 
-  app.get('/api/devices', loopbackOnly, (c) => {
+  app.get('/api/devices', admin, (c) => {
     const body: DevicesResponse = { phoneUrl, devices: devices.list() };
+    return c.json(body);
+  });
+
+  // The role this request acts with. A desktop checks its hub with it; the device guard has already refused unknown keys.
+  app.get('/api/devices/me', (c) => {
+    const key = isTailnetRequest(c) ? getCookie(c, DEVICE_COOKIE) : undefined;
+    const role = key ? devices.roleForKey(key) : 'admin';
+    if (!role) return c.json({ error: 'Not paired' }, 401);
+    const body: DeviceSelf = { role, ...(opts.version ? { version: opts.version } : {}) };
     return c.json(body);
   });
 
   const mutating = new Hono();
   mutating.use('*', mutationGuard(token, phone));
 
-  mutating.post('/pair/code', loopbackOnly, (c) => {
+  mutating.post('/pair/code', admin, async (c) => {
     if (!phoneUrl) return c.json({ error: 'Phone access is off' }, 409);
-    const { code, expiresAt } = codes.create();
+    const parsed = pairCodeBody.safeParse(await c.req.json().catch(() => ({})));
+    if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
+    const { code, expiresAt, role } = codes.create(parsed.data.role);
     const body: PairCode = {
       code,
       expiresAt: new Date(expiresAt).toISOString(),
       link: `${phoneUrl}/pair#code=${code}`,
+      role,
     };
     return c.json(body);
   });
 
-  // The one write to the settings file. Loopback only, so a paired phone cannot change the org or the bot.
-  mutating.put('/settings', loopbackOnly, async (c) => {
+  // The one write to the settings file. Loopback or an admin device, so a paired phone cannot change the org or the bot.
+  mutating.put('/settings', admin, async (c) => {
     if (Number(c.req.header('content-length') ?? 0) > SETTINGS_BODY_MAX) {
       return c.json({ error: 'Settings body too large' }, 413);
     }
@@ -516,14 +536,15 @@ export function createApp(opts: AppOptions): Hono {
     return c.json(result);
   });
 
-  mutating.post('/devices/rename', loopbackOnly, async (c) => {
+  mutating.post('/devices/rename', admin, async (c) => {
     const parsed = renameBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     const ok = await devices.rename(parsed.data.id, parsed.data.name);
     return ok ? c.json({ ok }) : c.json({ error: 'No such device' }, 404);
   });
 
-  mutating.post('/devices/revoke', loopbackOnly, async (c) => {
+  mutating.post('/devices/revoke', admin, async (c) => {
+
     const parsed = revokeBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     const ok = await devices.revoke(parsed.data.id);

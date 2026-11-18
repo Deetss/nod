@@ -1,6 +1,6 @@
 # Hub and spokes
 
-A hub is one always-on Linux machine that runs Nod as a service. Your phone pairs to the hub, so it keeps working while your desktop is off or asleep. Desktops are spokes: each one still runs the Nod app, and any of them can also open the hub in a browser.
+A hub is one always-on Linux machine that runs Nod as a service. Your phone pairs to the hub, so it keeps working while your desktop is off or asleep. Desktops are spokes: each one runs the Nod app, and with a Hub URL set it shows the hub instead of starting its own server.
 
 ## Pick a setup
 
@@ -29,7 +29,7 @@ flowchart LR
 
 ### Hub
 
-The hub syncs with GitHub, keeps the inbox state and sends Web Push. The phone and any paired browser reach it over Tailscale Serve, each with its own device key. A desktop app on a spoke keeps its own server, its own seen marks and its own settings.
+The hub syncs with GitHub, keeps the inbox state and sends Web Push. The phone, paired desktops and any paired browser reach it over Tailscale Serve, each with its own device key. A desktop with a Hub URL shows the hub's inbox, seen marks and settings. A desktop without one keeps its own server, seen marks and settings.
 
 ```mermaid
 flowchart LR
@@ -40,14 +40,12 @@ flowchart LR
     Svc[nod serve<br/>systemd user service]
   end
   subgraph Spoke[Desktop]
-    App[Nod app<br/>own server]
-    Browser[Browser tab<br/>paired to the hub]
+    App[Nod app<br/>Hub URL set]
   end
   Phone -- device key --> TS
-  Browser -- device key --> TS
+  App -- device key --> TS
   TS --> Svc
   Svc -- gh sync --> GH
-  App -- gh sync --> GH
 ```
 
 ### Hub with Orca
@@ -93,6 +91,30 @@ Run these on the hub, from a checkout of this repo.
 
 Rerunning the script is safe. The service updates itself from releases after that.
 
+## Device roles
+
+Every paired device has a role, chosen when its pairing code is made.
+
+| Role | Made with | May |
+|---|---|---|
+| `phone` | `nod pair`, Pair phone, `scripts/setup-hub.sh --pair` | Use the inbox |
+| `desktop` | `nod pair --desktop` | Use the inbox; Orca hosts read only |
+| `admin` | `nod pair --admin` | Also list, rename and revoke devices, make pairing codes and save settings |
+
+`nod pair` runs on the hub. It asks the local service for a code with the role its flag names, and prints the link, a QR code and when it expires. A desktop code's first line says to paste the link in Settings > Hub. The session token is never printed. See [Service](phone.md#service).
+
+
+## Use the hub from a desktop
+
+1. On the hub, run `nod pair --admin` (or `--desktop`). Copy the link it prints.
+2. On the desktop, open Settings > Hub, type the hub address (`https://hub.example.ts.net`) and press Check. Nod asks once to confirm the hub. The pill reads `Reachable · not paired`.
+3. Click Pair this desktop, paste the link (or only the code) and press Pair. A small window opens the hub's pair page in the desktop's own browser session, so the device cookie lands where the main window reads it. When the hub reports this desktop's role, Nod asks to open the hub in the window.
+4. From then on the desktop opens the hub at start. It starts no server of its own.
+
+If the hub does not answer at start, or this desktop is not paired, the desktop starts its own server as before and logs one `[hub]` line. To change or clear the Hub URL while the window shows the hub, start Nod once with `nod --local`.
+
+Desktop notifications come from the hub's event stream and follow the same rules as before. See [Notifications](notifications.md).
+
 ## Move a phone to the hub
 
 1. Run `scripts/setup-hub.sh --pair` on the hub.
@@ -105,10 +127,11 @@ A desktop that used to host the phone should stop, so only the hub answers on th
 1. `systemctl --user disable --now nod`
 2. `tailscale serve --https=443 off`, and the same for `8443` if you served it.
 3. Quit the app (`Ctrl+Q`) and open it again. It starts its own server.
-4. To use the hub from this desktop as well, open a pairing link from `scripts/setup-hub.sh --pair` in its browser.
+4. To use the hub from this desktop, follow [Use the hub from a desktop](#use-the-hub-from-a-desktop).
 
 ## Not yet
 
-- The desktop app cannot attach to a hub on another machine. It attaches only to a service on the same machine.
-- Seen marks and settings on a spoke stay separate from the hub's.
+- A desktop that falls back to its own server shows no banner, and its seen marks are not sent to the hub when it comes back.
+- Seen marks and settings on a desktop without a Hub URL stay separate from the hub's.
+
 - The hub cannot run Orca actions on another machine.
