@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1840" height="1720" viewBox="0 0 1840 1720" font-family="Liberation Sans, Helvetica, Arial, sans-serif" font-size="14" fill="#f0f6fc">
+  <defs>
+    <style>
+      .cap { font-size: 12px; }
+      .muted { fill: #9198a1; }
+      .semi { font-weight: 700; }
+      .mono { font-family: Liberation Mono, ui-monospace, monospace; font-size: 13px; }
+      .monos { font-family: Liberation Mono, ui-monospace, monospace; font-size: 12px; }
+      .lbl { font-size: 13px; font-weight: 700; fill: #f0f6fc; }
+      .note { font-size: 12px; fill: #9198a1; }
+    </style>
+  </defs>
+  <rect width="1840" height="1720" fill="#010409"/>
+  <text x="24" y="40" font-size="20" class="semi">Orca hosts and hub, round 2 mockup (dark)</text>
+  <text x="24" y="62" class="note">Approved layouts: picker B (one list, host tag per row), chip A (host prefix), settings A (Hub pane), banner A. Sample hosts: local (the hub), laptop (online), desktop (offline, seen 2h ago).</text>
+
+  <!-- ================= D1: dispatch dialog, merged list ================= -->
+  <text x="24" y="104" class="lbl">D1 Send to, sessions on two hosts</text>
+  <text x="24" y="122" class="note">Host tag only for non-local hosts. Offline host sessions are not listed; one note says so.</text>
+  <g transform="translate(24 136)">
+    <rect x="0.5" y="0.5" width="559" height="620" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="20" y="38" font-size="16" class="semi">Dispatch 2 findings to Orca</text>
+    <text x="540" y="37" class="cap muted" text-anchor="end">acme-co/orders-api #365</text>
+    <text x="20" y="69" class="cap muted">One prompt with every ticked finding. Human threads are left out.</text>
+
+    <text x="20" y="101" class="cap semi">Send to</text>
+    <text x="540" y="101" class="cap muted" text-anchor="end">2 related, 1 possible</text>
+    <rect x="20.5" y="110.5" width="519" height="255" rx="6" fill="none" stroke="#3d444d"/>
+    <rect x="21" y="111" width="518" height="24" fill="#151b23"/>
+    <text x="32" y="127" class="cap semi muted">RELATED</text><text x="528" y="127" class="cap muted" text-anchor="end">2 match</text>
+
+    <rect x="21" y="135" width="518" height="50" rx="6" fill="#111d2e" stroke="#1f6feb" stroke-width="2"/>
+    <circle cx="40" cy="160" r="8" fill="#0d1117" stroke="#4493f8" stroke-width="1.5"/><circle cx="40" cy="160" r="4" fill="#4493f8"/>
+    <text x="60" y="155" class="mono semi">fix-migration-365</text>
+    <text x="60" y="173" class="cap muted">linked PR #365</text>
+    <text x="528" y="155" class="cap muted" text-anchor="end">working</text>
+
+    <circle cx="40" cy="212" r="8" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="60" y="207" class="mono semi">review-365</text>
+    <text x="60" y="225" class="cap muted">linked PR #365</text>
+    <rect x="424" y="196" width="58" height="20" rx="10" fill="#1f232a" stroke="#3d444d"/>
+    <text x="453" y="210" class="cap" text-anchor="middle">laptop</text>
+    <text x="528" y="210" class="cap muted" text-anchor="end">done</text>
+
+    <line x1="28" y1="238.5" x2="532" y2="238.5" stroke="#2f353d"/>
+    <rect x="21" y="239" width="518" height="24" fill="#151b23"/>
+    <text x="32" y="255" class="cap semi muted">POSSIBLE</text>
+    <circle cx="40" cy="288" r="8" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="60" y="283" class="mono semi">crew-310</text>
+    <text x="60" y="301" class="cap muted">branch crew/orders-read-bonus</text>
+    <rect x="378" y="272" width="58" height="20" rx="10" fill="#1f232a" stroke="#3d444d"/>
+    <text x="407" y="286" class="cap" text-anchor="middle">laptop</text>
+    <text x="482" y="286" class="cap muted">working</text>
+    <text x="528" y="301" class="cap semi" fill="#4493f8" text-anchor="end">Send once</text>
+
+    <line x1="28" y1="314.5" x2="532" y2="314.5" stroke="#2f353d"/>
+    <circle cx="40" cy="340" r="8" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="60" y="345" class="mono semi">New worktree</text>
+    <text x="180" y="345" class="cap muted">on</text>
+    <rect x="200.5" y="327.5" width="150" height="26" rx="6" fill="#212830" stroke="#3d444d"/>
+    <text x="212" y="345" class="cap">local (hub)</text>
+    <path d="M334 338 l4 4 l4 -4" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+
+    <text x="20" y="390" class="cap muted">desktop is offline (seen 2h ago), so its sessions are not listed.</text>
+    <text x="20" y="408" class="cap muted">Your choice is remembered for this PR.</text>
+
+    <text x="20" y="440" class="cap semi">Prompt</text>
+    <rect x="20.5" y="450.5" width="519" height="110" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="33" y="472" class="monos">[nod] 2 review findings on acme-co/orders-api#365.</text>
+    <text x="33" y="490" class="monos">(1) blocker, db/migrate/20261113000000_add_amounts.rb:12 ...</text>
+    <text x="540" y="578" class="cap muted" text-anchor="end">553 / 600</text>
+    <rect x="336.5" y="584.5" width="96" height="28" rx="6" fill="#212830" stroke="#3d444d"/>
+    <text x="350" y="603" class="cap">Cancel</text><rect x="396" y="590" width="28" height="18" rx="3" fill="none" stroke="#3d444d"/><text x="400" y="603" class="cap muted">Esc</text>
+    <rect x="440" y="584" width="100" height="29" rx="6" fill="#238636"/>
+    <text x="490" y="603" class="cap semi" text-anchor="middle">Send 2</text>
+  </g>
+
+  <!-- ================= D2: new worktree, host menu open ================= -->
+  <text x="616" y="104" class="lbl">D2 New worktree picked, host menu open</text>
+  <text x="616" y="122" class="note">Menu lists online hosts first, offline greyed with last seen. Picking a host stores it per repo.</text>
+  <g transform="translate(616 136)">
+    <rect x="0.5" y="0.5" width="559" height="330" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="20" y="30" class="cap semi">Send to</text>
+    <rect x="20.5" y="40.5" width="519" height="150" rx="6" fill="none" stroke="#3d444d"/>
+    <circle cx="40" cy="66" r="8" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="60" y="71" class="mono semi" fill="#9198a1">fix-migration-365</text>
+    <text x="528" y="71" class="cap muted" text-anchor="end">working</text>
+    <line x1="28" y1="90.5" x2="532" y2="90.5" stroke="#2f353d"/>
+    <circle cx="40" cy="115" r="8" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="60" y="120" class="mono semi" fill="#9198a1">review-365</text>
+    <rect x="424" y="105" width="58" height="20" rx="10" fill="#1f232a" stroke="#3d444d"/>
+    <text x="453" y="119" class="cap" text-anchor="middle">laptop</text>
+    <text x="528" y="120" class="cap muted" text-anchor="end">done</text>
+    <rect x="21" y="140" width="518" height="50" rx="6" fill="#111d2e" stroke="#1f6feb" stroke-width="2"/>
+    <circle cx="40" cy="165" r="8" fill="#0d1117" stroke="#4493f8" stroke-width="1.5"/><circle cx="40" cy="165" r="4" fill="#4493f8"/>
+    <text x="60" y="170" class="mono semi">New worktree</text>
+    <text x="180" y="170" class="cap muted">on</text>
+    <rect x="200.5" y="152.5" width="150" height="26" rx="6" fill="#212830" stroke="#4493f8" stroke-width="1.5"/>
+    <text x="212" y="170" class="cap">laptop</text>
+    <path d="M334 167 l4 -4 l4 4" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+
+    <!-- Menu -->
+    <rect x="200.5" y="184.5" width="220" height="128" rx="8" fill="#151b23" stroke="#3d444d"/>
+    <text x="214" y="208" class="cap">local (hub)</text>
+    <rect x="205" y="218" width="211" height="30" rx="6" fill="#1f232a"/>
+    <text x="214" y="238" class="cap semi">laptop</text>
+    <path d="M396 233 l3 3 l6 -6" fill="none" stroke="#f0f6fc" stroke-width="1.6"/>
+    <line x1="208" y1="256.5" x2="412" y2="256.5" stroke="#2f353d"/>
+    <circle cx="219" cy="279" r="4.5" fill="none" stroke="#656c76" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <text x="230" y="283" class="cap muted">desktop</text>
+    <text x="410" y="283" class="cap muted" text-anchor="end">offline · 2h ago</text>
+    <text x="214" y="302" class="cap muted" font-size="12">Offline hosts cannot be picked.</text>
+  </g>
+
+  <!-- ================= D3: chosen host goes offline ================= -->
+  <text x="616" y="510" class="lbl">D3 Chosen host went offline</text>
+  <text x="616" y="528" class="note">The repo's host is offline: the row falls back to local and says so. Nothing is queued.</text>
+  <g transform="translate(616 542)">
+    <rect x="0.5" y="0.5" width="559" height="120" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <rect x="21" y="16" width="518" height="50" rx="6" fill="#111d2e" stroke="#1f6feb" stroke-width="2"/>
+    <circle cx="40" cy="41" r="8" fill="#0d1117" stroke="#4493f8" stroke-width="1.5"/><circle cx="40" cy="41" r="4" fill="#4493f8"/>
+    <text x="60" y="46" class="mono semi">New worktree</text>
+    <text x="180" y="46" class="cap muted">on</text>
+    <rect x="200.5" y="28.5" width="150" height="26" rx="6" fill="#212830" stroke="#3d444d"/>
+    <text x="212" y="46" class="cap">local (hub)</text>
+    <path d="M334 39 l4 4 l4 -4" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+    <g transform="translate(20 84)">
+      <path d="M8 1.8 14.6 13.5H1.4L8 1.8Z" fill="none" stroke="#d29922" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8 6v3.6M8 11.2v.4" stroke="#d29922" stroke-width="1.5"/>
+      <text x="24" y="13" class="cap" fill="#d29922">This repo usually runs on desktop, which is offline (seen 2h ago).</text>
+    </g>
+  </g>
+
+  <!-- ================= Chips (chip A) ================= -->
+  <text x="616" y="710" class="lbl">C1 Session chip on a PR row (host prefix)</text>
+  <text x="616" y="728" class="note">Local sessions show no host, exactly as today. Offline: dashed ring, muted, last seen.</text>
+  <g transform="translate(616 742)">
+    <rect x="0" y="0" width="559" height="150" fill="#0d1117" stroke="#3d444d"/>
+    <text x="16" y="28">Support sensor type 14 and fix cancel recursion</text>
+    <rect x="16.5" y="40.5" width="112" height="22" rx="11" fill="#1f232a" stroke="#3d444d"/>
+    <circle cx="30" cy="51.5" r="4" fill="#3fb950"/>
+    <text x="40" y="56" class="cap">working</text>
+    <text x="140" y="56" class="cap muted">local session, unchanged</text>
+
+    <rect x="16.5" y="74.5" width="150" height="22" rx="11" fill="#1f232a" stroke="#3d444d"/>
+    <circle cx="30" cy="85.5" r="4" fill="#3fb950"/>
+    <text x="40" y="90" class="cap"><tspan class="semi">laptop</tspan> · working</text>
+
+    <rect x="16.5" y="108.5" width="190" height="22" rx="11" fill="none" stroke="#3d444d" stroke-dasharray="3 3"/>
+    <circle cx="30" cy="119.5" r="4" fill="none" stroke="#9198a1" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <text x="40" y="124" class="cap muted"><tspan class="semi">desktop</tspan> · offline 2h</text>
+    <text x="220" y="124" class="cap muted">not clickable to send; Open shows the last state</text>
+  </g>
+
+  <!-- ================= Phone P1 ================= -->
+  <text x="1208" y="104" class="lbl">P1 Phone dispatch sheet (412x915)</text>
+  <text x="1208" y="122" class="note">Same list; tag sits right of the name; host select is a full-width row.</text>
+  <g transform="translate(1208 136)">
+    <rect width="412" height="915" fill="#0d1117"/>
+    <rect width="412" height="915" fill="#010409" opacity="0.6"/>
+    <rect x="0.5" y="160.5" width="411" height="760" rx="16" fill="#151b23" stroke="#3d444d"/>
+    <rect x="186" y="170" width="40" height="4" rx="2" fill="#656c76"/>
+    <text x="16" y="206" font-size="16" class="semi">Dispatch 2 findings to Orca</text>
+    <text x="16" y="226" class="cap muted">acme-co/orders-api #365</text>
+    <text x="16" y="262" class="cap semi">Send to</text>
+
+    <rect x="16" y="274" width="380" height="60" rx="8" fill="#111d2e" stroke="#1f6feb" stroke-width="2"/>
+    <circle cx="38" cy="304" r="9" fill="#0d1117" stroke="#4493f8" stroke-width="1.5"/><circle cx="38" cy="304" r="4.5" fill="#4493f8"/>
+    <text x="58" y="300" class="mono semi">fix-migration-365</text>
+    <text x="58" y="319" class="cap muted">linked PR #365 · working</text>
+
+    <rect x="16.5" y="342.5" width="379" height="59" rx="8" fill="#0d1117" stroke="#3d444d"/>
+    <circle cx="38" cy="372" r="9" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="58" y="368" class="mono semi">review-365</text>
+    <rect x="322" y="362" width="58" height="20" rx="10" fill="#1f232a" stroke="#3d444d"/><text x="351" y="376" class="cap" text-anchor="middle">laptop</text>
+    <text x="58" y="387" class="cap muted">linked PR #365 · done</text>
+
+    <rect x="16.5" y="409.5" width="379" height="59" rx="8" fill="#0d1117" stroke="#3d444d"/>
+    <circle cx="38" cy="439" r="9" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="58" y="435" class="mono semi">crew-310</text>
+    <rect x="322" y="429" width="58" height="20" rx="10" fill="#1f232a" stroke="#3d444d"/><text x="351" y="443" class="cap" text-anchor="middle">laptop</text>
+    <text x="58" y="454" class="cap muted">possible · working</text>
+
+    <rect x="16.5" y="476.5" width="379" height="103" rx="8" fill="#0d1117" stroke="#3d444d"/>
+    <circle cx="38" cy="506" r="9" fill="#0d1117" stroke="#656c76" stroke-width="1.5"/>
+    <text x="58" y="511" class="mono semi">New worktree</text>
+    <rect x="58.5" y="527.5" width="321" height="40" rx="8" fill="#212830" stroke="#3d444d"/>
+    <text x="72" y="552" class="cap muted">Run on</text><text x="130" y="552">local (hub)</text>
+    <path d="M358 545 l5 5 l5 -5" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+
+    <text x="16" y="606" class="cap muted">desktop is offline (seen 2h ago).</text>
+    <line x1="0" y1="831" x2="412" y2="831" stroke="#3d444d"/>
+    <rect x="16.5" y="847.5" width="183" height="47" rx="24" fill="#212830" stroke="#3d444d"/><text x="108" y="876" text-anchor="middle">Cancel</text>
+    <rect x="212" y="847" width="184" height="48" rx="24" fill="#238636"/><text x="304" y="876" class="semi" text-anchor="middle">Send 2</text>
+  </g>
+
+  <!-- ================= S1 Settings Hub pane ================= -->
+  <text x="24" y="1100" class="lbl">S1 Settings, Hub pane (880x640)</text>
+  <text x="24" y="1118" class="note">New nav item under GitHub. Per-repo host rows list repos seen in the inbox.</text>
+  <g transform="translate(24 1132)">
+    <rect x="0.5" y="0.5" width="879" height="579" rx="12" fill="#0d1117" stroke="#3d444d"/>
+    <text x="16" y="34" font-size="17" class="semi">Settings</text>
+    <rect x="806" y="12" width="34" height="22" rx="4" fill="#212830" stroke="#3d444d"/><text x="813" y="27" class="cap muted">Esc</text>
+    <line x1="0" y1="56.5" x2="880" y2="56.5" stroke="#3d444d"/>
+    <line x1="200.5" y1="56" x2="200.5" y2="520" stroke="#3d444d"/>
+    <text x="22" y="89">GitHub</text>
+    <rect x="8" y="108" width="184" height="32" rx="6" fill="#1f232a"/><rect x="8" y="108" width="4" height="32" rx="2" fill="#1f6feb"/>
+    <text x="22" y="129" class="semi">Hub</text>
+    <text x="22" y="169">Bot</text><text x="22" y="209">Project board</text><text x="22" y="249">Release merge</text>
+    <text x="22" y="289">Orca agents</text><text x="22" y="329">Phone and push</text><text x="22" y="369">Updates</text>
+
+    <text x="224" y="88" font-size="16" class="semi">Hub</text>
+    <text x="224" y="108" class="cap muted">An always-on Nod this desktop uses instead of its own server. Empty keeps everything here.</text>
+    <text x="224" y="140" class="cap semi">Hub URL</text>
+    <rect x="224.5" y="150.5" width="440" height="32" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="236" y="171" class="monos">https://hub.example.ts.net</text>
+    <rect x="676.5" y="150.5" width="80" height="32" rx="6" fill="#212830" stroke="#3d444d"/><text x="716" y="171" class="cap" text-anchor="middle">Check</text>
+    <rect x="224" y="194" width="270" height="22" rx="11" fill="#12261e" stroke="#238636"/>
+    <circle cx="238" cy="205" r="5" fill="#3fb950"/>
+    <text x="250" y="210" class="cap semi" fill="#3fb950">Reachable · paired as admin · v0.2.32</text>
+    <rect x="224.5" y="228.5" width="146" height="28" rx="6" fill="#212830" stroke="#3d444d"/><text x="297" y="247" class="cap" text-anchor="middle">Pair this desktop</text>
+    <text x="382" y="247" class="cap muted">Shown until this desktop is paired.</text>
+
+    <line x1="224" y1="276.5" x2="856" y2="276.5" stroke="#2f353d"/>
+    <text x="224" y="306" class="cap semi">Orca hosts</text>
+    <text x="224" y="324" class="cap muted">Where a new worktree runs when you do not pick one.</text>
+    <text x="224" y="358">Default host</text>
+    <rect x="380.5" y="340.5" width="200" height="28" rx="6" fill="#212830" stroke="#3d444d"/><text x="392" y="359" class="cap">local (hub)</text>
+    <path d="M562 352 l4 4 l4 -4" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+    <rect x="224.5" y="384.5" width="631" height="120" rx="6" fill="none" stroke="#3d444d"/>
+    <rect x="225" y="385" width="630" height="24" fill="#151b23"/>
+    <text x="236" y="401" class="cap semi muted">REPO</text><text x="560" y="401" class="cap semi muted">HOST</text>
+    <text x="236" y="432" class="monos">acme-co/orders-api</text>
+    <rect x="560.5" y="417.5" width="160" height="24" rx="6" fill="#212830" stroke="#3d444d"/><text x="572" y="434" class="cap">laptop</text>
+    <text x="236" y="462" class="monos">acme-co/web-app</text>
+    <rect x="560.5" y="447.5" width="160" height="24" rx="6" fill="#212830" stroke="#3d444d"/><text x="572" y="464" class="cap muted">Default</text>
+    <text x="236" y="492" class="monos">acme-co/infra</text>
+    <rect x="560.5" y="477.5" width="160" height="24" rx="6" fill="#212830" stroke="#3d444d" stroke-dasharray="3 3"/><text x="572" y="494" class="cap muted">desktop · offline</text>
+
+    <line x1="0" y1="520.5" x2="880" y2="520.5" stroke="#3d444d"/>
+    <text x="16" y="555" class="cap muted">Saved on the hub. Admin desktops only.</text>
+    <rect x="690.5" y="534.5" width="86" height="32" rx="6" fill="#212830" stroke="#3d444d"/><text x="733" y="555" class="cap" text-anchor="middle">Cancel</text>
+    <rect x="786" y="534" width="78" height="33" rx="6" fill="#238636"/><text x="825" y="555" class="cap semi" text-anchor="middle">Save</text>
+  </g>
+
+  <!-- ================= B1 banner ================= -->
+  <text x="936" y="1100" class="lbl">B1 Hub unreachable (top of the 1660 window, shown at 880)</text>
+  <text x="936" y="1118" class="note">Attention banner under the top bar, full width, until the hub answers. Chip agrees.</text>
+  <g transform="translate(936 1132)">
+    <rect width="880" height="200" fill="#0d1117" stroke="#3d444d"/>
+    <rect width="880" height="48" fill="#010409"/>
+    <line x1="0" y1="48.5" x2="880" y2="48.5" stroke="#3d444d"/>
+    <rect x="16" y="16" width="18" height="16" rx="3" fill="#238636"/><text x="42" y="30" font-size="16" class="semi">Nod</text>
+    <text x="100" y="30" class="cap muted">PRs   Issues   Activity</text>
+    <rect x="600" y="10" width="196" height="28" rx="14" fill="#272215" stroke="#9e6a03" stroke-width="1.5"/>
+    <path d="M612 31 l7 -12 l7 12 z" fill="#d29922"/>
+    <text x="634" y="29" class="cap semi" fill="#d29922">Local mode · hub down</text>
+    <rect x="0" y="49" width="880" height="48" fill="#272215"/>
+    <line x1="0" y1="96.5" x2="880" y2="96.5" stroke="#9e6a03"/>
+    <path d="M16 81 l8 -14 l8 14 z" fill="none" stroke="#d29922" stroke-width="1.5" stroke-linejoin="round"/>
+    <text x="40" y="78" class="cap semi" fill="#d29922">Hub unreachable, local mode.</text>
+    <text x="268" y="78" class="cap" fill="#f0f6fc">Seen marks are kept here and sent when the hub is back.</text>
+    <rect x="796.5" y="59.5" width="68" height="28" rx="6" fill="#212830" stroke="#3d444d"/><text x="830" y="78" class="cap" text-anchor="middle">Retry</text>
+    <text x="16" y="130" class="cap muted">Reconnect toast (bottom right, 4 s):</text>
+    <rect x="16.5" y="142.5" width="330" height="36" rx="6" fill="#151b23" stroke="#3d444d"/>
+    <path d="M30 160 l3 3 l6 -6" fill="none" stroke="#3fb950" stroke-width="1.8"/>
+    <text x="48" y="165" class="cap">Back on the hub. 12 seen marks sent.</text>
+  </g>
+</svg>
