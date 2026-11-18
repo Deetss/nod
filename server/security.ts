@@ -156,7 +156,20 @@ export function hostGuard(phone?: PhoneAccess): MiddlewareHandler {
   };
 }
 
+/**
+ * Clickjacking guard: HTML pages may be framed only by their own origin. `'self'` rather than
+ * `'none'`, because the design capture harness frames the app from the same server.
+ */
+export const frameGuard: MiddlewareHandler = async (c, next) => {
+  await next();
+  if (c.res.headers.get('content-type')?.includes('text/html')) {
+    c.res.headers.set('Content-Security-Policy', "frame-ancestors 'self'");
+    c.res.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  }
+};
+
 export function tokensMatch(a: string, b: string): boolean {
+
   const ab = Buffer.from(a);
   const bb = Buffer.from(b);
   return ab.length === bb.length && timingSafeEqual(ab, bb);

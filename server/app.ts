@@ -51,6 +51,7 @@ import {
   adminOnly,
   DEVICE_COOKIE,
   deviceGuard,
+  frameGuard,
   hostGuard,
   isTailnetRequest,
   loopbackOnly,
@@ -303,7 +304,10 @@ export function createApp(opts: AppOptions): Hono {
   const app = new Hono();
   const admin = adminOnly(devices);
 
+  // First, so it also covers the guards' own HTML answers.
+  app.use('*', frameGuard);
   app.use('*', hostGuard(phone));
+
   app.use('*', deviceGuard(devices));
   app.use('/api/*', async (c, next) => {
     c.header('Cache-Control', 'no-store');
