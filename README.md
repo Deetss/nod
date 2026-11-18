@@ -51,6 +51,8 @@ AppImages need FUSE 2 (`fuse2` on Arch, `libfuse2` on Debian and Ubuntu).
 
 See [docs/phone.md](docs/phone.md) for pairing, updates and the service.
 
+To keep the phone working while your desktop is off, run Nod on an always-on machine. See [docs/hub.md](docs/hub.md).
+
 ## Build from source
 
 You need Node, pnpm, the GitHub CLI and a GitHub login (`gh auth login`).
