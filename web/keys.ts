@@ -45,6 +45,7 @@ export const HELP_KEYS: KeyDef[] = [
   { keys: ',', label: 'settings' },
   { keys: 'W', label: 'closed window' },
   { keys: 'g o / g p / g i / g a', label: 'org / PRs / Issues / Activity' },
+  { keys: 'g c', label: 'connections' },
   { keys: 'f', label: 'filter' },
   { keys: '/', label: 'search' },
   { keys: '?', label: 'this help' },
@@ -67,6 +68,7 @@ export const FOOTER_WIDE: KeyDef[] = [
   { keys: 'y', label: 'ready' },
   { keys: 'O', label: 'open on GitHub' },
   { keys: 'W', label: 'closed window' },
+  { keys: 'g c', label: 'connections' },
   { keys: '/', label: 'search' },
   { keys: '?', label: 'help' },
 ];
@@ -163,6 +165,7 @@ const ISSUE_HELP_KEYS: KeyDef[] = [
   { keys: ',', label: 'settings' },
   { keys: 'W', label: 'closed window' },
   { keys: 'g p', label: 'PRs' },
+  { keys: 'g c', label: 'connections' },
   { keys: 'f', label: 'filter' },
   { keys: '/', label: 'search' },
   { keys: '?', label: 'this help' },
@@ -186,6 +189,7 @@ export const FOOTER_ISSUES_WIDE: KeyDef[] = [
   { keys: 'N', label: 'sub-issue' },
   { keys: 'W', label: 'closed window' },
   { keys: 'g p', label: 'PRs' },
+  { keys: 'g c', label: 'connections' },
   { keys: '/', label: 'search' },
   { keys: '?', label: 'help' },
 ];
@@ -221,6 +225,7 @@ export const ACTIVITY_HELP_KEYS: KeyDef[] = [
   { keys: 'g p', label: 'PRs' },
   { keys: 'g i', label: 'Issues' },
   { keys: 'g a', label: 'Activity' },
+  { keys: 'g c', label: 'connections' },
   { keys: ',', label: 'settings' },
   { keys: '?', label: 'this help' },
   { keys: 'Esc', label: 'clear selection' },
@@ -233,5 +238,6 @@ export const FOOTER_ACTIVITY: KeyDef[] = [
   { keys: 'R', label: 'refresh' },
   { keys: 'g p', label: 'PRs' },
   { keys: 'g i', label: 'Issues' },
+  { keys: 'g c', label: 'connections' },
   { keys: '?', label: 'help' },
 ];

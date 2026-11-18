@@ -103,6 +103,7 @@ function mount(o: { tab?: PhoneTab; prs?: Section[]; issues?: IssueSection[] } =
       createElement(PhoneApp, {
         tab: o.tab ?? 'prs',
         onTab: vi.fn(),
+        connections: { data: undefined, busy: false, check: vi.fn(), reload: vi.fn() },
         inbox,
         issues,
         activity,

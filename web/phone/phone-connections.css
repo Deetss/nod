@@ -1,0 +1,150 @@
+/* Connections sheet on the phone: the rail. Spec: docs/design/connections-spec.md. */
+
+.ph-menu button.ph-menu-conns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ph-asheet.ph-cx-sheet {
+  height: calc(100% - 235px);
+  min-height: 420px;
+  max-height: calc(100% - 116px);
+  padding-bottom: 0;
+  background: var(--bgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+  border-radius: 16px 16px 0 0;
+}
+
+.ph-cx-sheet .ph-handle {
+  margin-top: 10px;
+}
+
+.ph-cx-title {
+  margin: 15px 0 0;
+  font: 600 16px/24px var(--fontStack-system);
+}
+
+.ph-cx-sub {
+  margin: 2px 0 0;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.ph-cx-rail {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ph-cx-row {
+  position: relative;
+  min-height: 68px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 8px 32px;
+}
+
+.ph-cx-row .ph-cx-detail {
+  margin-top: 2px;
+}
+
+.ph-cx-row > .cx-mark {
+  position: absolute;
+  top: 21px;
+  left: 5px;
+}
+
+.ph-cx-row > .cx-mark.is-hub {
+  top: 20px;
+  left: 4px;
+}
+
+/* The link to the next row's mark, in the link's state. */
+.ph-cx-link {
+  position: absolute;
+  top: 36px;
+  left: 11px;
+  height: 52px;
+  border-left: 2px solid var(--fgColor-success);
+}
+
+.ph-cx-row:last-child .ph-cx-link {
+  display: none;
+}
+
+.ph-cx-link.is-off {
+  border-left-style: dashed;
+  border-left-color: var(--borderColor-default);
+}
+
+.ph-cx-link.is-broken {
+  border-left-style: dashed;
+  border-left-color: var(--fgColor-danger);
+}
+
+.ph-cx-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.ph-cx-name {
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.ph-cx-detail {
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  overflow-wrap: anywhere;
+}
+
+.ph-cx-detail.is-mono {
+  font-family: var(--fontStack-monospace);
+}
+
+.ph-cx-row.is-broken .ph-cx-detail {
+  color: var(--fgColor-danger);
+}
+
+/* Two classes, so the phone shell's button type does not win. */
+.ph-cx-row .ph-cx-action {
+  flex: none;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-accent);
+  font: 400 12px/18px var(--fontStack-system);
+  text-decoration: none;
+}
+
+.ph-cx-others {
+  margin: 10px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--borderColor-muted);
+  font: 600 12px/16px var(--fontStack-system);
+  text-transform: uppercase;
+  color: var(--fgColor-muted);
+}
+
+.ph-cx-checked {
+  flex: none;
+  margin: 8px 0 7px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+  text-align: center;
+}
+
+.ph-cx-sheet .ph-actionbar.ph-cx-bar {
+  gap: 12px;
+  margin: 0 -16px;
+  padding: 16px 16px var(--ph-bottom);
+  background: none;
+}

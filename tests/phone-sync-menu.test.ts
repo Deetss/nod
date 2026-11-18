@@ -42,6 +42,8 @@ function mount(o: Opts = {}) {
     onDensity: vi.fn(),
     onToggleTheme: vi.fn(),
     onCheckUpdates: vi.fn(),
+    connections: 'ok' as const,
+    onConnections: vi.fn(),
   });
   act(() => root?.render(createElement(AppBar, props(o.sync ?? HEALTHY))));
   return (sync: SyncStatus) => act(() => root?.render(createElement(AppBar, props(sync))));
@@ -53,17 +55,18 @@ const syncNow = () => host?.querySelector<HTMLButtonElement>('.ph-menu-sync');
 const items = () => [...(host?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [])];
 
 describe('phone ··· menu status block', () => {
-  it('opens with the block first and no Refresh row', () => {
+  it('opens with Connections, then the block, and no Refresh row', () => {
     mount();
     const menu = host?.querySelector('.ph-menu');
-    expect(menu?.firstElementChild?.className).toBe('ph-menu-status');
+    expect(menu?.firstElementChild?.className).toBe('ph-menu-conns');
+    expect(menu?.children[1]?.className).toBe('ph-menu-status');
     expect(block()?.getAttribute('role')).toBe('group');
     const title = block()?.querySelector('.ph-menu-status-title');
     expect(block()?.getAttribute('aria-labelledby')).toBe(title?.id);
     expect(title?.textContent).toBe('Synced 2m ago');
     expect(block()?.querySelector('.ph-menu-status-api')?.textContent).toBe('API 4,812 of 5,000 left');
     expect(block()?.querySelector('.ph-menu-status-reset')?.textContent).toBe('Resets 14:40 · last sync cost 12');
-    expect(items()[0]).toBe(syncNow());
+    expect(items()[1]).toBe(syncNow());
     expect(items().map((b) => b.textContent)).not.toContain('Refresh');
   });
 

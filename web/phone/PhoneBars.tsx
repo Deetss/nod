@@ -6,6 +6,8 @@ import { orgUrl } from '../org-settings';
 import { badgeText, syncTone, tabName, type PhoneTab, type SyncStatus, type TabBadge } from './phone-logic';
 import { PhoneNotifySheet } from './PhoneNotifySheet';
 import { usePush } from './usePush';
+import { ChipMark } from '../connections/ConnMark';
+import type { ChipTone } from '../connections/model';
 
 interface AppBarProps {
   title: string;
@@ -24,6 +26,9 @@ interface AppBarProps {
   onDensity: (d: Density) => void;
   onToggleTheme: () => void;
   onCheckUpdates: () => void;
+  /** The Connections row's mark. A danger state also lights the dot on ···. */
+  connections: ChipTone;
+  onConnections: () => void;
 }
 
 export function AppBar(p: AppBarProps) {
@@ -33,8 +38,8 @@ export function AppBar(p: AppBarProps) {
   const [notifySheet, setNotifySheet] = useState(false);
   const [running, setRunning] = useState(false);
   const [announce, setAnnounce] = useState(false);
-  const tone = syncTone(p.sync.problem);
-  const run = (fn: () => void) => () => {
+  const tone = p.connections === 'danger' ? 'danger' : syncTone(p.sync.problem);
+  const run =(fn: () => void) => () => {
     setMenu(false);
     fn();
   };
@@ -61,7 +66,7 @@ export function AppBar(p: AppBarProps) {
         <button
           type="button"
           className="ph-iconbtn ph-more"
-          aria-label={tone ? 'More, sync problem' : 'More'}
+          aria-label={p.connections === 'danger' ? 'More, connection problem' : tone ? 'More, sync problem' : 'More'}
           aria-expanded={menu}
           onClick={() => setMenu(!menu)}
         >
@@ -75,6 +80,10 @@ export function AppBar(p: AppBarProps) {
           <>
             <div className="ph-menu-scrim" onClick={() => setMenu(false)} />
             <div className="ph-menu" role="menu">
+              <button type="button" role="menuitem" className="ph-menu-conns" onClick={p.onConnections}>
+                <ChipMark tone={p.connections} />
+                Connections
+              </button>
               <SyncBlock sync={p.sync} busy={running || p.syncing} onSync={syncNow} />
               <button
                 type="button"

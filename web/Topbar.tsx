@@ -1,5 +1,6 @@
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState, type ComponentProps } from 'react';
 import { GearIcon } from '@primer/octicons-react';
+import { ConnectionsMenu } from './connections/ConnectionsMenu';
 import type { RateInfo } from '../shared/types';
 import type { NotifySettings } from '../shared/notify-rules';
 import { formatReset } from './inbox-utils';
@@ -301,6 +302,7 @@ interface TopbarProps {
   onSettings: () => void;
   /** The gear's `!` while the GitHub token needs attention. */
   settingsMark?: 'danger' | 'attention';
+  connections: ComponentProps<typeof ConnectionsMenu>;
 }
 
 export function Topbar(p: TopbarProps) {
@@ -358,6 +360,7 @@ export function Topbar(p: TopbarProps) {
           {p.theme === 'dark' ? 'Light' : 'Dark'}
         </button>
         {p.rate ? <ApiBudget rate={p.rate} now={now} /> : null}
+        <ConnectionsMenu {...p.connections} />
         {syncing ? (
           <span className="muted sync-text">Syncing...</span>
         ) : p.syncedAt ? (
