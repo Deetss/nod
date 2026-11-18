@@ -174,11 +174,12 @@ cp "$src" "$appimage"
 chmod +x "$appimage"
 
 # `nod serve` runs the headless service; `nod update` asks it to update now; anything else opens the app.
+# The ozone flag must be on the real command line: Chromium picks its platform before main.ts runs.
 cat > "$bin" <<EOF
 #!/usr/bin/env bash
 if [[ "\${1:-}" == serve ]]; then
   shift
-  set -- --serve "\$@"
+  set -- --serve --ozone-platform=headless "\$@"
 fi
 exec "$appimage" "\$@"
 EOF

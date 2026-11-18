@@ -89,6 +89,7 @@ describe('install-desktop.sh', () => {
     expect(res.status, res.stderr).toBe(0);
     expect(readFileSync(at('.local/opt/nod/nod.AppImage'), 'utf8')).toBe('new appimage');
     expect(readFileSync(at('.local/bin/nod'), 'utf8')).toContain(`exec "${home}/.local/opt/nod/nod.AppImage"`);
+    expect(readFileSync(at('.local/bin/nod'), 'utf8')).toContain('set -- --serve --ozone-platform=headless "$@"');
     const entry = readFileSync(at('.local/share/applications/nod.desktop'), 'utf8');
     expect(entry).toContain('Name=Nod');
     expect(entry).toContain('StartupWMClass=nod');
