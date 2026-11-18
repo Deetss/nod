@@ -213,9 +213,13 @@ export function HubPaneBody({ hub, repos }: HubPaneBodyProps) {
             </Btn>
           </div>
           {hub.error ? <FieldError id="hub-url-error" message={hub.error} /> : null}
-          <HubPill hub={hub} />
+          {hub.phase.kind === 'checking' || hub.phase.kind === 'status' ? (
+            <div className="hub-status-row">
+              <HubPill hub={hub} />
+              {!editable && paired ? <span className="settings-caption">To change the hub, start Nod with nod --local.</span> : null}
+            </div>
+          ) : null}
           {showPair ? <PairRow hub={hub} /> : null}
-          {!editable && paired ? <p className="settings-caption hub-local-hint">To change the hub, start Nod with nod --local.</p> : null}
         </>
       ) : (
         <p className="settings-caption">The Hub URL is a desktop app setting.</p>

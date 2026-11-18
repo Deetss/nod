@@ -1,7 +1,7 @@
 /* Settings > Hub (docs/design/hosts-spec.md S1) */
 
 .settings-pane-body .hub-label {
-  margin: 16px 0 6px;
+  margin: 14px 0 6px;
   font: 600 12px/18px var(--fontStack-system);
 }
 
@@ -28,8 +28,11 @@
   font-size: 12px;
 }
 
-.hub-pill {
+.hub-status-row {
   margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .hub-dot {
@@ -65,10 +68,6 @@
   font: 400 12px/18px var(--fontStack-monospace);
 }
 
-.settings-pane-body .hub-local-hint {
-  margin-top: 8px;
-}
-
 .hub-hosts {
   margin-top: 20px;
   padding-top: 20px;
@@ -88,7 +87,7 @@
 }
 
 .hub-default-row {
-  margin-top: 16px;
+  margin-top: 14px;
   display: grid;
   grid-template-columns: 156px 200px;
   align-items: center;
