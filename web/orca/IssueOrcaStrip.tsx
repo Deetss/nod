@@ -67,6 +67,7 @@ export function IssueOrcaStrip({ view, number, wide, now = Date.now(), onOpen, o
       <span className={`iorca-glyph orca-state-${s.state}`}><StateGlyph state={s.state} size={12} /></span>
       <span className="iorca-mid">
         <span className="iorca-name mono" title={`${s.name}\n${s.branch}`}>{s.name}</span>
+        {s.host && s.host !== 'local' ? <span className="orca-on-host">{`on ${s.host}`}</span> : null}
         <span className={`iorca-word orca-state-${s.state}`}>{STATE_WORD[s.state]}</span>
         {detail ? <span className="iorca-detail">{`· ${detail}`}</span> : null}
       </span>

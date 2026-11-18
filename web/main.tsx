@@ -29,6 +29,7 @@ import './fix-checks.css';
 import './status-box.css';
 import './pr-detail.css';
 import './orca.css';
+import './orca/hosts.css';
 import './timeline.css';
 import './findings.css';
 import './dispatch-all.css';

@@ -1,0 +1,398 @@
+/* Orca hosts: docs/design/hosts-spec.md (D1 to D3, C1, P1). */
+
+.orca-host-tag {
+  flex: none;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-default);
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 999px;
+}
+
+/* 12px between the tag and the state word. */
+.picker-row-line1 .orca-host-tag + .orca-word,
+.dispatch-all-session .orca-host-tag + .dispatch-all-state {
+  margin-left: 2px;
+}
+
+.dispatch-all-session .orca-host-tag {
+  margin-left: auto;
+}
+
+.orca-offline-note {
+  display: flex;
+  flex-direction: column;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.orca-host-fallback {
+  margin: 4px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-attention);
+}
+
+.orca-host-fallback svg {
+  flex: none;
+}
+
+/* New worktree row, last in the Send to list. */
+.orca-new-row {
+  gap: 8px;
+  cursor: pointer;
+}
+
+.dispatch-all-pick .orca-new-row {
+  height: 52px;
+  padding: 0 12px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  box-shadow: 0 -1px 0 var(--borderColor-muted);
+}
+
+.orca-new-name {
+  flex: none;
+  font: 600 13px/22px var(--fontStack-monospace);
+  color: var(--fgColor-default);
+}
+
+.orca-new-on {
+  margin-left: 12px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+.orca-new-box {
+  margin: 4px 0 8px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+}
+
+.orca-new-box .orca-new-row {
+  height: 44px;
+  padding: 0 12px;
+  cursor: default;
+}
+
+.orca-new-box .orca-new-row.is-focus {
+  background: none;
+}
+
+/* Host select and its menu. */
+.orca-host-select {
+  position: relative;
+  flex: none;
+}
+
+.orca-host-button {
+  box-sizing: border-box;
+  width: 150px;
+  height: 26px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-default);
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.orca-host-button:disabled {
+  border-style: dashed;
+  color: var(--fgColor-muted);
+  cursor: default;
+}
+
+.orca-host-button svg {
+  flex: none;
+  color: var(--fgColor-muted);
+}
+
+.orca-host-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-host-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 4px);
+  left: 0;
+  box-sizing: border-box;
+  width: 220px;
+  padding: 4px 0;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 8px;
+  box-shadow: var(--shadow-floating-small, 0 8px 24px rgb(1 4 9 / 0.4));
+}
+
+.orca-host-menu:focus {
+  outline: none;
+}
+
+.orca-host-row {
+  height: 30px;
+  margin: 0 4px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-default);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.orca-host-row.is-on {
+  font-weight: 600;
+  background: var(--bgColor-neutral-muted);
+}
+
+.orca-host-row.is-focus:not(.is-on) {
+  background: var(--bgColor-neutral-muted);
+}
+
+.orca-host-row.is-focus {
+  box-shadow: inset 2px 0 0 var(--fgColor-accent);
+}
+
+.orca-host-row-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-host-row.is-offline {
+  color: var(--fgColor-muted);
+  cursor: default;
+}
+
+.orca-host-row-right {
+  flex: none;
+}
+
+.orca-host-divider {
+  margin: 4px 0;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.orca-host-foot {
+  margin: 0;
+  padding: 2px 12px 4px;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* C1: host chip and detail card. */
+.orca-chip-host {
+  max-width: 180px;
+}
+
+.orca-chip-host-name {
+  flex: none;
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-default);
+}
+
+.orca-chip-host .orca-chip-word {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: -4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+.orca-chip.is-offline {
+  color: var(--fgColor-muted);
+  background: none;
+  border: 1px dashed var(--borderColor-default);
+}
+
+.orca-chip.is-offline .orca-chip-host-name {
+  color: var(--fgColor-muted);
+}
+
+.orca-on-host {
+  flex: none;
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* P1: phone Send to list. */
+.ph-host-tag {
+  flex: none;
+  margin-left: auto;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--fgColor-default);
+  background: var(--bgColor-neutral-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 999px;
+}
+
+.ph-ses-line .ph-host-tag + .ph-ses-state {
+  margin-left: -4px;
+}
+
+.ph-send-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ph-send-row {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 60px;
+  padding: 0 16px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: inherit;
+  text-align: left;
+  color: var(--fgColor-default);
+  background: none;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 8px;
+}
+
+.ph-send-row.is-on {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-emphasis);
+  box-shadow: inset 0 0 0 1px var(--borderColor-accent-emphasis);
+}
+
+.ph-send-row.is-on .ph-pk-radio {
+  border: 2px solid var(--bgColor-accent-emphasis);
+  background: radial-gradient(circle, var(--bgColor-accent-emphasis) 4px, transparent 5px);
+}
+
+.ph-send-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ph-send-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ph-send-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ph-send-sub {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-send-new {
+  min-height: 103px;
+  padding: 0 14px 14px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.ph-send-new-head {
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  text-align: left;
+}
+
+.ph-host-field {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: inherit;
+  color: var(--fgColor-default);
+  background: var(--button-default-bgColor-rest);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 8px;
+}
+
+.ph-host-field-cap {
+  font-size: 12px;
+  color: var(--fgColor-muted);
+}
+
+.ph-host-field-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  text-align: left;
+}
+
+.ph-host-field svg {
+  flex: none;
+  color: var(--fgColor-muted);
+}
+
+.ph-offline-note {
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--fgColor-muted);
+}
+
+.ph-host-off {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ph-host-off-right {
+  margin-left: auto;
+  font-size: 12px;
+}

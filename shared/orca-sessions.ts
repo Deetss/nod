@@ -71,11 +71,14 @@ export interface PrSessions {
   chosen?: string;
 }
 
+/** The prefs the web reads. The host fields are absent from servers older than hosts. */
+export type OrcaPrefsView = Pick<OrcaPrefs, 'enabled' | 'repos'> & Partial<Pick<OrcaPrefs, 'defaultHost' | 'hosts'>>;
+
 /** `GET /api/orca/sessions`. `available` is false when Orca or its CLI is missing or unreachable. */
 export interface OrcaSessionsResponse {
   available: boolean;
   at: number;
-  prefs: Pick<OrcaPrefs, 'enabled' | 'repos'>;
+  prefs: OrcaPrefsView;
   byPr: Record<string, PrSessions>;
   /** Live sessions whose worktree Orca links to the issue, by issue id. */
   byIssue: Record<string, SessionView[]>;
