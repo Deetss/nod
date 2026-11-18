@@ -7,7 +7,7 @@ import { useFocusTrap } from '../useFocusTrap';
 import { ChipMark } from './ConnMark';
 import { ConnRowView } from './ConnRowView';
 import { ConnectionsStrip } from './ConnectionsStrip';
-import { CHECKING_ROWS, chipFor, desktopRows, HUB_DOCS_URL, stripFor, subtitle, type ConnRow } from './model';
+import { CHECKING_ROWS, chipFor, desktopRows, HUB_DOCS_URL, LOCAL_MODE_CHIP, stripFor, subtitle, type ConnRow } from './model';
 import { useConnectionsKey } from './useConnectionsKey';
 import type { ConnectionsView } from './useConnections';
 import { api } from '../api';
@@ -135,14 +135,16 @@ interface ConnectionsMenuProps {
   onGithub: () => void;
   /** `g c` works while no dialog owns the keyboard. */
   keys: boolean;
+  /** The hub is down and this window fell back to this machine. */
+  localMode?: boolean;
 }
 
 /** The top bar chip, worst state wins, and its anchored popover. */
-export function ConnectionsMenu({ view, onPair, onGithub, keys }: ConnectionsMenuProps) {
+export function ConnectionsMenu({ view, onPair, onGithub, keys, localMode = false }: ConnectionsMenuProps) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const [clock] = useClockFormat();
-  const chip = chipFor(view.data, { now: Date.now(), clock });
+  const chip = localMode ? LOCAL_MODE_CHIP : chipFor(view.data, { now: Date.now(), clock });
   const toggle = useCallback(() => setOpen((o) => !o), []);
   const close = useCallback(() => setOpen(false), []);
   useConnectionsKey(keys, toggle);
