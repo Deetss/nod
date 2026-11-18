@@ -4,8 +4,8 @@ import type { Orca } from './orca';
 
 /** The host list is reused this long, the same as the session cache. */
 export const HOSTS_TTL_MS = 20_000;
-/** A remote host is online when `worktree ps` answers within this. */
-export const HOST_PROBE_MS = 3_000;
+/** A remote host is online when `worktree ps` answers within this. CLI startup alone takes about 3 s. */
+export const HOST_PROBE_MS = 6_000;
 const LIST_TIMEOUT_MS = 5_000;
 
 type Obj = Record<string, unknown>;

@@ -86,6 +86,8 @@ export interface Harness {
   /** Milliseconds each `worktree ps` takes. */
   delay: { ms: number };
   clock: { now: number };
+  /** Paired Orca hosts by name, as `environment list` reports them. A host that is down never answers. */
+  remotes: Record<string, { sessions: FakeSession[]; down?: boolean }>;
 }
 
 const OK_SEND = JSON.stringify({ result: { requestId: 'req-1', stages: ['input_accepted', 'turn_started'] } });
@@ -99,9 +101,16 @@ export function harness(initial: FakeSession[] = []): Harness {
   const down = { value: false };
   const delay = { ms: 0 };
   const clock = { now: 1_000_000 };
+  const remotes: Harness['remotes'] = {};
   const repos = ['acme-web', 'acme-api', 'notes'];
-  const exec: OrcaExec = async (bin, args) => {
-    calls.push([bin, ...args]);
+  const exec: OrcaExec = async (bin, argv) => {
+    calls.push([bin, ...argv]);
+    const env = argv.indexOf('--environment');
+    const args = env >= 0 ? argv.slice(0, env) : argv;
+    if (args[0] === 'environment' && args[1] === 'list') {
+      return JSON.stringify({ result: { environments: Object.keys(remotes).map((name, i) => ({ id: `env-${i}`, name })) } });
+    }
+    if (env >= 0) return remote(remotes[argv[env + 1] ?? ''], args);
     if (bin === 'git') return `git@github.com:acme-co/${args[1]?.split('/').pop() ?? ''}.git\n`;
     const [a, b] = args;
     if (a === '--help') return 'ok';
@@ -122,6 +131,21 @@ export function harness(initial: FakeSession[] = []): Harness {
     if (a === 'terminal' && b === 'switch') return JSON.stringify({ result: { ok: true } });
     throw new Error(`unexpected command ${args.join(' ')}`);
   };
+  /** A paired host reports each repo's remote itself, since its paths are not on this disk. */
+  const remote = async (host: Harness['remotes'][string] | undefined, args: string[]): Promise<string> => {
+    if (!host || host.down) throw new Error('environment not reachable');
+    const [a, b] = args;
+    if (a === 'repo' && b === 'list') {
+      const list = repos.map((r) => ({ id: `r-${r}`, gitRemoteIdentity: { remoteUrl: `git@github.com:acme-co/${r}.git` } }));
+      return JSON.stringify({ result: { repos: list } });
+    }
+    if (a === 'worktree' && b === 'ps') return psJson(host.sessions);
+    if (a === 'worktree' && b === 'create') return JSON.stringify({ result: { worktree: { name: 'made-remote' } } });
+    if (a === 'terminal' && b === 'list') return listJson(host.sessions);
+    if (a === 'terminal' && b === 'send') return onSend.fn(args);
+    if (a === 'terminal' && b === 'switch') return JSON.stringify({ result: { ok: true } });
+    throw new Error(`unexpected remote command ${args.join(' ')}`);
+  };
   const orca = new Orca({ exec, candidates: ['orca-ide'], now: () => clock.now });
   return {
     orca,
@@ -135,6 +159,7 @@ export function harness(initial: FakeSession[] = []): Harness {
     down,
     delay,
     clock,
+    remotes,
   };
 }
 
