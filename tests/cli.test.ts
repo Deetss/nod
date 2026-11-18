@@ -18,7 +18,7 @@ describe('parseSettingsArgs', () => {
     expect(parseSettingsArgs(['--ozone-platform=headless'])).toEqual({});
   });
   it('sets and clears orgs', () => {
-    expect(parseSettingsArgs(['orgs', 'Acme', 'Deetss'])).toEqual({ edit: { orgs: ['Acme', 'Deetss'] } });
+    expect(parseSettingsArgs(['orgs', 'Acme', 'Octo'])).toEqual({ edit: { orgs: ['Acme', 'Octo'] } });
     expect(parseSettingsArgs(['orgs'])).toEqual({ edit: { orgs: [] } });
   });
   it('turns involved on and off', () => {
@@ -33,7 +33,7 @@ describe('parseSettingsArgs', () => {
 
 describe('settingsText', () => {
   it('lists orgs and the involved switch', () => {
-    expect(settingsText({ orgs: ['Acme', 'Deetss'], includeInvolved: true })).toBe('orgs: Acme, Deetss\ninvolved: on');
+    expect(settingsText({ orgs: ['Acme', 'Octo'], includeInvolved: true })).toBe('orgs: Acme, Octo\ninvolved: on');
     expect(settingsText({ orgs: [], includeInvolved: false })).toBe('orgs: (none)\ninvolved: off');
   });
 });
