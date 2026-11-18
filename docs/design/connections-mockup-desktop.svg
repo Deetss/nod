@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="870" viewBox="0 0 1660 870" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#f0f6fc">
+  <defs>
+    <style>
+      .cap { font-size: 12px; }
+      .muted { fill: #9198a1; }
+      .semi { font-weight: 700; }
+      .mono { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+    </style>
+  </defs>
+  <rect width="1660" height="870" fill="#0d1117"/>
+
+  <!-- Top bar (existing) -->
+  <rect width="1660" height="48" fill="#010409"/>
+  <line x1="0" y1="48" x2="1660" y2="48" stroke="#3d444d"/>
+  <rect x="16" y="16" width="18" height="16" rx="3" fill="#238636"/>
+  <text x="42" y="30" font-size="16" class="semi">Nod</text>
+  <rect x="88" y="12" width="84" height="24" rx="12" fill="none" stroke="#3d444d"/>
+  <text x="100" y="29" class="cap">acme-dev</text>
+  <rect x="186" y="8" width="214" height="32" rx="6" fill="#151b23" stroke="#3d444d"/>
+  <rect x="186" y="8" width="48" height="32" rx="6" fill="#1f6feb"/>
+  <text x="198" y="29">PRs</text><text x="246" y="29">Issues</text>
+  <rect x="294" y="15" width="32" height="18" rx="9" fill="#1f232a"/><text x="302" y="29" class="cap">99+</text>
+  <text x="340" y="29">Activity</text>
+  <rect x="416" y="8" width="500" height="32" rx="6" fill="#0d1117" stroke="#3d444d"/>
+  <text x="428" y="29" class="muted">Search or jump to a PR, repo or author</text>
+  <rect x="932" y="8" width="32" height="32" rx="6" fill="#212830" stroke="#3d444d"/>
+  <circle cx="948" cy="24" r="6" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+  <rect x="972" y="8" width="32" height="32" rx="6" fill="#212830" stroke="#3d444d"/>
+  <path d="M982 29 h12 l-2 -3 v-5 a4 4 0 0 0 -8 0 v5 z" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+  <rect x="1012" y="8" width="52" height="32" rx="6" fill="#212830" stroke="#3d444d"/>
+  <text x="1024" y="29" class="cap">Light</text>
+  <text x="1076" y="29" class="cap muted">API 4,885 / 5,000 · resets 12:18 PM</text>
+
+  <!-- NEW: connections chip (open). Sits between the API budget and the sync text. -->
+  <rect x="1300" y="10" width="168" height="28" rx="14" fill="#12261e" stroke="#238636" stroke-width="1.5"/>
+  <circle cx="1317" cy="24" r="6" fill="#3fb950"/>
+  <path d="M1314 24 l2 2 l4 -4" stroke="#0d1117" stroke-width="1.6" fill="none"/>
+  <text x="1330" y="29" class="cap semi" fill="#3fb950">Service · 2 devices</text>
+
+  <text x="1480" y="29" class="cap muted">Synced 2m ago</text>
+  <rect x="1580" y="8" width="64" height="32" rx="6" fill="#212830" stroke="#3d444d"/>
+  <text x="1591" y="29" class="cap">Refresh</text>
+
+  <!-- App body behind (existing, unchanged) -->
+  <line x1="420" y1="49" x2="420" y2="870" stroke="#3d444d"/>
+  <rect x="16" y="64" width="388" height="32" rx="6" fill="#0d1117" stroke="#3d444d"/>
+  <text x="28" y="85" class="muted">Filter</text>
+  <text x="20" y="128" class="cap semi muted">NEEDS MY REVIEW  1</text>
+  <rect x="0" y="140" width="420" height="80" fill="#151b23"/><rect x="0" y="140" width="4" height="80" fill="#1f6feb"/>
+  <text x="24" y="166">test: cover pending approvals and batchUpdate</text>
+  <text x="24" y="190" class="cap muted">acme-dev/web-app #1437 · acme-dev · 3h</text>
+  <text x="20" y="252" class="cap semi muted">MINE  2</text>
+  <text x="24" y="282">Support sensor type 14 and fix cancel recursion</text>
+  <text x="24" y="304" class="cap muted">no reviews yet</text>
+  <text x="24" y="342">Improve credit charging logic</text>
+  <text x="24" y="364" class="cap muted">no reviews yet</text>
+  <text x="440" y="90" font-size="20" class="semi">test: cover pending approvals and batchUpdate</text>
+  <text x="440" y="116" class="muted">acme-dev/web-app #1437 · by acme-dev · opened 3h ago</text>
+
+  <!-- NEW: Connections popover, 520 x 548. Right edge aligned to the chip's right edge. -->
+  <g transform="translate(948 52)">
+    <rect x="0" y="0" width="520" height="548" rx="12" fill="#151b23" stroke="#3d444d"/>
+    <path d="M428 0 l8 -8 l8 8" fill="#151b23" stroke="#3d444d"/>
+    <line x1="429" y1="0.5" x2="443" y2="0.5" stroke="#151b23" stroke-width="2"/>
+
+    <text x="16" y="30" class="semi">Connections</text>
+    <text x="16" y="50" class="cap muted">This window uses the Nod service on this machine.</text>
+    <rect x="470" y="14" width="34" height="22" rx="4" fill="#212830" stroke="#3d444d"/>
+    <text x="477" y="29" class="mono muted">Esc</text>
+
+    <!-- Strip: 4 nodes on one line, Orca hangs under This Nod -->
+    <rect x="16" y="68" width="104" height="58" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="28" y="90" class="semi">GitHub</text>
+    <text x="28" y="110" class="cap muted">acme-dev</text>
+
+    <rect x="148" y="68" width="112" height="58" rx="6" fill="#111d2e" stroke="#1f6feb" stroke-width="1.5"/>
+    <text x="160" y="90" class="semi">This Nod</text>
+    <text x="160" y="110" class="cap muted">service :4477</text>
+
+    <rect x="288" y="68" width="104" height="58" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="300" y="90" class="semi">Tailscale</text>
+    <text x="300" y="110" class="cap muted">serve 443</text>
+
+    <rect x="420" y="68" width="84" height="58" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="432" y="90" class="semi">Devices</text>
+    <text x="432" y="110" class="cap muted">2 paired</text>
+
+    <rect x="148" y="154" width="112" height="48" rx="6" fill="#0d1117" stroke="#3d444d"/>
+    <text x="160" y="174" class="semi">Orca</text>
+    <text x="160" y="192" class="cap muted">5 sessions</text>
+
+    <g stroke="#3fb950" stroke-width="2">
+      <line x1="120" y1="97" x2="148" y2="97"/>
+      <line x1="260" y1="97" x2="288" y2="97"/>
+      <line x1="392" y1="97" x2="420" y2="97"/>
+      <line x1="204" y1="126" x2="204" y2="154"/>
+    </g>
+
+    <!-- Rows: mark 12, name column 130, detail column from 160, action right-aligned at 504 -->
+    <g>
+      <line x1="16" y1="220" x2="504" y2="220" stroke="#2f353d"/>
+      <circle cx="26" cy="243" r="6" fill="#3fb950"/>
+      <text x="42" y="248" class="semi">GitHub</text>
+      <text x="176" y="248" class="cap muted">All scopes on. API 4,885 / 5,000.</text>
+      <text x="504" y="248" class="cap" fill="#4493f8" text-anchor="end">Details</text>
+
+      <line x1="16" y1="266" x2="504" y2="266" stroke="#2f353d"/>
+      <circle cx="26" cy="289" r="6" fill="#3fb950"/>
+      <text x="42" y="294" class="semi">This Nod</text>
+      <text x="176" y="294" class="cap muted">v0.2.32. Synced 2m ago, no errors.</text>
+
+      <line x1="16" y1="312" x2="504" y2="312" stroke="#2f353d"/>
+      <circle cx="26" cy="335" r="6" fill="#3fb950"/>
+      <text x="42" y="340" class="semi">Tailscale</text>
+      <text x="176" y="340" class="mono muted">https://hub.example.ts.net</text>
+      <text x="504" y="340" class="cap" fill="#4493f8" text-anchor="end">Copy</text>
+
+      <line x1="16" y1="358" x2="504" y2="358" stroke="#2f353d"/>
+      <circle cx="26" cy="381" r="6" fill="#3fb950"/>
+      <text x="42" y="386" class="semi">Android phone</text>
+      <text x="176" y="386" class="cap muted">Seen 9:00 AM. Push on.</text>
+      <text x="504" y="386" class="cap" fill="#4493f8" text-anchor="end">Rename</text>
+
+      <line x1="16" y1="404" x2="504" y2="404" stroke="#2f353d"/>
+      <circle cx="26" cy="427" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+      <text x="42" y="432" class="semi">Laptop browser</text>
+      <text x="176" y="432" class="cap muted">Seen 11:58 AM. Push off.</text>
+      <text x="504" y="432" class="cap" fill="#4493f8" text-anchor="end">Rename</text>
+
+      <line x1="16" y1="450" x2="504" y2="450" stroke="#2f353d"/>
+      <circle cx="26" cy="473" r="6" fill="#3fb950"/>
+      <text x="42" y="478" class="semi">Orca</text>
+      <text x="176" y="478" class="cap muted">Running here. 3 repos, 5 sessions.</text>
+      <line x1="16" y1="496" x2="504" y2="496" stroke="#2f353d"/>
+    </g>
+
+    <rect x="16" y="508" width="104" height="28" rx="6" fill="#238636"/>
+    <text x="30" y="527" class="cap semi">Pair device</text>
+    <rect x="128" y="508" width="92" height="28" rx="6" fill="#212830" stroke="#3d444d"/>
+    <text x="142" y="527" class="cap">Check now</text>
+    <text x="504" y="527" class="cap muted" text-anchor="end">Checked 12:24 PM</text>
+  </g>
+</svg>

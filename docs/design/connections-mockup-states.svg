@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="870" viewBox="0 0 1660 870" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#f0f6fc">
+  <defs>
+    <style>
+      .cap { font-size: 12px; }
+      .muted { fill: #9198a1; }
+      .semi { font-weight: 700; }
+      .mono { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+    </style>
+  </defs>
+  <rect width="1660" height="870" fill="#0d1117"/>
+  <text x="32" y="48" font-size="20" class="semi">Connections: states</text>
+  <text x="32" y="72" class="cap muted">Chip in the top bar, worst state wins. Shape and words carry the state, colour only repeats it.</text>
+
+  <!-- Chip states -->
+  <g transform="translate(32 104)">
+    <text x="0" y="0" class="cap semi muted">CHIP</text>
+
+    <rect x="0" y="16" width="168" height="28" rx="14" fill="#12261e" stroke="#238636" stroke-width="1.5"/>
+    <circle cx="17" cy="30" r="6" fill="#3fb950"/>
+    <path d="M14 30 l2 2 l4 -4" stroke="#0d1117" stroke-width="1.6" fill="none"/>
+    <text x="30" y="35" class="cap semi" fill="#3fb950">Service · 2 devices</text>
+    <text x="200" y="35" class="cap muted">All good. Window attached to the service on this machine.</text>
+
+    <rect x="0" y="60" width="168" height="28" rx="14" fill="#12261e" stroke="#238636" stroke-width="1.5"/>
+    <circle cx="17" cy="74" r="6" fill="#3fb950"/>
+    <path d="M14 74 l2 2 l4 -4" stroke="#0d1117" stroke-width="1.6" fill="none"/>
+    <text x="30" y="79" class="cap semi" fill="#3fb950">Local · 1 device</text>
+    <text x="200" y="79" class="cap muted">All good. Window runs its own server with phone access on.</text>
+
+    <rect x="0" y="104" width="168" height="28" rx="14" fill="#212830" stroke="#3d444d" stroke-width="1.5"/>
+    <circle cx="17" cy="118" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+    <text x="30" y="123" class="cap semi">This machine only</text>
+    <text x="200" y="123" class="cap muted">Own server, phone access off. Not a problem, so neutral.</text>
+
+    <rect x="0" y="148" width="168" height="28" rx="14" fill="#272215" stroke="#9e6a03" stroke-width="1.5"/>
+    <path d="M11 129 l6 -11 l6 11 z" transform="translate(0 35)" fill="#d29922"/>
+    <text x="16" y="162" class="cap semi" fill="#0d1117">!</text>
+    <text x="30" y="167" class="cap semi" fill="#d29922">1 warning</text>
+    <text x="200" y="167" class="cap muted">A scope is missing, the API budget is under 10%, or a device has not been seen in 7 days.</text>
+
+    <rect x="0" y="192" width="168" height="28" rx="14" fill="#25181c" stroke="#da3633" stroke-width="1.5"/>
+    <circle cx="17" cy="206" r="6" fill="#f85149"/>
+    <text x="15" y="210" class="cap semi" fill="#0d1117">!</text>
+    <text x="30" y="211" class="cap semi" fill="#f85149">Sync failing</text>
+    <text x="200" y="211" class="cap muted">Named after the broken link: Sync failing, Tailscale off, Orca unreachable.</text>
+
+    <rect x="0" y="236" width="168" height="28" rx="14" fill="#212830" stroke="#3d444d" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <circle cx="17" cy="250" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <text x="30" y="255" class="cap semi muted">Checking…</text>
+    <text x="200" y="255" class="cap muted">First load only, before the first answer. Later checks keep the last state.</text>
+  </g>
+
+  <!-- Row marks -->
+  <g transform="translate(32 420)">
+    <text x="0" y="0" class="cap semi muted">ROW MARK (same as conn-mark in ConnectionBlock)</text>
+    <circle cx="10" cy="26" r="6" fill="#3fb950"/><text x="28" y="31" class="cap">filled: working</text>
+    <circle cx="10" cy="56" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/><text x="28" y="61" class="cap">ring: off or idle (not an error)</text>
+    <circle cx="10" cy="86" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5" stroke-dasharray="2 2"/><text x="28" y="91" class="cap">dashed ring: checking or unknown</text>
+    <path d="M4 122 l6 -11 l6 11 z" fill="#d29922"/><text x="28" y="121" class="cap">triangle: warning</text>
+    <circle cx="10" cy="146" r="6" fill="#f85149"/><text x="8" y="150" class="cap semi" fill="#0d1117">!</text><text x="28" y="151" class="cap">circled !: broken</text>
+  </g>
+
+  <!-- Error popover example: own server, sync failing, Tailscale not served -->
+  <g transform="translate(980 104)">
+    <text x="0" y="0" class="cap semi muted">POPOVER, BROKEN STATE</text>
+    <g transform="translate(0 16)">
+      <rect x="0" y="0" width="520" height="486" rx="12" fill="#151b23" stroke="#3d444d"/>
+      <text x="16" y="30" class="semi">Connections</text>
+      <text x="16" y="50" class="cap muted">This window runs its own server.</text>
+
+      <rect x="16" y="68" width="104" height="58" rx="6" fill="#25181c" stroke="#da3633" stroke-width="1.5"/>
+      <text x="28" y="90" class="semi">GitHub</text>
+      <text x="28" y="110" class="cap" fill="#f85149">Sync failing</text>
+      <rect x="148" y="68" width="112" height="58" rx="6" fill="#111d2e" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="160" y="90" class="semi">This Nod</text>
+      <text x="160" y="110" class="cap muted">own server</text>
+      <rect x="288" y="68" width="104" height="58" rx="6" fill="#0d1117" stroke="#3d444d" stroke-dasharray="4 3"/>
+      <text x="300" y="90" class="semi muted">Tailscale</text>
+      <text x="300" y="110" class="cap muted">not served</text>
+      <rect x="420" y="68" width="84" height="58" rx="6" fill="#0d1117" stroke="#3d444d" stroke-dasharray="4 3"/>
+      <text x="432" y="90" class="semi muted">Devices</text>
+      <text x="432" y="110" class="cap muted">none</text>
+      <rect x="148" y="154" width="112" height="48" rx="6" fill="#0d1117" stroke="#3d444d" stroke-dasharray="4 3"/>
+      <text x="160" y="174" class="semi muted">Orca</text>
+      <text x="160" y="192" class="cap muted">not running</text>
+      <line x1="120" y1="97" x2="148" y2="97" stroke="#f85149" stroke-width="2" stroke-dasharray="5 3"/>
+      <line x1="260" y1="97" x2="288" y2="97" stroke="#3d444d" stroke-width="2" stroke-dasharray="3 3"/>
+      <line x1="392" y1="97" x2="420" y2="97" stroke="#3d444d" stroke-width="2" stroke-dasharray="3 3"/>
+      <line x1="204" y1="126" x2="204" y2="154" stroke="#3d444d" stroke-width="2" stroke-dasharray="3 3"/>
+
+      <line x1="16" y1="220" x2="504" y2="220" stroke="#2f353d"/>
+      <circle cx="26" cy="243" r="6" fill="#f85149"/><text x="24" y="247" class="cap semi" fill="#0d1117">!</text>
+      <text x="42" y="248" class="semi">GitHub</text>
+      <text x="176" y="248" class="cap" fill="#f85149">Last 3 syncs failed: gh is logged out.</text>
+      <text x="504" y="248" class="cap" fill="#4493f8" text-anchor="end">Fix</text>
+
+      <line x1="16" y1="266" x2="504" y2="266" stroke="#2f353d"/>
+      <circle cx="26" cy="289" r="6" fill="#3fb950"/>
+      <text x="42" y="294" class="semi">This Nod</text>
+      <text x="176" y="294" class="cap muted">v0.2.32. Own server on port 41873.</text>
+
+      <line x1="16" y1="312" x2="504" y2="312" stroke="#2f353d"/>
+      <circle cx="26" cy="335" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+      <text x="42" y="340" class="semi">Tailscale</text>
+      <text x="176" y="340" class="cap muted">Phone access is off.</text>
+      <text x="504" y="340" class="cap" fill="#4493f8" text-anchor="end">Set up a hub</text>
+
+      <line x1="16" y1="358" x2="504" y2="358" stroke="#2f353d"/>
+      <circle cx="26" cy="381" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+      <text x="42" y="386" class="semi">Devices</text>
+      <text x="176" y="386" class="cap muted">No devices paired.</text>
+
+      <line x1="16" y1="404" x2="504" y2="404" stroke="#2f353d"/>
+      <circle cx="26" cy="427" r="5.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+      <text x="42" y="432" class="semi">Orca</text>
+      <text x="176" y="432" class="cap muted">Not running on this machine.</text>
+      <line x1="16" y1="450" x2="504" y2="450" stroke="#2f353d"/>
+
+      <rect x="16" y="458" width="92" height="28" rx="6" fill="#212830" stroke="#3d444d" transform="translate(0 -6)"/>
+      <text x="30" y="471" class="cap">Check now</text>
+      <text x="504" y="471" class="cap muted" text-anchor="end">Checked 12:24 PM</text>
+    </g>
+  </g>
+</svg>
