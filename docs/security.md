@@ -36,6 +36,9 @@ Each 403 from the host, origin and token checks logs one line (reason and path o
 - Issue images load through `GET /api/image?u=<url>`. The server rejects other hosts and accepts only png, jpeg, gif or webp responses, capped at 10 MB. See [Issues](issues.md).
 - Issue and PR HTML goes through DOMPurify before insertion.
 - Phone access adds device keys and a Tailscale user check. See [Phone](phone.md).
-- `GET /api/connections` sits behind the same guards. Loopback gets every device with its id. A paired phone gets its own row plus the other devices' name, last-seen time and push state, with no ids. No answer carries a key, key hash, push subscription or the session token. Tailscale Serve state comes from `tailscale serve status --json` (2 s timeout, cached 20 s); a missing `tailscale` reads as off.
+- `GET /api/connections` sits behind the same guards. Loopback gets every device with its id. A tailnet device gets its own row plus every device's name, role, last-seen time and push state, with no ids; an admin device reads ids from the admin-only device list. No answer carries a key, key hash, push subscription or the session token. Tailscale Serve state comes from `tailscale serve status --json` (2 s timeout, cached 20 s); a missing `tailscale` reads as off.
+- Each device has a role. Device admin routes and the settings write accept loopback and `admin` devices only, after the session token and Origin checks. Phone and desktop keys get 403. Responses never carry a key or a hash. See [Device roles](hub.md#device-roles).
+- A desktop with a Hub URL keeps its device cookie in its persistent Electron session, loads only the hub's origin, and gives hub pages no way to change or pair the hub. See [Desktop](desktop.md#hub-url).
+- `nod pair` prints the pairing link, its QR code and its expiry, never the session token.
 - Android keystore files stay in `~/.config/nod/` and are never printed. See [Android](android.md).
 - Desktop links open only `https://github.com/...` in the default browser. See [Desktop](desktop.md).

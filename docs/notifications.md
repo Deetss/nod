@@ -21,6 +21,8 @@ The desktop app notifies through the shell. The front end compares each poll wit
 
 ## Preload and payloads
 
-The preload exposes only `window.nod` with `notify`, `onOpen`, `getSettings` and `setSettings`. The main process validates every payload (`shared/notify-payload.ts`).
+The preload exposes only `window.nod` with `notify`, `onOpen`, `getSettings` and `setSettings`, plus the shell build, relaunch and Settings > Hub calls. The main process validates every payload (`shared/notify-payload.ts`) and checks the sender's origin per channel.
+
+With a Hub URL, the window shows the hub's page, which reads the hub's `/api/events` stream and asks this shell to notify with the same rules. See [Desktop](desktop.md#hub-url).
 
 Phone notifications use Web Push for the same triggers. See [Android](android.md) and [Phone](phone.md).

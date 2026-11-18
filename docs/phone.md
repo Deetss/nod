@@ -16,8 +16,9 @@ See [Android](android.md) to install the app first, or download `nod-<version>.a
 Pairing works like `orca serve --mobile-pairing`. The link is `https://<tailnet host>/pair#code=<code>`.
 
 - The code is single use and expires after 10 minutes. A new code replaces the old one.
+- Each code carries a role, `phone` unless asked otherwise, and the paired device gets it. `nod pair` on the server prints a phone link; `nod pair --admin` and `nod pair --desktop` print links for a desktop. See [Device roles](hub.md#device-roles).
 - The phone page trades the code (`POST /api/pair`, 5 tries a minute) for a device key: 32 random bytes, kept on the phone in an `HttpOnly; Secure; SameSite=Lax` cookie. Chrome withholds Strict cookies when another app launches the phone app, so the cookie is not Strict.
-- The server stores only a SHA-256 hash of each key, with a name (taken from the user agent; use Rename), the created time and the last-seen time, in `~/.local/state/nod/devices.json` (mode 600, written atomically).
+- The server stores only a SHA-256 hash of each key, with a name (taken from the user agent; use Rename), the role, the created time and the last-seen time, in `~/.local/state/nod/devices.json` (mode 600, written atomically). Records from before roles existed load as `phone`. The paired devices list shows each role.
 - Revoke deletes the hash, so that phone's key stops working at once.
 - Pairing, revoking and tailnet requests with no or an unknown device cookie are logged to the journal. Logs never hold keys or hashes.
 
@@ -27,7 +28,10 @@ Pairing works like `orca serve --mobile-pairing`. The link is `https://<tailnet 
 - Every tailnet request needs a valid device key. A phone without one gets a plain "Not paired" page (HTTP 401) with no data and no session token. Only `/pair`, `POST /api/pair`, the manifest and the icons answer without a key.
 - Mutations also accept `Origin: https://<tailnet host>`, the same host on `:8443` (older bookmarks) or on `NOD_PHONE_HTTPS_PORT`. They still need the session token, which is injected into the HTML served after the device key checks out.
 - Any request that carries `Tailscale-User-Login` must match your login, even with a loopback Host (Tailscale Serve may forward that way). It is rejected when phone access is off.
-- Creating codes, listing, renaming and revoking devices, and Update phones are loopback only. Requests without the header on loopback are unchanged.
+- Creating codes, listing, renaming and revoking devices, and saving settings work on loopback and for an `admin` device. A tailnet admin request still needs the session token and the Origin above. Phone and desktop keys get 403 `Admin device only`.
+- Update phones and Send test notification stay loopback only. Requests without the header on loopback are unchanged.
+- `GET /api/devices/me` tells a paired device its own role and the app version. A desktop uses it to check its hub.
+
 
 ## Layout
 
@@ -47,7 +51,8 @@ Every `vite build` gets a build id: the git short sha plus the build time (for e
 
 `nod serve` runs the server with no window, on port 4477 with phone access on. It prints the bound address, the advertised address and the pairing status. `pnpm serve` does the same for the browser build.
 
-On a machine with only the service, `nod pair` prints a new pairing link and its QR code, and `nod settings` shows the watched orgs and the involved switch. `nod settings orgs <org>...` replaces the orgs (no names clears them) and `nod settings involved on|off` sets the switch. Both talk to the service over loopback with the session token, like `nod update`, and a settings change restarts the service.
+On a machine with only the service, `nod pair` prints a new pairing link and its QR code (`--desktop` or `--admin` for a desktop instead of a phone),
+ and `nod settings` shows the watched orgs and the involved switch. `nod settings orgs <org>...` replaces the orgs (no names clears them) and `nod settings involved on|off` sets the switch. Both talk to the service over loopback with the session token, like `nod update`, and a settings change restarts the service.
 
 ```
 scripts/install-desktop.sh --install-service
