@@ -3,6 +3,7 @@ import { oneLine } from '../shared/orca-message';
 import { SEND_MAX, STATE_WORD, type SessionView } from '../shared/orca-sessions';
 import { BulkShell, SeverityBadge, StatusLine } from './FindingParts';
 import { DispatchFields, useDispatchFields } from './orca/DispatchFields';
+import { HostFallback, HostTag, NewWorktreeRow, OfflineNote, useWorktreeHost, type WorktreeHost } from './orca/HostPicker';
 import { Row } from './orca/SessionPicker';
 import { KeyCap } from './ui';
 import type { BulkRow, DispatchAllView, DispatchTarget } from './useFindings';
@@ -85,14 +86,16 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
     ...offer.related.map((s) => ({ s, kind: 'related' as const })),
     ...offer.possible.map((s) => ({ s, kind: 'possible' as const })),
   ];
+  const wh = useWorktreeHost(offer.host);
   const [changing, setChanging] = useState(false);
   const [pick, setPick] = useState(() => Math.max(0, candidates.findIndex((c) => c.s.id === offer.single?.id)));
   const f = useDispatchFields(offer.agents, `pr-${number}-findings`);
   const primary = useRef<HTMLButtonElement>(null);
   useEffect(() => primary.current?.focus(), []);
 
-  const path = offer.single && !changing ? 'session' : candidates.length > 0 ? 'pick' : 'worktree';
-  const worktree = path === 'worktree';
+  // With paired hosts the list always offers a New worktree row, after the sessions.
+  const path = offer.single && !changing ? 'session' : candidates.length > 0 || wh.multi ? 'pick' : 'worktree';
+  const worktree = path === 'worktree' || (path === 'pick' && wh.multi && pick === candidates.length);
   const over = v.text.length > SEND_MAX;
   const ready = n > 0 && !over && v.text.trim() !== '' && (!worktree || f.valid);
   const failed = v.error !== undefined && !busy;
@@ -101,13 +104,23 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   const target = (): DispatchTarget | undefined => {
     if (path === 'session' && offer.single) return { kind: 'session', session: offer.single };
     const c = candidates[pick];
-    if (path === 'pick') return c ? { kind: 'session', session: c.s, remember: c.kind === 'related' } : undefined;
-    return { kind: 'worktree', request: { ...f.request(), baseBranch: offer.headRef, prompt: v.text, pr: true } };
+    if (path === 'pick' && !worktree) return c ? { kind: 'session', session: c.s, remember: c.kind === 'related' } : undefined;
+    return { kind: 'worktree', request: { ...f.request(), ...(wh.multi ? { host: wh.host } : {}), baseBranch: offer.headRef, prompt: v.text, pr: true } };
   };
   const go = (): void => {
     const t = busy || !ready ? undefined : target();
     if (t) onConfirm(t);
   };
+
+  const head = (
+    <>
+      <label className="field-label" htmlFor="da-head">
+        Head branch
+      </label>
+      <input id="da-head" className="dispatch-locked mono" value={offer.headRef} readOnly />
+      <span className="muted small">Locked. The agent works on the PR head and pushes its fix there.</span>
+    </>
+  );
 
   return (
     <BulkShell title={title} className="dispatch-dialog finding-dispatch-all" busy={busy} ctrlEnter onCancel={onCancel} onConfirm={go}>
@@ -128,7 +141,7 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
         </div>
         <div className="dispatch-all-field">
           <div className="dispatch-all-label">
-            <span className="field-label">{worktree ? 'Dispatch to' : 'Send to'}</span>
+            <span className="field-label">{path === 'worktree' ? 'Dispatch to' : 'Send to'}</span>
             {path === 'pick' ? <span className="muted small">{`${offer.related.length} related, ${offer.possible.length} possible`}</span> : null}
           </div>
           {path === 'session' && offer.single ? (
@@ -136,8 +149,9 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
               <span className="ph-fit-dot" aria-hidden="true" />
               <span className="dispatch-all-session-name mono">{offer.single.name}</span>
               <span className="ph-fit-pill">Linked</span>
+              <HostTag host={offer.single.host} />
               <span className="dispatch-all-state muted small">{STATE_WORD[offer.single.state]}</span>
-              {candidates.length > 1 && !busy ? (
+              {(candidates.length > 1 || wh.multi) && !busy ? (
                 <button type="button" className="btn finding-btn" onClick={() => setChanging(true)}>
                   Change
                 </button>
@@ -145,17 +159,14 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
             </div>
           ) : null}
           {path === 'pick' ? (
-            <SessionChoice candidates={candidates} pick={pick} busy={busy} onPick={setPick} />
+            <SessionChoice candidates={candidates} pick={pick} busy={busy} worktreeRow={wh.multi ? wh : undefined} onPick={setPick} />
           ) : null}
-          {worktree ? (
+          {path === 'pick' && worktree ? <div className="dispatch-all-worktree">{<DispatchFields f={f} agents={offer.agents} paired disabled={busy} />}{head}</div> : null}
+          {path === 'worktree' ? (
             <div className="dispatch-all-worktree">
               <span className="muted small">{`No Orca session linked to PR #${number}. A new worktree opens on the PR head.`}</span>
               <DispatchFields f={f} agents={offer.agents} paired disabled={busy} />
-              <label className="field-label" htmlFor="da-head">
-                Head branch
-              </label>
-              <input id="da-head" className="dispatch-locked mono" value={offer.headRef} readOnly />
-              <span className="muted small">Locked. The agent works on the PR head and pushes its fix there.</span>
+              {head}
             </div>
           ) : null}
         </div>
@@ -207,14 +218,24 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   );
 }
 
+interface ChoiceProps {
+  candidates: Candidate[];
+  pick: number;
+  busy: boolean;
+  /** Paired hosts: a New worktree row closes the list, at index `candidates.length`. */
+  worktreeRow: WorktreeHost | undefined;
+  onPick: (i: number) => void;
+}
+
 /** Related and possible sessions with a radio. Up and Down move the choice. */
-function SessionChoice({ candidates, pick, busy, onPick }: { candidates: Candidate[]; pick: number; busy: boolean; onPick: (i: number) => void }) {
+function SessionChoice({ candidates, pick, busy, worktreeRow, onPick }: ChoiceProps) {
   const group = (kind: Candidate['kind']) => candidates.map((c, i) => ({ c, i })).filter(({ c }) => c.kind === kind);
   const related = group('related');
   const possible = group('possible');
+  const last = candidates.length - (worktreeRow ? 0 : 1);
   const rows = (list: typeof related) =>
     list.map(({ c, i }) => (
-      <Row key={c.s.id} s={c.s} focused={pick === i} radio hint={c.kind === 'possible' ? 'Send once' : ''} onPick={() => !busy && onPick(i)} />
+      <Row key={`${c.s.host}|${c.s.id}`} s={c.s} focused={pick === i} radio hint={c.kind === 'possible' ? 'Send once' : ''} onPick={() => !busy && onPick(i)} />
     ));
   return (
     <>
@@ -226,7 +247,7 @@ function SessionChoice({ candidates, pick, busy, onPick }: { candidates: Candida
         onKeyDown={(e) => {
           if (busy || (e.key !== 'ArrowDown' && e.key !== 'ArrowUp')) return;
           e.preventDefault();
-          onPick(Math.min(candidates.length - 1, Math.max(0, pick + (e.key === 'ArrowDown' ? 1 : -1))));
+          onPick(Math.min(last, Math.max(0, pick + (e.key === 'ArrowDown' ? 1 : -1))));
         }}
       >
         {related.length > 0 ? (
@@ -246,8 +267,27 @@ function SessionChoice({ candidates, pick, busy, onPick }: { candidates: Candida
             {rows(possible)}
           </>
         ) : null}
+        {worktreeRow ? (
+          <NewWorktreeRow
+            hosts={worktreeRow.hosts}
+            host={worktreeRow.host}
+            on={pick === candidates.length}
+            busy={busy}
+            radio
+            onSelect={() => onPick(candidates.length)}
+            onPick={worktreeRow.pick}
+          />
+        ) : null}
       </div>
-      <span className="muted small">Your choice is remembered for this PR. A possible match only gets the message you send now.</span>
+      {worktreeRow ? (
+        <>
+          <HostFallback fallback={worktreeRow.fallback} />
+          <OfflineNote hosts={worktreeRow.hosts} className="muted small orca-offline-note" />
+        </>
+      ) : null}
+      {candidates.length > 0 ? (
+        <span className="muted small">Your choice is remembered for this PR. A possible match only gets the message you send now.</span>
+      ) : null}
     </>
   );
 }

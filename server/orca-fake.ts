@@ -52,6 +52,17 @@ const LAPTOP_WORKTREES: FakeWorktree[] = [
   { repo: 'acme-api', name: 'swagger-309', branch: 'chore/swagger-309', linkedPr: 309, state: 'waiting', outputAgoS: 240 },
 ];
 
+/** `NOD_FIXTURE_SESSIONS=hosts` adds these on `laptop`, so #365 lists sessions on two hosts. */
+const LAPTOP_365: FakeWorktree[] = [
+  { repo: 'orders-api', name: 'review-365', branch: 'sam-lee/review-365', linkedPr: 365, state: 'done', outputAgoS: 300 },
+  { repo: 'orders-api', name: 'crew-310', branch: 'crew/orders-365-read-bonus', state: 'working', outputAgoS: 20 },
+];
+
+/** Sessions `desktop` reports while `NOD_FIXTURE_DESKTOP_UP_S` lasts, so its chip can be seen going offline. */
+const DESKTOP_WORKTREES: FakeWorktree[] = [
+  { repo: 'orders-api', name: 'webhooks-373', branch: 'feature/webhooks-373', linkedPr: 373, state: 'working', outputAgoS: 60 },
+];
+
 export const FIXTURE_ONLINE_HOST = 'laptop';
 export const FIXTURE_OFFLINE_HOST = 'desktop';
 
@@ -89,15 +100,20 @@ export class OrcaFake {
   private n = 0;
   private readonly byHost = new Map<string, FakeWorktree[]>([
     [LOCAL_HOST, fixtureWorktrees()],
-    [FIXTURE_ONLINE_HOST, LAPTOP_WORKTREES],
+    [FIXTURE_ONLINE_HOST, appEnv('FIXTURE_SESSIONS') === 'hosts' ? [...LAPTOP_WORKTREES, ...LAPTOP_365] : LAPTOP_WORKTREES],
   ]);
+  private readonly desktopUntil: number;
 
-  constructor(private readonly now: () => number = Date.now) {}
+  constructor(private readonly now: () => number = Date.now) {
+    this.desktopUntil = now() + Number(appEnv('FIXTURE_DESKTOP_UP_S') ?? 0) * 1000;
+  }
 
   run(argv: string[]): string {
     const host = valueOf(argv, '--environment') ?? LOCAL_HOST;
     const args = host === LOCAL_HOST ? argv : argv.slice(0, argv.indexOf('--environment'));
     const [a, b] = args;
+    if (this.now() < this.desktopUntil) this.byHost.set(FIXTURE_OFFLINE_HOST, DESKTOP_WORKTREES);
+    else this.byHost.delete(FIXTURE_OFFLINE_HOST);
     if (a === 'environment' && b === 'list') {
       return JSON.stringify({
         result: {

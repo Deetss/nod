@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { STATE_WORD, type SessionView } from '../../shared/orca-sessions';
+import type { HostStatus } from '../../shared/orca-hosts';
 import { useFocusTrap } from '../useFocusTrap';
+import { HostTag, OfflineNote } from './HostPicker';
 import { StateGlyph } from './orca-ui';
 
 interface Props {
   number: number;
+  /** Every Orca host, for the offline note under the list. */
+  hosts?: readonly HostStatus[];
   related: readonly SessionView[];
   possible: readonly SessionView[];
   /** Replaces the default heading, such as when sending a finding with nothing linked. */
@@ -45,6 +49,7 @@ export function Row({ s, focused, hint, radio, onHover, onPick }: RowProps) {
           </span>
         )}
         <span className="mono orca-picker-name">{s.name}</span>
+        <HostTag host={s.host} />
         <span className={`orca-word orca-state-${s.state}`}>{STATE_WORD[s.state]}</span>
       </span>
       <span className="picker-row-line2 muted">
@@ -56,7 +61,7 @@ export function Row({ s, focused, hint, radio, onHover, onPick }: RowProps) {
 }
 
 /** Chooses a session for one PR. Up, Down, Enter, Esc. Related rows are remembered; possible rows are send-once. */
-export function SessionPicker({ number, related, possible, title, onChoose, onSendOnce, onClose }: Props) {
+export function SessionPicker({ number, hosts, related, possible, title, onChoose, onSendOnce, onClose }: Props) {
   const rows = [...related.map((s) => ({ s, kind: 'related' as const })), ...possible.map((s) => ({ s, kind: 'possible' as const }))];
   const [focus, setFocus] = useState(0);
   const trap = useFocusTrap();
@@ -125,6 +130,7 @@ export function SessionPicker({ number, related, possible, title, onChoose, onSe
             </>
           ) : null}
         </div>
+        {hosts ? <OfflineNote hosts={hosts} className="muted small picker-note orca-offline-note" /> : null}
         <p className="muted small picker-note">
           Your choice is remembered for this PR and gets its automatic messages. A possible match only gets a message you send yourself.
         </p>

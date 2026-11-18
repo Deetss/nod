@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { prefillOptions } from '../../shared/orca-message';
-import { orcaEnabledFor, type OrcaPrefs, type RepoMode } from '../../shared/orca-prefs';
-import { SEND_MAX, type NoticeResult, type PrSessions, type SessionView } from '../../shared/orca-sessions';
+import { orcaEnabledFor, type RepoMode } from '../../shared/orca-prefs';
+import { SEND_MAX, type NoticeResult, type OrcaPrefsView, type PrSessions, type SessionView } from '../../shared/orca-sessions';
+import { carryOffline, LOCAL_ONLY } from './hosts';
 import { prWorktreeName, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../../shared/orca';
 import type { PrDetail } from '../../shared/types';
 import { api } from '../api';
@@ -10,7 +11,7 @@ import { useRemote } from '../useRemote';
 import type { ToastInput } from '../toasts';
 import { prefillFactsOf } from './facts';
 import { OrcaSection, type SendOutcome, type SentNote } from './OrcaSection';
-import type { OrcaSessionsValue } from './OrcaContext';
+import { hostChoice, type OrcaSessionsValue } from './OrcaContext';
 import { SendDialog } from './SendDialog';
 import { SessionPicker } from './SessionPicker';
 import { sendFailure, type FindingSender } from '../useFindings';
@@ -21,7 +22,7 @@ import { PhoneSessionPicker } from '../phone/PhoneSessionPicker';
 /** The poll cost is two CLI calls on the server, shared by every row. */
 export const SESSIONS_POLL_MS = 20_000;
 
-type Prefs = Pick<OrcaPrefs, 'enabled' | 'repos'>;
+type Prefs = OrcaPrefsView;
 
 export interface OrcaMenu {
   enabled: boolean;
@@ -99,18 +100,24 @@ export function useOrca(o: Options): OrcaController {
   const [dispatchBusy, setDispatchBusy] = useState(false);
   const [dispatchError, setDispatchError] = useState<string>();
 
+  const hostsRemote = useRemote(active ? 'orca-hosts' : null, () => api.orcaHosts());
+  const reloadHosts = hostsRemote.reload;
+
   useEffect(() => {
     if (!active) return;
+    const both = () => {
+      reload();
+      reloadHosts();
+    };
     const tick = setInterval(() => {
-      if (document.visibilityState === 'visible') reload();
+      if (document.visibilityState === 'visible') both();
     }, SESSIONS_POLL_MS);
-    const focus = () => reload();
-    window.addEventListener('focus', focus);
+    window.addEventListener('focus', both);
     return () => {
       clearInterval(tick);
-      window.removeEventListener('focus', focus);
+      window.removeEventListener('focus', both);
     };
-  }, [active, reload]);
+  }, [active, reload, reloadHosts]);
 
   // A sync or Refresh moves the lists, so the sessions are read again with them.
   const first = useRef(true);
@@ -127,9 +134,39 @@ export function useOrca(o: Options): OrcaController {
   useEffect(() => setLocalPrefs(undefined), [data?.at]);
   const prefs: Prefs = localPrefs ?? data?.prefs ?? { enabled: true, repos: {} };
 
+  const hosts = hostsRemote.data && hostsRemote.data.length > 0 ? hostsRemote.data : LOCAL_ONLY;
+  const carried = useRef<Record<string, PrSessions>>({});
+  const byPr = useMemo(() => {
+    const out = carryOffline(carried.current, data?.byPr ?? {}, hosts);
+    carried.current = out;
+    return out;
+  }, [data?.byPr, hosts]);
+
+  const setRepoHost = useCallback(
+    (repo: string, host: string) => {
+      const key = repo.toLowerCase();
+      setLocalPrefs((p) => {
+        const base = p ?? prefs;
+        return { ...base, hosts: { ...base.hosts, [key]: host } };
+      });
+      void api.orcaPrefs({ repo: key, host }).then(
+        () => reload(),
+        (e: unknown) => toast({ kind: 'err', message: msg(e, 'Could not save the host') }),
+      );
+    },
+    [prefs, reload, toast],
+  );
+
   const value = useMemo<OrcaSessionsValue>(
-    () => ({ available, byPr: data?.byPr ?? {}, byIssue: data?.byIssue ?? {} }),
-    [available, data?.byPr, data?.byIssue],
+    () => ({
+      available,
+      byPr,
+      byIssue: data?.byIssue ?? {},
+      hosts,
+      hostPrefs: { ...(prefs.hosts ? { hosts: prefs.hosts } : {}), ...(prefs.defaultHost ? { defaultHost: prefs.defaultHost } : {}) },
+      setRepoHost,
+    }),
+    [available, byPr, data?.byIssue, hosts, prefs.hosts, prefs.defaultHost, setRepoHost],
   );
 
   const summary = detail?.summary;
@@ -294,6 +331,7 @@ export function useOrca(o: Options): OrcaController {
         prId={summary.id}
         repo={summary.repo}
         sessions={sessions}
+        hosts={hosts}
         autoOn={orcaEnabledFor(prefs, summary.repo)}
         outcome={outcome}
         sent={sent}
@@ -347,6 +385,7 @@ export function useOrca(o: Options): OrcaController {
       {picker && pickerSessions && summary ? (
         <Picker
           number={summary.number}
+          hosts={hosts}
           related={pickerSessions.related}
           possible={pickerSessions.possible}
           title={pending && pickerSessions.related.length === 0 ? `No Orca session linked to PR #${summary.number}` : undefined}
@@ -456,6 +495,7 @@ export function useOrca(o: Options): OrcaController {
           ...(single ? { single } : {}),
           agents: orca?.agents ?? [],
           headRef: detail?.headRef ?? '',
+          host: hostChoice(value, summary?.repo ?? ''),
         },
         sendAll: async (text, target) => {
           if (!summary) throw new Error('No pull request');

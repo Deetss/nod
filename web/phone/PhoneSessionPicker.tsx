@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import type { HostStatus } from '../../shared/orca-hosts';
 import { STATE_WORD, type SessionView } from '../../shared/orca-sessions';
+import { HostTag, OfflineNote } from '../orca/HostPicker';
 import { PhoneFitSheet } from './PhoneFitSheet';
 
 interface Props {
   number: number;
+  /** Every Orca host, for the offline note under the list. */
+  hosts?: readonly HostStatus[];
   related: readonly SessionView[];
   possible: readonly SessionView[];
   /** Replaces the default heading, such as when sending a finding with nothing linked. */
@@ -30,6 +34,7 @@ function Row({ s, kind, on, onPick }: { s: SessionView; kind: Kind; on: boolean;
       <span className="ph-ses-main">
         <span className="ph-ses-line">
           <span className="ph-ses-name ph-mono">{s.name}</span>
+          <HostTag host={s.host} className="ph-host-tag" />
           <span className="ph-ses-state">{STATE_WORD[s.state]}</span>
         </span>
         <span className="ph-ses-line">
@@ -42,7 +47,7 @@ function Row({ s, kind, on, onPick }: { s: SessionView; kind: Kind; on: boolean;
 }
 
 /** Chooses a session for one PR in a bottom sheet. Related rows are remembered, possible rows are send-once. */
-export function PhoneSessionPicker({ number, related, possible, title, onChoose, onSendOnce, onClose }: Props) {
+export function PhoneSessionPicker({ number, hosts, related, possible, title, onChoose, onSendOnce, onClose }: Props) {
   const rows = [...related.map((s) => ({ s, kind: 'related' as const })), ...possible.map((s) => ({ s, kind: 'possible' as const }))];
   const [id, setId] = useState(rows[0]?.s.id);
   const picked = rows.find((r) => r.s.id === id) ?? rows[0];
@@ -88,6 +93,7 @@ export function PhoneSessionPicker({ number, related, possible, title, onChoose,
         {group('RELATED', relatedRows, `${relatedRows.length} match`)}
         {group('POSSIBLE', possibleRows)}
       </div>
+      {hosts ? <OfflineNote hosts={hosts} className="ph-offline-note" /> : null}
     </PhoneFitSheet>
   );
 }

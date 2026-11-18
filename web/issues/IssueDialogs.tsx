@@ -3,6 +3,8 @@ import type { CloseReason, IssueLabel, RepoMeta } from '../../shared/issue-types
 import type { BulkFailure } from '../../shared/bulk';
 import { dispatchPrompt, worktreeName, type OrcaDispatchRequest } from '../../shared/orca';
 import { DispatchFields, useDispatchFields } from '../orca/DispatchFields';
+import { HostFallback, NewWorktreeRow, useWorktreeHost } from '../orca/HostPicker';
+import { useHostChoice } from '../orca/OrcaContext';
 import { bot } from '../org-settings';
 import { Btn, KeyCap } from '../ui';
 import { AppDialog } from '../AppDialog';
@@ -335,10 +337,12 @@ export function DispatchDialog(p: DispatchDialogProps) {
   const baseOk = base === '' || /^[A-Za-z0-9._/-]{1,100}$/.test(base);
   const promptOk = prompt.trim() !== '' && prompt.length <= 4000;
   const ready = f.valid && baseOk && promptOk && !p.busy;
+  const wh = useWorktreeHost(useHostChoice(repo));
   const go = () => {
     if (!ready) return;
-    if (p.pr) p.onConfirm({ ...f.request(), baseBranch: p.pr.headRef, prompt, pr: true });
-    else p.onConfirm({ ...f.request(), ...(base ? { baseBranch: base } : {}), prompt });
+    const host = wh.multi ? { host: wh.host } : {};
+    if (p.pr) p.onConfirm({ ...f.request(), ...host, baseBranch: p.pr.headRef, prompt, pr: true });
+    else p.onConfirm({ ...f.request(), ...host, ...(base ? { baseBranch: base } : {}), prompt });
   };
 
   const onKeyDown: KeyboardEventHandler = (e) => {
@@ -377,6 +381,14 @@ export function DispatchDialog(p: DispatchDialogProps) {
       <p className="muted small">
         {repoLabel(repo)} #{number}
       </p>
+      {wh.multi ? (
+        <>
+          <div className="orca-new-box">
+            <NewWorktreeRow hosts={wh.hosts} host={wh.host} on busy={p.busy} onPick={wh.pick} />
+          </div>
+          <HostFallback fallback={wh.fallback} />
+        </>
+      ) : null}
       <DispatchFields f={f} agents={p.agents} />
       {p.pr ? (
         <>

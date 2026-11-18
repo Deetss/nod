@@ -8,6 +8,8 @@ import {
   type SessionView,
 } from '../../shared/orca-sessions';
 import { AlertIcon, BubbleIcon, Btn, InfoIcon, SlashIcon, ToastIcon } from '../ui';
+import type { HostStatus } from '../../shared/orca-hosts';
+import { isRemote, offlineWord } from './hosts';
 import { outputAgo, StateGlyph } from './orca-ui';
 import { repoLabel } from '../repo-label';
 
@@ -31,6 +33,8 @@ export interface OrcaSectionProps {
   prId: string;
   repo: string;
   sessions: PrSessions | undefined;
+  /** Every Orca host, so a session on an offline host shows its last state and cannot be sent to. */
+  hosts?: readonly HostStatus[];
   /** Automatic messages are on for this repo. */
   autoOn: boolean;
   outcome: SendOutcome | undefined;
@@ -235,7 +239,8 @@ export function OrcaSection(p: OrcaSectionProps) {
   }
 
   const outcome = p.outcome && p.outcome.prId === p.prId ? p.outcome : undefined;
-  const hint = hintFor(one);
+  const offline = offlineWord(one, p.hosts ?? []);
+  const hint = offline ? undefined : hintFor(one);
   const detail = outputAgo(one.lastOutputAt);
   const right = outcome ? RESULT[outcome.status].right : 'related';
   const reason =
@@ -258,11 +263,12 @@ export function OrcaSection(p: OrcaSectionProps) {
       ) : (
         <div className="orca-body">
           <div className="orca-session-row">
-            <span className={`orca-state-glyph orca-state-${one.state}`}>
-              <StateGlyph state={one.state} size={14} />
+            <span className={`orca-state-glyph orca-state-${offline ? 'unknown' : one.state}`}>
+              <StateGlyph state={offline ? 'unknown' : one.state} size={14} />
             </span>
             <span className="mono orca-name" title={one.name}>{one.name}</span>
-            <span className={`orca-word orca-state-${one.state}`}>{STATE_WORD[one.state]}</span>
+            {isRemote(one.host) ? <span className="orca-on-host">{`on ${one.host}`}</span> : null}
+            <span className={`orca-word orca-state-${offline ? 'unknown' : one.state}`}>{offline ?? STATE_WORD[one.state]}</span>
           </div>
           <div className="orca-reason muted">{reason}</div>
           <div className="orca-detail muted">
@@ -275,6 +281,10 @@ export function OrcaSection(p: OrcaSectionProps) {
               <Btn aria-disabled="true" className="is-busy">
                 <span className="spinner" aria-hidden="true" />
                 Sending...
+              </Btn>
+            ) : offline ? (
+              <Btn keyHint="s" disabled title={`Orca host ${one.host} is offline`}>
+                Send message...
               </Btn>
             ) : (
               <Btn keyHint="s" onClick={p.onSend}>Send message...</Btn>

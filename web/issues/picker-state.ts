@@ -14,6 +14,8 @@ export interface PickerItem {
   node: ReactNode;
   /** Text matched by the filter box. */
   text: string;
+  /** Shown but not pickable, such as an offline Orca host. */
+  disabled?: boolean;
 }
 
 export interface PickerStateOptions {

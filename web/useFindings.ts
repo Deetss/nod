@@ -21,6 +21,7 @@ import type { OrcaDispatchRequest } from '../shared/orca';
 import { SEND_MAX, type SendResult, type SessionView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
+import type { HostChoice } from './orca/OrcaContext';
 import { bot, reviewer } from './org-settings';
 
 /** One action on one thread: not started, running, finished, or failed with a reason. */
@@ -50,6 +51,8 @@ export interface DispatchOffer {
   single?: SessionView;
   agents: readonly string[];
   headRef: string;
+  /** The Orca hosts and where a new worktree goes. Absent means this machine only. */
+  host?: HostChoice;
 }
 
 /** The target Dispatch all confirmed. `remember` saves a related session as this PR's choice. */
@@ -381,8 +384,9 @@ export function useFindings(o: Options): FindingControls | undefined {
       const checked = new Set(seed ? ids.filter((id) => seed.checked.has(id)) : ids);
       const edited = seed?.edited ?? false;
       const base: AllState = { ids, checked, text: edited && seed ? seed.text : textFor(checked), edited, busy: false };
-      const { single, related, possible } = sender.offer;
-      if (phone && !single && related.length + possible.length > 0) sender.pick((session, once) => setAll({ ...base, picked: { session, once } }));
+      const { single, related, possible, host } = sender.offer;
+      // With paired hosts the phone sheet carries its own Send to list, New worktree included.
+      if (phone && !host?.multi && !single && related.length + possible.length > 0) sender.pick((session, once) => setAll({ ...base, picked: { session, once } }));
       else setAll(base);
     },
     [canDispatchAll, sender, eligible, textFor, phone],
