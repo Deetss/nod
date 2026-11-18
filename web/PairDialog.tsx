@@ -58,7 +58,9 @@ function DeviceRow({ device, onRename, onRevoke }: DeviceRowProps) {
         <>
           <span className="pair-device-name">
             {device.name}
+            <span className="pair-device-role">{device.role}</span>
             <span className="muted small"> last seen {new Date(device.lastSeen).toLocaleString()}</span>
+
           </span>
           <Btn onClick={() => setName(device.name)}>Rename</Btn>
           <Btn onClick={() => void onRevoke(device.id)}>Revoke</Btn>

@@ -200,11 +200,28 @@ function isPublicPath(method: string, path: string): boolean {
   );
 }
 
-/** Rejects loopback-only routes (pairing admin) when the request came through the tailnet. */
+/** Rejects loopback-only routes (Update phones, test push) when the request came through the tailnet. */
 export const loopbackOnly: MiddlewareHandler = async (c, next) => {
   if (isTailnetRequest(c)) return c.text('Loopback only', 403);
   await next();
 };
+
+/**
+ * Device admin routes and the settings write: loopback, or a tailnet request whose
+ * device key belongs to an admin device. Phone and desktop keys are refused. Mutating
+ * routes still pass the mutation guard (token and Origin) first.
+ */
+export function adminOnly(devices: DeviceStore): MiddlewareHandler {
+  const logOnce = createLogOnce();
+  return async (c, next) => {
+    if (!isTailnetRequest(c)) return next();
+    const key = getCookie(c, DEVICE_COOKIE);
+    if (key && devices.roleForKey(key) === 'admin') return next();
+    logOnce(`[security] 403 Admin device only on ${c.req.path}`);
+    return c.text('Admin device only', 403);
+  };
+}
+
 
 /**
  * Tailnet requests also need a device key from a paired phone, on top of the

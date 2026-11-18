@@ -103,7 +103,7 @@ describe('GET /api/connections', () => {
     expect(body.github.login).toBe('acme-dev');
     expect(body.orca).toEqual({ running: false, sessions: 0 });
     expect(body.devices).toHaveLength(2);
-    for (const d of body.devices) expect(Object.keys(d).sort()).toEqual(['id', 'lastSeen', 'name', 'push']);
+    for (const d of body.devices) expect(Object.keys(d).sort()).toEqual(['id', 'lastSeen', 'name', 'push', 'role']);
     expect(body.devices.find((d) => d.name === 'Android phone')?.push).toBe(true);
     expectNoSecrets(res.text, [phoneKey, laptopKey]);
   });
@@ -116,7 +116,8 @@ describe('GET /api/connections', () => {
     const self = body.devices.find((d) => d.self);
     expect(self).toMatchObject({ name: 'Android phone', push: true, self: true });
     const other = body.devices.find((d) => !d.self);
-    expect(Object.keys(other ?? {}).sort()).toEqual(['lastSeen', 'name', 'push']);
+    expect(Object.keys(other ?? {}).sort()).toEqual(['lastSeen', 'name', 'push', 'role']);
+
     for (const d of body.devices) expect(d.id).toBeUndefined();
     expectNoSecrets(res.text, [phoneKey, laptopKey]);
   });

@@ -3,7 +3,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { stateDir } from './app-paths';
 import type { DeviceLink } from '../shared/connections';
-import type { DeviceInfo } from '../shared/pairing';
+import { isDeviceRole, type DeviceInfo, type DeviceRole } from '../shared/pairing';
 import type { PushSubscriptionJson } from '../shared/push';
 import { TRIGGER_KEYS, type TriggerSwitches } from '../shared/notify-rules';
 
@@ -16,6 +16,8 @@ const NAME_MAX = 60;
 interface StoredDevice {
   id: string;
   name: string;
+  /** Records from before roles existed load as `phone`. */
+  role: DeviceRole;
   /** SHA-256 of the device key, hex. The key itself is never stored. */
   hash: string;
   createdAt: string;
@@ -54,21 +56,23 @@ const hashKey = (key: string) => createHash('sha256').update(key).digest('hex');
 function parseStored(raw: unknown): StoredDevice[] {
   const list = (raw as { devices?: unknown } | null)?.devices;
   if (!Array.isArray(list)) return [];
-  return list.filter((d): d is StoredDevice => {
-    if (typeof d !== 'object' || d === null) return false;
+  return list.flatMap((d): StoredDevice[] => {
+    if (typeof d !== 'object' || d === null) return [];
     const r = d as Record<string, unknown>;
-    return ['id', 'name', 'hash', 'createdAt', 'lastSeen'].every((k) => typeof r[k] === 'string');
+    if (!['id', 'name', 'hash', 'createdAt', 'lastSeen'].every((k) => typeof r[k] === 'string')) return [];
+    return [{ ...(d as StoredDevice), role: isDeviceRole(r.role) ? r.role : 'phone' }];
   });
 }
 
 /** Display name for a new device, taken from its User-Agent. The user can rename it. */
-export function deviceNameFromUserAgent(ua: string | undefined): string {
-  if (!ua) return 'Phone';
+export function deviceNameFromUserAgent(ua: string | undefined, role: DeviceRole = 'phone'): string {
+  const fallback = role === 'phone' ? 'Phone' : 'Desktop';
+  if (!ua) return fallback;
   if (/iPhone/.test(ua)) return 'iPhone';
   if (/iPad/.test(ua)) return 'iPad';
   const android = /Android[^;)]*;\s*([^;)]+)/.exec(ua)?.[1]?.replace(/\s*Build\/.*$/, '').trim();
   if (android) return android.length > 2 ? android : 'Android phone';
-  return 'Phone';
+  return fallback;
 }
 
 /** Paired phones. Holds only key hashes, in memory and (when given a path) in a mode 600 file. */
@@ -97,20 +101,21 @@ export class DeviceStore {
   }
 
   /** Registers a device and returns its key. This is the only time the key exists outside the phone. */
-  async add(name: string): Promise<string> {
+  async add(name: string, role: DeviceRole = 'phone'): Promise<string> {
     const key = randomBytes(32).toString('base64url');
     const now = new Date().toISOString();
     const hash = hashKey(key);
-    const device = {
+    const device: StoredDevice = {
       id: randomBytes(6).toString('hex'),
       name: name.trim().slice(0, NAME_MAX) || 'Phone',
+      role,
       hash,
       createdAt: now,
       lastSeen: now,
     };
     this.byHash.set(hash, device);
     await this.save();
-    console.error(`[devices] paired ${device.id} (${device.name})`);
+    console.error(`[devices] paired ${device.id} (${device.name}, ${role})`);
     return key;
   }
 
@@ -146,6 +151,11 @@ export class DeviceStore {
     else delete device.push;
     await this.save();
     return true;
+  }
+
+  /** The role of the device that owns `key`, or undefined for an unknown key. */
+  roleForKey(key: string): DeviceRole | undefined {
+    return this.byHash.get(hashKey(key))?.role;
   }
 
   /** The id of the device that owns `key`, without touching its last-seen time. */
@@ -205,7 +215,7 @@ export class DeviceStore {
 
   list(): DeviceInfo[] {
     return [...this.byHash.values()]
-      .map(({ id, name, createdAt, lastSeen }) => ({ id, name, createdAt, lastSeen }))
+      .map(({ id, name, role, createdAt, lastSeen }) => ({ id, name, role, createdAt, lastSeen }))
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   }
 
@@ -214,7 +224,15 @@ export class DeviceStore {
     const self = selfKey ? hashKey(selfKey) : undefined;
     return [...this.byHash.values()]
       .sort((a, b) => b.lastSeen.localeCompare(a.lastSeen))
-      .map((d) => ({ id: d.id, name: d.name, lastSeen: d.lastSeen, push: d.push !== undefined, ...(d.hash === self ? { self: true as const } : {}) }));
+      .map((d) => ({
+        id: d.id,
+        name: d.name,
+        role: d.role,
+        lastSeen: d.lastSeen,
+        push: d.push !== undefined,
+        ...(d.hash === self ? { self: true as const } : {}),
+      }));
+
   }
 
   async rename(id: string, name: string): Promise<boolean> {

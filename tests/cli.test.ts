@@ -41,7 +41,7 @@ describe('settingsText', () => {
 describe('pairText', () => {
   it('shows the link, a QR code and the minutes left', () => {
     const link = 'https://box.example.ts.net/pair#code=abc';
-    const text = pairText({ code: 'abc', link, expiresAt: '2026-01-01T00:10:00Z' }, new Date('2026-01-01T00:00:00Z'));
+    const text = pairText({ code: 'abc', link, expiresAt: '2026-01-01T00:10:00Z', role: 'phone' }, new Date('2026-01-01T00:00:00Z'));
     expect(text).toContain(link);
     expect(text).toContain('Expires in 10 min.');
     expect(text).toContain('\x1b[30;47m');

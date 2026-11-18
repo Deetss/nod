@@ -45,14 +45,17 @@ function github(inbox: InboxData | undefined, conn: Connection, failures: number
 }
 
 /**
- * The desktop gets every device with its id. A paired phone gets its own row, and the others'
- * name, last-seen and push state only, since rename and revoke stay loopback only.
+ * The desktop gets every device with its id. A tailnet device gets its own row, and every
+ * row's name, role, last-seen and push state only, never an id; an admin device reads ids
+ * from the admin-only device list.
  */
 function devicesFor(c: Context, devices: DeviceStore): DeviceLink[] {
   if (!isTailnetRequest(c)) return devices.links().map(({ self: _self, ...d }) => d);
-  return devices.links(getCookie(c, DEVICE_COOKIE)).map(({ name, lastSeen, push, self }) => ({
+  return devices.links(getCookie(c, DEVICE_COOKIE)).map(({ name, role, lastSeen, push, self }) => ({
     name,
+    role,
     lastSeen,
+
     push,
     ...(self ? { self } : {}),
   }));

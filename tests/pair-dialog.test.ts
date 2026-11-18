@@ -14,8 +14,15 @@ const CODE: PairCode = {
   code: 'abc',
   expiresAt: new Date(Date.now() + 10 * 60_000).toISOString(),
   link: 'https://hq.example.ts.net/pair#code=abc',
+  role: 'phone',
 };
-const DEVICE = { id: 'd1', name: 'Galaxy', createdAt: '2026-11-06T10:00:00Z', lastSeen: '2026-11-06T11:00:00Z' };
+const DEVICE = {
+  id: 'd1',
+  name: 'Galaxy',
+  role: 'admin' as const,
+  createdAt: '2026-11-06T10:00:00Z',
+  lastSeen: '2026-11-06T11:00:00Z',
+};
 
 function fakeFetch(devices: DevicesResponse, calls: string[]) {
   return vi.fn((url: string, init?: RequestInit) => {
@@ -51,6 +58,8 @@ describe('PairDialog', () => {
     expect(el.querySelector<HTMLInputElement>('input[aria-label="Pairing link"]')?.value).toBe(CODE.link);
     expect(el.textContent).toMatch(/expires in 9:5\d|expires in 10:00/);
     expect(el.textContent).toContain('Galaxy');
+    expect(el.querySelector('.pair-device-role')?.textContent).toBe('admin');
+
     expect(el.textContent).toContain('Copy');
   });
 
