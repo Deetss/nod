@@ -32,7 +32,7 @@
 }
 
 .orca-host-fallback {
-  margin: 4px 0 0;
+  margin: 8px 0 4px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -55,7 +55,20 @@
   padding: 0 12px;
   border: 2px solid transparent;
   border-radius: 6px;
-  box-shadow: 0 -1px 0 var(--borderColor-muted);
+  position: relative;
+}
+
+.dispatch-all-pick .orca-new-row:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -2px;
+  right: -2px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.dispatch-all-pick .orca-new-row.is-focus::before {
+  display: none;
 }
 
 .orca-new-name {
@@ -86,7 +99,11 @@
   background: none;
 }
 
-/* Host select and its menu. */
+/* Host select and its menu. The open menu hangs past the list's rounded clip. */
+.dispatch-all-pick:has(.orca-host-menu) {
+  overflow: visible;
+}
+
 .orca-host-select {
   position: relative;
   flex: none;
@@ -107,6 +124,10 @@
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   cursor: pointer;
+}
+
+.orca-host-button[aria-expanded='true'] {
+  border-color: var(--borderColor-accent-emphasis);
 }
 
 .orca-host-button:disabled {
@@ -165,9 +186,6 @@
 
 .orca-host-row.is-focus:not(.is-on) {
   background: var(--bgColor-neutral-muted);
-}
-
-.orca-host-row.is-focus {
   box-shadow: inset 2px 0 0 var(--fgColor-accent);
 }
 
@@ -214,7 +232,6 @@
 .orca-chip-host .orca-chip-word {
   flex: 0 1 auto;
   min-width: 0;
-  margin-left: -4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -235,6 +252,15 @@
   flex: none;
   font: 400 12px/18px var(--fontStack-system);
   color: var(--fgColor-muted);
+}
+
+/* The caption follows the name; the state word keeps the right edge. */
+.orca-session-row .orca-name:has(+ .orca-on-host) {
+  flex: 0 1 auto;
+}
+
+.orca-session-row .orca-on-host {
+  margin-right: auto;
 }
 
 /* P1: phone Send to list. */
