@@ -5,6 +5,7 @@ import { mapSessionState, type SessionCandidate } from '../shared/orca-sessions'
 function session(over: Partial<SessionCandidate> = {}): SessionCandidate {
   return {
     id: 'wt1|pane1',
+    host: 'local',
     worktreeId: 'wt1',
     name: 'crew-1355',
     state: 'working',

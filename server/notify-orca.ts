@@ -32,6 +32,7 @@ export interface NotifyDeps {
   timeoutMs?: number;
   confirmMs?: number;
   now?: () => number;
+  log?: (line: string) => void;
 }
 
 export interface NotifyRequest {
@@ -133,6 +134,8 @@ export class OrcaNotifier {
     const { provider, sessions, prefs } = this.deps;
     const word = EVENT_WORD[req.kind];
     const snap = await sessions.snapshot();
+    const log = this.deps.log ?? ((line: string) => console.log(line));
+    for (const h of snap.hosts) if (!h.online) log(`[orca] skipped ${h.name}: offline`);
     if (!snap.available) return NONE;
 
     const viewer = (await provider.inbox(req.state, 'none')).viewer;
@@ -176,7 +179,7 @@ export class OrcaNotifier {
         ...(req.reason ? { reason: req.reason } : {}),
       }),
     );
-    const sent = await sendToSession(this.deps.orca, sessions, session.id, text, {
+    const sent = await sendToSession(this.deps.orca, sessions, session.host, session.id, text, {
       timeoutMs: this.deps.timeoutMs ?? NOTIFY_TIMEOUT_MS,
       confirmMs: this.deps.confirmMs ?? NOTIFY_CONFIRM_MS,
     });

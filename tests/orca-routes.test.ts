@@ -92,7 +92,7 @@ describe('POST /api/orca/choose', () => {
 
   it('clears a choice with null', async () => {
     const s = setup([linked]);
-    s.prefs.choose('PR_acme-co/acme-api_305', { worktreeId: 'w', sessionId: 'w|p' });
+    s.prefs.choose('PR_acme-co/acme-api_305', { host: 'local', worktreeId: 'w', sessionId: 'w|p' });
     await s.post('/orca/choose', { prId: 'PR_acme-co/acme-api_305', sessionId: null });
     expect(s.prefs.get().chosen).toEqual({});
   });
@@ -133,7 +133,7 @@ describe('OrcaPrefsStore file', () => {
     const path = join(dir, 'orca-prefs.json');
     const store = await OrcaPrefsStore.open(path);
     store.patch({ enabled: false });
-    store.choose('PR_1', { worktreeId: 'w', sessionId: 'w|p' });
+    store.choose('PR_1', { host: 'local', worktreeId: 'w', sessionId: 'w|p' });
     await store.flush();
     expect((await stat(path)).mode & 0o777).toBe(0o600);
     expect(JSON.parse(await readFile(path, 'utf8'))).toMatchObject({ enabled: false, chosen: { PR_1: { sessionId: 'w|p' } } });
@@ -146,6 +146,6 @@ describe('OrcaPrefsStore file', () => {
     dir = await mkdtemp(join(tmpdir(), 'orca-prefs-'));
     const path = join(dir, 'orca-prefs.json');
     await (await import('node:fs/promises')).writeFile(path, '{"enabled":"yes"}');
-    expect((await OrcaPrefsStore.open(path)).get()).toEqual({ enabled: true, repos: {}, chosen: {}, dispatch: {} });
+    expect((await OrcaPrefsStore.open(path)).get()).toEqual({ enabled: true, repos: {}, chosen: {}, dispatch: {}, hosts: {} });
   });
 });

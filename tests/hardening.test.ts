@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { createApp } from '../server/app';
 import { FixtureProvider } from '../server/fixture-provider';
 import { ApiError } from '../server/github-client';
-import { dispatchBody } from '../server/orca';
+import { dispatchBody } from '../server/orca-dispatch';
 import { parseRef, REPO_RE } from '../server/provider';
 import { SeenStore } from '../server/seen';
 

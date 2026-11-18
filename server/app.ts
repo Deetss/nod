@@ -17,7 +17,8 @@ import { saveSettings, settingsFileExists } from './settings-write';
 import type { DiffMode } from '../shared/types';
 import { ApiError } from './github-client';
 import { LOOKUP_MAX_REPOS } from './number-lookup';
-import { dispatchBodyFor, Orca } from './orca';
+import { Orca } from './orca';
+import { dispatchBodyFor } from './orca-dispatch';
 import { streamSSE } from 'hono/streaming';
 import { parseRef, REPO_RE, type InlineCommentArgs, type PrRef, type Provider, type SyncEvent } from './provider';
 import { getCookie } from 'hono/cookie';
@@ -38,7 +39,7 @@ import { ActivityStore } from './activity-store';
 import type { ActionResult } from '../shared/types';
 import { OrcaNotifier, type NotifyRequest } from './notify-orca';
 import { OrcaPrefsStore } from './orca-prefs';
-import { registerOrcaRoutes } from './orca-routes';
+import { registerOrcaRoutes, resolveHost } from './orca-routes';
 import { OrcaSessions } from './orca-sessions';
 import type { SyncLoop } from './sync-loop';
 import { AgentModelCatalog } from './agent-models';
@@ -793,10 +794,12 @@ export function createApp(opts: AppOptions): Hono {
     const parsed = dispatchSchema.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     const body = parsed.data;
+    const pick = await resolveHost(orcaSessions, orcaPrefs, body.host, body.repo);
+    if (!pick.ok) return c.json({ error: pick.error }, pick.status);
     const chosen = body.model !== undefined;
     const remembered = orcaPrefs.get().dispatch[body.agent];
     const req = chosen ? body : { ...body, ...remembered };
-    const res = await orca.dispatch(req);
+    const res = await orca.dispatch(req, pick.host);
     if (res.ok && chosen) {
       orcaPrefs.rememberDispatch(body.agent, { ...(body.model ? { model: body.model } : {}), ...(body.effort ? { effort: body.effort } : {}) });
     }

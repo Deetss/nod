@@ -6,7 +6,7 @@ import { adminMergeArgs, mergeFlags } from '../shared/pr-actions';
 import { DEFAULT_SETTINGS, statusNames } from '../shared/settings';
 import { mergeMethodFor } from '../shared/types';
 import { FixtureProvider } from '../server/fixture-provider';
-import { dispatchBodyFor } from '../server/orca';
+import { dispatchBodyFor } from '../server/orca-dispatch';
 import { resolveProject, type ProjectMetaResponse } from '../server/project-config';
 import { fullSearch } from '../server/queries';
 import { loadSettings } from '../server/settings';

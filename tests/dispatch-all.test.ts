@@ -141,7 +141,7 @@ describe('useFindings Dispatch all', () => {
   });
 
   const detail = { summary: { id: 'pr-365', repo: REPO, number: 365 }, isOpen: true, headRef: 'feature/365', thread: FIXTURE_FINDING_THREADS } as unknown as PrDetail;
-  const session: SessionView = { id: 's1', name: 'fix-migration-365', state: 'working', branch: 'b', via: 'pr', reason: 'linked PR #365' };
+  const session: SessionView = { id: 's1', host: 'local', name: 'fix-migration-365', state: 'working', branch: 'b', via: 'pr', reason: 'linked PR #365' };
 
   function mount(sender: FindingSender | undefined) {
     const notify = vi.fn();

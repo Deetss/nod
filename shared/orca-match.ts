@@ -64,11 +64,12 @@ const byRecent = (a: Matched, b: Matched): number => (b.session.lastOutputAt ?? 
 export function matchSessions(
   pr: MatchTarget,
   sessions: readonly SessionCandidate[],
-  chosen?: { sessionId: string; worktreeId: string },
+  chosen?: { host?: string; sessionId?: string; worktreeId: string },
 ): MatchResult {
   const live = sessions.filter((s) => s.live);
   if (chosen) {
-    const pick = live.find((s) => s.id === chosen.sessionId) ?? live.find((s) => s.worktreeId === chosen.worktreeId);
+    const onHost = live.filter((s) => chosen.host === undefined || s.host === chosen.host);
+    const pick = onHost.find((s) => s.id === chosen.sessionId) ?? onHost.find((s) => s.worktreeId === chosen.worktreeId);
     if (pick) return { related: [{ session: pick, via: 'chosen', reason: 'chosen by you' }], possible: [] };
   }
   const related: Matched[] = [];

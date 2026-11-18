@@ -27,6 +27,7 @@ afterEach(() => {
 
 const view = (over: Partial<SessionView> = {}): SessionView => ({
   id: 's1',
+  host: 'local',
   name: 'crew-1355',
   state: 'working',
   branch: 'build-bot/x',

@@ -2,7 +2,7 @@ import { MESSAGE_TAG } from '../shared/orca-message';
 import type { Receipt, SendResult } from '../shared/orca-sessions';
 import { OrcaUnavailable, timedOut, type Orca } from './orca';
 import { observe, startWatch, type PendingChecks, type Watch } from './orca-confirm';
-import type { OrcaSessions } from './orca-sessions';
+import { sessionKey, type OrcaSessions } from './orca-sessions';
 
 export const USER_SEND_TIMEOUT_MS = 15_000;
 
@@ -103,14 +103,15 @@ async function confirm(
 }
 
 /**
- * Sends one prepared message to a session. The handle is resolved at call time from a fresh
- * `worktree ps` and `terminal list`, never from the cache. The command always carries `--enter` and
- * the text as a single argument. Never resends on silence; a stale handle is re-resolved once and
- * only the replacement is used.
+ * Sends one prepared message to a session on its host. The handle is resolved at call time from a
+ * fresh `worktree ps` and `terminal list` on that host, never from the cache. The command always
+ * carries `--enter` and the text as a single argument. Never resends on silence; a stale handle is
+ * re-resolved once and only the replacement is used.
  */
 export async function sendToSession(
   orca: Orca,
   sessions: OrcaSessions,
+  host: string,
   sessionId: string,
   text: string,
   opts: SendOptions = {},
@@ -119,10 +120,10 @@ export async function sendToSession(
   const timeoutMs = opts.timeoutMs ?? USER_SEND_TIMEOUT_MS;
 
   const resolve = async (): Promise<{ handle?: string; state?: string; result?: SendResult }> => {
-    const snap = await sessions.fresh();
+    const snap = await sessions.fresh(host);
     if (!snap.available) return { result: { status: 'unreachable' } };
-    const s = snap.sessions.find((x) => x.id === sessionId && x.live);
-    const term = s ? snap.terminals.get(s.id) : undefined;
+    const s = snap.sessions.find((x) => x.host === host && x.id === sessionId && x.live);
+    const term = s ? snap.terminals.get(sessionKey(host, s.id)) : undefined;
     if (!s || !term || !term.writable) return { result: { status: 'not-writable' } };
     return { handle: term.handle, state: s.state };
   };
@@ -134,9 +135,9 @@ export async function sendToSession(
     if (opts.retryRequestId) args.push('--retry-request', opts.retryRequestId);
     args.push('--json');
     const watch =
-      (opts.confirmMs ?? 0) > 0 ? await startWatch(orca, sessionId, target.handle, text, target.state ?? 'unknown') : undefined;
+      (opts.confirmMs ?? 0) > 0 ? await startWatch(orca, host, sessionId, target.handle, text, target.state ?? 'unknown') : undefined;
     try {
-      return await confirm(orca, sessions, parseReceipt(await orca.cli(args, timeoutMs)), watch, opts);
+      return await confirm(orca, sessions, parseReceipt(await orca.cli(args, timeoutMs, host)), watch, opts);
     } catch (e) {
       const failure = classify(e);
       if (failure !== 'stale') return failure;
@@ -157,11 +158,12 @@ export async function checkAgain(
   orca: Orca,
   sessions: OrcaSessions,
   pending: PendingChecks,
+  host: string,
   sessionId: string,
   requestId: string,
   ms: number,
 ): Promise<SendResult | undefined> {
-  const watch = pending.get(requestId, sessionId);
+  const watch = pending.get(requestId, host, sessionId);
   if (!watch) return undefined;
 
   // The agent may have finished its turn by now, so only the echo counts.
@@ -171,13 +173,13 @@ export async function checkAgain(
   return { status: 'sent', requestId, confirmedBy: by };
 }
 
-/** Brings a session's terminal to the front in Orca. The handle is resolved at call time. */
-export async function openInOrca(orca: Orca, sessions: OrcaSessions, sessionId: string): Promise<boolean> {
-  const snap = await sessions.fresh();
-  const term = snap.available ? snap.terminals.get(sessionId) : undefined;
+/** Brings a session's terminal to the front in Orca on its host. The handle is resolved at call time. */
+export async function openInOrca(orca: Orca, sessions: OrcaSessions, host: string, sessionId: string): Promise<boolean> {
+  const snap = await sessions.fresh(host);
+  const term = snap.available ? snap.terminals.get(sessionKey(host, sessionId)) : undefined;
   if (!term) return false;
   try {
-    await orca.cli(['terminal', 'switch', '--terminal', term.handle, '--json'], 10_000);
+    await orca.cli(['terminal', 'switch', '--terminal', term.handle, '--json'], 10_000, host);
     return true;
   } catch {
     return false;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { OrcaSessions, parseSessions, SESSIONS_TTL_MS } from '../server/orca-sessions';
+import { OrcaSessions, parseSessions, sessionKey, SESSIONS_TTL_MS } from '../server/orca-sessions';
 import { harness, listJson, psJson, PROMPT_SECRET, type FakeSession } from './orca-helpers';
 
 const a: FakeSession = { name: 'crew-1355', repo: 'acme-web', branch: 'build-bot/posthog-opt-in', linkedPr: 1355 };
@@ -23,7 +23,7 @@ describe('parseSessions', () => {
       linkedPrs: [{ number: 1355 }],
       live: true,
     });
-    expect(snap.terminals.get(s!.id)).toEqual({ handle: 'term_crew-1355', writable: true });
+    expect(snap.terminals.get(sessionKey('local', s!.id))).toEqual({ handle: 'term_crew-1355', writable: true });
   });
 
   it('never carries prompt, assistant text, tool input or previews', () => {

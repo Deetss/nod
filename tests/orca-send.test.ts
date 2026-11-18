@@ -14,7 +14,7 @@ function setup(sessions: FakeSession[] = [s]) {
 describe('sendToSession arguments', () => {
   it('passes the handle, one --text value and --enter, with --json', async () => {
     const { h, sessions } = setup();
-    const res = await sendToSession(h.orca, sessions, ID, '[nod] a b; rm -rf /');
+    const res = await sendToSession(h.orca, sessions, 'local', ID, '[nod] a b; rm -rf /');
     expect(res.status).toBe('sent');
     const [call] = h.sends();
     expect(call).toEqual([
@@ -24,13 +24,13 @@ describe('sendToSession arguments', () => {
 
   it('never sends text without --enter', async () => {
     const { h, sessions } = setup();
-    await sendToSession(h.orca, sessions, ID, '[nod] hi');
+    await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi');
     expect(h.sends().every((c) => c.includes('--enter'))).toBe(true);
   });
 
   it('refuses untagged text', async () => {
     const { h, sessions } = setup();
-    expect((await sendToSession(h.orca, sessions, ID, '--help')).status).toBe('unreachable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '--help')).status).toBe('unreachable');
     expect(h.sends()).toHaveLength(0);
   });
 
@@ -38,7 +38,7 @@ describe('sendToSession arguments', () => {
     const { h, sessions } = setup();
     await sessions.snapshot();
     h.setSessions([{ ...s, handle: 'term_replacement' }]);
-    await sendToSession(h.orca, sessions, ID, '[nod] hi');
+    await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi');
     expect(h.sends()[0]).toContain('term_replacement');
   });
 });
@@ -46,7 +46,7 @@ describe('sendToSession arguments', () => {
 describe('status mapping', () => {
   it('sent when Orca proves the turn started', async () => {
     const { h, sessions } = setup();
-    expect(await sendToSession(h.orca, sessions, ID, '[nod] hi')).toEqual({
+    expect(await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).toEqual({
       status: 'sent',
       requestId: 'req-1',
       confirmedBy: 'orca',
@@ -57,7 +57,7 @@ describe('status mapping', () => {
   it('unconfirmed when only input_accepted comes back', async () => {
     const { h, sessions } = setup();
     h.onSend.fn = () => JSON.stringify({ result: { requestId: 'r2', stages: ['input_accepted'] } });
-    expect(await sendToSession(h.orca, sessions, ID, '[nod] hi')).toEqual({
+    expect(await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).toEqual({
       status: 'unconfirmed',
       requestId: 'r2',
       receipt: { stages: ['input_accepted'] },
@@ -68,14 +68,14 @@ describe('status mapping', () => {
     const { h, sessions } = setup();
     for (const provider of ['unsupported', 'old-host']) {
       h.onSend.fn = () => JSON.stringify({ result: { provider, stages: ['input_accepted', 'turn_started'] } });
-      expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('unconfirmed');
+      expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('unconfirmed');
     }
   });
 
   it('unconfirmed for an unreadable receipt', async () => {
     const { h, sessions } = setup();
     h.onSend.fn = () => 'ok';
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('unconfirmed');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('unconfirmed');
   });
 
   it('not-writable for terminal_not_writable', async () => {
@@ -83,19 +83,19 @@ describe('status mapping', () => {
     h.onSend.fn = () => {
       throw failure('terminal_not_writable');
     };
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('not-writable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('not-writable');
     expect(h.sends()).toHaveLength(1);
   });
 
   it('not-writable without sending when terminal list says the terminal is not writable', async () => {
     const { h, sessions } = setup([{ ...s, writable: false }]);
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('not-writable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('not-writable');
     expect(h.sends()).toHaveLength(0);
   });
 
   it('not-writable when the session is gone', async () => {
     const { h, sessions } = setup([]);
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('not-writable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('not-writable');
   });
 
   it('blocked for agent_prompt_blocked, with no retry', async () => {
@@ -103,14 +103,14 @@ describe('status mapping', () => {
     h.onSend.fn = () => {
       throw failure('agent_prompt_blocked');
     };
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('blocked');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('blocked');
     expect(h.sends()).toHaveLength(1);
   });
 
   it('unreachable when Orca is down', async () => {
     const { h, sessions } = setup();
     h.down.value = true;
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('unreachable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('unreachable');
     expect(h.sends()).toHaveLength(0);
   });
 
@@ -119,7 +119,7 @@ describe('status mapping', () => {
     h.onSend.fn = () => {
       throw new Error('{"requestId":"retry-9","error":"transport reset"}');
     };
-    expect(await sendToSession(h.orca, sessions, ID, '[nod] hi')).toEqual({ status: 'unreachable', requestId: 'retry-9' });
+    expect(await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).toEqual({ status: 'unreachable', requestId: 'retry-9' });
     expect(h.sends()).toHaveLength(1);
   });
 
@@ -128,7 +128,7 @@ describe('status mapping', () => {
     h.onSend.fn = () => {
       throw Object.assign(new Error(''), { timedOut: true });
     };
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('unconfirmed');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('unconfirmed');
     expect(h.sends()).toHaveLength(1);
   });
 });
@@ -136,7 +136,7 @@ describe('status mapping', () => {
 describe('retry and stale handles', () => {
   it('reissues with the same request id when asked, once', async () => {
     const { h, sessions } = setup();
-    await sendToSession(h.orca, sessions, ID, '[nod] hi', { retryRequestId: 'retry-9' });
+    await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi', { retryRequestId: 'retry-9' });
     const args = h.sends()[0] ?? [];
     expect(args.slice(args.indexOf('--retry-request'), args.indexOf('--retry-request') + 2)).toEqual(['--retry-request', 'retry-9']);
     expect(h.sends()).toHaveLength(1);
@@ -154,7 +154,7 @@ describe('retry and stale handles', () => {
       expect(args).toContain('term_new');
       return JSON.stringify({ result: { stages: ['turn_started'] } });
     };
-    const res = await sendToSession(h.orca, sessions, ID, '[nod] hi');
+    const res = await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi');
     expect(res.status).toBe('sent');
     expect(h.sends().map((c) => c[4])).toEqual(['term_crew-1355', 'term_new']);
   });
@@ -164,7 +164,7 @@ describe('retry and stale handles', () => {
     h.onSend.fn = () => {
       throw failure('terminal_handle_stale');
     };
-    expect((await sendToSession(h.orca, sessions, ID, '[nod] hi')).status).toBe('unreachable');
+    expect((await sendToSession(h.orca, sessions, 'local', ID, '[nod] hi')).status).toBe('unreachable');
     expect(h.sends()).toHaveLength(1);
   });
 });

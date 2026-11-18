@@ -12,6 +12,7 @@ const MAX_PENDING = 50;
  * output cursor, a slice of the message to look for after it, and whether the agent was idle.
  */
 export interface Watch {
+  host: string;
   sessionId: string;
   handle: string;
   cursor?: string;
@@ -28,21 +29,28 @@ const cursorOf = (out: string): string | undefined => {
 };
 
 /** Notes where the terminal's output stands now. A failed read only means the echo check is skipped. */
-export async function startWatch(orca: Orca, sessionId: string, handle: string, text: string, state: string): Promise<Watch> {
+export async function startWatch(
+  orca: Orca,
+  host: string,
+  sessionId: string,
+  handle: string,
+  text: string,
+  state: string,
+): Promise<Watch> {
   let cursor: string | undefined;
   try {
-    cursor = cursorOf(await orca.cli(['terminal', 'read', '--terminal', handle, '--limit', '1', '--json'], READ_TIMEOUT_MS));
+    cursor = cursorOf(await orca.cli(['terminal', 'read', '--terminal', handle, '--limit', '1', '--json'], READ_TIMEOUT_MS, host));
   } catch {
     cursor = undefined;
   }
-  return { sessionId, handle, ...(cursor ? { cursor } : {}), snippet: squash(text).slice(0, SNIPPET_CHARS), wasIdle: state !== 'working' };
+  return { host, sessionId, handle, ...(cursor ? { cursor } : {}), snippet: squash(text).slice(0, SNIPPET_CHARS), wasIdle: state !== 'working' };
 }
 
 /** True when the output since the watch began contains the message. Only reads, never keeps the text. */
 async function echoed(orca: Orca, w: Watch): Promise<boolean> {
   if (!w.cursor) return false;
   try {
-    const out = await orca.cli(['terminal', 'read', '--terminal', w.handle, '--cursor', w.cursor, '--json'], READ_TIMEOUT_MS);
+    const out = await orca.cli(['terminal', 'read', '--terminal', w.handle, '--cursor', w.cursor, '--json'], READ_TIMEOUT_MS, w.host);
     const tail = (JSON.parse(out) as { result?: { terminal?: { tail?: unknown } } }).result?.terminal?.tail;
     return Array.isArray(tail) && squash(tail.filter((l) => typeof l === 'string').join('')).includes(w.snippet);
   } catch {
@@ -52,8 +60,8 @@ async function echoed(orca: Orca, w: Watch): Promise<boolean> {
 
 async function startedWorking(sessions: OrcaSessions, w: Watch): Promise<boolean> {
   if (!w.wasIdle) return false;
-  const snap = await sessions.fresh();
-  return snap.sessions.some((s) => s.id === w.sessionId && s.state === 'working');
+  const snap = await sessions.fresh(w.host);
+  return snap.sessions.some((s) => s.host === w.host && s.id === w.sessionId && s.state === 'working');
 }
 
 /**
@@ -82,10 +90,10 @@ export class PendingChecks {
     this.items.set(requestId, { watch, at: this.now() });
   }
 
-  get(requestId: string, sessionId: string): Watch | undefined {
+  get(requestId: string, host: string, sessionId: string): Watch | undefined {
     this.prune();
     const hit = this.items.get(requestId);
-    return hit && hit.watch.sessionId === sessionId ? hit.watch : undefined;
+    return hit && hit.watch.host === host && hit.watch.sessionId === sessionId ? hit.watch : undefined;
   }
 
   delete(requestId: string): void {
