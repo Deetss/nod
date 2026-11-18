@@ -92,7 +92,7 @@ export function useIssueOrca({ issue, pending, wide, toast }: Options): IssueOrc
 
   const openInOrca = useCallback(() => {
     if (!session) return;
-    api.orcaOpen(session.id).catch(() => toast({ ok: false, message: 'Could not open Orca' }));
+    api.orcaOpen(session).catch(() => toast({ ok: false, message: 'Could not open Orca' }));
   }, [session, toast]);
 
   const openSend = useCallback(() => {
@@ -103,7 +103,7 @@ export function useIssueOrca({ issue, pending, wide, toast }: Options): IssueOrc
     (target: SessionView, text: string) => {
       setBusy(true);
       api
-        .orcaSend(target.id, text)
+        .orcaSend(target, text)
         .then((r) => {
           toast(RESULT[r.status](target.name));
           setDialog(undefined);

@@ -1,11 +1,13 @@
-import type { Hono } from 'hono';
+import type { Context, Hono } from 'hono';
 import { z } from 'zod';
+import { hostName, type HostStatus } from '../shared/orca-hosts';
 import { matchSessions, relatedToIssue, type Matched } from '../shared/orca-match';
 import { prepareSend } from '../shared/orca-message';
-import { prefsPatchBody } from '../shared/orca-prefs';
+import { patchHost, prefsPatchBody } from '../shared/orca-prefs';
 import type { OrcaSessionsResponse, PrSessions, SessionCandidate, SessionView } from '../shared/orca-sessions';
 import type { Orca } from './orca';
 import type { OrcaNotifier } from './notify-orca';
+import { pickHost, type HostPick } from './orca-hosts';
 import type { OrcaPrefsStore } from './orca-prefs';
 import { PendingChecks } from './orca-confirm';
 import { checkAgain, openInOrca, sendToSession } from './orca-send';
@@ -20,17 +22,13 @@ export interface OrcaRouteDeps {
   provider: Provider;
 }
 
-const sendBody = z.object({
-  sessionId: z.string().min(1).max(600),
-  text: z.string().max(4000),
-  requestId: z.string().regex(/^[A-Za-z0-9._:-]{1,100}$/).optional(),
-});
-const chooseBody = z.object({ prId: z.string().min(1).max(200), sessionId: z.string().min(1).max(600).nullable() });
-const openBody = z.object({ sessionId: z.string().min(1).max(600) });
-const confirmBody = z.object({
-  sessionId: z.string().min(1).max(600),
-  requestId: z.string().regex(/^[A-Za-z0-9._:-]{1,100}$/),
-});
+const sessionId = z.string().min(1).max(600);
+const requestId = z.string().regex(/^[A-Za-z0-9._:-]{1,100}$/);
+
+const sendBody = z.object({ sessionId, host: hostName.optional(), text: z.string().max(4000), requestId: requestId.optional() });
+const chooseBody = z.object({ prId: z.string().min(1).max(200), sessionId: sessionId.nullable(), host: hostName.optional() });
+const openBody = z.object({ sessionId, host: hostName.optional() });
+const confirmBody = z.object({ sessionId, host: hostName.optional(), requestId });
 
 const NOTICE_WAIT_MS = 6_000;
 /** How long a send waits for the terminal to show an unconfirmed message, and how long Check again looks. */
@@ -39,6 +37,7 @@ const RECHECK_MS = 1_500;
 
 const view = (m: Matched): SessionView => ({
   id: m.session.id,
+  host: m.session.host,
   name: m.session.name,
   state: m.session.state,
   branch: m.session.branch,
@@ -47,7 +46,7 @@ const view = (m: Matched): SessionView => ({
   ...(m.session.lastOutputAt ? { lastOutputAt: m.session.lastOutputAt } : {}),
 });
 
-/** Related and possible sessions for every open PR that has any. One shared snapshot serves all rows. */
+/** Related and possible sessions on every online host for every open PR that has any. One shared snapshot serves all rows. */
 export async function sessionsResponse(deps: OrcaRouteDeps, state: string | undefined): Promise<OrcaSessionsResponse> {
   const snap = await deps.sessions.snapshot();
   const prefs = deps.prefs.get();
@@ -94,12 +93,32 @@ async function issueSessions(
   }
 }
 
+/** The live host list, for `GET /api/orca/hosts` and for checking a write's host. */
+export async function hostList(sessions: OrcaSessions): Promise<HostStatus[]> {
+  return (await sessions.snapshot()).hosts;
+}
+
+/** Picks and checks the host a write acts on. See `pickHost` for the order. */
+export async function resolveHost(
+  sessions: OrcaSessions,
+  prefs: OrcaPrefsStore,
+  requested: string | undefined,
+  repo?: string,
+): Promise<HostPick> {
+  return pickHost(requested, await hostList(sessions), prefs.get(), repo);
+}
+
+const refuse = (c: Context, pick: Extract<HostPick, { ok: false }>) => c.json({ error: pick.error }, pick.status);
+
 /** Registers the read routes on `app` and the write routes on `mutating`, which carries the mutation guard. */
 export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDeps): void {
   const state = (q: string | undefined) => q;
   const pending = new PendingChecks();
+  const host = (requested: string | undefined) => resolveHost(deps.sessions, deps.prefs, requested);
 
   app.get('/api/orca/sessions', async (c) => c.json(await sessionsResponse(deps, state(c.req.query('state')))));
+
+  app.get('/api/orca/hosts', async (c) => c.json(await hostList(deps.sessions)));
 
   app.get('/api/orca/notice/:id', async (c) => {
     const res = await deps.notifier.result(c.req.param('id'), NOTICE_WAIT_MS);
@@ -108,7 +127,9 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
 
   // Fixture mode only: what the in-memory Orca received, for checking without a real session.
   app.get('/api/orca/fixture-sends', (c) =>
-    deps.orca.fake ? c.json(deps.orca.fake.sends.map((s) => ({ handle: s.handle, text: s.text }))) : c.json({ error: 'Not found' }, 404),
+    deps.orca.fake
+      ? c.json(deps.orca.fake.sends.map((s) => ({ host: s.host, handle: s.handle, text: s.text })))
+      : c.json({ error: 'Not found' }, 404),
   );
 
   mutating.post('/orca/send', async (c) => {
@@ -116,7 +137,9 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     const text = prepareSend(parsed.data.text);
     if (text === undefined) return c.json({ error: 'The message is empty or over 600 characters' }, 400);
-    const res = await sendToSession(deps.orca, deps.sessions, parsed.data.sessionId, text, {
+    const pick = await host(parsed.data.host);
+    if (!pick.ok) return refuse(c, pick);
+    const res = await sendToSession(deps.orca, deps.sessions, pick.host, parsed.data.sessionId, text, {
       ...(parsed.data.requestId ? { retryRequestId: parsed.data.requestId } : {}),
       confirmMs: CONFIRM_MS,
       pending,
@@ -127,28 +150,35 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
   mutating.post('/orca/confirm', async (c) => {
     const parsed = confirmBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
-    const { sessionId, requestId } = parsed.data;
-    const res = await checkAgain(deps.orca, deps.sessions, pending, sessionId, requestId, RECHECK_MS);
+    const pick = await host(parsed.data.host);
+    if (!pick.ok) return refuse(c, pick);
+    const res = await checkAgain(deps.orca, deps.sessions, pending, pick.host, parsed.data.sessionId, parsed.data.requestId, RECHECK_MS);
     return res ? c.json(res) : c.json({ error: 'That send is too old to check. Open the session in Orca.' }, 404);
   });
 
   mutating.post('/orca/choose', async (c) => {
     const parsed = chooseBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
-    const { prId, sessionId } = parsed.data;
-    if (sessionId === null) {
+    const { prId, sessionId: id } = parsed.data;
+    if (id === null) {
       deps.prefs.choose(prId, null);
       return c.json({ ok: true });
     }
-    const live = (await deps.sessions.snapshot()).sessions.find((s) => s.id === sessionId && s.live);
+    const pick = await host(parsed.data.host);
+    if (!pick.ok) return refuse(c, pick);
+    const live = (await deps.sessions.snapshot()).sessions.find((s) => s.host === pick.host && s.id === id && s.live);
     if (!live) return c.json({ error: 'That session is not running' }, 404);
-    deps.prefs.choose(prId, { worktreeId: live.worktreeId, sessionId: live.id });
+    deps.prefs.choose(prId, { host: live.host, worktreeId: live.worktreeId, sessionId: live.id });
     return c.json({ ok: true });
   });
 
   mutating.post('/orca/prefs', async (c) => {
     const parsed = prefsPatchBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
+    const named = patchHost(parsed.data);
+    if (named && !(await hostList(deps.sessions)).some((h) => h.name === named)) {
+      return c.json({ error: `Unknown Orca host: ${named}` }, 400);
+    }
     const next = deps.prefs.patch(parsed.data);
     return c.json({ enabled: next.enabled, repos: next.repos });
   });
@@ -156,7 +186,9 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
   mutating.post('/orca/open', async (c) => {
     const parsed = openBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
-    const ok = await openInOrca(deps.orca, deps.sessions, parsed.data.sessionId);
+    const pick = await host(parsed.data.host);
+    if (!pick.ok) return refuse(c, pick);
+    const ok = await openInOrca(deps.orca, deps.sessions, pick.host, parsed.data.sessionId);
     return ok ? c.json({ ok }) : c.json({ error: 'Could not open that session in Orca' }, 502);
   });
 }

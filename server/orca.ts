@@ -2,13 +2,11 @@ import { execFile } from 'node:child_process';
 import { access, constants } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { z } from 'zod';
-import { effortLevel, modelId } from '../shared/agent-models';
+import { LOCAL_HOST } from '../shared/orca-hosts';
 import { repoName } from '../shared/repo-name';
 import { DEFAULT_SETTINGS, type Settings } from '../shared/settings';
+import { dispatchArgs, parseCreated, type DispatchBody, type DispatchResult } from './orca-dispatch';
 import { OrcaFake } from './orca-fake';
-import { REPO_RE } from './provider';
-
 
 const DETECT_TTL_MS = 60_000;
 const REPO_TTL_MS = 10 * 60_000;
@@ -45,6 +43,10 @@ export class OrcaUnavailable extends Error {
 /** True when `execBinary` killed the command at its timeout, so the outcome is unknown. */
 export const timedOut = (e: unknown): boolean => (e as { timedOut?: boolean } | undefined)?.timedOut === true;
 
+/** The argument array for one host. `local` is this hub's own Orca and takes no flag. */
+export const hostArgs = (args: readonly string[], host: string): string[] =>
+  host === LOCAL_HOST ? [...args] : [...args, '--environment', host];
+
 /**
  * A short failure message from CLI output. The CLI reports failures as JSON
  * (`{ error: { message } }`) or plain text; git's `fatal:` line is the useful
@@ -75,127 +77,10 @@ export function repoFromRemote(url: string, orgs: readonly string[] = DEFAULT_SE
   return m?.[1]?.toLowerCase();
 }
 
-/** The dispatch request schema; `agents` is the allowed agent ids. Orca rejects ids it does not know. */
-export const dispatchBodyFor = (agents: readonly string[]) => z.object({
-  repo: z.string().regex(REPO_RE),
-  number: z.number().int().positive(),
-  agent: z.string().refine((a) => agents.includes(a), 'Unknown agent'),
-  name: z.string().regex(/^[a-z0-9][a-z0-9-]{0,60}$/),
-  baseBranch: z
-    .string()
-    .regex(/^[A-Za-z0-9][A-Za-z0-9._/-]{0,99}$/)
-    .refine((v) => !v.includes('..') && !v.endsWith('/'), 'Invalid branch name')
-    .optional(),
-  // A leading dash could be read as a CLI flag.
-  prompt: z.string().min(1).max(12000).refine((v) => !v.trimStart().startsWith('-'), 'Prompt must not start with a dash'),
-  /** PR mode: `number` is a PR and `baseBranch` is its head ref. */
-  pr: z.boolean().optional(),
-  /** `''` is the harness default. Absent (a phone dispatch) means the model last chosen for the agent. */
-  model: z.union([z.literal(''), modelId]).optional(),
-  effort: effortLevel.optional(),
-})
-  .refine((b) => !b.pr || b.baseBranch !== undefined, { message: 'PR mode needs the head branch', path: ['baseBranch'] })
-  .refine((b) => !b.effort || !!b.model, { message: 'Effort needs a model', path: ['effort'] });
-
-/** The schema with the default agent list. */
-export const dispatchBody = dispatchBodyFor(DEFAULT_SETTINGS.orcaAgents);
-export type DispatchBody = z.infer<typeof dispatchBody>;
-
-export type DispatchResult = { ok: true; worktree: string; path?: string } | { ok: false; message: string };
-
-const WRAP_UP_MARK = '## When you finish (Nod)';
-
-/**
- * Closes every dispatched prompt, so a finished session files itself instead of lingering in
- * Orca's sidebar. Only a session with a real question stays unread.
- */
-export const WRAP_UP = [
-  WRAP_UP_MARK,
-  'Leave this workspace tidy so it does not wait on the user for nothing.',
-  '- If nothing needs the user: save a session log and compact if your harness can (Claude Code: /compress), then run',
-  '  `orca-ide worktree set --worktree current --workspace-status <status> --read --comment "<one-line outcome>"`',
-  '  with status `in-review` when a PR now waits for review, otherwise `completed`. Then stop.',
-  '- If something needs the user: run `orca-ide worktree set --worktree current --unread --comment "<the decision or blocker>"`,',
-  '  end your reply with that one question, and wait.',
-  '- Never remove the worktree or close terminals. The user does that.',
-].join('\n');
-
-/** The prompt with the wrap-up appended once. A prompt that already carries it, as on a retry, is left alone. */
-export const withWrapUp = (prompt: string): string =>
-  prompt.includes(WRAP_UP_MARK) ? prompt : `${prompt.trimEnd()}\n\n${WRAP_UP}`;
-
-/** `--model` and `--effort`, or nothing for the harness default. Orca rejects `--effort` without `--model`. */
-function modelArgs(b: DispatchBody): string[] {
-  if (!b.model) return [];
-  return ['--model', b.model, ...(b.effort ? ['--effort', b.effort] : [])];
-}
-
-/** `orca-ide worktree create` arguments. Every value is its own array entry. The prompt gets the wrap-up. */
-export function dispatchArgs(repoId: string, b: DispatchBody): string[] {
-  // PR mode starts on the PR head; `--issue` is never passed with `--pr`. The
-  // head ref usually exists only on the remote, and git cannot base a worktree
-  // on a bare remote-only name, so the base is `origin/<headRef>`.
-  if (b.pr) {
-    return [
-      'worktree',
-      'create',
-      '--repo',
-      `id:${repoId}`,
-      '--name',
-      b.name,
-      '--pr',
-      String(b.number),
-      '--base-branch',
-      `origin/${b.baseBranch ?? ''}`,
-      '--agent',
-      b.agent,
-      '--prompt',
-      withWrapUp(b.prompt),
-      ...modelArgs(b),
-      '--no-parent',
-      '--json',
-    ];
-  }
-  const args = [
-    'worktree',
-    'create',
-    '--repo',
-    `id:${repoId}`,
-    '--name',
-    b.name,
-    '--issue',
-    String(b.number),
-    '--agent',
-    b.agent,
-    '--prompt',
-    withWrapUp(b.prompt),
-    ...modelArgs(b),
-  ];
-  if (b.baseBranch) args.push('--base-branch', b.baseBranch);
-  args.push('--no-parent', '--json');
-  return args;
-}
-
-/** Pulls the worktree name and path out of the CLI's JSON; falls back to the requested name. */
-export function parseCreated(stdout: string, fallback: string): { worktree: string; path?: string } {
-  try {
-    const parsed = JSON.parse(stdout) as { result?: unknown };
-    const result = (parsed.result ?? parsed) as Record<string, unknown>;
-    const wt = (typeof result.worktree === 'object' && result.worktree !== null ? result.worktree : result) as Record<
-      string,
-      unknown
-    >;
-    const worktree = [wt.displayName, wt.name, wt.branch].find((v): v is string => typeof v === 'string' && v !== '');
-    const path = typeof wt.path === 'string' ? wt.path : undefined;
-    return { worktree: worktree ?? fallback, ...(path ? { path } : {}) };
-  } catch {
-    return { worktree: fallback };
-  }
-}
-
 interface RepoEntry {
-  id: string;
-  path: string;
+  id?: unknown;
+  path?: unknown;
+  gitRemoteIdentity?: { remoteUrl?: unknown };
 }
 
 export interface OrcaOptions {
@@ -212,7 +97,7 @@ export interface OrcaOptions {
   fake?: OrcaFake;
 }
 
-/** Finds the `orca-ide` binary, maps issue repos to Orca repos, and starts worktrees. */
+/** Finds the `orca-ide` binary, maps issue repos to Orca repos per host, and starts worktrees. */
 export class Orca {
   private readonly exec: OrcaExec;
   private readonly candidates: string[];
@@ -225,8 +110,7 @@ export class Orca {
   private bin: string | undefined;
   private detecting: Promise<string | undefined> | undefined;
   private checkedAt = -Infinity;
-  private repos: Map<string, string> | undefined;
-  private reposAt = -Infinity;
+  private readonly repos = new Map<string, { map: Map<string, string>; at: number }>();
 
   constructor(opts: OrcaOptions = {}) {
     this.exec = opts.exec ?? execBinary;
@@ -239,20 +123,22 @@ export class Orca {
   }
 
   /**
-   * Runs one `orca-ide` command with an argument array. Fixture mode answers from memory and never
-   * spawns. Throws `OrcaUnavailable` when the CLI is missing; other failures carry the CLI's own text.
+   * Runs one `orca-ide` command on one host with an argument array. Every Orca call goes through
+   * here. Fixture mode answers from memory and never spawns. Throws `OrcaUnavailable` when the CLI
+   * is missing; other failures carry the CLI's own text.
    */
-  async cli(args: string[], timeoutMs: number): Promise<string> {
-    if (this.fake) return this.fake.run(args);
+  async cli(args: string[], timeoutMs: number, host: string): Promise<string> {
+    const full = hostArgs(args, host);
+    if (this.fake) return this.fake.run(full);
     const bin = await this.resolve();
     if (!bin) throw new OrcaUnavailable();
-    return this.exec(bin, args, timeoutMs);
+    return this.exec(bin, full, timeoutMs);
   }
 
-  /** Maps an Orca repo id to a lower-case GitHub repo name. Fixture ids carry the name after `fixture-`. */
-  async repoNameOf(): Promise<(repoId: string) => string | undefined> {
+  /** Maps a host's Orca repo id to a lower-case GitHub repo name. Fixture ids carry the name after `fixture-`. */
+  async repoNameOf(host: string): Promise<(repoId: string) => string | undefined> {
     if (this.fake) return (id) => (id.startsWith('fixture-') ? id.slice('fixture-'.length) : undefined);
-    const byName = (await this.repoMap()) ?? new Map<string, string>();
+    const byName = (await this.repoMap(host)) ?? new Map<string, string>();
     const byId = new Map([...byName].map(([name, id]) => [id, name]));
     return (id) => byId.get(id);
   }
@@ -265,47 +151,43 @@ export class Orca {
     return { available: bin !== undefined, agents: bin ? agents : [] };
   }
 
-  /** Orca repo id for a GitHub repo (`owner/name`, matched on its name), or undefined when Orca does not know it. */
-  async repoId(repo: string): Promise<string | undefined> {
+  /** A host's Orca repo id for a GitHub repo (`owner/name`, matched on its name), or undefined when that host does not know it. */
+  async repoId(repo: string, host: string): Promise<string | undefined> {
     const name = repoName(repo).toLowerCase();
     if (this.fixtures) return `fixture-${name}`;
-    return (await this.repoMap())?.get(name);
+    return (await this.repoMap(host))?.get(name);
   }
 
-  /** Lower-case names of the GitHub repos Orca has; undefined in fixture mode, where every repo maps. */
+  /** Lower-case names of the GitHub repos the hub's own Orca has; undefined in fixture mode, where every repo maps. */
   async mappedRepos(): Promise<string[] | undefined> {
     if (this.fixtures) return undefined;
-    return [...((await this.repoMap())?.keys() ?? [])];
+    return [...((await this.repoMap(LOCAL_HOST))?.keys() ?? [])];
   }
 
-  private async repoMap(): Promise<Map<string, string> | undefined> {
+  private async repoMap(host: string): Promise<Map<string, string> | undefined> {
     const bin = await this.resolve();
     if (!bin) return undefined;
-    if (!this.repos || this.now() - this.reposAt > REPO_TTL_MS) {
-      // A failed list keeps the last good map and is retried on the next call, not cached as empty.
-      const fresh = await this.mapRepos(bin);
-      if (fresh) {
-        this.repos = fresh;
-        this.reposAt = this.now();
-      }
-    }
-    return this.repos;
+    const cached = this.repos.get(host);
+    if (cached && this.now() - cached.at <= REPO_TTL_MS) return cached.map;
+    // A failed list keeps the last good map and is retried on the next call, not cached as empty.
+    const fresh = await this.mapRepos(host);
+    if (fresh) this.repos.set(host, { map: fresh, at: this.now() });
+    return fresh ?? cached?.map;
   }
 
-  async dispatch(b: DispatchBody): Promise<DispatchResult> {
-    const id = await this.repoId(b.repo);
-    if (!id) return { ok: false, message: 'Repo not in Orca' };
+  async dispatch(b: DispatchBody, host: string): Promise<DispatchResult> {
+    const id = await this.repoId(b.repo, host);
+    if (!id) return { ok: false, message: host === LOCAL_HOST ? 'Repo not in Orca' : `Repo not in Orca on ${host}` };
     const args = dispatchArgs(id, b);
     if (this.fixtures) {
-      this.log(`[fixture] orca-ide ${JSON.stringify(args)}`);
+      this.log(`[fixture] orca-ide ${JSON.stringify(hostArgs(args, host))}`);
       return { ok: true, worktree: b.name };
     }
-    const bin = await this.resolve();
-    if (!bin) return { ok: false, message: 'Orca is not available' };
     try {
-      const out = await this.exec(bin, args, SPAWN_TIMEOUT_MS);
+      const out = await this.cli(args, SPAWN_TIMEOUT_MS, host);
       return { ok: true, ...parseCreated(out, b.name) };
     } catch (e) {
+      if (e instanceof OrcaUnavailable) return { ok: false, message: e.message };
       const message = cliErrorMessage(e instanceof Error ? e.message : '');
       this.log(`[orca] dispatch failed: ${message}`);
       return { ok: false, message: `Dispatch failed: ${message}` };
@@ -348,29 +230,39 @@ export class Orca {
     return undefined;
   }
 
-  /** Undefined when `orca-ide repo list` fails. */
-  private async mapRepos(bin: string): Promise<Map<string, string> | undefined> {
+  /**
+   * Undefined when `orca-ide repo list` fails. Orca reports each repo's remote; for a local repo
+   * without one the origin is read with git. A remote host's paths are not on this disk.
+   */
+  private async mapRepos(host: string): Promise<Map<string, string> | undefined> {
     const map = new Map<string, string>();
     let list: RepoEntry[] = [];
     try {
-      const parsed = JSON.parse(await this.exec(bin, ['repo', 'list', '--json'], 20_000)) as {
+      const parsed = JSON.parse(await this.cli(['repo', 'list', '--json'], 20_000, host)) as {
         result?: { repos?: RepoEntry[] };
       };
       list = parsed.result?.repos ?? [];
     } catch (e) {
-      this.log(`[orca] repo list failed: ${(e instanceof Error ? e.message : String(e)).slice(0, 200)}`);
+      this.log(`[orca] repo list failed${host === LOCAL_HOST ? '' : ` on ${host}`}: ${(e instanceof Error ? e.message : String(e)).slice(0, 200)}`);
       return undefined;
     }
     for (const r of list) {
-      if (typeof r.id !== 'string' || typeof r.path !== 'string') continue;
-      try {
-        const url = await this.exec('git', ['-C', r.path, 'remote', 'get-url', 'origin'], 10_000);
-        const name = repoFromRemote(url, this.settings.orgs);
-        if (name && !map.has(name)) map.set(name, r.id);
-      } catch {
-        continue;
-      }
+      if (typeof r.id !== 'string') continue;
+      const url = await this.remoteOf(r, host);
+      const name = url ? repoFromRemote(url, this.settings.orgs) : undefined;
+      if (name && !map.has(name)) map.set(name, r.id);
     }
     return map;
+  }
+
+  private async remoteOf(r: RepoEntry, host: string): Promise<string | undefined> {
+    const reported = r.gitRemoteIdentity?.remoteUrl;
+    if (typeof reported === 'string') return reported;
+    if (host !== LOCAL_HOST || typeof r.path !== 'string') return undefined;
+    try {
+      return await this.exec('git', ['-C', r.path, 'remote', 'get-url', 'origin'], 10_000);
+    } catch {
+      return undefined;
+    }
   }
 }

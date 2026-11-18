@@ -2,17 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { createApp } from '../server/app';
 import { FixtureProvider } from '../server/fixture-provider';
 import { dispatchPrompt, repoInOrca, worktreeName } from '../shared/orca';
-import {
-  cliErrorMessage,
-  dispatchArgs,
-  dispatchBody,
-  Orca,
-  parseCreated,
-  repoFromRemote,
-  withWrapUp,
-  WRAP_UP,
-  type OrcaExec,
-} from '../server/orca';
+import { cliErrorMessage, Orca, repoFromRemote, type OrcaExec } from '../server/orca';
+import { dispatchArgs, dispatchBody, parseCreated, withWrapUp, WRAP_UP } from '../server/orca-dispatch';
 
 const PORT = 4477;
 const TOKEN = 'test-token';
@@ -167,13 +158,13 @@ function fakeOrca() {
 describe('Orca', () => {
   it('maps a repo by its origin remote, case-insensitively', async () => {
     const { orca } = fakeOrca();
-    expect(await orca.repoId('acme-co/Acme-Api')).toBe('r1');
-    expect(await orca.repoId('acme-co/other')).toBeUndefined();
+    expect(await orca.repoId('acme-co/Acme-Api', 'local')).toBe('r1');
+    expect(await orca.repoId('acme-co/other', 'local')).toBeUndefined();
   });
 
   it('spawns with an argument array, never a shell string', async () => {
     const { orca, calls } = fakeOrca();
-    const res = await orca.dispatch(dispatchBody.parse({ ...good, prompt: '$(touch x) `y` ; z' }));
+    const res = await orca.dispatch(dispatchBody.parse({ ...good, prompt: '$(touch x) `y` ; z' }), 'local');
     expect(res).toEqual({ ok: true, worktree: 'made', path: '/w/made' });
     const spawn = calls.find((c) => c.args[0] === 'worktree');
     expect(spawn?.bin).toBe('orca-ide');
@@ -203,7 +194,7 @@ describe('Orca', () => {
 
   it('reports a repo that Orca does not have', async () => {
     const { orca } = fakeOrca();
-    const res = await orca.dispatch(dispatchBody.parse({ ...good, repo: 'acme-co/other' }));
+    const res = await orca.dispatch(dispatchBody.parse({ ...good, repo: 'acme-co/other' }), 'local');
     expect(res).toEqual({ ok: false, message: 'Repo not in Orca' });
   });
 
@@ -214,7 +205,7 @@ describe('Orca', () => {
       throw new Error('e'.repeat(1000));
     };
     const orca = new Orca({ exec, candidates: ['orca-ide'] });
-    const res = await orca.dispatch(dispatchBody.parse(good));
+    const res = await orca.dispatch(dispatchBody.parse(good), 'local');
     expect(res.ok).toBe(false);
     expect(res.ok ? 0 : res.message.length).toBeLessThanOrEqual(320);
   });
@@ -234,7 +225,7 @@ describe('Orca', () => {
     };
     const orca = new Orca({ exec, fixtures: true, log: (l) => logs.push(l) });
     expect((await orca.status()).available).toBe(true);
-    const res = await orca.dispatch(dispatchBody.parse(good));
+    const res = await orca.dispatch(dispatchBody.parse(good), 'local');
     expect(res).toEqual({ ok: true, worktree: 'issue-12-fix-it' });
     expect(logs[0]).toContain('"worktree","create"');
   });
@@ -302,7 +293,7 @@ describe('PR mode dispatch', () => {
       return '';
     };
     const orca = new Orca({ exec, candidates: ['orca-ide'], log: () => {} });
-    const res = await orca.dispatch(dispatchBody.parse(pr));
+    const res = await orca.dispatch(dispatchBody.parse(pr), 'local');
     expect(res.ok).toBe(false);
     expect(res.ok === false && res.message).toBe('Dispatch failed: fatal: invalid reference: bot/y');
   });
@@ -315,7 +306,7 @@ describe('PR mode dispatch', () => {
   it('logs the PR arguments in fixture mode', async () => {
     const logs: string[] = [];
     const orca = new Orca({ fixtures: true, log: (l) => logs.push(l) });
-    expect(await orca.dispatch(dispatchBody.parse(pr))).toEqual({ ok: true, worktree: 'pr-42-fix-checks' });
+    expect(await orca.dispatch(dispatchBody.parse(pr), 'local')).toEqual({ ok: true, worktree: 'pr-42-fix-checks' });
     expect(logs[0]).toContain('"--pr","42"');
     expect(logs[0]).not.toContain('--issue');
   });

@@ -2,11 +2,15 @@
  * In-memory stand-in for `orca-ide`, used by the fixture server. It serves synthetic sessions,
  * records sends and tab switches in memory, and never spawns a process or touches a real Orca.
  *
+ * It answers for three Orca hosts: `local`, `laptop` with sessions of its own, and `desktop`, which
+ * is paired but offline. A call picks its host with `--environment`, as the real CLI does.
+ *
  * A message that contains one of the `fixture-` markers below gets the matching failure, so every
  * result state can be shown without a real session. `fixture-echo` gets Orca's unsupported receipt
  * but shows in the terminal, so the server confirms it from the output.
  */
 
+import { LOCAL_HOST } from '../shared/orca-hosts';
 import { appEnv } from './env';
 
 interface FakeAgent {
@@ -42,6 +46,15 @@ const WORKTREES: FakeWorktree[] = [
   { repo: 'notes', name: 'crew-aof-41', branch: 'feature/41', state: 'working', outputAgoS: 70 },
 ];
 
+/** Sessions on the paired `laptop` host. */
+const LAPTOP_WORKTREES: FakeWorktree[] = [
+  { repo: 'orders-api', name: 'refund-372', branch: 'feature/refund-372', linkedPr: 372, state: 'working', outputAgoS: 45 },
+  { repo: 'acme-api', name: 'swagger-309', branch: 'chore/swagger-309', linkedPr: 309, state: 'waiting', outputAgoS: 240 },
+];
+
+export const FIXTURE_ONLINE_HOST = 'laptop';
+export const FIXTURE_OFFLINE_HOST = 'desktop';
+
 /**
  * `NOD_FIXTURE_SESSIONS` reshapes the sessions for PR #365, so every Dispatch target shows:
  * `several` adds a second linked session (the picker), `none` unlinks it (a new worktree).
@@ -56,9 +69,11 @@ function fixtureWorktrees(mode = appEnv('FIXTURE_SESSIONS')): FakeWorktree[] {
 
 const wid = (w: FakeWorktree): string => `fixture-${w.repo}::/fixture/${w.name}`;
 const pane = (w: FakeWorktree): string => `tab-${w.name}:leaf-${w.name}`;
-const handle = (w: FakeWorktree): string => `term_fixture_${w.name}`;
+const handle = (host: string, w: FakeWorktree): string =>
+  host === LOCAL_HOST ? `term_fixture_${w.name}` : `term_fixture_${host}_${w.name}`;
 
 export interface FakeSend {
+  host: string;
   handle: string;
   text: string;
   args: string[];
@@ -72,15 +87,32 @@ export class OrcaFake {
   /** Output lines per handle, so `terminal read --cursor` can show what arrived. */
   private readonly output = new Map<string, string[]>();
   private n = 0;
-  private readonly worktrees = fixtureWorktrees();
+  private readonly byHost = new Map<string, FakeWorktree[]>([
+    [LOCAL_HOST, fixtureWorktrees()],
+    [FIXTURE_ONLINE_HOST, LAPTOP_WORKTREES],
+  ]);
 
   constructor(private readonly now: () => number = Date.now) {}
 
-  run(args: string[]): string {
+  run(argv: string[]): string {
+    const host = valueOf(argv, '--environment') ?? LOCAL_HOST;
+    const args = host === LOCAL_HOST ? argv : argv.slice(0, argv.indexOf('--environment'));
     const [a, b] = args;
-    if (a === 'worktree' && b === 'ps') return JSON.stringify(this.ps());
-    if (a === 'terminal' && b === 'list') return JSON.stringify(this.terminals());
-    if (a === 'terminal' && b === 'send') return this.send(args);
+    if (a === 'environment' && b === 'list') {
+      return JSON.stringify({
+        result: {
+          environments: [
+            { id: 'env-fixture-1', name: FIXTURE_ONLINE_HOST },
+            { id: 'env-fixture-2', name: FIXTURE_OFFLINE_HOST },
+          ],
+        },
+      });
+    }
+    const worktrees = this.byHost.get(host);
+    if (!worktrees) throw new Error(`Orca environment ${host} is not reachable`);
+    if (a === 'worktree' && b === 'ps') return JSON.stringify(this.ps(worktrees));
+    if (a === 'terminal' && b === 'list') return JSON.stringify(this.terminals(host, worktrees));
+    if (a === 'terminal' && b === 'send') return this.send(host, args);
     if (a === 'terminal' && b === 'read') return this.read(args);
     if ((a === 'terminal' && (b === 'switch' || b === 'focus')) || (a === 'repo' && b === 'list')) {
       if (a === 'terminal') this.switches.push(valueOf(args, '--terminal') ?? '');
@@ -89,12 +121,12 @@ export class OrcaFake {
     throw new Error(`fixture Orca does not run: ${args.slice(0, 2).join(' ')}`);
   }
 
-  private ps() {
+  private ps(worktrees: FakeWorktree[]) {
     return {
       result: {
-        totalCount: this.worktrees.length,
+        totalCount: worktrees.length,
         truncated: false,
-        worktrees: this.worktrees.map((w) => ({
+        worktrees: worktrees.map((w) => ({
           worktreeId: wid(w),
           repoId: `fixture-${w.repo}`,
           path: `/fixture/${w.name}`,
@@ -117,13 +149,13 @@ export class OrcaFake {
     };
   }
 
-  private terminals() {
+  private terminals(host: string, worktrees: FakeWorktree[]) {
     return {
       result: {
-        totalCount: this.worktrees.length,
+        totalCount: worktrees.length,
         truncated: false,
-        terminals: this.worktrees.map((w) => ({
-          handle: handle(w),
+        terminals: worktrees.map((w) => ({
+          handle: handle(host, w),
           worktreeId: wid(w),
           tabId: `tab-${w.name}`,
           leafId: `leaf-${w.name}`,
@@ -136,10 +168,10 @@ export class OrcaFake {
     };
   }
 
-  private send(args: string[]): string {
+  private send(host: string, args: string[]): string {
     const text = valueOf(args, '--text') ?? '';
     const term = valueOf(args, '--terminal') ?? '';
-    this.sends.push({ handle: term, text, args });
+    this.sends.push({ host, handle: term, text, args });
     this.n += 1;
     const requestId = `fixture-req-${this.n}`;
     if (text.includes('fixture-down')) throw new Error('Orca is not running');

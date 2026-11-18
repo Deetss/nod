@@ -4,7 +4,8 @@ import { withDispatchChoice, DEFAULT_ORCA_PREFS, parseOrcaPrefs } from '../share
 import { AgentModelCatalog } from '../server/agent-models';
 import { createApp } from '../server/app';
 import { FixtureProvider } from '../server/fixture-provider';
-import { dispatchArgs, dispatchBody, Orca } from '../server/orca';
+import { Orca } from '../server/orca';
+import { dispatchArgs, dispatchBody } from '../server/orca-dispatch';
 import { OrcaPrefsStore } from '../server/orca-prefs';
 
 const PORT = 4477;

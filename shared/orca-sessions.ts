@@ -26,8 +26,10 @@ export interface LinkedItem {
  * `worktree ps` and never copies prompts or assistant text.
  */
 export interface SessionCandidate {
-  /** `<worktreeId>|<paneKey>`. Stable while the agent pane lives. */
+  /** `<worktreeId>|<paneKey>`. Stable while the agent pane lives. Unique on its host only. */
   id: string;
+  /** The Orca host that owns the session and its terminal. */
+  host: string;
   worktreeId: string;
   name: string;
   state: SessionState;
@@ -48,6 +50,8 @@ export type MatchVia = 'pr' | 'branch' | 'issue' | 'number' | 'chosen';
 /** A candidate as the client sees it. */
 export interface SessionView {
   id: string;
+  /** The Orca host the session runs on. Sends and opens go back to it. */
+  host: string;
   name: string;
   state: SessionState;
   branch: string;
@@ -57,10 +61,13 @@ export interface SessionView {
   lastOutputAt?: number;
 }
 
+/** What a write needs to reach a session: its id and the host it runs on. */
+export type SessionRef = Pick<SessionView, 'id' | 'host'>;
+
 export interface PrSessions {
   related: SessionView[];
   possible: SessionView[];
-  /** The remembered session id for this PR, when it is still live. */
+  /** The remembered session id for this PR, when it is still live. Its host is on the related entry. */
   chosen?: string;
 }
 

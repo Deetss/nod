@@ -1,9 +1,11 @@
 import { oneLine } from '../shared/orca-message';
 import { mapSessionState, type LinkedItem, type SessionCandidate } from '../shared/orca-sessions';
+import { LOCAL_HOST, type HostStatus } from '../shared/orca-hosts';
 import { OrcaUnavailable, type Orca } from './orca';
+import { HOST_PROBE_MS, HOSTS_TTL_MS, OrcaHosts } from './orca-hosts';
 
-/** One `worktree ps` plus one `terminal list` serves every row for this long. */
-export const SESSIONS_TTL_MS = 20_000;
+/** One `worktree ps` plus one `terminal list` per host serves every row for this long. */
+export const SESSIONS_TTL_MS = HOSTS_TTL_MS;
 /** After a failed read the next try comes sooner, so a started Orca shows up quickly. */
 const FAILURE_TTL_MS = 5_000;
 const LIST_TIMEOUT_MS = 15_000;
@@ -20,11 +22,16 @@ export interface SessionSnapshot {
   /** ms when the read finished. */
   at: number;
   sessions: SessionCandidate[];
-  /** Terminal handle and writable flag by session id. A session without a terminal cannot be sent to. */
+  /** Terminal handle and writable flag by `sessionKey`. A session without a terminal cannot be sent to. */
   terminals: Map<string, TerminalInfo>;
+  /** Every host read for this snapshot. Offline hosts add no sessions. */
+  hosts: HostStatus[];
 }
 
-const EMPTY = (at: number, available = false): SessionSnapshot => ({ available, at, sessions: [], terminals: new Map() });
+/** Session ids are unique on one host only, and a terminal handle belongs to the host that issued it. */
+export const sessionKey = (host: string, id: string): string => `${host}\n${id}`;
+
+const EMPTY = (at: number, available = false): SessionSnapshot => ({ available, at, sessions: [], terminals: new Map(), hosts: [] });
 
 type Obj = Record<string, unknown>;
 const obj = (v: unknown): Obj | undefined => (typeof v === 'object' && v !== null && !Array.isArray(v) ? (v as Obj) : undefined);
@@ -72,6 +79,7 @@ export function parseSessions(
   listJson: string,
   repoNameOf: (repoId: string) => string | undefined,
   at: number,
+  host: string = LOCAL_HOST,
 ): SessionSnapshot {
   const worktrees = obj(JSON.parse(psJson) as unknown)?.result;
   const terminalRows = obj(JSON.parse(listJson) as unknown)?.result;
@@ -113,6 +121,7 @@ export function parseSessions(
       const lastOutputAt = term?.lastOutputAt ?? num(w.lastOutputAt);
       sessions.push({
         id,
+        host,
         worktreeId,
         name,
         state: mapSessionState(agent.state),
@@ -123,17 +132,19 @@ export function parseSessions(
         live: agent.hasLivePty === true,
         ...(lastOutputAt ? { lastOutputAt } : {}),
       });
-      if (term) terminals.set(id, { handle: term.handle, writable: term.writable });
+      if (term) terminals.set(sessionKey(host, id), { handle: term.handle, writable: term.writable });
     }
   }
-  return { available: true, at, sessions, terminals };
+  return { available: true, at, sessions, terminals, hosts: [] };
 }
 
 /**
- * Reads sessions from Orca. One read costs two CLI calls (about 0.4 s), shared by every caller:
- * concurrent callers wait on the same run, and a stale snapshot is served while one refresh runs.
+ * Reads sessions from every Orca host and merges them. One read costs two CLI calls per host (about
+ * 0.4 s each, in parallel), shared by every caller: concurrent callers wait on the same run, and a
+ * stale snapshot is served while one refresh runs.
  */
 export class OrcaSessions {
+  readonly hosts: OrcaHosts;
   private snap: SessionSnapshot | undefined;
   private inflight: Promise<SessionSnapshot> | undefined;
   private lastReads = 0;
@@ -141,7 +152,9 @@ export class OrcaSessions {
   constructor(
     private readonly orca: Orca,
     private readonly now: () => number = Date.now,
-  ) {}
+  ) {
+    this.hosts = new OrcaHosts(orca, now);
+  }
 
   /** Number of reads that reached the CLI. For tests. */
   get reads(): number {
@@ -155,9 +168,14 @@ export class OrcaSessions {
     return s ?? run;
   }
 
-  /** Always reads. Used at send time, so a handle is never taken from the cache. */
-  fresh(): Promise<SessionSnapshot> {
-    return this.refresh();
+  /**
+   * Always reads. Used at send time, so a handle is never taken from the cache. With a host, reads
+   * that host only and leaves the shared snapshot alone.
+   */
+  async fresh(host?: string): Promise<SessionSnapshot> {
+    if (host === undefined) return this.refresh();
+    const one = await this.readHost(host);
+    return { ...(one.snap ?? EMPTY(this.now())), hosts: [this.hosts.status(host, one.snap !== undefined, this.now())] };
   }
 
   private refresh(): Promise<SessionSnapshot> {
@@ -169,19 +187,35 @@ export class OrcaSessions {
 
   private async read(): Promise<SessionSnapshot> {
     this.lastReads += 1;
-    let next: SessionSnapshot;
-    try {
-      const [ps, list, repoNameOf] = await Promise.all([
-        this.orca.cli(['worktree', 'ps', '--limit', ROW_LIMIT, '--json'], LIST_TIMEOUT_MS),
-        this.orca.cli(['terminal', 'list', '--limit', ROW_LIMIT, '--json'], LIST_TIMEOUT_MS),
-        this.orca.repoNameOf(),
-      ]);
-      next = parseSessions(ps, list, repoNameOf, this.now());
-    } catch (e) {
-      if (!(e instanceof OrcaUnavailable)) console.error('[orca] session read failed:', e instanceof Error ? e.message.slice(0, 200) : 'error');
-      next = EMPTY(this.now());
+    const names = await this.hosts.list();
+    const reads = await Promise.all(names.map(async (host) => ({ host, ...(await this.readHost(host)) })));
+    const at = this.now();
+    const next: SessionSnapshot = { ...EMPTY(at), hosts: reads.map((r) => this.hosts.status(r.host, r.snap !== undefined, at)) };
+    for (const r of reads) {
+      if (!r.snap) continue;
+      next.available = true;
+      next.sessions.push(...r.snap.sessions);
+      for (const [key, term] of r.snap.terminals) next.terminals.set(key, term);
     }
     this.snap = next;
     return next;
+  }
+
+  /** One host's sessions, or no snapshot when it did not answer in time. The hub's own Orca gets the longer limit. */
+  private async readHost(host: string): Promise<{ snap?: SessionSnapshot }> {
+    const timeout = host === LOCAL_HOST ? LIST_TIMEOUT_MS : HOST_PROBE_MS;
+    try {
+      const [ps, list, repoNameOf] = await Promise.all([
+        this.orca.cli(['worktree', 'ps', '--limit', ROW_LIMIT, '--json'], timeout, host),
+        this.orca.cli(['terminal', 'list', '--limit', ROW_LIMIT, '--json'], timeout, host),
+        this.orca.repoNameOf(host),
+      ]);
+      return { snap: parseSessions(ps, list, repoNameOf, this.now(), host) };
+    } catch (e) {
+      if (host === LOCAL_HOST && !(e instanceof OrcaUnavailable)) {
+        console.error('[orca] session read failed:', e instanceof Error ? e.message.slice(0, 200) : 'error');
+      }
+      return {};
+    }
   }
 }

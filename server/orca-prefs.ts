@@ -6,6 +6,7 @@ import {
   parseOrcaPrefs,
   withChosen,
   withDispatchChoice,
+  type ChosenSession,
   type DispatchChoice,
   type OrcaPrefs,
   type PrefsPatch,
@@ -17,8 +18,10 @@ export function defaultOrcaPrefsPath(): string {
 }
 
 /**
- * The automatic-message switch, the per-repo overrides and the session chosen per PR. Kept in the
- * app's state directory next to seen.json, mode 0600. Reads are synchronous once opened.
+ * The automatic-message switch, the per-repo overrides, the host choices and the session chosen per
+ * PR. Kept in the app's state directory next to seen.json, mode 0600. Reads are synchronous once
+ * opened. An entry saved in an older shape is read in the new one and written back in it on the
+ * next save.
  */
 export class OrcaPrefsStore {
   private value: OrcaPrefs = DEFAULT_ORCA_PREFS;
@@ -48,7 +51,7 @@ export class OrcaPrefsStore {
     return this.set(applyPrefsPatch(this.value, p));
   }
 
-  choose(prId: string, choice: { worktreeId: string; sessionId: string } | null): OrcaPrefs {
+  choose(prId: string, choice: ChosenSession | null): OrcaPrefs {
     return this.set(withChosen(this.value, prId, choice));
   }
 

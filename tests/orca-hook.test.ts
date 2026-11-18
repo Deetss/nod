@@ -141,7 +141,7 @@ describe('automatic messages: which session', () => {
   it('sends to the chosen session when two are related', async () => {
     const { h, prefs, call, notice } = setup([crew, second]);
     const id = 'PR_acme-co/acme-api_310';
-    prefs.choose(id, { worktreeId: 'r-acme-api::/w/bot-310', sessionId: 'r-acme-api::/w/bot-310|tab-bot-310:leaf-bot-310' });
+    prefs.choose(id, { host: 'local', worktreeId: 'r-acme-api::/w/bot-310', sessionId: 'r-acme-api::/w/bot-310|tab-bot-310:leaf-bot-310' });
     const body = (await (await call('/review', approve)).json()) as { noticeId?: string };
     expect(await notice(body.noticeId!)).toMatchObject({ status: 'notified', name: 'bot-310' });
     expect(h.sends()[0]).toContain('term_bot-310');

@@ -22,6 +22,8 @@ export interface OrcaDispatchRequest {
   /** `''` is the harness default. Absent: the server uses the model last chosen for the agent. */
   model?: string;
   effort?: Effort;
+  /** The Orca host for the new worktree. Absent: the server picks the repo's or the default host. */
+  host?: string;
 }
 
 export interface OrcaDispatchResult {

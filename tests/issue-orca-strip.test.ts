@@ -28,6 +28,7 @@ afterEach(() => {
 const NOW = 10_000_000;
 const session = (over: Partial<SessionView> = {}): SessionView => ({
   id: 's1',
+  host: 'local',
   name: 'acme-banner Issue 195 Outlook Signature Setup',
   state: 'working',
   branch: 'dev/issue-195-link-signature',

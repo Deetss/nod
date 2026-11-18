@@ -55,7 +55,7 @@ describe('autoMessagesOn', () => {
 
 describe('prefs', () => {
   it('defaults to on, no overrides, nothing chosen', () => {
-    expect(DEFAULT_ORCA_PREFS).toEqual({ enabled: true, repos: {}, chosen: {}, dispatch: {} });
+    expect(DEFAULT_ORCA_PREFS).toEqual({ enabled: true, repos: {}, chosen: {}, dispatch: {}, hosts: {} });
     expect(orcaEnabledFor(DEFAULT_ORCA_PREFS, 'x')).toBe(true);
   });
 
@@ -91,8 +91,8 @@ describe('prefs', () => {
 
   it('stores and clears a chosen session per PR', () => {
     const base = parseOrcaPrefs({});
-    const set = withChosen(base, 'PR_1', { worktreeId: 'w', sessionId: 'w|p' });
-    expect(set.chosen).toEqual({ PR_1: { worktreeId: 'w', sessionId: 'w|p' } });
+    const set = withChosen(base, 'PR_1', { host: 'local', worktreeId: 'w', sessionId: 'w|p' });
+    expect(set.chosen).toEqual({ PR_1: { host: 'local', worktreeId: 'w', sessionId: 'w|p' } });
     expect(withChosen(set, 'PR_1', null).chosen).toEqual({});
     expect(base.chosen).toEqual({});
   });
