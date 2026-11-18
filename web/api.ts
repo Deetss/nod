@@ -26,7 +26,7 @@ import type { PushSubscriptionJson } from '../shared/push';
 import type { TriggerSwitches } from '../shared/notify-rules';
 import type { OrcaDispatchRequest, OrcaDispatchResult, OrcaInfo } from '../shared/orca';
 import type { PrefsPatch } from '../shared/orca-prefs';
-import type { HostStatus } from '../shared/orca-hosts';
+import type { HostPrefs, HostStatus } from '../shared/orca-hosts';
 import type { NoticeResult, OrcaPrefsView, OrcaSessionsResponse, SendResult, SessionRef } from '../shared/orca-sessions';
 import type {
   ActionResult,
@@ -276,6 +276,7 @@ export const api = {
     post<{ ok: boolean }>('/api/orca/choose', s ? { prId, sessionId: s.id, host: s.host } : { prId, sessionId: null }),
   orcaPrefs: (patch: PrefsPatch) => post<OrcaPrefsView>('/api/orca/prefs', patch),
   orcaHosts: () => get<HostStatus[]>('/api/orca/hosts'),
+  orcaHostPrefs: () => get<HostPrefs>('/api/orca/host-prefs'),
   orcaOpen: (s: SessionRef) => post<{ ok: boolean }>('/api/orca/open', { sessionId: s.id, host: s.host }),
   /** Waits up to 6 s for an automatic notification to finish. */
   orcaNotice: (id: string) => get<NoticeResult>(`/api/orca/notice/${encodeURIComponent(id)}`),

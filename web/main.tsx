@@ -36,6 +36,7 @@ import './dispatch-all.css';
 import './pair.css';
 import './mentions/mentions.css';
 import './settings.css';
+import './hub-settings.css';
 import './connection.css';
 import './connections/connections.css';
 import './phone/phone-connections.css';

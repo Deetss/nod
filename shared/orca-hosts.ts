@@ -12,3 +12,9 @@ export interface HostStatus {
   online: boolean;
   lastSeen: number | null;
 }
+
+/** `GET /api/orca/host-prefs`: the default host (null is `local`) and the per-repo hosts. */
+export interface HostPrefs {
+  defaultHost: string | null;
+  hosts: Record<string, string>;
+}

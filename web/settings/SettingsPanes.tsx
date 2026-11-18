@@ -1,5 +1,7 @@
 import { orgScope } from '../../shared/org-scope';
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
+import { HUB_LOCAL_NOTE, HUB_SAVED_NOTE, HubPaneBody } from './HubPane';
+import { useHub } from './useHub';
 import { STATUS_KEYS, type StatusOptionKey } from '../../shared/settings';
 import { Btn } from '../ui';
 import type { FieldErrors, FormState, SectionId } from './form';
@@ -19,6 +21,10 @@ export interface PaneProps {
   connection?: ConnectionView;
   /** Opened from a banner: focus lands on Check again. */
   focusCheck?: boolean;
+  /** Repos seen in the inbox, for Settings > Hub's host table. */
+  repos?: readonly string[];
+  /** Settings > Hub sets the footer's note while it is open. */
+  onFooterNote?: (note: string | undefined) => void;
 }
 
 const STATUS_LABELS: Record<StatusOptionKey, string> = {
@@ -208,6 +214,19 @@ function PhonePane({ form, errors, patch, onEnter }: PaneProps) {
   );
 }
 
+function HubPane({ repos, onFooterNote }: PaneProps) {
+  const hub = useHub();
+  useEffect(() => {
+    onFooterNote?.(hub.attached ? HUB_SAVED_NOTE : HUB_LOCAL_NOTE);
+    return () => onFooterNote?.(undefined);
+  }, [hub.attached, onFooterNote]);
+  return (
+    <Pane title="Hub" caption="An always-on Nod this desktop uses instead of its own server. Empty keeps everything here.">
+      <HubPaneBody hub={hub} repos={repos ?? []} />
+    </Pane>
+  );
+}
+
 function UpdatesPane() {
   return (
     <Pane title="Updates" caption="Nod checks GitHub for a new release every hour. The service restarts on it once it downloads.">
@@ -218,6 +237,9 @@ function UpdatesPane() {
 
 const PANES: Record<SectionId, (p: PaneProps) => ReactNode> = {
   github: GithubPane,
+  // A component, not a call, because it holds hooks of its own.
+  hub: (p) => <HubPane {...p} />,
+
   bot: BotPane,
   project: ProjectPane,
   release: ReleasePane,

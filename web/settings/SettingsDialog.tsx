@@ -48,6 +48,8 @@ interface SettingsDialogProps {
   connection?: ConnectionView;
   /** Opened from a token banner: focus lands on Check again. */
   focusCheck?: boolean;
+  /** Repos seen in the inbox, for Settings > Hub. */
+  repos?: readonly string[];
 }
 
 /** The `!` on a section, for the token. Shown on the active section too. */
@@ -60,7 +62,8 @@ function NavMark({ tone }: { tone: 'danger' | 'attention' }) {
   );
 }
 
-export function SettingsDialog({ initial, onClose, initialSection, connection, focusCheck }: SettingsDialogProps) {
+export function SettingsDialog({ initial, onClose, initialSection, connection, focusCheck, repos }: SettingsDialogProps) {
+  const [paneNote, setPaneNote] = useState<string | undefined>();
   const baseline = useMemo(() => toForm(initial), [initial]);
   const [form, setForm] = useState<FormState>(baseline);
   const [section, setSection] = useState<SectionId>(initialSection ?? 'github');
@@ -126,7 +129,7 @@ export function SettingsDialog({ initial, onClose, initialSection, connection, f
     ) : dirty ? (
       <Status tone="attention">Unsaved changes</Status>
     ) : (
-      <Status tone="muted">{DEFAULT_STATUS}</Status>
+      <Status tone="muted">{paneNote ?? DEFAULT_STATUS}</Status>
     );
 
   return (
@@ -196,6 +199,9 @@ export function SettingsDialog({ initial, onClose, initialSection, connection, f
             onEnter={submit}
             connection={connection}
             focusCheck={focusCheck}
+            repos={repos}
+            onFooterNote={setPaneNote}
+
           />
         </div>
       </div>

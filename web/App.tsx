@@ -1065,6 +1065,7 @@ export function App() {
           initialSection={settingsSection}
           connection={connection}
           focusCheck={focusCheck}
+          repos={[...new Set((inbox.data?.prs ?? []).map((p) => p.repo.toLowerCase()))].sort()}
           onClose={() => {
             setSettingsOpen(false);
             setSettingsSection(undefined);

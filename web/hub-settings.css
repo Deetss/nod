@@ -1,0 +1,168 @@
+/* Settings > Hub (docs/design/hosts-spec.md S1) */
+
+.settings-pane-body .hub-label {
+  margin: 16px 0 6px;
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.hub-url-row,
+.hub-pair-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialog input.hub-url {
+  width: 440px;
+  flex: none;
+  font: 400 12px/18px var(--fontStack-monospace);
+}
+
+.dialog input.hub-url[readonly] {
+  color: var(--fgColor-muted);
+}
+
+.btn.hub-check {
+  width: 80px;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.hub-pill {
+  margin-top: 12px;
+}
+
+.hub-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.hub-pill .spinner {
+  width: 10px;
+  height: 10px;
+}
+
+.hub-pair-row {
+  margin-top: 12px;
+}
+
+.btn.hub-pair,
+.hub-pair-row .btn {
+  height: 28px;
+  font-size: 12px;
+}
+
+.btn.hub-pair {
+  width: 146px;
+  justify-content: center;
+}
+
+.dialog input.hub-pair-input {
+  width: 440px;
+  height: 28px;
+  font: 400 12px/18px var(--fontStack-monospace);
+}
+
+.settings-pane-body .hub-local-hint {
+  margin-top: 8px;
+}
+
+.hub-hosts {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.hub-section-title {
+  font: 600 12px/18px var(--fontStack-system);
+}
+
+.settings-pane-body .hub-hosts .settings-caption {
+  margin-top: 0;
+}
+
+.hub-readonly {
+  margin-top: 4px;
+}
+
+.hub-default-row {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 156px 200px;
+  align-items: center;
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.dialog select.hub-default-select,
+.dialog select.hub-repo-select {
+  height: 28px;
+  padding: 0 8px;
+  background: var(--button-default-bgColor-rest);
+  font: 400 12px/18px var(--fontStack-system);
+  color: var(--fgColor-default);
+}
+
+.dialog select.hub-repo-select {
+  width: 160px;
+  height: 24px;
+}
+
+.dialog select.is-default {
+  color: var(--fgColor-muted);
+}
+
+.dialog select.is-offline {
+  border-style: dashed;
+  color: var(--fgColor-muted);
+}
+
+.dialog select:disabled {
+  opacity: 0.6;
+}
+
+.hub-table {
+  margin-top: 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.hub-table-head,
+.hub-table-row {
+  display: grid;
+  grid-template-columns: 325px 1fr;
+  align-items: center;
+  padding: 0 11px;
+}
+
+/* The header sits outside the scrolling body, so it stays in view. */
+.hub-table-head {
+  height: 24px;
+  background: var(--bgColor-muted);
+  font: 600 12px/18px var(--fontStack-system);
+  color: var(--fgColor-muted);
+}
+
+/* Five rows, then the table scrolls inside itself. */
+.hub-table-body {
+  max-height: 150px;
+  overflow: auto;
+}
+
+.hub-table-row {
+  height: 30px;
+}
+
+.hub-repo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 12px/18px var(--fontStack-monospace);
+}
+
+.settings-pane-body .hub-table-empty {
+  margin: 0;
+  padding: 6px 11px;
+}
