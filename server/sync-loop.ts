@@ -16,6 +16,8 @@ export class SyncLoop {
   private lastTickAt = 0;
   /** The current step, before the budget stretch. */
   private step: number = MIN_DELAY_MS;
+  /** Polls that failed in a row. */
+  failures = 0;
 
   constructor(
     private readonly provider: Pick<Provider, 'poll' | 'budget'>,
@@ -31,7 +33,9 @@ export class SyncLoop {
       // The first poll only sets the baseline, so the first wait is the start step.
       this.step = this.polled ? nextDelay(this.step, changed) : MIN_DELAY_MS;
       this.polled = true;
+      this.failures = 0;
     } catch (e) {
+      this.failures += 1;
       this.log(`[sync] ${e instanceof Error ? e.message : 'poll failed'}`);
     } finally {
       this.ticking = false;

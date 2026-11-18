@@ -11,6 +11,8 @@ export interface SheetStack {
   openLayer: (key: string, onBack: () => void) => void;
   /** Closes the top layer through History so the back gesture and the UI agree. */
   closeLayer: (key: string) => void;
+  /** Swaps the top layer `from` for another in place. History is left alone, so no Back is in flight to close the new one. */
+  swapLayer: (from: string, key: string, onBack: () => void) => void;
   /** Opens a root from a notification navigation. The navigation already made the entry, so the sheet is written into it. */
   openFromNavigation: (level: Level) => void;
   /** Closes the top level. Goes through History so the back gesture and Close agree. */
@@ -110,6 +112,12 @@ export function useSheetStack(initial: readonly Level[] = []): SheetStack {
     window.history.back();
   }, []);
 
+  const swapLayer = useCallback((from: string, key: string, onBack: () => void) => {
+    const top = layers.current[layers.current.length - 1];
+    if (top?.key === from) layers.current = [...layers.current.slice(0, -1), { key, onBack }];
+    else openLayer(key, onBack);
+  }, [openLayer]);
+
   // Pushing here would be skipped by Chrome's rule for entries made without user activation.
   const openFromNavigation = useCallback((level: Level) => {
     window.history.replaceState(entry(1, 0), '', window.location.pathname);
@@ -142,5 +150,5 @@ export function useSheetStack(initial: readonly Level[] = []): SheetStack {
     };
   }, []);
 
-  return { stack, push, replaceTop, replaceRoot: placeRoot, openLayer, closeLayer, openFromNavigation, pop, hold };
+  return { stack, push, replaceTop, replaceRoot: placeRoot, openLayer, closeLayer, swapLayer, openFromNavigation, pop, hold };
 }

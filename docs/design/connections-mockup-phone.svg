@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="412" height="915" viewBox="0 0 412 915" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#f0f6fc">
+  <defs>
+    <style>
+      .cap { font-size: 12px; }
+      .muted { fill: #9198a1; }
+      .semi { font-weight: 700; }
+      .mono { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+    </style>
+  </defs>
+  <rect width="412" height="915" fill="#0d1117"/>
+
+  <!-- Phone list behind, under scrim -->
+  <text x="16" y="44" font-size="20" class="semi">Pull requests</text>
+  <rect x="356" y="22" width="40" height="32" rx="16" fill="#212830"/>
+  <text x="366" y="44" class="semi">···</text>
+  <circle cx="390" cy="24" r="4" fill="#3fb950"/>
+  <g class="muted">
+    <text x="16" y="96">test: cover pending approvals and batchUpdate</text>
+    <text x="16" y="116" class="cap">acme-dev/web-app #1437 · 3h</text>
+    <text x="16" y="160">Support sensor type 14 and fix cancel recursion</text>
+    <text x="16" y="180" class="cap">no reviews yet</text>
+  </g>
+  <rect width="412" height="915" fill="#010409" opacity="0.6"/>
+
+  <!-- NEW: Connections bottom sheet (ph-asheet). Opened from the ··· menu row "Connections". -->
+  <rect x="0" y="235" width="412" height="700" rx="16" fill="#151b23" stroke="#3d444d"/>
+  <rect x="186" y="245" width="40" height="4" rx="2" fill="#656c76"/>
+  <text x="16" y="282" font-size="16" class="semi">Connections</text>
+  <text x="16" y="302" class="cap muted">This phone reaches the hub over Tailscale.</text>
+
+  <!-- Rail: the rows form the diagram. 24px gutter, marks centred at x=28, 2px link between marks. -->
+  <g stroke="#3fb950" stroke-width="2">
+    <line x1="28" y1="346" x2="28" y2="398"/>
+    <line x1="28" y1="414" x2="28" y2="466"/>
+    <line x1="28" y1="482" x2="28" y2="534"/>
+    <line x1="28" y1="550" x2="28" y2="602"/>
+  </g>
+
+  <!-- Each row 68 high, 48+ touch target -->
+  <circle cx="28" cy="338" r="7" fill="#3fb950"/>
+  <text x="48" y="336" class="semi">This phone</text>
+  <text x="48" y="356" class="cap muted">Android phone. Push on.</text>
+
+  <circle cx="28" cy="406" r="7" fill="#3fb950"/>
+  <text x="48" y="404" class="semi">Tailscale</text>
+  <text x="48" y="424" class="mono muted">https://hub.example.ts.net</text>
+  <text x="396" y="412" class="cap" fill="#4493f8" text-anchor="end">Copy</text>
+
+  <circle cx="28" cy="474" r="8" fill="#111d2e" stroke="#1f6feb" stroke-width="2"/>
+  <text x="48" y="472" class="semi">Hub</text>
+  <text x="48" y="492" class="cap muted">Nod service, v0.2.32. Synced 2m ago.</text>
+
+  <circle cx="28" cy="542" r="7" fill="#3fb950"/>
+  <text x="48" y="540" class="semi">GitHub</text>
+  <text x="48" y="560" class="cap muted">acme-dev. API 4,885 / 5,000.</text>
+
+  <circle cx="28" cy="610" r="7" fill="#3fb950"/>
+  <text x="48" y="608" class="semi">Orca on the hub</text>
+  <text x="48" y="628" class="cap muted">Running. 3 repos, 5 sessions.</text>
+
+  <line x1="16" y1="660" x2="396" y2="660" stroke="#2f353d"/>
+  <text x="16" y="686" class="cap semi muted">OTHER DEVICES ON THIS HUB</text>
+  <circle cx="28" cy="718" r="6.25" fill="none" stroke="#9198a1" stroke-width="1.5"/>
+  <text x="48" y="716" class="semi">Laptop browser</text>
+  <text x="48" y="736" class="cap muted">Seen 11:58 AM. Push off.</text>
+
+  <!-- Pinned footer -->
+  <line x1="0" y1="827" x2="412" y2="827" stroke="#3d444d"/>
+  <rect x="16" y="843" width="184" height="48" rx="24" fill="#212830" stroke="#3d444d"/>
+  <text x="108" y="872" text-anchor="middle">Close</text>
+  <rect x="212" y="843" width="184" height="48" rx="24" fill="#212830" stroke="#3d444d"/>
+  <text x="304" y="872" text-anchor="middle">Check again</text>
+  <text x="206" y="815" class="cap muted" text-anchor="middle">Checked 12:24 PM</text>
+</svg>

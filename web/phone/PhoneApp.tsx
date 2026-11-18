@@ -48,6 +48,9 @@ import { projectOff } from '../../shared/connection';
 import { clockOf, tokenBlocks } from '../Banner';
 import type { ConnectionView } from '../settings/useConnection';
 import { PhoneConnectionSheet } from './PhoneConnectionSheet';
+import { PhoneConnectionsSheet } from './PhoneConnectionsSheet';
+import { chipFor } from '../connections/model';
+import type { ConnectionsView } from '../connections/useConnections';
 import { useUpdateCheck } from './useUpdateCheck';
 import { PhoneQuietNote, SyncFailedBanner, TokenBannerPhone } from './PhoneStates';
 
@@ -75,6 +78,8 @@ interface PhoneAppProps {
   overlay?: ReactNode;
   /** The GitHub token's state, for the banners and the How to fix sheet. */
   connection: ConnectionView;
+  /** How the phone reaches the hub, for the ··· menu row and its sheet. */
+  connections: ConnectionsView;
 }
 
 const CLOSED_BY_DEFAULT = new Set(['org', 'dependabot', 'all']);
@@ -189,6 +194,19 @@ export function PhoneApp(p: PhoneAppProps) {
       p.connection.clearResult();
     }
   };
+  const [connsSheet, setConnsSheet] = useState(false);
+  const setConnsLayer = (on: boolean) => {
+    if (on) sheets.openLayer('connections', () => setConnsSheet(false));
+    else sheets.closeLayer('connections');
+    setConnsSheet(on);
+  };
+  // From the ··· menu: the sheet takes over the menu's History entry, so Back closes the sheet.
+  const openConnsFromMenu = () => {
+    sheets.swapLayer('menu', 'connections', () => setConnsSheet(false));
+    setMenu(false);
+    setConnsSheet(true);
+  };
+  const connsTone = chipFor(p.connections.data, { now, clock: 'system' }).tone;
   const listBanner =
     blocked && conn ? (
       <TokenBannerPhone connection={conn} cachedAt={cachedAt} onFix={() => setConnLayer(true)} />
@@ -393,6 +411,8 @@ export function PhoneApp(p: PhoneAppProps) {
           onDensity={p.onDensity}
           onToggleTheme={p.onToggleTheme}
           onCheckUpdates={updates.check}
+          connections={connsTone}
+          onConnections={openConnsFromMenu}
         />
         <SwipePager
           pager={pager}
@@ -497,6 +517,7 @@ export function PhoneApp(p: PhoneAppProps) {
       </SheetHoldContext.Provider>
       </LinkRouterContext.Provider>
       {connSheet ? <PhoneConnectionSheet view={p.connection} onClose={() => setConnLayer(false)} /> : null}
+      {connsSheet ? <PhoneConnectionsSheet view={p.connections} onClose={() => setConnsLayer(false)} /> : null}
       {p.overlay}
     </div>
   );

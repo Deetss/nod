@@ -36,6 +36,8 @@ import './pair.css';
 import './mentions/mentions.css';
 import './settings.css';
 import './connection.css';
+import './connections/connections.css';
+import './phone/phone-connections.css';
 import './phone/phone-shell.css';
 import './phone/phone-list.css';
 import './phone/phone-pull.css';

@@ -1,0 +1,427 @@
+/* Connections chip, popover and row marks. Spec: docs/design/connections-spec.md. */
+
+/* Marks: shape carries the state, colour repeats it. */
+.cx-mark {
+  flex: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.cx-mark.is-ok {
+  background: var(--fgColor-success);
+}
+
+.cx-mark.is-off {
+  border: 1.5px solid var(--fgColor-muted);
+}
+
+.cx-mark.is-checking {
+  border: 1.5px dashed var(--fgColor-muted);
+}
+
+.cx-mark.is-warn {
+  border-radius: 0;
+  color: var(--fgColor-attention);
+}
+
+.cx-mark.is-broken {
+  background: var(--fgColor-danger);
+  color: var(--bgColor-default);
+  font: 700 12px/12px var(--fontStack-system);
+}
+
+.cx-mark.is-hub {
+  background: var(--bgColor-accent-muted);
+  border: 2px solid var(--borderColor-accent-emphasis);
+}
+
+/* Chip: worst state wins. Width hugs the label between 120 and 220. */
+.cx-menu {
+  position: relative;
+  display: flex;
+}
+
+.cx-chip {
+  height: 28px;
+  min-width: 120px;
+  max-width: 220px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 10.5px;
+  border: 1.5px solid;
+  border-radius: 999px;
+  font: 600 12px/18px var(--fontStack-system);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cx-chip-full {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cx-chip-short {
+  display: none;
+}
+
+.cx-chip-icon {
+  flex: none;
+}
+
+/* Outside the chip (the phone menu row) the glyph carries its own tone. */
+.cx-chip-icon.is-ok {
+  color: var(--fgColor-success);
+}
+
+.cx-chip-icon.is-attention {
+  color: var(--fgColor-attention);
+}
+
+.cx-chip.is-ok {
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
+  color: var(--fgColor-success);
+}
+
+.cx-chip.is-neutral {
+  background: var(--button-default-bgColor-rest);
+  border-color: var(--borderColor-default);
+  color: var(--fgColor-default);
+}
+
+.cx-chip.is-attention {
+  background: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-emphasis);
+  color: var(--fgColor-attention);
+}
+
+.cx-chip.is-danger {
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
+  color: var(--fgColor-danger);
+}
+
+.cx-chip.is-checking {
+  background: var(--button-default-bgColor-rest);
+  border-style: dashed;
+  border-color: var(--borderColor-emphasis);
+  color: var(--fgColor-muted);
+}
+
+.cx-chip:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1499px) {
+  .cx-chip {
+    min-width: 0;
+  }
+
+  .cx-chip-full {
+    display: none;
+  }
+
+  .cx-chip-short {
+    display: inline;
+  }
+}
+
+/* Popover: 520 wide, right edge on the chip's, arrow centred on the chip. */
+.cx-arrow {
+  position: absolute;
+  z-index: 41;
+  top: calc(100% + 7px);
+  left: calc(50% - 8px);
+  width: 11px;
+  height: 11px;
+  background: var(--bgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+  border-left: 1px solid var(--borderColor-default);
+  transform: translateY(1px) rotate(45deg);
+  transform-origin: center;
+}
+
+.cx-pop {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 520px;
+  box-sizing: border-box;
+  padding: 16px 16px 12px;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 12px;
+  color: var(--fgColor-default);
+  font: 400 12px/18px var(--fontStack-system);
+  white-space: normal;
+  text-align: left;
+  cursor: default;
+}
+
+.cx-head {
+  position: relative;
+}
+
+.cx-title {
+  margin: 0;
+  font: 600 14px/20px var(--fontStack-system);
+}
+
+.cx-sub {
+  margin: 0;
+  color: var(--fgColor-muted);
+}
+
+.cx-head .kbd {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 34px;
+  height: 22px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: var(--button-default-bgColor-rest);
+}
+
+/* Strip: four nodes on one line, Orca under This Nod. Offsets from the redline. */
+.cx-strip {
+  position: relative;
+  height: 134px;
+  margin-top: 14px;
+}
+
+.cx-node {
+  position: absolute;
+  top: 0;
+  height: 58px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 12px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+}
+
+.cx-node-github {
+  left: 0;
+  width: 104px;
+}
+
+.cx-node-nod {
+  left: 132px;
+  width: 112px;
+}
+
+.cx-node-tailscale {
+  left: 272px;
+  width: 104px;
+}
+
+/* The narrowest node keeps the 12px text inset but a tighter right edge, so `Devices` fits. */
+.cx-node-devices {
+  left: 404px;
+  width: 84px;
+  padding-right: 4px;
+}
+
+.cx-node-orca {
+  top: 86px;
+  left: 132px;
+  width: 112px;
+  height: 48px;
+}
+
+.cx-node-name {
+  font: 600 14px/20px var(--fontStack-system);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cx-node-detail {
+  color: var(--fgColor-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cx-node.is-here {
+  background: var(--bgColor-accent-muted);
+  border: 1.5px solid var(--borderColor-accent-emphasis);
+}
+
+.cx-node.is-off {
+  border-style: dashed;
+}
+
+.cx-node.is-off .cx-node-name {
+  color: var(--fgColor-muted);
+}
+
+.cx-node.is-broken {
+  background: var(--bgColor-danger-muted);
+  border: 1.5px solid var(--borderColor-danger-emphasis);
+}
+
+.cx-node.is-broken .cx-node-detail {
+  color: var(--fgColor-danger);
+}
+
+/* Links are 2px fills: solid when working, 3 3 dashes when off, 5 3 when broken. */
+.cx-link {
+  position: absolute;
+  --cx-link-dir: to right;
+  background: var(--fgColor-success);
+}
+
+.cx-link-github,
+.cx-link-tailscale,
+.cx-link-devices {
+  top: 28px;
+  width: 28px;
+  height: 2px;
+}
+
+.cx-link-github {
+  left: 104px;
+}
+
+.cx-link-tailscale {
+  left: 244px;
+}
+
+.cx-link-devices {
+  left: 376px;
+}
+
+.cx-link-orca {
+  top: 58px;
+  left: 187px;
+  width: 2px;
+  height: 28px;
+  --cx-link-dir: to bottom;
+}
+
+.cx-link.is-off {
+  background: repeating-linear-gradient(var(--cx-link-dir), var(--borderColor-default) 0 3px, transparent 3px 6px);
+}
+
+.cx-link.is-broken {
+  background: repeating-linear-gradient(var(--cx-link-dir), var(--fgColor-danger) 0 5px, transparent 5px 8px);
+}
+
+/* Rows: mark, name column 130, detail, action right aligned. */
+.cx-rows {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--borderColor-muted);
+}
+
+.cx-rows.is-scroll {
+  max-height: 276px;
+  overflow-y: auto;
+}
+
+.cx-row {
+  height: 46px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 4px;
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.cx-row-name {
+  flex: none;
+  width: 124px;
+  font: 600 14px/20px var(--fontStack-system);
+  white-space: nowrap;
+}
+
+.cx-row-detail {
+  flex: 1;
+  min-width: 0;
+  color: var(--fgColor-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cx-row-detail.is-mono {
+  font-family: var(--fontStack-monospace);
+}
+
+.cx-row.is-broken .cx-row-detail {
+  color: var(--fgColor-danger);
+}
+
+.cx-action {
+  flex: none;
+  margin-left: auto;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--fgColor-accent);
+  font: 400 12px/18px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.cx-action:hover {
+  text-decoration: underline;
+}
+
+.cx-action:focus-visible {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.cx-more .cx-action {
+  margin-left: 22px;
+}
+
+.cx-rename {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  color: var(--fgColor-default);
+  font: 400 14px/20px var(--fontStack-system);
+}
+
+.cx-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cx-footer .btn {
+  height: 28px;
+  padding: 0 13px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.cx-checked {
+  margin-left: auto;
+  color: var(--fgColor-muted);
+}

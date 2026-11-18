@@ -10,6 +10,7 @@ import type {
   RepoMeta,
 } from '../shared/issue-types';
 import type { DevicesResponse, PairCode } from '../shared/pairing';
+import type { ConnectionsBody } from '../shared/connections';
 import type { AndroidRelease } from '../shared/android-release';
 import type { PhonesUpdateResult } from '../shared/build-update';
 import type { UpdateCheckResult } from '../shared/app-update';
@@ -231,6 +232,8 @@ export const api = {
     get<{ hits: NumberHit[] }>(`/api/lookup/${number}`, { repos: repos.join(',') }),
   issueAction: (action: IssueAction) => post<IssueActionResult>('/api/issue-action', action),
   devices: () => get<DevicesResponse>('/api/devices'),
+  /** `fresh` re-runs every probe, for Check now. */
+  connections: (fresh = false) => get<ConnectionsBody>('/api/connections', fresh ? { fresh: '1' } : {}),
   pairCode: () => post<PairCode>('/api/pair/code', {}),
   renameDevice: (id: string, name: string) => post<{ ok: boolean }>('/api/devices/rename', { id, name }),
   revokeDevice: (id: string) => post<{ ok: boolean }>('/api/devices/revoke', { id }),

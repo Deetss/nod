@@ -62,6 +62,7 @@ function mount(tab: PhoneTab = 'prs') {
       createElement(PhoneApp, {
         tab,
         onTab: vi.fn(),
+        connections: { data: undefined, busy: false, check: vi.fn(), reload: vi.fn() },
         inbox,
         issues,
         activity,

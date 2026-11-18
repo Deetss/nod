@@ -112,6 +112,7 @@ function mount(over: Partial<ActivityHandle> = {}) {
       createElement(PhoneApp, {
         tab: 'activity',
         onTab: vi.fn(),
+        connections: { data: undefined, busy: false, check: vi.fn(), reload: vi.fn() },
         inbox,
         issues,
         activity,

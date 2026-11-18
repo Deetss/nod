@@ -29,6 +29,8 @@ Fixture mode serves synthetic data, makes no GitHub calls, and turns every actio
 - acme-co/orders-api #372 is your own PR that passes the Merge (bypass) gate; #373 hides it with a failing check and #374 with no ruleset bypass. `?state=bypass-fail` makes the merge fail like GitHub's 405, and `?state=bypass-slow` holds it busy for a minute.
 - Issue writes in fixture mode log what they would do and change an in-memory copy only.
 
+- Connections (`GET /api/connections`, the top bar chip and the phone sheet) answer from fixtures too. `?state=conn-local|conn-off|conn-warn|conn-broken|conn-nodevices|conn-noorca|conn-many` picks a state, and `conn-checking` holds the answer for two minutes so the first-load state shows. Anything else is the all-good service.
+
 Orca and Helper fixtures are described in [Orca](orca.md) and [Issues](issues.md).
 
 ## Scripts

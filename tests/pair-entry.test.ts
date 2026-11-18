@@ -45,6 +45,12 @@ function topbar(onPairPhone = () => {}) {
   return createElement(Topbar, {
     view: 'prs',
     onView: () => {},
+    connections: {
+      view: { data: undefined, busy: false, check: () => Promise.resolve(), reload: () => {} },
+      onPair: () => {},
+      onGithub: () => {},
+      keys: false,
+    },
     prUnseen: 0,
     issueUnseen: 0,
     activityUnseen: 0,

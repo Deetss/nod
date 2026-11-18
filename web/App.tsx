@@ -14,6 +14,7 @@ import { ACTIVITY_HELP_KEYS, FOOTER_FINDINGS, FOOTER_FINDINGS_NARROW, issueHelpK
 import { bot, isFirstRun, loadedSettings } from './org-settings';
 import { SettingsDialog } from './settings/SettingsDialog';
 import { useConnection } from './settings/useConnection';
+import { useConnections } from './connections/useConnections';
 import { attentionTone } from '../shared/connection';
 import { tokenBlocks } from './Banner';
 import type { SectionId } from './settings/form';
@@ -188,6 +189,7 @@ export function App() {
     setFocusCheck(true);
     setSettingsOpen(true);
   }, []);
+  const connections = useConnections();
   const activity = useActivity(inbox.data?.syncedAt, listView === 'activity' || (phone && phoneActivity));
   const issueUnseen = (issues.data?.issues ?? []).filter((i) => i.seen !== 'seen' && !issueSeen.has(i.id)).length;
   const prUnseen = inbox.data ? allPrs(inbox.data).filter((p) => p.seen !== 'seen' && !seenLocal.has(p.id)).length : 0;
@@ -841,6 +843,7 @@ export function App() {
         onDensity={setDensity}
         overlay={updateToast}
         connection={connection}
+        connections={connections}
       />
     );
   }
@@ -882,6 +885,12 @@ export function App() {
         onPairPhone={() => setPairing(true)}
         onSettings={() => setSettingsOpen(true)}
         settingsMark={attentionTone(connection.connection)}
+        connections={{
+          view: connections,
+          onPair: () => setPairing(true),
+          onGithub: openConnection,
+          keys: !help && !pairing && !settingsShown,
+        }}
       />
       {listView === 'activity' ? (
         <ActivityView

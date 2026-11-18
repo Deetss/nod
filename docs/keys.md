@@ -40,6 +40,7 @@
 | `,` | settings |
 | `W` | closed window |
 | `g o` / `g p` / `g i` / `g a` | org / PRs / Issues / Activity |
+| `g c` | Connections (top bar chip). `c` alone is comment |
 | `f` | filter |
 | `/` | search |
 | `?` | this help |
@@ -89,6 +90,7 @@ The Issues view reuses the keys above where it can, and adds its own. The help s
 | `,` | settings |
 | `W` | closed window |
 | `g p` | PRs |
+| `g c` | Connections |
 | `f` | filter |
 | `/` | search |
 | `?` | this help |

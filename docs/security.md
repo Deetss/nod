@@ -36,5 +36,6 @@ Each 403 from the host, origin and token checks logs one line (reason and path o
 - Issue images load through `GET /api/image?u=<url>`. The server rejects other hosts and accepts only png, jpeg, gif or webp responses, capped at 10 MB. See [Issues](issues.md).
 - Issue and PR HTML goes through DOMPurify before insertion.
 - Phone access adds device keys and a Tailscale user check. See [Phone](phone.md).
+- `GET /api/connections` sits behind the same guards. Loopback gets every device with its id. A paired phone gets its own row plus the other devices' name, last-seen time and push state, with no ids. No answer carries a key, key hash, push subscription or the session token. Tailscale Serve state comes from `tailscale serve status --json` (2 s timeout, cached 20 s); a missing `tailscale` reads as off.
 - Android keystore files stay in `~/.config/nod/` and are never printed. See [Android](android.md).
 - Desktop links open only `https://github.com/...` in the default browser. See [Desktop](desktop.md).

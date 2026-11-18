@@ -42,6 +42,8 @@ describe('phone menu Check for updates row', () => {
       onDensity: () => undefined,
       onToggleTheme: () => undefined,
       onCheckUpdates,
+      connections: 'ok',
+      onConnections: () => undefined,
     });
   }
 

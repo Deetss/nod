@@ -40,6 +40,12 @@ function render(f: Flags, onRefresh = () => {}): HTMLElement {
         notify: { settings: {} as never, onChange: () => {}, density: 'comfortable', onDensity: () => {} },
         pairOpen: false,
         onPairPhone: () => {},
+        connections: {
+          view: { data: undefined, busy: false, check: () => Promise.resolve(), reload: () => {} },
+          onPair: () => {},
+          onGithub: () => {},
+          keys: false,
+        },
       } as never),
     );
   });
