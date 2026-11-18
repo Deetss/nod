@@ -154,7 +154,7 @@ export function useOrca(o: Options): OrcaController {
       setBusy(true);
       if (phone) setDialog((d) => (d ? { ...d, error: undefined } : d));
       api
-        .orcaSend(session.id, text, requestId)
+        .orcaSend(session, text, requestId)
         .then((r) => {
           const out = { ...r, prId: prIdFor, session, text };
           setOutcome(out);
@@ -181,7 +181,7 @@ export function useOrca(o: Options): OrcaController {
       if (!o.requestId) return;
       setBusy(true);
       api
-        .orcaConfirm(o.session.id, o.requestId)
+        .orcaConfirm(o.session, o.requestId)
         .then((r) => {
           setOutcome((cur) => (cur === o ? { ...o, ...r } : cur));
           if (r.status === 'unconfirmed') toast({ kind: 'neutral', message: `Still no sign of the message in ${o.session.name}` });
@@ -215,7 +215,7 @@ export function useOrca(o: Options): OrcaController {
     (session?: SessionView) => {
       const target = session ?? single;
       if (!target) return;
-      api.orcaOpen(target.id).catch((e: unknown) => toast({ kind: 'err', message: msg(e, 'Could not open Orca') }));
+      api.orcaOpen(target).catch((e: unknown) => toast({ kind: 'err', message: msg(e, 'Could not open Orca') }));
     },
     [single, toast],
   );
@@ -244,7 +244,7 @@ export function useOrca(o: Options): OrcaController {
   const choose = useCallback(
     (forPr: string, s: SessionView) => {
       setPicker(undefined);
-      void api.orcaChoose(forPr, s.id).then(() => reload(), (e: unknown) => toast({ kind: 'err', message: msg(e, 'Could not save the choice') }));
+      void api.orcaChoose(forPr, s).then(() => reload(), (e: unknown) => toast({ kind: 'err', message: msg(e, 'Could not save the choice') }));
     },
     [reload, toast],
   );
@@ -465,7 +465,7 @@ export function useOrca(o: Options): OrcaController {
             return { name: res.worktree, worktree: true };
           }
           if (target.remember) choose(summary.id, target.session);
-          const r = await api.orcaSend(target.session.id, text);
+          const r = await api.orcaSend(target.session, text);
           setOutcome({ ...r, prId: summary.id, session: target.session, text });
           reload();
           return { name: target.session.name, status: r.status };

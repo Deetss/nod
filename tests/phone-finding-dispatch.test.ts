@@ -52,7 +52,7 @@ const detail = { summary: { id: 'pr-1', repo: 'acme/app', number: 7 }, headRef: 
 const TAG = 'pr-1|t1';
 const TEXT = 'Fix the coverage summary';
 
-const session = (name: string, reason: string): SessionView => ({ id: name, name, state: 'working', branch: name, via: 'pr', reason });
+const session = (name: string, reason: string): SessionView => ({ id: name, host: 'local', name, state: 'working', branch: name, via: 'pr', reason });
 
 function mount(phone: boolean) {
   const onFindingDispatched = vi.fn();
@@ -190,7 +190,7 @@ describe('phone finding dispatch, one linked session (Job 1)', () => {
     act(() => btn(el, 'Send').click());
     await flush();
 
-    expect(mocks.orcaSend).toHaveBeenCalledWith('fix-7', TEXT, undefined);
+    expect(mocks.orcaSend).toHaveBeenCalledWith(expect.objectContaining({ id: 'fix-7', host: 'local' }), TEXT, undefined);
     expect(onFindingResult).toHaveBeenCalledWith(TAG, expect.objectContaining({ status: 'sent' }));
     expect(el.querySelector('.ph-sheet')).toBeNull();
   });
@@ -270,7 +270,7 @@ describe('phone finding dispatch, several sessions (Job 2)', () => {
     act(() => btn(el, 'Remember and continue').click());
     await flush();
 
-    expect(mocks.orcaChoose).toHaveBeenCalledWith('pr-1', 'fix-7');
+    expect(mocks.orcaChoose).toHaveBeenCalledWith('pr-1', expect.objectContaining({ id: 'fix-7', host: 'local' }));
     expect(el.querySelector('.ph-sheet')?.getAttribute('aria-label')).toBe('Send to Orca session');
     expect(el.querySelector('.ph-fit-pill')?.textContent).toBe('Linked');
   });
