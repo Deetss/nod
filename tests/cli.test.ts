@@ -51,8 +51,8 @@ describe('pairText', () => {
 describe('qrText', () => {
   it('draws two module rows per line with a quiet zone', () => {
     const lines = qrText('https://box.example.ts.net/pair#code=abc').split('\n');
-    const width = lines[0].replace(/\x1b\[[0-9;]*m/g, '').length;
-    expect(lines.length).toBe(Math.ceil(width / 2));
-    expect(lines[0].replace(/\x1b\[[0-9;]*m/g, '')).toBe(' '.repeat(width));
+    const first = (lines[0] ?? '').replace(/\x1b\[[0-9;]*m/g, '');
+    expect(lines.length).toBe(Math.ceil(first.length / 2));
+    expect(first).toBe(' '.repeat(first.length));
   });
 });

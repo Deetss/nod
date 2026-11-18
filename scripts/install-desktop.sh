@@ -173,14 +173,14 @@ mkdir -p "$opt" "$(dirname "$bin")" "$(dirname "$desktop")"
 cp "$src" "$appimage"
 chmod +x "$appimage"
 
-# `nod serve` runs the headless service; `nod update` asks it to update now; anything else opens the app.
+# `nod serve` runs the headless service; `nod update`, `nod pair` and `nod settings` ask it; anything else opens the app.
 # The ozone flag must be on the real command line: Chromium picks its platform before main.ts runs.
 cat > "$bin" <<EOF
 #!/usr/bin/env bash
-if [[ "\${1:-}" == serve ]]; then
-  shift
-  set -- --serve --ozone-platform=headless "\$@"
-fi
+case "\${1:-}" in
+  serve) shift; set -- --serve --ozone-platform=headless "\$@" ;;
+  update | pair | settings) set -- "\$@" --ozone-platform=headless ;;
+esac
 exec "$appimage" "\$@"
 EOF
 chmod +x "$bin"
