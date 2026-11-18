@@ -137,10 +137,10 @@ export function useOrca(o: Options): OrcaController {
   const hosts = hostsRemote.data && hostsRemote.data.length > 0 ? hostsRemote.data : LOCAL_ONLY;
   const carried = useRef<Record<string, PrSessions>>({});
   const byPr = useMemo(() => {
-    const out = carryOffline(carried.current, data?.byPr ?? {}, hosts);
+    const out = carryOffline(carried.current, data?.byPr ?? {}, hosts, data?.at ?? 0);
     carried.current = out;
     return out;
-  }, [data?.byPr, hosts]);
+  }, [data?.byPr, data?.at, hosts]);
 
   const setRepoHost = useCallback(
     (repo: string, host: string) => {

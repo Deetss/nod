@@ -161,7 +161,12 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
           {path === 'pick' ? (
             <SessionChoice candidates={candidates} pick={pick} busy={busy} worktreeRow={wh.multi ? wh : undefined} onPick={setPick} />
           ) : null}
-          {path === 'pick' && worktree ? <div className="dispatch-all-worktree">{<DispatchFields f={f} agents={offer.agents} paired disabled={busy} />}{head}</div> : null}
+          {path === 'pick' && worktree ? (
+            <div className="dispatch-all-worktree">
+              <DispatchFields f={f} agents={offer.agents} paired disabled={busy} />
+              {head}
+            </div>
+          ) : null}
           {path === 'worktree' ? (
             <div className="dispatch-all-worktree">
               <span className="muted small">{`No Orca session linked to PR #${number}. A new worktree opens on the PR head.`}</span>

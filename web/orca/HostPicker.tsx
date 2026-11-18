@@ -75,7 +75,7 @@ export function HostSelect({ hosts, value, disabled, label, onPick }: SelectProp
   useEffect(() => {
     if (!open) return;
     setFocus(Math.max(0, online.findIndex((h) => h.name === value)));
-    menu.current?.focus();
+    menu.current?.focus({ preventScroll: true });
     const away = (e: MouseEvent) => {
       if (!menu.current?.parentElement?.contains(e.target as Node)) setOpen(false);
     };

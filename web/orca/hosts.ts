@@ -55,17 +55,24 @@ export function worktreeHost(prefs: HostPrefs, repo: string | undefined, hosts: 
 }
 
 /**
- * Keeps each PR's related sessions whose host went offline, so the chip shows the last state it
- * knew. They drop once the host answers again or leaves the list.
+ * Keeps each PR's related sessions from a host that did not answer the snapshot taken at `at`,
+ * so the chip shows the last state it knew. A host's `lastSeen` equals the time of the last
+ * snapshot it answered, which keeps this right whichever of the two polls lands first. A session
+ * drops once its host answers a snapshot without it, or leaves the list.
  */
 export function carryOffline(
   prev: Readonly<Record<string, PrSessions>>,
   next: Readonly<Record<string, PrSessions>>,
   hosts: readonly HostStatus[],
+  at: number,
 ): Record<string, PrSessions> {
+  const answered = (name: string): boolean => {
+    const h = hosts.find((x) => x.name === name);
+    return !h || (h.online && h.lastSeen !== null && h.lastSeen >= at);
+  };
   const out: Record<string, PrSessions> = { ...next };
   for (const [prId, ps] of Object.entries(prev)) {
-    const kept = ps.related.filter((s) => offlineHost(s.host, hosts));
+    const kept = ps.related.filter((s) => !answered(s.host));
     if (kept.length === 0) continue;
     const cur = out[prId] ?? { related: [], possible: [] };
     const fresh = kept.filter((s) => !cur.related.some((r) => r.host === s.host && r.id === s.id));
