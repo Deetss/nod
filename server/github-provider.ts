@@ -28,6 +28,7 @@ import {
   bypassMethodFor,
   bypassRefusal,
   canBypassMerge,
+  CONFLICT_HINT,
   deletesBranch,
   DRAFT_HINT,
   isOwnPr,
@@ -1304,6 +1305,7 @@ export class GithubProvider implements Provider {
       // The guard query already carries the title and branches, so no separate title read.
       const { pr } = await this.mergeState(ref);
       if (pr.isDraft === true) return { ok: false, message: `Auto-merge refused. ${DRAFT_HINT}` };
+      if (pr.mergeable === 'CONFLICTING') return { ok: false, message: `Auto-merge refused. ${CONFLICT_HINT}` };
       await this.gh([
         'pr', 'merge', '--auto', '--repo', ref.repo, String(ref.number),
         ...mergeFlags({ title: pr.title, base: pr.baseRefName, head: pr.headRefName }, this.settings),
@@ -1398,6 +1400,7 @@ export class GithubProvider implements Provider {
         return { ok: false, message: 'Admin merge refused: you do not have admin merge permission' };
       }
       if (pr.isDraft === true) return { ok: false, message: `Admin merge refused. ${DRAFT_HINT}` };
+      if (pr.mergeable === 'CONFLICTING') return { ok: false, message: `Admin merge refused. ${CONFLICT_HINT}` };
       const ci = ciFromRollup(pr.commits.nodes[0]?.commit.statusCheckRollup?.state);
       const state = adminMergeState({
         author,
