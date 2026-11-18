@@ -12,6 +12,8 @@ export const OWN_PR_HINT = 'Your PR: GitHub only allows comments';
 
 export const DRAFT_HINT = 'Draft: mark ready first';
 
+export const CONFLICT_HINT = 'Conflicts with the base branch: rebase first';
+
 export const AUTO_MERGE_ON = 'Auto-merge is on';
 
 /**

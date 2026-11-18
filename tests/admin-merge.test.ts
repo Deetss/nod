@@ -13,6 +13,7 @@ interface Over {
   rollup?: string | null;
   state?: string;
   draft?: boolean;
+  mergeable?: string;
   headLogins?: string[];
 }
 
@@ -30,6 +31,7 @@ function setup(over: Over = {}) {
           id: 'PR_7',
           state: o.state,
           isDraft: o.draft ?? false,
+          mergeable: o.mergeable,
           baseRefName: 'main',
           headRefName: 'f',
           author: { login: o.author },
@@ -153,6 +155,22 @@ describe('server-side admin merge guard', () => {
     const res = await p.merge(ref);
     expect(res.ok).toBe(false);
     expect(res.message).toContain('Draft: mark ready first');
+    expect(calls).toHaveLength(0);
+  });
+
+  it('refuses auto-merge on a conflicting PR and says to rebase', async () => {
+    const { p, calls } = setup({ mergeable: 'CONFLICTING' });
+    const res = await p.merge(ref);
+    expect(res.ok).toBe(false);
+    expect(res.message).toContain('Conflicts with the base branch');
+    expect(calls).toHaveLength(0);
+  });
+
+  it('refuses admin merge on a conflicting PR', async () => {
+    const { p, calls } = setup({ mergeable: 'CONFLICTING' });
+    const res = await p.adminMerge(ref);
+    expect(res.ok).toBe(false);
+    expect(res.message).toContain('Conflicts with the base branch');
     expect(calls).toHaveLength(0);
   });
 });
