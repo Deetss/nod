@@ -25,6 +25,7 @@ import { startBackground } from '../server/background';
 import { consoleNotifyLog, webPushSender } from '../server/push';
 import { loadOrCreateVapid } from '../server/vapid';
 import { DeviceStore } from '../server/devices';
+import { PairingCodes } from '../server/pairing';
 import { appEnv } from '../server/env';
 import { migrateLegacyDirs } from '../server/migrate';
 import { consoleSink } from '../server/request-log';
@@ -179,6 +180,7 @@ async function startServer(): Promise<string> {
     distDir: DIST_DIR,
     phone,
     devices,
+    pairing: FIXTURES ? new PairingCodes() : await PairingCodes.open(),
     settings: orgSettings,
     settingsPath: userFile('app-settings.json'),
     restart: relaunchRestarter(relaunch, quit),

@@ -480,6 +480,7 @@ export function createApp(opts: AppOptions): Hono {
     const parsed = pairBody.safeParse(await c.req.json().catch(() => null));
     const role = parsed.success ? codes.take(parsed.data.code) : undefined;
     if (!role) return c.json({ error: 'That code is wrong or expired' }, 403);
+    await codes.flush();
     const key = await devices.add(deviceNameFromUserAgent(c.req.header('user-agent'), role), role);
     setDeviceCookie(c, key);
     return c.json({ ok: true });
@@ -507,6 +508,7 @@ export function createApp(opts: AppOptions): Hono {
     const parsed = pairCodeBody.safeParse(await c.req.json().catch(() => ({})));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     const { code, expiresAt, role } = codes.create(parsed.data.role);
+    await codes.flush();
     const body: PairCode = {
       code,
       expiresAt: new Date(expiresAt).toISOString(),

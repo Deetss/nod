@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -78,6 +78,54 @@ describe('pairing codes', () => {
     expect(codes.allow()).toBe(false);
     now += EXCHANGE_WINDOW_MS;
     expect(codes.allow()).toBe(true);
+  });
+});
+
+describe('pairing codes on disk', () => {
+  const tempPath = async () => join(await mkdtemp(join(tmpdir(), 'nod-pair-')), 'pairing.json');
+
+  it('survives a reload, and the file holds only a hash with mode 600', async () => {
+    const path = await tempPath();
+    const first = await PairingCodes.open(path);
+    const { code } = first.create('desktop');
+    await first.flush();
+
+    const text = await readFile(path, 'utf8');
+    expect(text).not.toContain(code);
+    expect(text).toContain(createHash('sha256').update(code).digest('hex'));
+    expect(JSON.parse(text).pending[0].role).toBe('desktop');
+    expect((await stat(path)).mode & 0o777).toBe(0o600);
+
+    const reloaded = await PairingCodes.open(path);
+    expect(reloaded.take(code)).toBe('desktop');
+  });
+
+  it('stays single use across a reload', async () => {
+    const path = await tempPath();
+    const first = await PairingCodes.open(path);
+    const { code } = first.create();
+    expect(first.consume(code)).toBe(true);
+    await first.flush();
+    expect((await PairingCodes.open(path)).consume(code)).toBe(false);
+  });
+
+  it('drops an expired code on load', async () => {
+    const path = await tempPath();
+    let now = 1_000;
+    const first = await PairingCodes.open(path, () => now);
+    const { code } = first.create();
+    await first.flush();
+    now += CODE_TTL_MS;
+    const reloaded = await PairingCodes.open(path, () => now);
+    expect(JSON.parse(await readFile(path, 'utf8'))).toEqual({ pending: [] });
+    expect(reloaded.consume(code)).toBe(false);
+  });
+
+  it('reads a damaged file as no code', async () => {
+    const path = await tempPath();
+    await writeFile(path, '{not json');
+    const codes = await PairingCodes.open(path);
+    expect(codes.consume('anything')).toBe(false);
   });
 });
 
