@@ -14,7 +14,7 @@ export interface HubSource {
   pair: (input: string) => Promise<PairResult>;
 }
 
-const isLoopback = (host: string) => host === '127.0.0.1' || host === 'localhost' || host.endsWith('.localhost');
+export const isLoopback = (host: string): boolean => host === '127.0.0.1' || host === 'localhost' || host.endsWith('.localhost');
 
 const READ_ONLY: PairResult = { ok: false, error: 'Start Nod with nod --local to change the hub.' };
 

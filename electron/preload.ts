@@ -20,6 +20,7 @@ const bridge: NodBridge = {
     get: () => ipcRenderer.invoke('hub:get'),
     check: (url) => ipcRenderer.invoke('hub:check', url),
     pair: (input) => ipcRenderer.invoke('hub:pair', input),
+    retry: () => ipcRenderer.invoke('hub:retry'),
   },
 };
 

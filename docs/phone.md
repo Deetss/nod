@@ -15,7 +15,7 @@ See [Android](android.md) to install the app first, or download `nod-<version>.a
 
 Pairing works like `orca serve --mobile-pairing`. The link is `https://<tailnet host>/pair#code=<code>`.
 
-- The code is single use and expires after 10 minutes. A new code replaces the old one.
+- The code is single use and expires after 10 minutes. A new code replaces the old one. A pending code survives a restart of the server, kept on disk as a hash only.
 - Each code carries a role, `phone` unless asked otherwise, and the paired device gets it. `nod pair` on the server prints a phone link; `nod pair --admin` and `nod pair --desktop` print links for a desktop. See [Device roles](hub.md#device-roles).
 - The phone page trades the code (`POST /api/pair`, 5 tries a minute) for a device key: 32 random bytes, kept on the phone in an `HttpOnly; Secure; SameSite=Lax` cookie. Chrome withholds Strict cookies when another app launches the phone app, so the cookie is not Strict.
 - The server stores only a SHA-256 hash of each key, with a name (taken from the user agent; use Rename), the role, the created time and the last-seen time, in `~/.local/state/nod/devices.json` (mode 600, written atomically). Records from before roles existed load as `phone`. The paired devices list shows each role.

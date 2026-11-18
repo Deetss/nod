@@ -118,12 +118,12 @@ describe('chooseStart', () => {
 
   it('starts locally with one log line when the hub is down', async () => {
     const choice = await chooseStart(HUB, probe({ state: 'unreachable' }));
-    expect(choice).toEqual({ mode: 'local', log: `[hub] ${HUB} did not answer; starting a local server.` });
+    expect(choice).toEqual({ mode: 'local', down: true, log: `[hub] ${HUB} did not answer; starting a local server.` });
   });
 
-  it('starts locally when the hub answers but this desktop is not paired', async () => {
+  it('starts locally, not in local mode, when the hub answers but this desktop is not paired', async () => {
     const choice = await chooseStart(HUB, probe({ state: 'not-paired' }));
-    expect(choice.mode).toBe('local');
+    expect(choice).toMatchObject({ mode: 'local', down: false });
     expect(choice.mode === 'local' && choice.log).toContain('not paired');
   });
 });
@@ -147,7 +147,7 @@ describe('desktop hub setting', () => {
 
 describe('IPC origin policy', () => {
   const LOCAL = 'http://127.0.0.1:4477';
-  const HUB_CHANNELS = ['hub:get', 'hub:check', 'hub:pair', 'shell:relaunch'];
+  const HUB_CHANNELS = ['hub:get', 'hub:check', 'hub:pair', 'hub:retry', 'shell:relaunch'];
   const PAGE_CHANNELS = ['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build'];
 
   it('refuses shell:relaunch from a hub page', () => {

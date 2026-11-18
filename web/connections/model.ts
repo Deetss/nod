@@ -184,6 +184,9 @@ export function chipFor(b: ConnectionsBody | undefined, ctx: Ctx): Chip {
   return { tone: 'ok', label: `${b.nod.mode === 'service' ? 'Service' : 'Local'} · ${plural(n, 'device')}`, short: String(n) };
 }
 
+/** B1: the hub is down and this window runs on this machine. Wins over every other state. */
+export const LOCAL_MODE_CHIP: Chip = { tone: 'attention', label: 'Local mode · hub down', short: '' };
+
 export function subtitle(b: ConnectionsBody | undefined): string {
   if (!b) return CHECKING;
   return b.nod.mode === 'service' ? 'This window uses the Nod service on this machine.' : 'This window runs its own server.';

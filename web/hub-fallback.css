@@ -1,0 +1,44 @@
+/* B1: the hub stopped answering. A row of its own between the top bar and the panes. */
+.app.has-hub-banner {
+  grid-template-rows: 48px 48px minmax(0, 1fr) 28px;
+}
+
+.hub-down {
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background: var(--bgColor-attention-muted);
+  border-bottom: 1px solid var(--borderColor-attention-emphasis);
+}
+
+.hub-down-icon {
+  display: inline-flex;
+  margin-right: 8px;
+  color: var(--fgColor-attention);
+}
+
+.hub-down-label {
+  flex: none;
+  font: 600 12px/20px var(--fontStack-system);
+  color: var(--fgColor-attention);
+}
+
+.hub-down-detail {
+  min-width: 0;
+  margin-left: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 12px/20px var(--fontStack-system);
+  color: var(--fgColor-default);
+}
+
+.btn.hub-down-retry {
+  min-width: 68px;
+  height: 28px;
+  margin-left: auto;
+  justify-content: center;
+  font-size: 12px;
+}

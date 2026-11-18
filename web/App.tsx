@@ -35,6 +35,7 @@ import { FollowContext } from './follow';
 import { FollowStatus } from './FollowStatus';
 import { CopyLinkProvider, makeCopyUrl } from './copy-link';
 import { ToastStack, useToasts } from './toasts';
+import { HubDownBanner, useHubReturnToast, useLocalMode } from './hub-fallback';
 import { OrcaSessionsContext } from './orca/OrcaContext';
 import { useOrca } from './orca/useOrca';
 import { PaneHandle } from './PaneHandle';
@@ -127,6 +128,8 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const toasts = useToasts();
   const pushToast = toasts.push;
+  const localMode = useLocalMode();
+  useHubReturnToast(pushToast);
   const copyUrl = useMemo(() => makeCopyUrl(pushToast), [pushToast]);
   /** The action's own result. Orca notifications stack above it. */
   const setToast = useCallback(
@@ -854,7 +857,7 @@ export function App() {
     <LinkRouterContext.Provider value={routeLink}>
     <FollowContext.Provider value={inbox.follow}>
     <OrcaSessionsContext.Provider value={orcaUi.value}>
-    <div className="app">
+    <div className={`app${localMode.down ? ' has-hub-banner' : ''}`}>
       <FollowStatus chips={inbox.follow.chips} prs={prById} />
       <Topbar
         view={listView}
@@ -890,8 +893,10 @@ export function App() {
           onPair: () => setPairing(true),
           onGithub: openConnection,
           keys: !help && !pairing && !settingsShown,
+          localMode: localMode.down,
         }}
       />
+      {localMode.down ? <HubDownBanner retrying={localMode.retrying} onRetry={localMode.retry} /> : null}
       {listView === 'activity' ? (
         <ActivityView
           activity={activity}

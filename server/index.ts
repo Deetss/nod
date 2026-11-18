@@ -21,6 +21,7 @@ import { exitRestarter } from './restart';
 import { detectTailnet, newSessionToken, phoneOrigin } from './security';
 import { loadOrCreateSessionToken } from './session-token';
 import { startupLines } from './service';
+import { PairingCodes } from './pairing';
 
 const DEFAULT_PORT = 4477;
 /** `pnpm serve`: the headless service, with phone access on. */
@@ -71,6 +72,7 @@ async function main(): Promise<void> {
     settingsPath: defaultSettingsPath(),
     restart: exitRestarter(),
     devices,
+    pairing: fixtures ? new PairingCodes() : await PairingCodes.open(),
     activity,
     orcaPrefs,
     vapidPublicKey: vapid?.publicKey,

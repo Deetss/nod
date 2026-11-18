@@ -67,12 +67,17 @@ export function hubStatusFrom(status: number, body: unknown): HubStatus {
   return typeof version === 'string' && version.length <= 40 ? { state: 'paired', role, version } : { state: 'paired', role };
 }
 
+/** Query parameter on the hub page after local mode ends: how many seen marks the hub took. */
+export const SEEN_SENT_PARAM = 'seen-sent';
+
 /** The desktop's view of its hub, as the Electron shell reports it. */
 export interface HubView {
   /** The saved Hub URL, or '' for none. */
   url: string;
   /** True when this window shows the hub rather than a server on this machine. */
   attached: boolean;
+  /** True when the hub stopped answering and this window fell back to local mode. */
+  down: boolean;
 }
 
 export type CheckResult = { ok: true; url: string; status: HubStatus | undefined } | { ok: false; error: string };
@@ -85,4 +90,6 @@ export interface HubBridge {
   check: (url: string) => Promise<CheckResult>;
   /** Opens the hub's pair page in this window's session, and resolves once the hub accepts the code. */
   pair: (input: string) => Promise<PairResult>;
+  /** In local mode, checks the hub now. Resolves with the view after the check. */
+  retry: () => Promise<HubView>;
 }

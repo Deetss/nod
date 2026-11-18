@@ -5,9 +5,7 @@ import { stateDir } from './app-paths';
 import type { PrSummary, SeenState } from '../shared/types';
 import type { IssueSummary } from '../shared/issue-types';
 import type { IssueSeenMark, SeenMark } from './provider';
-
-/** Issue marks carry a comment count instead of a head sha. */
-type SeenMap = Record<string, SeenMark | IssueSeenMark>;
+import { mergeMarks, type AnyMark, type SeenMap } from './seen-merge';
 
 export function defaultSeenPath(): string {
   return join(stateDir(), 'seen.json');
@@ -42,6 +40,17 @@ export class SeenStore {
     // Writes run one at a time and each saves the latest map, so a slow write cannot overwrite a newer one.
     this.writing = this.writing.catch(() => undefined).then(() => this.persist());
     await this.writing;
+  }
+
+  /** Merges marks pushed by a desktop back from local mode. Returns how many items changed. */
+  async merge(marks: readonly AnyMark[]): Promise<number> {
+    await this.load();
+    const { map, changed } = mergeMarks(this.map, marks);
+    if (changed === 0) return 0;
+    this.map = map;
+    this.writing = this.writing.catch(() => undefined).then(() => this.persist());
+    await this.writing;
+    return changed;
   }
 
   private async persist(): Promise<void> {

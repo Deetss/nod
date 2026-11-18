@@ -10,7 +10,7 @@ vi.mock('../server/update-request', async (real) => ({
   serviceRequest,
 }));
 
-const { pairRole, pairText, runCli } = await import('../server/cli');
+const { cliArgs, cliCommand, pairRole, pairText, runCli } = await import('../server/cli');
 const { createApp } = await import('../server/app');
 const { DeviceStore } = await import('../server/devices');
 const { FixtureProvider } = await import('../server/fixture-provider');
@@ -49,6 +49,24 @@ describe('nod pair roles', () => {
     expect(out).toContain('Expires in 10 min.');
     expect(out).not.toContain(TOKEN);
     expect(pairing.take(code.code)).toBe(role);
+  });
+
+  // A headless box: Chromium puts its switches ahead of the command word.
+  it.each([
+    ['phone', ['nod', '--ozone-platform=headless', '--no-sandbox', 'pair']],
+    ['admin', ['nod', '--ozone-platform=headless', 'pair', '--admin']],
+    ['desktop', ['nod', '--desktop', '--ozone-platform=headless', '--no-sandbox', 'pair']],
+  ] as const)('recognises nod pair for a %s after Chromium switches and prints the link', async (role, argv) => {
+    const command = cliCommand(argv);
+    expect(command).toBe('pair');
+    const { code } = await realCode(role);
+    serviceRequest.mockResolvedValueOnce(code);
+
+    const { out, code: exit } = await runCli(command!, cliArgs(argv), TOKEN);
+
+    expect(serviceRequest).toHaveBeenLastCalledWith('POST', '/api/pair/code', TOKEN, { role });
+    expect(exit).toBe(0);
+    expect(out).toContain(`https://${PHONE.host}/pair#code=${code.code}`);
   });
 
   it('tells a desktop where to paste the link', () => {

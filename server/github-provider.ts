@@ -1548,4 +1548,8 @@ export class GithubProvider implements Provider {
   markIssueSeen(mark: IssueSeenMark): Promise<void> {
     return this.issueSvc.markSeen(mark);
   }
+
+  mergeSeen(marks: readonly (SeenMark | IssueSeenMark)[]): Promise<number> {
+    return this.seen.merge(marks);
+  }
 }
