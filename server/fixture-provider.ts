@@ -56,6 +56,7 @@ import { FIXTURE_INLINE_THREADS } from './fixture-threads';
 import { FixtureReview } from './fixture-review';
 import { FixtureIssues } from './issue-fixtures';
 import { FixtureConnection } from './fixture-connection';
+import { mergeMarks, type SeenMap } from './seen-merge';
 import { connectionFeatures, type Connection, type ConnectionCheck } from '../shared/connection';
 import type { MentionablePage } from '../shared/mentions';
 
@@ -711,4 +712,14 @@ export class FixtureProvider implements Provider {
   async markIssueSeen(mark: IssueSeenMark): Promise<void> {
     this.issueData.markSeen(mark);
   }
+
+  /** Kept in memory with the real merge rule, so a fixture hub answers like a live one. */
+  async mergeSeen(marks: readonly (SeenMark | IssueSeenMark)[]): Promise<number> {
+    const { map, changed } = mergeMarks(this.merged, marks);
+    this.merged = map;
+    for (const id of Object.keys(map)) this.openedIds.add(id);
+    return changed;
+  }
+
+  private merged: SeenMap = {};
 }

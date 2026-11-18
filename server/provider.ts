@@ -129,6 +129,8 @@ export interface Provider {
     query: StateQuery,
   ): Promise<ClosedPage<ClosedPr> | ClosedPage<ClosedIssue>>;
   markIssueSeen(mark: IssueSeenMark): Promise<void>;
+  /** Keeps the later mark per item; returns how many items changed. */
+  mergeSeen(marks: readonly (SeenMark | IssueSeenMark)[]): Promise<number>;
   /** What the GitHub token allows. */
   connection(query?: StateQuery): Connection;
   /** Check again: re-reads the token, swaps it in, reads its scopes, and resyncs when it improved. */

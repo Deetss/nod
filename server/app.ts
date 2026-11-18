@@ -35,6 +35,7 @@ import { DEVICE_ROLES, type DeviceSelf, type DevicesResponse, type PairCode } fr
 import { DeviceStore, deviceNameFromUserAgent } from './devices';
 import { PAIR_HTML } from './pair-pages';
 import { PairingCodes } from './pairing';
+import { seenMergeBody } from './seen-merge';
 import { ActivityStore } from './activity-store';
 import type { ActionResult } from '../shared/types';
 import { OrcaNotifier, type NotifyRequest } from './notify-orca';
@@ -50,6 +51,7 @@ import type { OrcaModelsResponse } from '../shared/agent-models';
 import {
   adminOnly,
   DEVICE_COOKIE,
+  desktopOnly,
   deviceGuard,
   frameGuard,
   hostGuard,
@@ -795,6 +797,13 @@ export function createApp(opts: AppOptions): Hono {
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
     await provider.markSeen(parsed.data);
     return c.json({ ok: true });
+  });
+
+  // A desktop back from local mode sends the marks it made meanwhile. The later look wins per item.
+  mutating.post('/seen/merge', desktopOnly(devices), async (c) => {
+    const parsed = seenMergeBody.safeParse(await c.req.json().catch(() => null));
+    if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
+    return c.json({ changed: await provider.mergeSeen(parsed.data.marks) });
   });
 
   mutating.post('/issue-action', async (c) => {

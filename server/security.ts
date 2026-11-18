@@ -235,6 +235,19 @@ export function adminOnly(devices: DeviceStore): MiddlewareHandler {
   };
 }
 
+/** Like `adminOnly`, but a desktop key also passes. Phone keys are refused. */
+export function desktopOnly(devices: DeviceStore): MiddlewareHandler {
+  const logOnce = createLogOnce();
+  return async (c, next) => {
+    if (!isTailnetRequest(c)) return next();
+    const key = getCookie(c, DEVICE_COOKIE);
+    const role = key ? devices.roleForKey(key) : undefined;
+    if (role === 'desktop' || role === 'admin') return next();
+    logOnce(`[security] 403 Desktop device only on ${c.req.path}`);
+    return c.text('Desktop device only', 403);
+  };
+}
+
 
 /**
  * Tailnet requests also need a device key from a paired phone, on top of the
