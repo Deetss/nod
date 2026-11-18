@@ -1,4 +1,5 @@
 import type { NotifyItem, NotifySettings, NotifyTarget } from './notify-rules';
+import type { HubBridge } from './hub';
 import type { NotifyTargetResult } from './notify-test';
 
 /** The only API the Electron preload exposes to the page, as `window.nod`. */
@@ -14,6 +15,8 @@ export interface NodBridge {
   shellBuild?: () => Promise<string>;
   /** Quits this window and starts it again from the installed AppImage. Missing before 0.2.4. */
   relaunch?: () => Promise<void>;
+  /** Settings > Hub. Missing before hub support. */
+  hub?: HubBridge;
 }
 
 declare global {

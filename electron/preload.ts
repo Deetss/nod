@@ -16,6 +16,11 @@ const bridge: NodBridge = {
   setSettings: (settings) => ipcRenderer.invoke('settings:set', settings),
   shellBuild: () => ipcRenderer.invoke('shell:build'),
   relaunch: () => ipcRenderer.invoke('shell:relaunch'),
+  hub: {
+    get: () => ipcRenderer.invoke('hub:get'),
+    check: (url) => ipcRenderer.invoke('hub:check', url),
+    pair: (input) => ipcRenderer.invoke('hub:pair', input),
+  },
 };
 
 contextBridge.exposeInMainWorld('nod', bridge);
