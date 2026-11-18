@@ -74,7 +74,8 @@ export const returnText = (n: number): string => `Back on the hub. ${n} seen ${n
 export function useHubReturnToast(push: (t: ToastInput) => void): void {
   useEffect(() => {
     if (STATE_PARAM === 'hub-back') {
-      push({ kind: 'ok', message: returnText(FIXTURE_SENT), ms: RETURN_TOAST_MS });
+      // Held for a minute so a capture can catch it.
+      push({ kind: 'ok', message: returnText(FIXTURE_SENT), ms: 60_000 });
       return;
     }
     if (!window.nod) return;
