@@ -25,7 +25,7 @@ export interface Chip {
   short: string;
 }
 
-export const HUB_DOCS_URL = 'https://github.com/Deetss/nod/blob/main/docs/phone.md#service';
+export const HUB_DOCS_URL = 'https://github.com/Deetss/nod/blob/main/docs/hub.md';
 export const CHECKING = 'Checking…';
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const LOW_BUDGET = 0.1;
