@@ -1,5 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
-import { chooseStart, ipcAllowed, isOrigin, probeHub, readHubSetting, type Fetcher } from '../electron/hub';
+import {
+  chooseStart,
+  frameNavigationAllowed,
+  ipcAllowed,
+  isOrigin,
+  permissionAllowed,
+  probeHub,
+  rateGate,
+  readHubSetting,
+  type Fetcher,
+} from '../electron/hub';
 import { createApp } from '../server/app';
 import { DeviceStore } from '../server/devices';
 import { FixtureProvider } from '../server/fixture-provider';
@@ -137,8 +147,15 @@ describe('desktop hub setting', () => {
 
 describe('IPC origin policy', () => {
   const LOCAL = 'http://127.0.0.1:4477';
-  const HUB_CHANNELS = ['hub:get', 'hub:check', 'hub:pair'];
-  const PAGE_CHANNELS = ['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build', 'shell:relaunch'];
+  const HUB_CHANNELS = ['hub:get', 'hub:check', 'hub:pair', 'shell:relaunch'];
+  const PAGE_CHANNELS = ['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build'];
+
+  it('refuses shell:relaunch from a hub page', () => {
+    expect(ipcAllowed('shell:relaunch', `${HUB}/`, { current: HUB, local: '' })).toBe(false);
+    expect(ipcAllowed('shell:relaunch', `${HUB}/`, { current: HUB, local: LOCAL })).toBe(false);
+    expect(ipcAllowed('shell:relaunch', `${LOCAL}/`, { current: LOCAL, local: LOCAL })).toBe(true);
+  });
+
 
   it('lets this machine’s page use every channel', () => {
     const o = { current: LOCAL, local: LOCAL };

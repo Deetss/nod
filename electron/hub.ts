@@ -47,14 +47,39 @@ export async function chooseStart(hubUrl: string, probe: (origin: string) => Pro
   return { mode: 'local', log: `[hub] ${hubUrl} ${why}; starting a local server.` };
 }
 
-/**
- * Channels any page the window shows may call: notifications, their switches, and the
- * shell build and relaunch that the update notice offers.
- */
-const PAGE_CHANNELS = new Set(['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build', 'shell:relaunch']);
+/** Channels any page the window shows may call: notifications, their switches, and the shell build. */
+const PAGE_CHANNELS = new Set(['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build']);
 
-/** Channels that choose or pair the hub. Only this machine's own server page may call them. */
-const LOCAL_CHANNELS = new Set(['hub:get', 'hub:check', 'hub:pair']);
+/** Channels that choose or pair the hub, or restart the shell. Only this machine's own server page may call them. */
+const LOCAL_CHANNELS = new Set(['hub:get', 'hub:check', 'hub:pair', 'shell:relaunch']);
+
+/** The only permission a page may get: Copy buttons write to the clipboard. */
+const PERMISSIONS = new Set(['clipboard-sanitized-write']);
+
+/** Whether `permission` may be granted to a frame at `requestingUrl`. Only the window's exact origin, only the listed permissions. */
+export function permissionAllowed(permission: string, requestingUrl: string | undefined, origin: string): boolean {
+  return PERMISSIONS.has(permission) && isOrigin(requestingUrl, origin);
+}
+
+/** Whether a frame may navigate to `url`: the window's exact origin, over http or https. */
+export function frameNavigationAllowed(url: string, origin: string): boolean {
+  return /^https?:/.test(url) && isOrigin(url, origin);
+}
+
+/**
+ * Lets one call through per `gapMs` and drops the rest, so a hostile hub page cannot flood the
+ * desktop with notifications.
+ */
+export function rateGate(gapMs: number, now: () => number = Date.now): () => boolean {
+  let last = -Infinity;
+  return () => {
+    const t = now();
+    if (t - last < gapMs) return false;
+    last = t;
+    return true;
+  };
+}
+
 
 /**
  * Whether a call on `channel` from a frame at `frameUrl` is allowed. `current` is the window's

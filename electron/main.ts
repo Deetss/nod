@@ -34,7 +34,16 @@ import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
 import { cliCommand, runCli, type CliCommand } from '../server/cli';
 import { pairTarget, parseHubUrl, type CheckResult, type HubView, type PairResult } from '../shared/hub';
-import { chooseStart, ipcAllowed, isOrigin, probeHub, readHubSetting } from './hub';
+import {
+  chooseStart,
+  frameNavigationAllowed,
+  ipcAllowed,
+  isOrigin,
+  permissionAllowed,
+  probeHub,
+  rateGate,
+  readHubSetting,
+} from './hub';
 
 import { openPairWindow } from './pair-window';
 import { startUpdater, type Updater } from './updater';
@@ -111,6 +120,8 @@ let settings: NotifySettings = DEFAULT_SETTINGS;
 let phoneAccess = false;
 let phone: PhoneAccess | undefined;
 const live = new Set<Notification>();
+/** A page from the hub gets at most one notification call a second; the rest are dropped. */
+const hubNotifyGate = rateGate(1000);
 
 const userFile = (name: string) => join(app.getPath('userData'), name);
 
@@ -289,10 +300,14 @@ function guardNavigation(w: BrowserWindow): void {
   w.webContents.on('will-navigate', lock);
   w.webContents.on('will-redirect', lock);
   w.webContents.on('will-attach-webview', (event) => event.preventDefault());
-  // Only the page's own origin may ask for a permission, such as clipboard writes.
-  w.webContents.session.setPermissionRequestHandler((_wc, _permission, callback, details) =>
-    callback(isOrigin(details.requestingUrl, origin)),
+  w.webContents.on('will-frame-navigate', (details) => {
+    if (!details.isMainFrame && !frameNavigationAllowed(details.url, origin)) details.preventDefault();
+  });
+  const ses = w.webContents.session;
+  ses.setPermissionRequestHandler((_wc, permission, callback, details) =>
+    callback(permissionAllowed(permission, details.requestingUrl, origin)),
   );
+  ses.setPermissionCheckHandler((_wc, permission, requestingOrigin) => permissionAllowed(permission, requestingOrigin, origin));
 }
 
 async function createWindow(): Promise<BrowserWindow> {
@@ -424,6 +439,7 @@ function registerIpc(): void {
     if (!fromApp(event, 'notify')) throw new Error('Untrusted sender');
     const items = parseNotifyItems(payload);
     if (!items) throw new Error('Bad notification payload');
+    if (onHub && !hubNotifyGate()) return;
     if (win?.isFocused()) return;
     const { show, skipped } = gateDesktop(items, settings);
     for (const kind of skipped) consoleNotifyLog.info(`[notify] skipped ${kind} for Desktop (off)`);
@@ -432,6 +448,8 @@ function registerIpc(): void {
 
   ipcMain.handle('notify:test', (event): NotifyTargetResult => {
     if (!fromApp(event, 'notify:test')) throw new Error('Untrusted sender');
+    if (onHub && !hubNotifyGate()) return { target: 'Desktop', ok: false, detail: 'too many notifications' };
+
     const shown = showDesktop([TEST_NOTIFICATION]) > 0;
     return shown ? { target: 'Desktop', ok: true } : { target: 'Desktop', ok: false, detail: 'notifications unsupported' };
   });

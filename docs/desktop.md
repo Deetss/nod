@@ -30,7 +30,7 @@ The window class is `nod`, so Hyprland window rules can match it. Fixtures work 
 
 - Closing the window hides it, and polling continues. `Ctrl+Q` quits. A second launch shows the existing window.
 - Window size and position persist in the Electron userData folder (`~/.config/nod`).
-- The window stays on its own origin: this machine's server, or the hub. Redirects elsewhere and webviews are blocked, and only that origin may be granted permissions such as clipboard writes. Only `https://github.com/...` links open, in the default browser.
+- The window stays on its own origin: this machine's server, or the hub. Redirects elsewhere and webviews are blocked, and subframes stay on that origin over http or https. That origin may get one permission, clipboard writes; every other permission is refused. Only `https://github.com/...` links open, in the default browser.
 - `nod --smoke` loads the page in a hidden window, prints `SMOKE OK` and exits 0.
 
 ## Hub URL
@@ -40,7 +40,7 @@ Settings > Hub holds the Hub URL, an `https://` address with no path, saved in `
 - At start, the window asks the hub for `GET /api/devices/me` with the device cookie from its persistent session. When the hub answers with a role, the window loads the hub and starts no server. Otherwise it starts its own server as today and logs one `[hub]` line.
 - Saving a new Hub URL, and opening the hub after pairing, each ask in a dialog that names the URL.
 - Pair this desktop takes the link or code from `nod pair --admin` on the hub. It opens the hub's `/pair` page in a small window on the same session, so the device cookie lands where the main window reads it. Pairing counts only when the hub then reports this desktop's role.
-- A page from the hub may call only the notification, notification switch, build and relaunch channels of the preload. Only this machine's own server page may check, save or pair a hub. To change or clear the Hub URL while the window shows the hub, start once with `nod --local`.
+- A page from the hub may call only the notification, notification switch and build channels of the preload, and at most one notification call a second; the rest are dropped. Only this machine's own server page may relaunch the shell or check, save or pair a hub. To change or clear the Hub URL while the window shows the hub, start once with `nod --local`.
 - On the hub there is no local server, so the window updates its own AppImage on quit.
 
 `nod pair` prints a pairing link and its QR code from the server on port 4477: a phone link by default, `--admin` or `--desktop` for a desktop. It never prints the session token.
