@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { phonesUpdateText } from '../shared/build-update';
 import type { DeviceInfo, DevicesResponse, PairCode } from '../shared/pairing';
 import { api } from './api';
-import { qrModules } from './qr';
+import { qrModules } from '../shared/qr';
 import { TestNotifications } from './TestNotifications';
 import { Btn } from './ui';
 import { AppDialog } from './AppDialog';

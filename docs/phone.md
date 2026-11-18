@@ -47,6 +47,8 @@ Every `vite build` gets a build id: the git short sha plus the build time (for e
 
 `nod serve` runs the server with no window, on port 4477 with phone access on. It prints the bound address, the advertised address and the pairing status. `pnpm serve` does the same for the browser build.
 
+On a machine with only the service, `nod pair` prints a new pairing link and its QR code, and `nod settings` shows the watched orgs and the involved switch. `nod settings orgs <org>...` replaces the orgs (no names clears them) and `nod settings involved on|off` sets the switch. Both talk to the service over loopback with the session token, like `nod update`, and a settings change restarts the service.
+
 ```
 scripts/install-desktop.sh --install-service
 systemctl --user enable --now nod

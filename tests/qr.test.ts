@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { qrModules } from '../web/qr';
+import { qrModules } from '../shared/qr';
 
 const FINDER = ['1111111', '1000001', '1011101', '1011101', '1011101', '1000001', '1111111'];
 
