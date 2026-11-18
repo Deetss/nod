@@ -33,7 +33,8 @@ export async function probeHub(origin: string, fetcher: Fetcher, timeoutMs: numb
   }
 }
 
-export type StartChoice = { mode: 'hub'; origin: string } | { mode: 'local'; log?: string };
+/** `down`: the hub did not answer, so the window starts in local mode and keeps watching it. */
+export type StartChoice = { mode: 'hub'; origin: string } | { mode: 'local'; log?: string; down?: boolean };
 
 /**
  * Where the window goes at startup. A Hub URL is used only when the hub answers and this
@@ -43,15 +44,16 @@ export async function chooseStart(hubUrl: string, probe: (origin: string) => Pro
   if (!hubUrl) return { mode: 'local' };
   const status = await probe(hubUrl);
   if (status.state === 'paired') return { mode: 'hub', origin: hubUrl };
-  const why = status.state === 'not-paired' ? 'answers but this desktop is not paired' : 'did not answer';
-  return { mode: 'local', log: `[hub] ${hubUrl} ${why}; starting a local server.` };
+  const down = status.state === 'unreachable';
+  const why = down ? 'did not answer' : 'answers but this desktop is not paired';
+  return { mode: 'local', down, log: `[hub] ${hubUrl} ${why}; starting a local server.` };
 }
 
 /** Channels any page the window shows may call: notifications, their switches, and the shell build. */
 const PAGE_CHANNELS = new Set(['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build']);
 
 /** Channels that choose or pair the hub, or restart the shell. Only this machine's own server page may call them. */
-const LOCAL_CHANNELS = new Set(['hub:get', 'hub:check', 'hub:pair', 'shell:relaunch']);
+const LOCAL_CHANNELS = new Set(['hub:get', 'hub:check', 'hub:pair', 'hub:retry', 'shell:relaunch']);
 
 /** The only permission a page may get: Copy buttons write to the clipboard. */
 const PERMISSIONS = new Set(['clipboard-sanitized-write']);

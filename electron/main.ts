@@ -34,7 +34,11 @@ import { appImageRelaunch, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
 import { cliArgs, cliCommand, runCli, type CliCommand } from '../server/cli';
-import { pairTarget, parseHubUrl, type CheckResult, type HubView, type PairResult } from '../shared/hub';
+import { pairTarget, parseHubUrl, SEEN_SENT_PARAM, type CheckResult, type HubView, type PairResult } from '../shared/hub';
+import { defaultSeenPath } from '../server/seen';
+import { changedMarks, parseSeenMap, type SeenMap } from '../server/seen-merge';
+import { HubWatch, type WatchMode } from './hub-watch';
+import { pushSeen } from './seen-push';
 import {
   chooseStart,
   frameNavigationAllowed,
@@ -107,6 +111,12 @@ let attached = false;
 let hubUrl = '';
 /** True when the window shows the hub. */
 let onHub = false;
+/** True when the hub stopped answering and the window fell back to this machine's server. */
+let hubDown = false;
+/** Watches the hub while this desktop uses one. */
+let watch: HubWatch | undefined;
+/** The local seen marks when local mode began. Those made since go to the hub on return. */
+let seenBefore: SeenMap = {};
 let quitting = false;
 /** Set in the process that owns the server; an attached window leaves updates to the service. */
 let updater: Updater | undefined;
@@ -368,18 +378,66 @@ async function confirm(message: string, detail: string, yes: string): Promise<bo
 /** Fetches with the window's session, so the hub sees this desktop's device cookie. */
 const sessionFetch = (url: string, init: RequestInit) => session.defaultSession.fetch(url, init);
 
+function show(url: string): void {
+  win?.loadURL(url).catch((e: unknown) => console.error(`[hub] could not load ${url}: ${e instanceof Error ? e.message : String(e)}`));
+}
+
+const readSeen = async (): Promise<SeenMap> => parseSeenMap(await readJson(defaultSeenPath()));
+
+/** This machine's server. A window that started on the hub starts one on first use. */
+async function ensureLocal(): Promise<string> {
+  if (!localOrigin) ({ origin: localOrigin } = await attachOrStart(startServer));
+  return localOrigin;
+}
+
+async function enterLocalMode(): Promise<void> {
+  seenBefore = await readSeen();
+  origin = await ensureLocal();
+  onHub = false;
+  hubDown = true;
+  console.error(`[hub] ${hubUrl} stopped answering; local mode.`);
+  show(origin);
+}
+
+/** Sends the marks made in local mode, then shows the hub with the count for its toast. */
+async function returnToHub(): Promise<void> {
+  const sent = await pushSeen(hubUrl, changedMarks(seenBefore, await readSeen()), sessionFetch);
+  origin = hubUrl;
+  onHub = true;
+  hubDown = false;
+  console.error(`[hub] ${hubUrl} answers again; ${sent} seen marks sent.`);
+  show(`${hubUrl}/?${SEEN_SENT_PARAM}=${sent}`);
+}
+
+function watchHub(mode: WatchMode): void {
+  watch?.stop();
+  const probe = async () => (await probeHub(hubUrl, sessionFetch)).state === 'paired';
+  watch = new HubWatch(mode, probe, { toLocal: enterLocalMode, toHub: returnToHub, log: (line) => console.error(line) });
+  watch.start();
+}
+
 /** Moves the window onto the hub, as a paired desktop. */
 function attachToHub(): void {
   origin = hubUrl;
   attached = true;
   onHub = true;
-  void win?.loadURL(hubUrl);
+  hubDown = false;
+  watchHub('hub');
+  show(hubUrl);
 }
+
+const hubView = (): HubView => ({ url: hubUrl, attached: onHub, down: hubDown });
 
 function registerHubIpc(): void {
   ipcMain.handle('hub:get', (event): HubView => {
     if (!fromApp(event, 'hub:get')) throw new Error('Untrusted sender');
-    return { url: hubUrl, attached: onHub };
+    return hubView();
+  });
+
+  ipcMain.handle('hub:retry', async (event): Promise<HubView> => {
+    if (!fromApp(event, 'hub:retry')) throw new Error('Untrusted sender');
+    await watch?.retry();
+    return hubView();
   });
 
   ipcMain.handle('hub:check', async (event, raw: unknown): Promise<CheckResult> => {
@@ -391,6 +449,12 @@ function registerHubIpc(): void {
       if (!(await confirm(`Use ${parsed.url} as this desktop's hub?`, detail, 'Use this hub'))) {
         return { ok: false, error: 'Not saved.' };
       }
+    }
+    if (parsed.url !== hubUrl) {
+      // A new or cleared Hub URL ends the watch on the old one, and local mode with it.
+      watch?.stop();
+      watch = undefined;
+      hubDown = false;
     }
     hubUrl = parsed.url;
     await writeJson(userFile('hub.json'), { hubUrl });
@@ -531,9 +595,12 @@ async function main(): Promise<void> {
     onHub = true;
   } else {
     if (start.log) console.error(start.log);
+    hubDown = start.down === true;
+    if (hubDown) seenBefore = await readSeen();
     ({ origin, attached } = await attachOrStart(startServer));
     localOrigin = origin;
   }
+  if (start.mode === 'hub' || hubDown) watchHub(start.mode === 'hub' ? 'hub' : 'local');
   // On the hub nothing on this machine owns an updater, so the window updates its own AppImage on quit.
   if ((!attached || onHub) && !SMOKE) updater = startUpdater({ service: false });
 
