@@ -111,7 +111,17 @@ Every paired device has a role, chosen when its pairing code is made.
 3. Click Pair this desktop, paste the link (or only the code) and press Pair. A small window opens the hub's pair page in the desktop's own browser session, so the device cookie lands where the main window reads it. When the hub reports this desktop's role, Nod asks to open the hub in the window.
 4. From then on the desktop opens the hub at start. It starts no server of its own.
 
-If the hub does not answer at start, or this desktop is not paired, the desktop starts its own server as before and logs one `[hub]` line. To change or clear the Hub URL while the window shows the hub, start Nod once with `nod --local`.
+If this desktop is not paired, it starts its own server as before and logs one `[hub]` line. To change or clear the Hub URL while the window shows the hub, start Nod once with `nod --local`.
+
+### Local mode
+
+A desktop with a Hub URL keeps working when the hub goes away, at start or at any time after.
+
+- The app checks the hub every 10 s with its device cookie. Two failed checks in a row switch the window to this machine's server, starting it if needed, and log one `[hub]` line.
+- In local mode an attention banner sits under the top bar: `Hub unreachable, local mode.` with Retry, which checks now. The Connections chip reads `Local mode · hub down`.
+- Seen marks are recorded on this machine meanwhile. The app keeps checking; after two good checks it sends the marks made in local mode to the hub (`POST /api/seen/merge`), and the window reloads onto the hub with the toast `Back on the hub. N seen marks sent.` The hub keeps the later mark per item, so sending twice changes nothing, and N counts the items whose hub mark changed.
+- The window never switches more than once every 30 s, so a flaky hub cannot bounce it.
+- A desktop without a Hub URL, a desktop started with `nod --local`, and phones never show the banner. Phones have no fallback.
 
 Desktop notifications come from the hub's event stream and follow the same rules as before. See [Notifications](notifications.md).
 
@@ -131,7 +141,6 @@ A desktop that used to host the phone should stop, so only the hub answers on th
 
 ## Not yet
 
-- A desktop that falls back to its own server shows no banner, and its seen marks are not sent to the hub when it comes back.
 - Seen marks and settings on a desktop without a Hub URL stay separate from the hub's.
 
 - The hub cannot run Orca actions on another machine.
