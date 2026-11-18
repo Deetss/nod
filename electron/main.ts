@@ -32,7 +32,7 @@ import { loadSettings } from '../server/settings';
 import { appImageRelaunch, relaunchRestarter } from '../server/restart';
 import { loadOrCreateSessionToken } from '../server/session-token';
 import { attachOrStart, startupLines } from '../server/service';
-import { cliCommand, runCli, type CliCommand } from '../server/cli';
+import { cliArgs, cliCommand, runCli, type CliCommand } from '../server/cli';
 import { pairTarget, parseHubUrl, type CheckResult, type HubView, type PairResult } from '../shared/hub';
 import {
   chooseStart,
@@ -496,7 +496,7 @@ async function runService(): Promise<void> {
 }
 
 async function runCommand(command: CliCommand): Promise<void> {
-  const { out, code } = await runCli(command, process.argv.slice(2), await loadOrCreateSessionToken());
+  const { out, code } = await runCli(command, cliArgs(process.argv), await loadOrCreateSessionToken());
   if (code === 0) console.log(out);
   else console.error(out);
   app.exit(code);
