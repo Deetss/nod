@@ -1,173 +1,132 @@
 #!/usr/bin/env bash
+# Sets up this machine as a Nod hub: the service, Tailscale Serve on 443, and pairing links. Safe to re-run.
+# Never runs sudo; it prints the command instead.
 set -euo pipefail
 
-# Parse arguments
+usage="Usage: $0 [--check] [--settings FILE] [--pair] [--help]"
 check=0
-settings_file=""
 pair=0
-help=0
-
-for arg in "$@"; do
-  case "$arg" in
+settings=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
     --check) check=1 ;;
-    --settings)
-      # Get next argument
-      shift
-      settings_file="$1"
-      ;;
     --pair) pair=1 ;;
-    --help) help=1 ;;
-    *) echo "Usage: $0 [--check] [--settings FILE] [--pair] [--help]" >&2; exit 2 ;;
+    --settings)
+      [[ $# -ge 2 ]] || { echo "$usage" >&2; exit 2; }
+      settings="$2"
+      shift
+      ;;
+    --help) echo "$usage"; exit 0 ;;
+    *) echo "$usage" >&2; exit 2 ;;
   esac
   shift
 done
-
-# Check for conflicting arguments
-if [[ $pair -eq 1 && ($check -eq 1 || -n "$settings_file") ]]; then
-  echo "Usage: $0 [--check] [--settings FILE] [--pair] [--help]" >&2
+if [[ "$pair" -eq 1 && ( "$check" -eq 1 || -n "$settings" ) ]]; then
+  echo "$usage" >&2
   exit 2
 fi
 
-# Help
-if [[ $help -eq 1 ]]; then
-  echo "Usage: $0 [--check] [--settings FILE] [--pair] [--help]"
-  echo "  --check          Check prerequisites without making changes"
-  echo "  --settings FILE  Copy settings from FILE"
-  echo "  --pair           Print a pairing link and exit"
-  echo "  --help           Show this help and exit"
-  exit 0
-fi
-
-# Constants
 port=4477
-repo_slug="github.com/Deetss/nod"
+origin="http://127.0.0.1:$port"
+repo_slug=github.com/Deetss/nod
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 svc_settings="$HOME/.config/nod-service/app-settings.json"
 dropin="$HOME/.config/systemd/user/nod.service.d/headless.conf"
+scopes_wanted=repo,read:org,project
 
-# Function to print step status
-print_step() {
-  if [[ $1 -eq 0 ]]; then
-    printf "ok   %s\n" "$2"
-  else
-    printf "FAIL %s\n" "$2"
-    if [[ -n "$3" ]]; then
-      printf "  fix: %s\n" "$3"
-    fi
-    exit 1
-  fi
+ok() { printf 'ok   %s\n' "$1"; }
+warn() {
+  printf 'warn %s\n' "$1"
+  if [[ -n "${2:-}" ]]; then printf '  fix: %s\n' "$2"; fi
+}
+fail() {
+  printf 'FAIL %s\n' "$1"
+  if [[ -n "${2:-}" ]]; then printf '  fix: %s\n' "$2"; fi
+  exit 1
 }
 
-# Pair function
-pair_function() {
-  # Get session token from meta tag
-  token=$(curl -fsS "http://127.0.0.1:$port/" | grep -o '<meta name="nod-token" content="[^"]*' | cut -d'"' -f4)
-  
-  # Request pairing code
-  response=$(curl -fsS -X POST -H "Origin: http://127.0.0.1:$port" \
-    -H "x-nod-token: $token" -H 'content-type: application/json' -d '{}' \
-    "http://127.0.0.1:$port/api/pair/code")
-  
-  # Extract link from JSON
-  link=$(echo "$response" | grep -o '"link":"[^"]*"' | cut -d'"' -f4)
-  
+# Prints one JSON field from stdin, or nothing when it is missing.
+json_get() {
+  python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+for key in sys.argv[1:]:
+    d = d.get(key) if isinstance(d, dict) else None
+print("" if d is None else d)' "$@"
+}
+
+# The session token stays in variables; it is never printed.
+pair() {
+  local page token body link
+  page="$(curl -fsS -m 5 "$origin/" 2>/dev/null)" || fail "pairing code" "systemctl --user status nod"
+  token="$(sed -n 's/.*name="nod-token" content="\([^"]*\)".*/\1/p' <<<"$page" | head -n 1)"
+  [[ -n "$token" ]] || fail "pairing code" "systemctl --user status nod"
+  body="$(curl -fsS -m 5 -X POST -H "Origin: $origin" -H "x-nod-token: $token" \
+    -H 'content-type: application/json' -d '{}' "$origin/api/pair/code" 2>/dev/null)" \
+    || fail "pairing code" "systemctl --user status nod"
+  link="$(json_get link <<<"$body" 2>/dev/null || true)"
+  [[ -n "$link" ]] || fail "pairing code" "systemctl --user status nod"
   echo "Pairing link (one use, 10 minutes): $link"
 }
 
-# Main logic
-if [[ $pair -eq 1 ]]; then
-  pair_function
+if [[ "$pair" -eq 1 ]]; then
+  pair
   exit 0
 fi
 
-# Step 1: python3 exists
-if command -v python3 >/dev/null 2>&1; then
-  print_step 0 "python3 exists"
+command -v python3 >/dev/null || fail "python3" "install python3"
+ok "python3"
+
+gh auth status -h github.com >/dev/null 2>&1 || fail "GitHub login" "gh auth login -h github.com -s $scopes_wanted"
+ok "GitHub login"
+
+# The service has no desktop session, so gh must answer without a keyring prompt.
+env -u DISPLAY -u WAYLAND_DISPLAY -u DBUS_SESSION_BUS_ADDRESS gh auth token -h github.com >/dev/null 2>&1 \
+  || fail "GitHub login without a keyring" "gh auth login -h github.com --insecure-storage -s $scopes_wanted"
+ok "GitHub login without a keyring"
+
+scopes="$(gh auth status -h github.com 2>&1 | sed -n 's/.*Token scopes: //p' | tr -d "',")"
+has_scope() {
+  local s
+  for s in "$@"; do
+    [[ " $scopes " == *" $s "* ]] && return 0
+  done
+  return 1
+}
+if [[ -z "$scopes" ]]; then
+  warn "scopes unknown"
 else
-  print_step 1 "python3 exists" "install python3"
+  has_scope repo || fail "GitHub scope repo" "gh auth login -h github.com -s $scopes_wanted"
+  ok "GitHub scope repo"
+  refresh="gh auth refresh -h github.com -s read:org,project"
+  has_scope read:org write:org admin:org || warn "read:org missing" "$refresh"
+  has_scope project read:project || warn "project missing" "$refresh"
 fi
 
-# Step 2: GitHub login
-if gh auth status -h github.com >/dev/null 2>&1; then
-  print_step 0 "GitHub login"
-else
-  print_step 1 "GitHub login" "gh auth login -h github.com -s repo,read:org,project"
-fi
+ts="$(tailscale status --json 2>/dev/null)" || fail "Tailscale" "tailscale up"
+[[ "$(json_get BackendState <<<"$ts")" == Running ]] || fail "Tailscale" "tailscale up"
+host="$(json_get Self DNSName <<<"$ts")"
+host="${host%.}"
+ok "Tailscale"
 
-# Step 3: No keyring prompt
-if env -u DISPLAY -u WAYLAND_DISPLAY -u DBUS_SESSION_BUS_ADDRESS gh auth token -h github.com >/dev/null 2>&1; then
-  print_step 0 "No keyring prompt"
-else
-  print_step 1 "No keyring prompt" "gh auth login -h github.com --insecure-storage -s repo,read:org,project"
-fi
+ldconfig -p 2>/dev/null | grep -q 'libfuse\.so\.2' || fail "FUSE 2" "sudo apt install libfuse2   # or: sudo pacman -S fuse2"
+ok "FUSE 2"
 
-# Step 4: Scopes
-scopes_line=$(gh auth status -h github.com 2>&1 | grep "Token scopes:" || true)
-if [[ -n "$scopes_line" ]]; then
-  # Extract scopes
-  scopes=${scopes_line#*Token scopes: }
-  scopes=$(echo "$scopes" | xargs)  # Trim whitespace
-  
-  # Check required repo scope
-  if [[ "$scopes" != *repo* ]]; then
-    print_step 1 "Scopes" "gh auth login -h github.com -s repo,read:org,project"
-  fi
-  
-  # Check optional read:org scope (satisfied by read:org, write:org, or admin:org)
-  if [[ ! "$scopes" =~ (read:org|write:org|admin:org) ]]; then
-    echo "warn read:org missing"
-    echo "  fix: gh auth refresh -h github.com -s read:org,project"
-  fi
-  
-  # Check optional project scope (satisfied by project or read:project)
-  if [[ ! "$scopes" =~ (project|read:project) ]]; then
-    echo "warn project missing"
-    echo "  fix: gh auth refresh -h github.com -s read:org,project"
-  fi
-else
-  echo "warn scopes unknown"
-fi
+[[ "$(loginctl show-user "$USER" -p Linger --value 2>/dev/null || true)" == yes ]] \
+  || fail "linger" "sudo loginctl enable-linger $USER"
+ok "linger"
 
-# Step 5: Tailscale
-if tailscale status --json >/dev/null 2>&1; then
-  backend_state=$(tailscale status --json | python3 -c "import sys, json; print(json.load(sys.stdin)['BackendState'])")
-  if [[ "$backend_state" == "Running" ]]; then
-    host=$(tailscale status --json | python3 -c "import sys, json; d=json.load(sys.stdin); print(d['Self']['DNSName'].rstrip('.'))")
-    print_step 0 "Tailscale"
-  else
-    print_step 1 "Tailscale" "tailscale up"
-  fi
-else
-  print_step 1 "Tailscale" "tailscale up"
-fi
-
-# Step 6: FUSE 2
-if ldconfig -p 2>/dev/null | grep -q 'libfuse\.so\.2'; then
-  print_step 0 "FUSE 2"
-else
-  print_step 1 "FUSE 2" "sudo apt install libfuse2   # or: sudo pacman -S fuse2"
-fi
-
-# Step 7: Linger
-if [[ $(loginctl show-user "$USER" -p Linger --value) == "yes" ]]; then
-  print_step 0 "Linger"
-else
-  print_step 1 "Linger" "sudo loginctl enable-linger $USER"
-fi
-
-# --check exits here
-if [[ $check -eq 1 ]]; then
+if [[ "$check" -eq 1 ]]; then
   echo "Checks passed."
   exit 0
 fi
 
-# Step 8: Install
 mkdir -p "$root/release"
-gh release download -R "$repo_slug" --pattern 'nod-*.AppImage' --dir "$root/release" --clobber
-bash "$root/scripts/install-desktop.sh" --install-service --restart
-print_step 0 "install latest release"
+gh release download -R "$repo_slug" --pattern 'nod-*.AppImage' --dir "$root/release" --clobber >/dev/null \
+  || fail "download latest release" "gh release view -R $repo_slug"
+bash "$root/scripts/install-desktop.sh" --install-service --restart || fail "install latest release"
+ok "install latest release"
 
-# Step 9: Headless
 if [[ -z "${DISPLAY:-}" && -z "${WAYLAND_DISPLAY:-}" ]]; then
   mkdir -p "$(dirname "$dropin")"
   cat > "$dropin" <<'EOF'
@@ -177,103 +136,61 @@ ExecStart=
 ExecStart=%h/.local/bin/nod serve --ozone-platform=headless
 EOF
   systemctl --user daemon-reload
-  # No output for this step when executed
+  ok "headless drop-in"
 fi
 
-# Step 10: Settings
-if [[ -n "$settings_file" ]]; then
-  if [[ ! -f "$settings_file" ]]; then
-    echo "FAIL settings from FILE"
-    echo "  fix: File $settings_file does not exist"
-    exit 1
-  fi
-  
-  if ! python3 -m json.tool "$settings_file" >/dev/null 2>&1; then
-    echo "FAIL settings from FILE"
-    # No fix line per spec
-    exit 1
-  fi
-  
+if [[ -n "$settings" ]]; then
+  python3 -m json.tool "$settings" >/dev/null 2>&1 || fail "settings from $settings"
+  mkdir -p "$(dirname "$svc_settings")"
   if [[ -f "$svc_settings" ]]; then
     cp "$svc_settings" "$svc_settings.bak-$(date +%s)"
   fi
-  
-  mkdir -p "$(dirname "$svc_settings")"
-  cp "$settings_file" "$svc_settings"
-  print_step 0 "settings from FILE"
+  cp "$settings" "$svc_settings"
+  ok "settings from $settings"
 fi
 
-# Step 11: Service
-systemctl --user enable nod
+systemctl --user enable nod >/dev/null 2>&1
 systemctl --user restart nod
-
-# Poll for service readiness
-for i in {1..30}; do
-  if curl -fsS -m 2 "http://127.0.0.1:$port/api/health" | grep -q '"app":"nod"'; then
-    print_step 0 "service answers on $port"
+up=0
+for _ in $(seq 30); do
+  if curl -fsS -m 2 "$origin/api/health" 2>/dev/null | grep -q '"app":"nod"'; then
+    up=1
     break
-  fi
-  if [[ $i -eq 30 ]]; then
-    echo "FAIL service answers on $port"
-    echo "  fix: journalctl --user -t nod -n 50"
-    exit 1
   fi
   sleep 1
 done
+[[ "$up" -eq 1 ]] || fail "service answers on $port" "journalctl --user -t nod -n 50"
+ok "service answers on $port"
 
-# Step 12: Serve
-tailscale_json=$(tailscale serve status --json)
-if python3 -m json.tool <<<"$tailscale_json" >/dev/null 2>&1; then
-  # Parse with Python to check if port 443 is configured correctly
-  handler_count=$(python3 <<'EOF'
-import sys, json
-data = json.load(sys.stdin)
-count = 0
-for handler in data.get('Handlers', []):
-    if handler.get('Port') == 443:
-        count += 1
-print(count)
-EOF
-)
-  
-  if [[ $handler_count -eq 0 ]]; then
-    # No handler on port 443, set it up
-    tailscale serve --bg --https=443 "http://127.0.0.1:$port"
-    print_step 0 "tailscale serve 443"
-  elif [[ $handler_count -eq 1 ]]; then
-    # Check if it's exactly the right handler
-    is_correct=$(python3 <<'EOF'
-import sys, json
-data = json.load(sys.stdin)
-for handler in data.get('Handlers', []):
-    if handler.get('Port') == 443:
-        if handler.get('Mode') == 'HTTPS':
-            proxy = handler.get('Proxy', '')
-            if proxy == 'http://127.0.0.1:4477':
-                print('yes')
-                sys.exit(0)
-        break
-print('no')
-EOF
-)
-    if [[ "$is_correct" == "yes" ]]; then
-      print_step 0 "tailscale serve 443"
-    else
-      echo "FAIL port 443 already serves something else"
-      # No fix line per spec
-      exit 1
-    fi
-  else
-    echo "FAIL port 443 already serves something else"
-    # No fix line per spec
-    exit 1
-  fi
-else
-  # Failed to parse JSON, treat as no handler
-  tailscale serve --bg --https=443 "http://127.0.0.1:$port"
-  print_step 0 "tailscale serve 443"
-fi
+# free: nothing on 443. ours: only "/" proxied to Nod. taken: anything else, which is never replaced.
+serve_state="$(tailscale serve status --json 2>/dev/null | python3 -c '
+import json, sys
+try:
+    d = json.load(sys.stdin) or {}
+except ValueError:
+    d = {}
+handlers = [
+    (path, h)
+    for site, cfg in (d.get("Web") or {}).items()
+    if site.endswith(":443")
+    for path, h in ((cfg or {}).get("Handlers") or {}).items()
+]
+if not handlers and "443" not in (d.get("TCP") or {}):
+    print("free")
+elif len(handlers) == 1 and handlers[0][0] == "/" and (handlers[0][1] or {}).get("Proxy") == sys.argv[1]:
+    print("ours")
+else:
+    print("taken")' "$origin")"
+case "$serve_state" in
+  ours) ok "tailscale serve 443" ;;
+  free)
+    tailscale serve --bg --https=443 "$origin" >/dev/null 2>&1 \
+      || fail "tailscale serve 443" "sudo tailscale set --operator=$USER"
+    ok "tailscale serve 443"
+    ;;
+  *) fail "port 443 already serves something else" ;;
+esac
 
-# Final output
+echo
 echo "Hub URL: https://$host"
 echo "Pair a phone: scripts/setup-hub.sh --pair"

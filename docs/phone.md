@@ -47,13 +47,12 @@ Every `vite build` gets a build id: the git short sha plus the build time (for e
 
 `nod serve` runs the server with no window, on port 4477 with phone access on. It prints the bound address, the advertised address and the pairing status. `pnpm serve` does the same for the browser build.
 
-``` 
+```
 scripts/install-desktop.sh --install-service
 systemctl --user enable --now nod
 ```
-To run the service on an always-on machine for your phone, see [Hub and spokes](hub.md).
 
-The first line installs the app and copies `scripts/nod.service` (a systemd user unit, `Restart=always`, `RestartSec=10`, so a self-update comes back on the new build) to `~/.config/systemd/user/`. The second is printed for you to run. The unit needs `gh` and `tailscale` on its `PATH` and a GitHub login that works without a desktop keyring prompt.
+The first line installs the app and copies `scripts/nod.service` (a systemd user unit, `Restart=always`, `RestartSec=10`, so a self-update comes back on the new build) to `~/.config/systemd/user/`. The second is printed for you to run. The unit needs `gh` and `tailscale` on its `PATH` and a GitHub login that works without a desktop keyring prompt. To run the service on an always-on machine for your phone, see [Hub and spokes](hub.md).
 
 The service installs new releases itself (see [Desktop updates](desktop.md#updates)). After a local `pnpm app:dist`, `scripts/install-desktop.sh --restart` restarts a running service. The phones reload onto the new build when their event stream reconnects. Update phones reaches the ones that were not open.
 
