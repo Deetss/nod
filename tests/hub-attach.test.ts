@@ -1,10 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { chooseStart, isOrigin, probeHub, readHubSetting, type Fetcher } from '../electron/hub';
+import { chooseStart, ipcAllowed, isOrigin, probeHub, readHubSetting, type Fetcher } from '../electron/hub';
 import { createApp } from '../server/app';
 import { DeviceStore } from '../server/devices';
 import { FixtureProvider } from '../server/fixture-provider';
 import type { PhoneAccess } from '../server/security';
 import { hubStatusFrom, pairTarget, parseHubUrl, type HubStatus } from '../shared/hub';
+import type { DeviceRole } from '../shared/pairing';
 
 const HUB = 'https://hub.example.ts.net';
 
@@ -63,10 +64,10 @@ describe('probeHub against a real hub', () => {
   const PHONE: PhoneAccess = { host: 'hub.example.ts.net', owner: 'owner@example.com' };
 
   /** Stands in for Tailscale Serve: the hub sees the tailnet Host and login, and the cookie the session holds. */
-  async function hubFetcher(cookie?: string): Promise<Fetcher> {
+  async function hubFetcher(role?: DeviceRole): Promise<Fetcher> {
     const devices = DeviceStore.memory();
     const app = createApp({ provider: new FixtureProvider(), port: 4477, token: 't', phone: PHONE, devices, version: '0.2.32' });
-    const key = cookie ? await devices.add('Desk', cookie as 'admin') : undefined;
+    const key = role ? await devices.add('Desk', role) : undefined;
     return (url, init) =>
       Promise.resolve(
         app.request(url, {
@@ -126,9 +127,45 @@ describe('desktop hub setting', () => {
   });
 
   it('matches an origin exactly', () => {
+    expect(isOrigin('http://127.0.0.1:4477/', 'http://127.0.0.1:4477')).toBe(true);
     expect(isOrigin(`${HUB}/pair`, HUB)).toBe(true);
     expect(isOrigin('https://hub.example.ts.net.evil.example/', HUB)).toBe(false);
     expect(isOrigin('https://github.com/acme-co', HUB)).toBe(false);
     expect(isOrigin(undefined, HUB)).toBe(false);
   });
 });
+
+describe('IPC origin policy', () => {
+  const LOCAL = 'http://127.0.0.1:4477';
+  const HUB_CHANNELS = ['hub:get', 'hub:check', 'hub:pair'];
+  const PAGE_CHANNELS = ['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build', 'shell:relaunch'];
+
+  it('lets this machine’s page use every channel', () => {
+    const o = { current: LOCAL, local: LOCAL };
+    for (const ch of [...HUB_CHANNELS, ...PAGE_CHANNELS]) expect(ipcAllowed(ch, `${LOCAL}/`, o), ch).toBe(true);
+  });
+
+  it('never lets a hub page change or pair the hub, started on the hub or moved there', () => {
+    for (const o of [
+      { current: HUB, local: '' },
+      { current: HUB, local: LOCAL },
+    ]) {
+      for (const ch of HUB_CHANNELS) {
+        expect(ipcAllowed(ch, `${HUB}/`, o), ch).toBe(false);
+        expect(ipcAllowed(ch, `${LOCAL}/`, o), ch).toBe(false);
+      }
+      for (const ch of PAGE_CHANNELS) expect(ipcAllowed(ch, `${HUB}/`, o), ch).toBe(true);
+    }
+  });
+
+  it('refuses other origins, look-alikes and unknown channels', () => {
+    const o = { current: LOCAL, local: LOCAL };
+    expect(ipcAllowed('notify', 'https://evil.example/', o)).toBe(false);
+    expect(ipcAllowed('notify', 'http://127.0.0.1:4478/', o)).toBe(false);
+    expect(ipcAllowed('hub:check', 'http://127.0.0.1.evil.example:4477/', o)).toBe(false);
+    expect(ipcAllowed('notify', undefined, o)).toBe(false);
+    expect(ipcAllowed('shell:exec', `${LOCAL}/`, o)).toBe(false);
+    expect(ipcAllowed('notify', `${HUB}.evil.example/`, { current: HUB, local: '' })).toBe(false);
+  });
+});
+

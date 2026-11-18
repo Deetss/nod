@@ -47,6 +47,25 @@ export async function chooseStart(hubUrl: string, probe: (origin: string) => Pro
   return { mode: 'local', log: `[hub] ${hubUrl} ${why}; starting a local server.` };
 }
 
+/**
+ * Channels any page the window shows may call: notifications, their switches, and the
+ * shell build and relaunch that the update notice offers.
+ */
+const PAGE_CHANNELS = new Set(['notify', 'notify:test', 'settings:get', 'settings:set', 'shell:build', 'shell:relaunch']);
+
+/** Channels that choose or pair the hub. Only this machine's own server page may call them. */
+const LOCAL_CHANNELS = new Set(['hub:get', 'hub:check', 'hub:pair']);
+
+/**
+ * Whether a call on `channel` from a frame at `frameUrl` is allowed. `current` is the window's
+ * origin; `local` is this machine's server, empty when the window started on the hub. A hub
+ * page can never change or pair the hub, so a hostile hub cannot point the desktop elsewhere.
+ */
+export function ipcAllowed(channel: string, frameUrl: string | undefined, o: { current: string; local: string }): boolean {
+  if (LOCAL_CHANNELS.has(channel)) return o.local !== '' && o.current === o.local && isOrigin(frameUrl, o.local);
+  return PAGE_CHANNELS.has(channel) && isOrigin(frameUrl, o.current);
+}
+
 /** True when `raw` is a URL on exactly `origin`. */
 export function isOrigin(raw: string | undefined, origin: string): boolean {
   if (!raw || !origin) return false;
