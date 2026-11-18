@@ -1,5 +1,5 @@
 import { updateCheckText, type UpdateCheckResult } from '../shared/app-update';
-import type { PairCode } from '../shared/pairing';
+import type { DeviceRole, PairCode } from '../shared/pairing';
 import type { SettingsSaveResult } from '../shared/settings-save';
 import { qrText } from './qr-text';
 import { requestErrorText, requestUpdate, serviceRequest } from './update-request';
@@ -38,10 +38,20 @@ export function settingsText(s: ScopeSettings): string {
   return `orgs: ${orgs}\ninvolved: ${s.includeInvolved ? 'on' : 'off'}`;
 }
 
+/** The role `nod pair` asks for: `--admin`, `--desktop`, or a phone. */
+export function pairRole(args: readonly string[]): DeviceRole {
+  if (args.includes('--admin')) return 'admin';
+  if (args.includes('--desktop')) return 'desktop';
+  return 'phone';
+}
+
+/** The link, a QR code and the expiry. Never the session token. */
 export function pairText(p: PairCode, now: Date = new Date()): string {
   const minutes = Math.max(1, Math.round((Date.parse(p.expiresAt) - now.getTime()) / 60_000));
   return [
-    'Scan in the Nod app, or open the link in Chrome on the phone:',
+    p.role === 'phone'
+      ? 'Scan in the Nod app, or open the link in Chrome on the phone:'
+      : `Pairs a desktop as ${p.role}. Paste the link in Settings > Hub > Pair this desktop:`,
     p.link,
     '',
     qrText(p.link),
@@ -63,7 +73,8 @@ export async function runCli(command: CliCommand, args: readonly string[], token
       return { out: updateCheckText(result), code: result.state === 'failed' ? 1 : 0 };
     }
     if (command === 'pair') {
-      const code = await serviceRequest<PairCode>('POST', '/api/pair/code', token, {});
+      const code = await serviceRequest<PairCode>('POST', '/api/pair/code', token, { role: pairRole(args) });
+
       return { out: pairText(code), code: 0 };
     }
     const parsed = parseSettingsArgs(args);
