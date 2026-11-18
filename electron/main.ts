@@ -151,6 +151,7 @@ async function startServer(): Promise<string> {
     provider,
     sync,
     port,
+    mode: SERVICE ? 'service' : 'own',
     token: FIXTURES ? newSessionToken() : await loadOrCreateSessionToken(),
     distDir: DIST_DIR,
     phone,

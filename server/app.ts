@@ -40,6 +40,9 @@ import type { ActionResult } from '../shared/types';
 import { OrcaNotifier, type NotifyRequest } from './notify-orca';
 import { OrcaPrefsStore } from './orca-prefs';
 import { registerOrcaRoutes, resolveHost } from './orca-routes';
+import { registerConnectionsRoutes } from './connections';
+import { TailscaleServe } from './tailscale-serve';
+import type { NodMode } from '../shared/connections';
 import { OrcaSessions } from './orca-sessions';
 import type { SyncLoop } from './sync-loop';
 import { AgentModelCatalog } from './agent-models';
@@ -96,8 +99,12 @@ export interface AppOptions {
   orcaSessions?: OrcaSessions;
   /** The models each agent offers in Dispatch with Orca. Defaults to reading the CLIs. */
   agentModels?: Pick<AgentModelCatalog, 'get'>;
-  /** The background sync, so a returning viewer can ask for a poll now. */
-  sync?: Pick<SyncLoop, 'nudge'>;
+  /** The background sync, so a returning viewer can ask for a poll now. `failures` feeds Connections. */
+  sync?: Pick<SyncLoop, 'nudge'> & Partial<Pick<SyncLoop, 'failures'>>;
+  /** Whether this server is the shared service or a window's own. Defaults to `own`. */
+  mode?: NodMode;
+  /** Tailscale Serve probe. Defaults to one that runs the tailscale CLI. */
+  serve?: TailscaleServe;
   /** Hard timeout of an automatic Orca notification, ms. Tests shorten it. */
   orcaNotifyTimeoutMs?: number;
 }
@@ -816,6 +823,19 @@ export function createApp(opts: AppOptions): Hono {
   });
 
   registerOrcaRoutes(app, mutating, { orca, sessions: orcaSessions, prefs: orcaPrefs, notifier, provider });
+  registerConnectionsRoutes(app, {
+    provider,
+    sync: opts.sync,
+    devices,
+    orca,
+    sessions: orcaSessions,
+    serve: opts.serve ?? new TailscaleServe({ port: opts.port }),
+    phoneUrl,
+    mode: opts.mode ?? 'own',
+    port: opts.port,
+    build,
+    fixtures: orca.fake !== undefined,
+  });
 
   app.route('/api', mutating);
 

@@ -62,6 +62,7 @@ async function main(): Promise<void> {
     provider,
     sync,
     port,
+    mode: SERVICE ? 'service' : 'own',
     token: fixtures ? newSessionToken() : await loadOrCreateSessionToken(),
     distDir,
     phone,

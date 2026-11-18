@@ -2,6 +2,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { stateDir } from './app-paths';
+import type { DeviceLink } from '../shared/connections';
 import type { DeviceInfo } from '../shared/pairing';
 import type { PushSubscriptionJson } from '../shared/push';
 import { TRIGGER_KEYS, type TriggerSwitches } from '../shared/notify-rules';
@@ -206,6 +207,14 @@ export class DeviceStore {
     return [...this.byHash.values()]
       .map(({ id, name, createdAt, lastSeen }) => ({ id, name, createdAt, lastSeen }))
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  }
+
+  /** Devices with their push state, most recently seen first. `selfKey` marks the caller's own row. */
+  links(selfKey?: string): DeviceLink[] {
+    const self = selfKey ? hashKey(selfKey) : undefined;
+    return [...this.byHash.values()]
+      .sort((a, b) => b.lastSeen.localeCompare(a.lastSeen))
+      .map((d) => ({ id: d.id, name: d.name, lastSeen: d.lastSeen, push: d.push !== undefined, ...(d.hash === self ? { self: true as const } : {}) }));
   }
 
   async rename(id: string, name: string): Promise<boolean> {
