@@ -67,7 +67,8 @@ describe('GET /api/orca/sessions', () => {
   it('carries the switch and overrides', async () => {
     const s = setup([crew]);
     s.prefs.patch({ repo: 'acme-co/acme-api', mode: 'off' });
-    expect((await s.sessions()).prefs).toEqual({ enabled: true, repos: { 'acme-co/acme-api': 'off' } });
+    s.prefs.patch({ repo: 'acme-co/acme-api', host: 'local' });
+    expect((await s.sessions()).prefs).toEqual({ enabled: true, repos: { 'acme-co/acme-api': 'off' }, hosts: { 'acme-co/acme-api': 'local' } });
   });
 });
 
@@ -101,8 +102,8 @@ describe('POST /api/orca/choose', () => {
 describe('POST /api/orca/prefs', () => {
   it('updates the switch and a repo override, and validates the body', async () => {
     const s = setup([]);
-    expect(await (await s.post('/orca/prefs', { enabled: false })).json()).toEqual({ enabled: false, repos: {} });
-    expect(await (await s.post('/orca/prefs', { repo: 'acme-co/acme-api', mode: 'on' })).json()).toEqual({ enabled: false, repos: { 'acme-co/acme-api': 'on' } });
+    expect(await (await s.post('/orca/prefs', { enabled: false })).json()).toEqual({ enabled: false, repos: {}, hosts: {} });
+    expect(await (await s.post('/orca/prefs', { repo: 'acme-co/acme-api', mode: 'on' })).json()).toEqual({ enabled: false, repos: { 'acme-co/acme-api': 'on' }, hosts: {} });
     expect((await s.post('/orca/prefs', { repo: '../x', mode: 'on' })).status).toBe(400);
     expect((await s.post('/orca/prefs', { enabled: 'yes' })).status).toBe(400);
   });

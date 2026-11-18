@@ -4,8 +4,8 @@ import { DISPATCH_ALL_MAX } from '../shared/findings';
 import { LOCAL_HOST, hostName, type HostStatus } from '../shared/orca-hosts';
 import { matchSessions, relatedToIssue, type Matched } from '../shared/orca-match';
 import { prepareSend } from '../shared/orca-message';
-import { patchHost, prefsPatchBody } from '../shared/orca-prefs';
-import { SEND_MAX, type OrcaSessionsResponse, type PrSessions, type SessionCandidate, type SessionView } from '../shared/orca-sessions';
+import { patchHost, prefsPatchBody, type OrcaPrefs } from '../shared/orca-prefs';
+import { SEND_MAX, type OrcaPrefsView, type OrcaSessionsResponse, type PrSessions, type SessionCandidate, type SessionView } from '../shared/orca-sessions';
 import { writeBrief } from './dispatch-brief';
 import type { Orca } from './orca';
 import type { OrcaNotifier } from './notify-orca';
@@ -50,6 +50,14 @@ const view = (m: Matched): SessionView => ({
   ...(m.session.lastOutputAt ? { lastOutputAt: m.session.lastOutputAt } : {}),
 });
 
+/** The prefs the web reads: automatic messages and the host choices, never the chosen sessions. */
+const prefsView = (p: OrcaPrefs): OrcaPrefsView => ({
+  enabled: p.enabled,
+  repos: p.repos,
+  hosts: p.hosts,
+  ...(p.defaultHost ? { defaultHost: p.defaultHost } : {}),
+});
+
 /** Related and possible sessions on every online host for every open PR that has any. One shared snapshot serves all rows. */
 export async function sessionsResponse(deps: OrcaRouteDeps, state: string | undefined): Promise<OrcaSessionsResponse> {
   const snap = await deps.sessions.snapshot();
@@ -57,7 +65,7 @@ export async function sessionsResponse(deps: OrcaRouteDeps, state: string | unde
   const out: OrcaSessionsResponse = {
     available: snap.available,
     at: snap.at,
-    prefs: { enabled: prefs.enabled, repos: prefs.repos },
+    prefs: prefsView(prefs),
     byPr: {},
     byIssue: {},
   };
@@ -191,7 +199,7 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
       return c.json({ error: `Unknown Orca host: ${named}` }, 400);
     }
     const next = deps.prefs.patch(parsed.data);
-    return c.json({ enabled: next.enabled, repos: next.repos });
+    return c.json(prefsView(next));
   });
 
   mutating.post('/orca/open', async (c) => {

@@ -20,6 +20,20 @@ Dispatch, Send, Open, Check again and Choose take an optional `host`. Without on
 - An offline host returns 503 with `Orca host <name> is offline`, and nothing is sent or created.
 - The web sends back the host of the session it acts on, so a send reaches the Orca that owns the terminal. A terminal handle is valid only on the host that issued it.
 
+### Hosts in the app
+
+With only `local` in the host list, nothing below shows and every surface looks as it did before hosts.
+
+- Session lists (Send to in Dispatch all, the session picker, the phone sheets) tag each row whose host is not `local` with a pill naming the host. Rows keep their order.
+- Sessions on an offline host are not listed. One muted line per offline host says so, `desktop is offline (seen 2h ago), so its sessions are not listed.`, at most two, then `and N more`.
+- Dispatch all ends its Send to list with a `New worktree on <host>` row, and the issue and PR Dispatch dialogs show the same row above their fields. The host starts on the repo's host, then the default host, then `local`, which reads `local (hub)`.
+- The host menu lists online hosts first, then offline ones greyed with `offline · <ago>`, which cannot be picked. Arrows move, Enter picks and Esc closes the menu only. A pick is saved as the repo's host through `POST /api/orca/prefs`.
+- When the repo's host is offline the row falls back to `local (hub)` and an attention line says `This repo usually runs on <host>, which is offline (seen <ago>).` Nothing is queued for later.
+- On a phone, Dispatch all lists the sessions itself as cards, and the New worktree card has a full-width `Run on` select that opens the picker sheet with the same grouping.
+- A row chip for a session on another host reads `<host> · <state>`. The issue strip and the detail card add `on <host>` after the worktree name.
+- When a host stops answering, its sessions keep their last state in this window, drawn with a dashed ring and border as `<host> · offline <ago>`. The card's Send message is disabled with the title `Orca host <host> is offline`. They clear once the host answers again. A reload forgets them.
+- `GET /api/orca/sessions` and `POST /api/orca/prefs` return `defaultHost` and the per-repo `hosts` beside the message prefs, so the dialogs know the repo's host.
+
 ## Sessions
 
 - The server reads `orca-ide worktree ps --json` and `terminal list --json` on every host at most once every 20 seconds, and merges the results. Every row shares them, and a stale value is served while one refresh runs.
@@ -67,7 +81,7 @@ Settings, Orca messages has one global box (default on) and a per-repo Default, 
 
 ## Fixture mode
 
-Fixture mode uses an in-memory Orca stand-in with synthetic sessions and records sends in memory (`GET /api/orca/fixture-sends`, each with its host). It has two paired hosts: `laptop`, online with sessions of its own, and `desktop`, offline. Put `fixture-down`, `fixture-exited`, `fixture-blocked`, `fixture-unconfirmed` or `fixture-echo` (unconfirmed by Orca, confirmed from the terminal) in a message to see each result.
+Fixture mode uses an in-memory Orca stand-in with synthetic sessions and records sends in memory (`GET /api/orca/fixture-sends`, each with its host). It has two paired hosts: `laptop`, online with sessions of its own, and `desktop`, offline. `NOD_FIXTURE_SESSIONS=hosts` adds `review-365` and `crew-310` on `laptop`, so #365's Send to list spans two hosts. `NOD_FIXTURE_DESKTOP_UP_S=<seconds>` keeps `desktop` online for that long after start with `webhooks-373` on #373, so its chip can be seen going offline. Put `fixture-down`, `fixture-exited`, `fixture-blocked`, `fixture-unconfirmed` or `fixture-echo` (unconfirmed by Orca, confirmed from the terminal) in a message to see each result.
 
 ## Dispatch from a phone
 

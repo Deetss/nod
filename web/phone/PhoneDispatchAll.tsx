@@ -1,14 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { DISPATCH_ALL_MAX } from '../../shared/findings';
 import { DispatchAllRows, PromptCounter, StaleLine, dispatchAllTitle, type DispatchAllProps } from '../DispatchAll';
+import { useWorktreeHost } from '../orca/HostPicker';
 import { PhoneDispatchFields, usePhoneDispatchFields } from './PhoneFix';
 import { PhoneFitSheet, PhoneSheetBar, PhoneSheetError } from './PhoneFitSheet';
+import { PhoneSendTo, type SendToCandidate } from './PhoneSendTo';
 
 /** Dispatch all as a bottom sheet: ticked findings, the session or a new worktree, and one editable prompt. */
 export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onConfirm }: DispatchAllProps) {
   const { offer, busy, repo, number } = v;
-  const session = v.picked?.session ?? offer.single;
+  const wh = useWorktreeHost(offer.host);
+  const candidates: SendToCandidate[] = [
+    ...offer.related.map((s) => ({ s, kind: 'related' as const })),
+    ...offer.possible.map((s) => ({ s, kind: 'possible' as const })),
+  ];
+  const [pick, setPick] = useState(() => {
+    const first = v.picked?.session ?? offer.single;
+    const i = first ? candidates.findIndex((c) => c.s.id === first.id && c.s.host === first.host) : -1;
+    return i >= 0 ? i : candidates.length > 0 ? 0 : candidates.length;
+  });
+  // With paired hosts the sheet lists the sessions itself; on one machine the picker sheet ran first.
+  const listed = wh.multi ? candidates[pick] : undefined;
+  const session = wh.multi ? listed?.s : (v.picked?.session ?? offer.single);
   const worktree = session === undefined;
   const d = usePhoneDispatchFields(offer.agents, `pr-${number}-findings`);
   const n = v.rows.filter((r) => r.checked).length;
@@ -21,8 +35,11 @@ export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onC
   }, [failed, v.error]);
 
   const confirm = (): void => {
-    if (session) onConfirm({ kind: 'session', session });
-    else onConfirm({ kind: 'worktree', request: { agent: d.agent, name: d.name, baseBranch: offer.headRef, prompt: v.text, pr: true } });
+    if (session) onConfirm({ kind: 'session', session, ...(listed?.kind === 'related' ? { remember: true } : {}) });
+    else {
+      const host = wh.multi ? { host: wh.host } : {};
+      onConfirm({ kind: 'worktree', request: { agent: d.agent, name: d.name, ...host, baseBranch: offer.headRef, prompt: v.text, pr: true } });
+    }
   };
 
   // The Thread tab sits in a transformed swipe pager, so the sheet mounts on the phone root to stay fixed to the screen.
@@ -49,7 +66,12 @@ export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onC
       </div>
       <DispatchAllRows rows={v.rows} busy={busy} phone onToggle={onToggle} />
       <div className={`ph-fit-form is-tall ph-dall-form${busy ? ' is-locked' : ''}`}>
-        {session ? (
+        {wh.multi ? (
+          <>
+            <PhoneSendTo candidates={candidates} pick={pick} busy={busy} repo={`${repo} #${number}`} wh={wh} onPick={setPick} />
+            {worktree ? <PhoneDispatchFields d={d} agents={offer.agents} headRef={offer.headRef} busy={busy} /> : null}
+          </>
+        ) : session ? (
           <>
             <span className="ph-fix-label">Session</span>
             <div className="ph-fit-session" aria-label={`Session ${session.name}`}>

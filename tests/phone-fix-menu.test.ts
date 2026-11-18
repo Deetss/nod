@@ -32,6 +32,7 @@ vi.mock('../web/api', () => ({
     diff: async () => ({ files: [] }),
     orca: async () => mock.orca,
     orcaSessions: async () => ({ available: false }),
+    orcaHosts: async () => [{ name: 'local', online: true, lastSeen: null }],
     orcaModels: async () => ({ models: {}, remembered: { codex: { model: 'gpt-6-astra', effort: 'high' } }, lastAgent: 'codex' }),
     orcaDispatch: (req: unknown) => orcaDispatch(req),
   },

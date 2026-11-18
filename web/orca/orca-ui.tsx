@@ -1,4 +1,5 @@
 import { STATE_WORD, type SessionState, type SessionView } from '../../shared/orca-sessions';
+import { isRemote } from './hosts';
 
 /** Longest a session name draws in a chip before the ellipsis. */
 export const CHIP_NAME_MAX_PX = 96;
@@ -58,7 +59,10 @@ export function outputAgo(at: number | undefined, now: number = Date.now()): str
   return `output ${Math.floor(s / 3600)}h ago`;
 }
 
-export type ChipInput = { kind: 'one'; session: Pick<SessionView, 'name' | 'state'> } | { kind: 'many'; count: number };
+/** `offline` is the word for a session whose host stopped answering, such as `offline 2h`. */
+export type ChipInput =
+  | { kind: 'one'; session: Pick<SessionView, 'name' | 'state'> & { host?: string }; offline?: string }
+  | { kind: 'many'; count: number };
 
 /**
  * The row chip: glyph, mono session name, state word. The word never truncates; the name
@@ -74,7 +78,27 @@ export function OrcaChip({ input }: { input: ChipInput }) {
       </span>
     );
   }
-  const { name, state } = input.session;
+  const { name, state, host } = input.session;
+  if (input.offline !== undefined && host) {
+    const text = `Orca session ${name} on ${host}, ${input.offline}`;
+    return (
+      <span className="ci orca-chip orca-chip-host is-offline" aria-label={text} title={text}>
+        <StateGlyph state="unknown" />
+        <span className="orca-chip-host-name">{host}</span>
+        <span className="orca-chip-word">{` · ${input.offline}`}</span>
+      </span>
+    );
+  }
+  if (isRemote(host)) {
+    const text = `Orca session ${name} on ${host}, ${STATE_WORD[state]}`;
+    return (
+      <span className={`ci orca-chip orca-chip-host orca-chip-${state}`} aria-label={text} title={text}>
+        <StateGlyph state={state} />
+        <span className="orca-chip-host-name">{host}</span>
+        <span className="orca-chip-word">{` · ${STATE_WORD[state]}`}</span>
+      </span>
+    );
+  }
   const text = `Orca session ${name}, ${STATE_WORD[state]}`;
   return (
     <span className={`ci orca-chip orca-chip-${state}`} aria-label={text} title={text}>

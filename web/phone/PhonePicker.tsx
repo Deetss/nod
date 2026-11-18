@@ -171,8 +171,9 @@ export function PhonePicker(p: PhonePickerProps) {
         ) : null}
         {shown.map((item) => {
           const on = picked.has(item.value);
-          const off = !p.single && atLimit && !on;
-          const word = off ? 'Limit reached' : caption(item.value, on);
+          const limited = !p.single && atLimit && !on;
+          const off = limited || item.disabled === true;
+          const word = limited ? 'Limit reached' : off ? '' : caption(item.value, on);
           const state = p.single
             ? {}
             : { 'aria-selected': on };
