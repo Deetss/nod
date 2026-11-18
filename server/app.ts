@@ -85,6 +85,8 @@ export interface AppOptions {
   distDir?: string;
   /** Orca integration; defaults to a real detector. */
   orca?: Orca;
+  /** Where long Orca sends are written. Defaults to the state folder. */
+  dispatchDir?: string;
   /** Org-specific values; defaults when omitted. Served at `/api/settings`. */
   settings?: Settings;
   /** Where `PUT /api/settings` writes. Defaults to the file the settings load from. */
@@ -822,7 +824,14 @@ export function createApp(opts: AppOptions): Hono {
     } satisfies OrcaModelsResponse);
   });
 
-  registerOrcaRoutes(app, mutating, { orca, sessions: orcaSessions, prefs: orcaPrefs, notifier, provider });
+  registerOrcaRoutes(app, mutating, {
+    orca,
+    sessions: orcaSessions,
+    prefs: orcaPrefs,
+    notifier,
+    provider,
+    ...(opts.dispatchDir ? { dispatchDir: opts.dispatchDir } : {}),
+  });
   registerConnectionsRoutes(app, {
     provider,
     sync: opts.sync,

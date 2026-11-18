@@ -1,4 +1,4 @@
-import { commentBot, commentText, inlineThreads, type ThreadItem } from './fix-comments';
+import { PROMPT_MAX, commentBot, commentText, inlineThreads, type ThreadItem } from './fix-comments';
 import { MESSAGE_TAG, cleanField, oneLine } from './orca-message';
 import { SEND_MAX } from './orca-sessions';
 import type { BotSettings, ReviewerSettings } from './settings';
@@ -136,45 +136,25 @@ export function dispatchText(f: Finding, repo: string, number: number): string {
   return `${head}${text}${link}`;
 }
 
+/** Longest Dispatch all prompt. A session gets it as a file; a new worktree gets it as its prompt. */
+export const DISPATCH_ALL_MAX = PROMPT_MAX;
+
 /**
- * One Orca message for several findings, one line within the send limit. Links stay whole; past the
- * limit each finding's text is cut to an equal share of the room left. When the heads and links alone
- * pass the limit the text comes back over it, and the confirm shows `too long`.
+ * One prompt for several findings: a tagged head line, then one block per finding with its file,
+ * whole text and link. Nothing is cut; `DISPATCH_ALL_MAX` bounds the whole prompt.
  */
 export function dispatchAllText(fs: readonly Finding[], repo: string, number: number): string {
   const [only] = fs;
   if (fs.length === 1 && only) return dispatchText(only, repo, number);
-  const head = `${MESSAGE_TAG} ${fs.length} review findings on ${cleanField(repo, 100)}#${number}.`;
-  const parts = fs.map((f, i) => {
+  const head = `${MESSAGE_TAG} ${fs.length} review findings on ${cleanField(repo, 100)}#${number}. Fix each one, or resolve its thread if it is wrong.`;
+  const blocks = fs.map((f, i) => {
     const t = f.thread;
     const where = `${t.path}${t.line ? `:${t.line}` : ''}`;
     const url = t.comments[0]?.url;
-    return { lead: ` (${i + 1}) ${f.severity}, ${cleanField(where, 160)}: `, body: oneLine(f.text), link: url ? ` ${url}` : '' };
+    return [`(${i + 1}) ${f.severity}, ${cleanField(where, 160)}`, oneLine(f.text), ...(url ? [url] : [])].join('\n');
   });
-  const fixed = head.length + parts.reduce((n, p) => n + p.lead.length + p.link.length, 0);
-  const caps = fixed <= SEND_MAX ? shares(parts.map((p) => p.body.length), SEND_MAX - fixed) : parts.map((p) => p.body.length);
-  return head + parts.map((p, i) => `${p.lead}${cut(p.body, caps[i] ?? 0)}${p.link}`).join('');
+  return [head, ...blocks].join('\n\n');
 }
-
-/** Splits `room` evenly; a text shorter than its share keeps its length and leaves the rest to the others. */
-function shares(lengths: readonly number[], room: number): number[] {
-  const caps = [...lengths];
-  let left = room;
-  let open = lengths.map((_, i) => i).sort((a, b) => (lengths[a] ?? 0) - (lengths[b] ?? 0));
-  while (open.length > 0) {
-    const share = Math.floor(left / open.length);
-    const [first] = open;
-    if (first === undefined || (lengths[first] ?? 0) > share) {
-      for (const i of open) caps[i] = share;
-      break;
-    }
-    left -= lengths[first] ?? 0;
-    open = open.slice(1);
-  }
-  return caps;
-}
-
-const cut = (s: string, max: number): string => (s.length <= max ? s : `${s.slice(0, Math.max(0, max - 3)).trimEnd()}...`);
 
 /** The first line of a comment in plain text, cut to `max`. */
 export function firstLine(text: string, max = 140): string {

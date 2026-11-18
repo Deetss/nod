@@ -1,3 +1,6 @@
+import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ActivityStore } from '../server/activity-store';
 import { createApp } from '../server/app';
@@ -268,11 +271,29 @@ describe('free-form send route', () => {
     expect(args).toContain('--enter');
   });
 
-  it('rejects text over 600 characters and sends nothing', async () => {
+  it('rejects text over 12000 characters and sends nothing', async () => {
     const { h, call } = setup([crew]);
-    const res = await call('/orca/send', { sessionId: id, text: 'x'.repeat(601) });
+    const res = await call('/orca/send', { sessionId: id, text: 'x'.repeat(12001) });
     expect(res.status).toBe(400);
     expect(h.sends()).toHaveLength(0);
+  });
+
+  it('writes a multi-line prompt to a file and types its first line', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'nod-send-'));
+    try {
+      const h = harness([crew]);
+      const app = createApp({ provider: new FixtureProvider(), port: PORT, token: TOKEN, orca: h.orca, dispatchDir: dir });
+      const text = `[nod] 2 review findings on acme-co/acme-api#310. Fix each one.\n\n(1) major, a.ts:1\n${'z'.repeat(900)}`;
+      const res = await app.request(`${ORIGIN}/api/orca/send`, { method: 'POST', headers, body: JSON.stringify({ sessionId: id, text }) });
+      expect(res.status).toBe(200);
+      const [name] = readdirSync(dir);
+      const file = join(dir, name!);
+      expect(readFileSync(file, 'utf8')).toBe(`${text}\n`);
+      const args = h.sends()[0]!;
+      expect(args[args.indexOf('--text') + 1]).toBe(`[nod] 2 review findings on acme-co/acme-api#310. Fix each one. Read the full list in ${file}`);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it('is behind the mutation guard', async () => {

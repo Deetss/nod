@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  DISPATCH_ALL_MAX,
   bannerOf,
   dispatchAllOf,
   dispatchAllText,
@@ -18,7 +19,7 @@ import {
 import type { ThreadItem } from '../shared/fix-comments';
 import { BUZZ, buzz } from './phone/haptics';
 import type { OrcaDispatchRequest } from '../shared/orca';
-import { SEND_MAX, type SendResult, type SessionView } from '../shared/orca-sessions';
+import type { SendResult, SessionView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
 import { bot, reviewer } from './org-settings';
@@ -412,7 +413,7 @@ export function useFindings(o: Options): FindingControls | undefined {
     (target: DispatchTarget) => {
       if (!all || all.busy || !sender) return;
       const chosen = eligible.filter((f) => all.checked.has(f.thread.id));
-      if (chosen.length === 0 || all.text.trim() === '' || all.text.length > SEND_MAX) return;
+      if (chosen.length === 0 || all.text.trim() === '' || all.text.length > DISPATCH_ALL_MAX) return;
       setAll({ ...all, busy: true, error: undefined });
       const mark = (step: Step) => chosen.forEach((f) => patch(f.thread.id, { dispatch: step }));
       const keep = (error: string) => setAll((cur) => (cur ? { ...cur, busy: false, error } : cur));
