@@ -1,10 +1,12 @@
 import type { Context, Hono } from 'hono';
 import { z } from 'zod';
-import { hostName, type HostStatus } from '../shared/orca-hosts';
+import { DISPATCH_ALL_MAX } from '../shared/findings';
+import { LOCAL_HOST, hostName, type HostStatus } from '../shared/orca-hosts';
 import { matchSessions, relatedToIssue, type Matched } from '../shared/orca-match';
 import { prepareSend } from '../shared/orca-message';
 import { patchHost, prefsPatchBody } from '../shared/orca-prefs';
-import type { OrcaSessionsResponse, PrSessions, SessionCandidate, SessionView } from '../shared/orca-sessions';
+import { SEND_MAX, type OrcaSessionsResponse, type PrSessions, type SessionCandidate, type SessionView } from '../shared/orca-sessions';
+import { writeBrief } from './dispatch-brief';
 import type { Orca } from './orca';
 import type { OrcaNotifier } from './notify-orca';
 import { pickHost, type HostPick } from './orca-hosts';
@@ -20,12 +22,14 @@ export interface OrcaRouteDeps {
   prefs: OrcaPrefsStore;
   notifier: OrcaNotifier;
   provider: Provider;
+  /** Where long sends are written. Defaults to the state folder. */
+  dispatchDir?: string;
 }
 
 const sessionId = z.string().min(1).max(600);
 const requestId = z.string().regex(/^[A-Za-z0-9._:-]{1,100}$/);
 
-const sendBody = z.object({ sessionId, host: hostName.optional(), text: z.string().max(4000), requestId: requestId.optional() });
+const sendBody = z.object({ sessionId, host: hostName.optional(), text: z.string().max(DISPATCH_ALL_MAX), requestId: requestId.optional() });
 const chooseBody = z.object({ prId: z.string().min(1).max(200), sessionId: sessionId.nullable(), host: hostName.optional() });
 const openBody = z.object({ sessionId, host: hostName.optional() });
 const confirmBody = z.object({ sessionId, host: hostName.optional(), requestId });
@@ -135,10 +139,17 @@ export function registerOrcaRoutes(app: Hono, mutating: Hono, deps: OrcaRouteDep
   mutating.post('/orca/send', async (c) => {
     const parsed = sendBody.safeParse(await c.req.json().catch(() => null));
     if (!parsed.success) return c.json({ error: 'Bad request' }, 400);
-    const text = prepareSend(parsed.data.text);
-    if (text === undefined) return c.json({ error: 'The message is empty or over 600 characters' }, 400);
     const pick = await host(parsed.data.host);
     if (!pick.ok) return refuse(c, pick);
+    // A multi-line or long prompt (Dispatch all) goes to the session as a file; one short line is typed.
+    // The file is on this machine, so only a local session can read it.
+    const raw = parsed.data.text;
+    const long = raw.trim() !== '' && (raw.includes('\n') || raw.length > SEND_MAX);
+    if (long && pick.host !== LOCAL_HOST) {
+      return c.json({ error: `Long prompts go only to sessions on this machine. Dispatch to a new worktree on ${pick.host} instead.` }, 400);
+    }
+    const text = prepareSend(long ? await writeBrief(raw, deps.dispatchDir) : raw);
+    if (text === undefined) return c.json({ error: 'The message is empty' }, 400);
     const res = await sendToSession(deps.orca, deps.sessions, pick.host, parsed.data.sessionId, text, {
       ...(parsed.data.requestId ? { retryRequestId: parsed.data.requestId } : {}),
       confirmMs: CONFIRM_MS,

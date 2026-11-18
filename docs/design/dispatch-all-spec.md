@@ -16,18 +16,30 @@ Tokens: `tokens.md`, `density-tokens.md`. Minimum font 12px (`constraints.md`). 
 
 ## Combined prompt
 
-The send route takes one line of at most `SEND_MAX` (600) characters (`prepareSend` collapses newlines). A numbered multi-line prompt is not possible, so the prompt is one tagged line. The worktree path uses the same 600 cap, as the phone finding dispatch already does (`max={SEND_MAX}`).
+`dispatchAllText(findings, repo, number)` in `shared/findings.ts`, next to `dispatchText`:
 
-New `dispatchAllText(findings, repo, number)` in `shared/findings.ts`, next to `dispatchText`:
+- 1 ticked finding: exactly `dispatchText(f, repo, number)`, one line within `SEND_MAX` (600).
+- 2 or more: a head line `[nod] {n} review findings on {repo}#{number}. Fix each one, or resolve its thread if it is wrong.`, then one block per finding, separated by a blank line: `({i}) {severity}, {path}:{line}`, the whole `oneLine(f.text)`, and the comment link, one per line. Nothing is cut.
+- `severity` is the lower-case `f.severity`. `repo` and `where` go through `cleanField` with the `dispatchText` limits (100, 160).
+- The prompt limit is `DISPATCH_ALL_MAX` (12000, the same as `PROMPT_MAX`). Over it, the primary button is disabled and the counter shows `too long`.
+- Fixture result: 605 characters for both findings (A2), 306 for the Blocker alone (A3).
 
-- 1 ticked finding: exactly `dispatchText(f, repo, number)`.
-- 2 or more: `[nod] {n} review findings on {repo}#{number}. ` then, per finding in list order, `({i}) {severity}, {path}:{line}: {text} {url}`, joined by one space.
-- `severity` is the lower-case `f.severity`, as `dispatchText` writes it. `text` is `oneLine(f.text)`. `repo` and `where` go through `cleanField` with the `dispatchText` limits (100, 160).
-- Over 600: links stay whole. Each finding's text is cut to an equal share of the room left, ending `...`. If the heads and links alone pass 600, the primary button is disabled and the counter shows `too long`.
-- Fixture result: 553 characters for both findings (A2), 306 for the Blocker alone (A3).
+Where it goes:
+
+- New worktree: the prompt is the `orca worktree create --prompt` value as is.
+- Session on this machine: when the text has a newline or is over 600 characters, `POST /api/orca/send` writes it to `~/.local/state/nod/dispatch/<date>-<hex>.md` (mode 600, files older than a week removed) and types one line: the first line, cut to fit 600, plus `Read the full list in <path>`.
+- Session on another Orca host: a long prompt is refused with `Long prompts go only to sessions on this machine`, because that host cannot read the file. A new worktree on that host still works.
 
 ```
-[nod] 2 review findings on acme-co/orders-api#365. (1) blocker, db/migrate/20261113000000_add_amounts.rb:12: The diff adds the new migration without deleting the old version, so the duplicate version remains and migration loading still fails. https://github.com/acme-co/orders-api/pull/365#discussion_r2234567891 (2) major, db/migrate/20261113000000_add_amounts.rb:31: Rolling back the new migration drops the existing parcels table on a database where the old migration already ran. https://github.com/acme-co/orders-api/pull/365#discussion_r2234567892
+[nod] 2 review findings on acme-co/orders-api#365. Fix each one, or resolve its thread if it is wrong.
+
+(1) blocker, db/migrate/20261113000000_add_amounts.rb:12
+The diff adds the new migration without deleting the old version, so the duplicate version remains and migration loading still fails.
+https://github.com/acme-co/orders-api/pull/365#discussion_r2234567891
+
+(2) major, db/migrate/20261113000000_add_amounts.rb:31
+Rolling back the new migration drops the existing parcels table on a database where the old migration already ran.
+https://github.com/acme-co/orders-api/pull/365#discussion_r2234567892
 ```
 
 ## Reuse

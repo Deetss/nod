@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { oneLine } from '../shared/orca-message';
-import { SEND_MAX, STATE_WORD, type SessionView } from '../shared/orca-sessions';
+import { DISPATCH_ALL_MAX } from '../shared/findings';
+import { STATE_WORD, type SessionView } from '../shared/orca-sessions';
 import { BulkShell, SeverityBadge, StatusLine } from './FindingParts';
 import { DispatchFields, useDispatchFields } from './orca/DispatchFields';
 import { Row } from './orca/SessionPicker';
@@ -45,11 +46,11 @@ export function DispatchAllRows({ rows, busy, phone, onToggle }: { rows: BulkRow
   );
 }
 
-/** `Edit before sending.` and `553 / 600`, over adds `too long`. Locked while the request runs. */
+/** `Edit before sending.` and `605 / 12000`, over adds `too long`. Locked while the request runs. */
 export function PromptCounter({ length, busy, worktree, phone }: { length: number; busy: boolean; worktree: boolean; phone?: boolean }) {
-  const over = length > SEND_MAX;
+  const over = length > DISPATCH_ALL_MAX;
   const note = busy ? 'Fields are locked while sending.' : worktree ? 'Edit before dispatching.' : 'Edit before sending.';
-  const count = `${length} / ${SEND_MAX}${over ? ' too long' : ''}`;
+  const count = `${length} / ${DISPATCH_ALL_MAX}${over ? ' too long' : ''}`;
   return phone ? (
     <div className="ph-fit-counter">
       <span>{note}</span>
@@ -93,7 +94,7 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
 
   const path = offer.single && !changing ? 'session' : candidates.length > 0 ? 'pick' : 'worktree';
   const worktree = path === 'worktree';
-  const over = v.text.length > SEND_MAX;
+  const over = v.text.length > DISPATCH_ALL_MAX;
   const ready = n > 0 && !over && v.text.trim() !== '' && (!worktree || f.valid);
   const failed = v.error !== undefined && !busy;
   const title = dispatchAllTitle(n);

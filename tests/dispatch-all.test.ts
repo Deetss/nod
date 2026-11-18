@@ -4,7 +4,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FIXTURE_FINDING_THREADS, FIXTURE_REVIEWER } from '../server/fixture-findings';
-import { bannerOf, dispatchAllOf, dispatchAllText, dispatchText, groupThreads, showDispatchAll } from '../shared/findings';
+import { DISPATCH_ALL_MAX, bannerOf, dispatchAllOf, dispatchAllText, dispatchText, groupThreads, showDispatchAll } from '../shared/findings';
 import type { ThreadItem } from '../shared/fix-comments';
 import { SEND_MAX, type SessionView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
@@ -43,37 +43,27 @@ describe('dispatchAllText', () => {
     expect(dispatchAllText([blocker!], REPO, 365)).toHaveLength(306);
   });
 
-  it('numbers the findings in list order on one tagged line', () => {
-    const text = dispatchAllText([blocker!, major!], REPO, 365);
-    expect(text).toHaveLength(553);
-    expect(text).toBe(
-      '[nod] 2 review findings on acme-co/orders-api#365. ' +
-        '(1) blocker, db/migrate/20261113000000_add_amounts.rb:12: The diff adds the new migration without deleting the old version, so the duplicate version remains and migration loading still fails. https://github.com/acme-co/orders-api/pull/365#discussion_r2234567891 ' +
-        '(2) major, db/migrate/20261113000000_add_amounts.rb:31: Rolling back the new migration drops the existing parcels table on a database where the old migration already ran. https://github.com/acme-co/orders-api/pull/365#discussion_r2234567892',
+  it('puts a head line, then one block per finding with its whole text and link', () => {
+    expect(dispatchAllText([blocker!, major!], REPO, 365)).toBe(
+      '[nod] 2 review findings on acme-co/orders-api#365. Fix each one, or resolve its thread if it is wrong.\n\n' +
+        '(1) blocker, db/migrate/20261113000000_add_amounts.rb:12\n' +
+        'The diff adds the new migration without deleting the old version, so the duplicate version remains and migration loading still fails.\n' +
+        'https://github.com/acme-co/orders-api/pull/365#discussion_r2234567891\n\n' +
+        '(2) major, db/migrate/20261113000000_add_amounts.rb:31\n' +
+        'Rolling back the new migration drops the existing parcels table on a database where the old migration already ran.\n' +
+        'https://github.com/acme-co/orders-api/pull/365#discussion_r2234567892',
     );
-    expect(text).not.toContain('\n');
   });
 
-  it('cuts each text to an even share past 600 and keeps every link whole', () => {
-    const long = [finding(1, 'a'.repeat(400)), finding(2, 'b'.repeat(400)), finding(3, 'c'.repeat(400))];
-    const text = dispatchAllText(long, REPO, 365);
-    expect(text.length).toBeLessThanOrEqual(SEND_MAX);
-    for (const f of long) expect(text).toContain(` ${f.thread.comments[0]?.url}`);
-    const kept = ['a', 'b', 'c'].map((ch) => (text.match(new RegExp(`${ch}+\\.\\.\\.`)) ?? [''])[0].length);
-    expect(Math.max(...kept) - Math.min(...kept)).toBeLessThanOrEqual(1);
-  });
-
-  it('leaves a short text whole and gives its spare room to the long one', () => {
-    const text = dispatchAllText([finding(1, 'Short one.'), finding(2, 'x'.repeat(800))], REPO, 365);
-    expect(text).toContain(': Short one. https://');
-    expect(text).toMatch(/x+\.\.\. https:/);
-    expect(SEND_MAX - text.length).toBeLessThan(3);
-  });
-
-  it('comes back over the limit when the heads and links alone pass 600', () => {
-    const many = Array.from({ length: 6 }, (_, i) => finding(i + 1, 'Text.'));
-    for (const f of many) f.thread.comments[0]!.url = `https://github.com/${REPO}/pull/365#discussion_r${'9'.repeat(60)}${f.thread.line}`;
-    expect(dispatchAllText(many, REPO, 365).length).toBeGreaterThan(SEND_MAX);
+  it('never cuts a text, so six long findings stay whole', () => {
+    const many = Array.from({ length: 6 }, (_, i) => finding(i + 1, `${'y'.repeat(400)} end ${i + 1}.`));
+    const text = dispatchAllText(many, REPO, 365);
+    for (const f of many) {
+      expect(text).toContain(f.text);
+      expect(text).toContain(f.thread.comments[0]!.url);
+    }
+    expect(text.length).toBeGreaterThan(SEND_MAX);
+    expect(text.length).toBeLessThan(DISPATCH_ALL_MAX);
   });
 });
 
@@ -171,7 +161,7 @@ describe('useFindings Dispatch all', () => {
   it('rebuilds the prompt on untick until the user edits it', () => {
     const h = mount(senderWith(vi.fn()));
     act(() => h.get().openDispatchAll());
-    expect(h.get().dispatchAll?.text).toHaveLength(553);
+    expect(h.get().dispatchAll?.text).toHaveLength(605);
     act(() => h.get().toggleDispatchAll('PRRC_ta2'));
     expect(h.get().dispatchAll?.text).toHaveLength(306);
     act(() => h.get().editDispatchAll('my own words'));
@@ -180,7 +170,7 @@ describe('useFindings Dispatch all', () => {
     expect(h.get().dispatchAll?.rows.filter((r) => r.checked)).toHaveLength(2);
     act(() => h.get().rebuildDispatchAll());
     expect(h.get().dispatchAll).toMatchObject({ edited: false, stale: false });
-    expect(h.get().dispatchAll?.text).toHaveLength(553);
+    expect(h.get().dispatchAll?.text).toHaveLength(605);
   });
 
   it('sends once and marks every ticked card dispatched', async () => {

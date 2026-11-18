@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { SEND_MAX } from '../../shared/orca-sessions';
+import { DISPATCH_ALL_MAX } from '../../shared/findings';
 import { DispatchAllRows, PromptCounter, StaleLine, dispatchAllTitle, type DispatchAllProps } from '../DispatchAll';
 import { PhoneDispatchFields, usePhoneDispatchFields } from './PhoneFix';
 import { PhoneFitSheet, PhoneSheetBar, PhoneSheetError } from './PhoneFitSheet';
@@ -13,7 +13,7 @@ export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onC
   const d = usePhoneDispatchFields(offer.agents, `pr-${number}-findings`);
   const n = v.rows.filter((r) => r.checked).length;
   const failed = v.error !== undefined && !busy;
-  const ready = n > 0 && v.text.trim() !== '' && v.text.length <= SEND_MAX && (!worktree || d.nameOk);
+  const ready = n > 0 && v.text.trim() !== '' && v.text.length <= DISPATCH_ALL_MAX && (!worktree || d.nameOk);
 
   const error = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -74,7 +74,7 @@ export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onC
           className="ph-fix-field ph-mono ph-fit-area"
           value={v.text}
           readOnly={busy}
-          aria-invalid={v.text.length > SEND_MAX}
+          aria-invalid={v.text.length > DISPATCH_ALL_MAX}
           onChange={(e) => onEdit(e.target.value)}
         />
         <PromptCounter length={v.text.length} busy={busy} worktree={worktree} phone />
