@@ -11,7 +11,7 @@ const ORG = 'acme-co';
 const SHA = '89a446a69659ae7f77043f7a669de1bd2cddd022';
 const BLOB = `https://github.com/${ORG}/acme-web/blob/${SHA}/before-signatures.png?raw=true`;
 const PNG = Uint8Array.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]);
-const SECRET = 'ghp_secret_token_value';
+const SECRET = '[REDACTED-SECRET]';
 
 describe('image allowlist', () => {
   it('accepts the real GitHub URL forms', () => {
@@ -33,8 +33,8 @@ describe('image allowlist', () => {
     ['http', `http://github.com/${ORG}/R/blob/${SHA}/a.png`],
     ['other host', 'https://evil.com/a.png'],
     ['lookalike host', 'https://github.com.evil.com/user-attachments/assets/x'],
-    ['userinfo trick', `https://github.com@evil.com/${ORG}/R/blob/${SHA}/a.png`],
-    ['userinfo on allowed host', `https://user:pw@github.com/${ORG}/R/blob/${SHA}/a.png`],
+    ['userinfo trick', `https://***@evil.com/${ORG}/R/blob/${SHA}/a.png`],
+    ['userinfo on allowed host', `https://user:<email>/${ORG}/R/blob/${SHA}/a.png`],
     ['port', `https://github.com:8443/${ORG}/R/blob/${SHA}/a.png`],
     ['other org', `https://github.com/other-org/R/blob/${SHA}/a.png`],
     ['other org raw host', `https://raw.githubusercontent.com/other-org/R/${SHA}/a.png`],
@@ -56,7 +56,7 @@ describe('image allowlist', () => {
     expect(sniffImageType(Uint8Array.from([0xff, 0xd8, 0xff, 0xe0]))).toBe('image/jpeg');
     expect(sniffImageType(new TextEncoder().encode('GIF89a....'))).toBe('image/gif');
     expect(sniffImageType(new TextEncoder().encode('RIFF....WEBP'))).toBe('image/webp');
-    expect(sniffImageType(new TextEncoder().encode('<svg xmlns="http://www.w3.org/2000/svg"/>'))).toBeUndefined();
+    expect(sniffImageType(new TextEncoder().encode('<svg xmlns=\"http://www.w3.org/2000/svg\"/>'))).toBeUndefined();
   });
 });
 
@@ -64,13 +64,13 @@ describe('sanitizer image rewrite', () => {
   const clean = createSanitizer(new JSDOM('').window as unknown as Window & typeof globalThis);
 
   it('routes allowlisted images through the proxy', () => {
-    const out = clean(`<img src="${BLOB}" alt="x">`);
-    expect(out).toContain(`src="/api/image?u=${encodeURIComponent(BLOB)}"`);
+    const out = clean(`<img src=\"${BLOB}\" alt=\"x\">`);
+    expect(out).toContain(`src=\"/api/image?u=${encodeURIComponent(BLOB)}\"`);
   });
 
   it('prefers an allowlisted data-canonical-src and drops srcset and the attribute', () => {
     const out = clean(
-      `<img src="https://camo.githubusercontent.com/abc" data-canonical-src="${BLOB}" srcset="https://evil.com/a.png 2x">`,
+      `<img src=\"https://camo.githubusercontent.com/abc\" data-canonical-src=\"${BLOB}\" srcset=\"https://evil.com/a.png 2x\">`,
     );
     expect(out).toContain(`/api/image?u=${encodeURIComponent(BLOB)}`);
     expect(out).not.toContain('srcset');
@@ -78,11 +78,11 @@ describe('sanitizer image rewrite', () => {
   });
 
   it('leaves other sources alone', () => {
-    expect(clean('<img src="https://example.com/a.png">')).toContain('src="https://example.com/a.png"');
+    expect(clean('<img src=\"https://example.com/a.png\">')).toContain('src=\"https://example.com/a.png\"');
   });
 
   it('keeps link behaviour', () => {
-    expect(clean('<a href="https://x.test">x</a>')).toContain('rel="noopener noreferrer"');
+    expect(clean('<a href=\"https://x.test\">x</a>')).toContain('rel=\"noopener noreferrer\"');
   });
 });
 
@@ -112,6 +112,16 @@ describe('GET /api/image', () => {
     expect(res.headers.get('content-type')).toBe('image/png');
     expect(res.headers.get('x-content-type-options')).toBe('nosniff');
     expect(res.headers.get('cache-control')).toBe('private, max-age=300');
+    expect(new Uint8Array(await res.arrayBuffer())).toEqual(PNG);
+    expect(p.seen).toHaveLength(1);
+  });
+
+  it('caches an avatar for a day', async () => {
+    const p = new Fake(async () => ({ bytes: PNG, contentType: 'image/png' }));
+    const avatarUrl = 'https://avatars.githubusercontent.com/u/1?v=4';
+    const res = await get(appWith(p), avatarUrl);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('cache-control')).toBe('private, max-age=86400');
     expect(new Uint8Array(await res.arrayBuffer())).toEqual(PNG);
     expect(p.seen).toHaveLength(1);
   });
