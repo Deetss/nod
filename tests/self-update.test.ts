@@ -94,6 +94,10 @@ describe('shellNotice', () => {
     expect(shellNotice(DEV_BUILD, OLD)).toBe('none');
     expect(shellNotice(NEW, DEV_BUILD)).toBe('none');
   });
+
+  it("stays quiet on a hub page, whose build is the hub's", () => {
+    expect(shellNotice(NEW, null)).toBe('none');
+  });
 });
 
 describe('appImageRelaunch', () => {

@@ -11,8 +11,8 @@ export interface NodBridge {
   onOpen: (cb: (target: NotifyTarget) => void) => () => void;
   getSettings: () => Promise<NotifySettings>;
   setSettings: (settings: NotifySettings) => Promise<NotifySettings>;
-  /** The build of this Electron shell, which can trail the service's after a self-update. Missing before 0.2.4. */
-  shellBuild?: () => Promise<string>;
+  /** The build of this Electron shell, which can trail the service's after a self-update. Null on a hub page. Missing before 0.2.4. */
+  shellBuild?: () => Promise<string | null>;
   /** Quits this window and starts it again from the installed AppImage. Missing before 0.2.4. */
   relaunch?: () => Promise<void>;
   /** Settings > Hub. Missing before hub support. */
