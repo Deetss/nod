@@ -71,6 +71,7 @@ import { useNotifications, useNotifySettings } from './useNotifications';
 import { usePaneWidths } from './usePaneWidths';
 import { useOrcaInfo } from './orca/useOrcaInfo';
 import { useRemote } from './useRemote';
+import { usePrDetail } from './usePrDetail';
 import {
   ViewedWriter,
   applyOverride,
@@ -245,9 +246,7 @@ export function App() {
   const selected: PrSummary | undefined =
     everyPr.find((p) => p.id === effectiveId) ?? closed.state.items.find((p) => p.id === effectiveId);
 
-  const detail = useRemote(selected ? `detail:${selected.id}` : null, () =>
-    api.detail(selected?.repo ?? '', selected?.number ?? 0),
-  );
+  const detail = usePrDetail(selected);
   const diff = useRemote(selected ? `diff:${selected.id}:${mode}` : null, () =>
     api.diff(selected?.repo ?? '', selected?.number ?? 0, mode),
   );
