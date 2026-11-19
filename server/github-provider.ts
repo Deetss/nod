@@ -145,6 +145,9 @@ const META_MS = 60 * 60_000;
 /** Wait this long after a rate limit that names no reset time. */
 const DEFAULT_BACKOFF_MS = 60_000;
 
+/** Prefetch stops when less than this share of the rate budget is left. */
+const WARM_MIN_BUDGET = 0.2;
+
 /** Follow-up checks after an action, in ms from the action. */
 export const FOLLOW_STEPS_MS = [3_000, 10_000, 30_000, 60_000, 120_000];
 
@@ -785,11 +788,45 @@ export class GithubProvider implements Provider {
       };
     }
     this.emit();
+    if (changed || !this.warmedOnce) this.warm();
     return { changed };
   }
 
   async refresh(): Promise<void> {
     await this.poll('full');
+  }
+
+  /** The running prefetch, so a poll never starts a second one. */
+  private warming: Promise<void> | undefined;
+  private warmedOnce = false;
+
+  /**
+   * Reads detail and files for every listed PR in the background, so opening one is a
+   * cache hit. A PR already saved at its head costs a disk read and no request. It stops
+   * while rate limited or with less than a fifth of the budget left.
+   */
+  private warm(): void {
+    if (this.warming) return;
+    this.warmedOnce = true;
+    this.warming = (async () => {
+      for (const pr of Object.values(this.state.prs)) {
+        if (this.now() < this.backoffUntil) return;
+        const rate = this.budget();
+        if (rate && rate.remaining < rate.limit * WARM_MIN_BUDGET) return;
+        try {
+          await this.diff({ repo: pr.repo, number: pr.number }, 'all');
+        } catch (e) {
+          this.log(`[warm] ${pr.repo}#${pr.number}: ${e instanceof Error ? e.message : 'failed'}`);
+        }
+      }
+    })().finally(() => {
+      this.warming = undefined;
+    });
+  }
+
+  /** Resolves once the running prefetch, if any, has finished. */
+  async whenWarm(): Promise<void> {
+    await this.warming;
   }
 
   private listed(ref: PrRef): PrSummary | undefined {
@@ -928,6 +965,17 @@ export class GithubProvider implements Provider {
           };
         }
       }
+      return this.fetchDetail(ref, prKey);
+    });
+  }
+
+  /** Detail fetches in flight, so a user opening a PR the prefetch is loading shares its request. */
+  private readonly fetching = new Map<string, Promise<PrDetail>>();
+
+  private fetchDetail(ref: PrRef, prKey: string): Promise<PrDetail> {
+    const running = this.fetching.get(prKey);
+    if (running) return running;
+    const p = (async () => {
       const data = await this.client.graphql<DetailResponse>(DETAIL_QUERY, {
         owner: repoOwner(ref.repo),
         name: repoName(ref.repo),
@@ -948,7 +996,9 @@ export class GithubProvider implements Provider {
         });
       }
       return detail;
-    });
+    })().finally(() => this.fetching.delete(prKey));
+    this.fetching.set(prKey, p);
+    return p;
   }
 
   private async buildDetail(
