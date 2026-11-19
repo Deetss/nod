@@ -19,6 +19,7 @@ const NAME_RE = /^[A-Za-z0-9._-]{1,100}$/;
 /** A GraphQL global node id, current or legacy base64 form. */
 const NODE_ID_RE = /^[A-Za-z0-9_=+/-]{1,128}$/;
 const HOSTED_HOSTS = new Set(['user-images.githubusercontent.com', 'private-user-images.githubusercontent.com']);
+const AVATAR_HOST = 'avatars.githubusercontent.com';
 
 /** Hosts a redirect from an allowed image URL may land on. */
 export const REDIRECT_HOSTS = new Set([
@@ -61,6 +62,7 @@ export function parseImageUrl(raw: string, orgs?: readonly string[]): ImageTarge
   if (!parts) return undefined;
 
   if (HOSTED_HOSTS.has(u.hostname)) return parts.length ? { kind: 'hosted', url: u.href } : undefined;
+  if (u.hostname === AVATAR_HOST) return parts.length ? { kind: 'hosted', url: u.href } : undefined;
 
   if (u.hostname === 'raw.githubusercontent.com') {
     const [o, repo, ref, ...path] = parts;
@@ -91,6 +93,18 @@ export function contentsPath(t: Extract<ImageTarget, { kind: 'contents' }>): str
 }
 
 export const imageProxyUrl = (src: string) => `/api/image?u=${encodeURIComponent(src)}`;
+
+const DAY_S = 24 * 60 * 60;
+
+/**
+ * How long a fetched image stays fresh. A repo file can change at its ref, and an avatar can
+ * change behind the same URL. An uploaded asset never changes, since its URL names its uuid.
+ */
+export function imageMaxAgeSeconds(target: ImageTarget): number {
+  if (target.kind === 'contents') return 300;
+  if (target.kind === 'hosted' && new URL(target.url).hostname === AVATAR_HOST) return DAY_S;
+  return 30 * DAY_S;
+}
 
 /** An uploaded asset's uuid, as GitHub writes it in attachment and hosted image URLs. */
 export const ASSET_UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
