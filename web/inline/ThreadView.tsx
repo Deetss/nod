@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import { api } from '../api';
 import { MentionTextarea } from '../mentions/MentionTextarea';
 import type { MentionCandidate } from '../mentions/mention-logic';
@@ -36,25 +36,36 @@ export function ThreadView({ g, host }: { g: GroupedThread; host: ThreadHost }) 
   const [busy, setBusy] = useState<Busy>({ status: 'idle' });
   const [editing, setEditing] = useState(false);
   const [draftText, setDraftText] = useState('');
+  /** The reply just posted, shown until the reloaded thread includes it. */
+  const [sent, setSent] = useState<string>();
   const root = t.comments[0];
+
+  useEffect(() => setSent(undefined), [t.comments.length]);
   const commentId = root?.id ?? '';
   const threadId = t.threadId;
   const { state: resolveBusy, toggle: toggleResolve } = useResolveThread(host, threadId, t.resolved, host.onPosted);
 
   const postReply = async () => {
     if (!threadId || reply.trim() === '' || busy.status === 'posting') return;
+    const text = reply;
     setBusy({ status: 'posting' });
+    setSent(text.trim());
+    setReply('');
+    const failed = (error: string) => {
+      setSent(undefined);
+      setReply(text);
+      setBusy({ status: 'failed', error });
+    };
     try {
-      const r = await api.replyToThread(host.repo, host.number, threadId, reply);
+      const r = await api.replyToThread(host.repo, host.number, threadId, text);
       if (r.ok) {
-        setReply('');
         setBusy({ status: 'idle' });
         host.onPosted();
       } else {
-        setBusy({ status: 'failed', error: r.message });
+        failed(r.message);
       }
     } catch (e) {
-      setBusy({ status: 'failed', error: message(e) });
+      failed(message(e));
     }
   };
 
@@ -219,6 +230,14 @@ export function ThreadView({ g, host }: { g: GroupedThread; host: ThreadHost }) 
           <div className="thread-body">{commentText(c)}</div>
         </div>
       ))}
+      {sent !== undefined ? (
+        <div className="thread-comment thread-comment-sending" aria-live="polite">
+          <div className="thread-author">
+            <strong>You</strong> <span>{busy.status === 'posting' ? 'Sending...' : 'Posted'}</span>
+          </div>
+          <div className="thread-body">{sent}</div>
+        </div>
+      ) : null}
       {failure ? (
         <div className="thread-error" role="alert">
           <WarningIcon />
