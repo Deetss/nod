@@ -223,6 +223,24 @@ describe('cache keying by head SHA', () => {
     expect(second.checksTruncated).toBe(true);
   });
 
+  it('answers a quick cache hit with no request and marks its checks cached', async () => {
+    const f = fakeClient();
+    const { p } = provider(f);
+    await p.inbox(undefined, 'full');
+    const first = await p.detail(ref, undefined, { quick: true });
+    expect(first.checksCached).toBeUndefined();
+    const merge = f.calls.merge;
+
+    const quick = await p.detail(ref, undefined, { quick: true });
+    expect(f.calls.detail).toBe(1);
+    expect(f.calls.merge).toBe(merge);
+    expect(quick.checksCached).toBe(true);
+
+    const live = await p.detail(ref);
+    expect(f.calls.merge).toBe(merge + 1);
+    expect(live.checksCached).toBeUndefined();
+  });
+
   it('refetches when the list shows a new head and updatedAt', async () => {
     const f = fakeClient();
     const { p, tick } = provider(f);

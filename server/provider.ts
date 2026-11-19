@@ -52,6 +52,11 @@ export interface SyncEvent {
   syncing?: true;
 }
 
+export interface DetailOptions {
+  /** Answer a cache hit at once, with cached checks and merge state, instead of asking GitHub for fresh ones. */
+  quick?: boolean;
+}
+
 export interface PollResult {
   changed: boolean;
 }
@@ -73,7 +78,7 @@ export interface Provider {
   /** Calls `fn` after each sync attempt. Returns the unsubscribe function. */
   subscribe(fn: (e: SyncEvent) => void): () => void;
   syncState(): SyncEvent;
-  detail(ref: PrRef, query: StateQuery): Promise<PrDetail>;
+  detail(ref: PrRef, query: StateQuery, opts?: DetailOptions): Promise<PrDetail>;
   diff(ref: PrRef, mode: DiffMode, query: StateQuery): Promise<DiffData>;
   setViewed(prId: string, path: string, viewed: boolean): Promise<ActionResult>;
   review(ref: PrRef, event: ReviewEvent, body: string, query?: StateQuery): Promise<ActionResult>;

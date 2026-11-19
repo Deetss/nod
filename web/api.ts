@@ -171,7 +171,9 @@ export const api = {
   nudgeSync: () => post<{ polled: boolean }>('/api/sync/nudge', {}),
   /** Check again: the server re-reads `gh auth token` and the token's scopes. */
   checkConnection: () => post<ConnectionCheck>(withState('/api/connection/check'), {}),
-  detail: (repo: string, number: number) => get<PrDetail>(prPath(repo, number)),
+  /** `quick` answers from the server's cache, with cached checks (`checksCached`). */
+  detail: (repo: string, number: number, quick = false) =>
+    get<PrDetail>(prPath(repo, number), quick ? { quick: '1' } : {}),
   diff: (repo: string, number: number, mode: DiffMode) =>
     get<DiffData>(`${prPath(repo, number)}/diff`, { mode }),
   setViewed: (prId: string, path: string, viewed: boolean) =>

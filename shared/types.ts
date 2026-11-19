@@ -211,6 +211,8 @@ export interface PrDetail {
   /** False for a closed or merged PR. Absent in older cached details, which count as open. */
   isOpen?: boolean;
   checks: CheckItem[];
+  /** Checks and merge state come from the cache. The page asks again without `quick` for fresh ones. */
+  checksCached?: boolean;
   reviewLine: string;
   lastReviewedSha?: string;
   commits: CommitItem[];

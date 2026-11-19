@@ -93,6 +93,7 @@ import type {
   InlineCommentArgs,
   IssueSeenMark,
   PollResult,
+  DetailOptions,
   PrRef,
   Provider,
   RerunMode,
@@ -881,8 +882,8 @@ export class GithubProvider implements Provider {
     }
   }
 
-  async detail(ref: PrRef): Promise<PrDetail> {
-    return this.attachments.prDetail(await this.withBypass(ref, await this.loadDetail(ref)));
+  async detail(ref: PrRef, _state?: StateQuery, opts: DetailOptions = {}): Promise<PrDetail> {
+    return this.attachments.prDetail(await this.withBypass(ref, await this.loadDetail(ref, opts)));
   }
 
   /** Asks the rulesets only when every other Merge (bypass) row holds, so most PRs cost no REST call. */
@@ -899,7 +900,7 @@ export class GithubProvider implements Provider {
     return { ...d, rulesetBypass: verdict.bypass, requiredApprovals: verdict.required };
   }
 
-  private loadDetail(ref: PrRef): Promise<PrDetail> {
+  private loadDetail(ref: PrRef, opts: DetailOptions): Promise<PrDetail> {
     return this.cached(`detail:${ref.repo}#${ref.number}`, async () => {
       await this.load();
       const prKey = keyOf(ref);
@@ -910,6 +911,7 @@ export class GithubProvider implements Provider {
           this.hit(`detail ${prKey}@${listed.headSha.slice(0, 7)}`);
           this.bases.set(prKey, entry.base);
           const summary = (await this.seen.annotate([listed]))[0] ?? listed;
+          if (opts.quick) return { ...entry.detail, summary, checksCached: true, rate: this.rate() };
           // Checks and merge state move without the PR's updatedAt, so they are never cached.
           const fresh = await this.liveChecks(ref);
           const rollup = fresh.commits.nodes[0]?.commit.statusCheckRollup;
@@ -1060,7 +1062,7 @@ export class GithubProvider implements Provider {
   async diff(ref: PrRef, mode: DiffMode): Promise<DiffData> {
     return this.cached(`diff:${ref.repo}#${ref.number}:${mode}`, async () => {
       const key = `${ref.repo}#${ref.number}`;
-      const known = this.bases.get(key) ?? (await this.loadDetail(ref).then(() => this.bases.get(key)));
+      const known = this.bases.get(key) ?? (await this.loadDetail(ref, { quick: true }).then(() => this.bases.get(key)));
       const range = known?.sha ? `${known.sha.slice(0, 7)}..${known.head.slice(0, 7)}` : '';
       if (mode === 'since' && known?.sha && !known.gone) {
         const cmp = await this.compareFiles(ref, known.sha, known.head);

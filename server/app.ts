@@ -364,7 +364,7 @@ export function createApp(opts: AppOptions): Hono {
   app.get('/api/pr/:owner/:name/:number', async (c) => {
     const ref = parseRef(`${c.req.param('owner')}/${c.req.param('name')}`, c.req.param('number'));
     if (!ref) return c.json({ error: 'Bad PR reference' }, 400);
-    return c.json(await provider.detail(ref, state(c)));
+    return c.json(await provider.detail(ref, state(c), { quick: c.req.query('quick') === '1' }));
   });
 
   app.get('/api/pr/:owner/:name/:number/diff', async (c) => {
