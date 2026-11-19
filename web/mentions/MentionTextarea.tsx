@@ -16,6 +16,7 @@ import { useEffect, useId, useRef, useState, type ChangeEvent, type KeyboardEven
 import { filterCandidates, insertMention, mentionTrigger, rankCandidates, type MentionCandidate } from './mention-logic';
 import { useRepoPeople } from './useRepoPeople';
 import { repoOwner } from '../../shared/repo-name';
+import { imageProxyUrl } from '../../shared/image-url';
 
 const VISIBLE = 4;
 const ROW_H = 48;
@@ -180,7 +181,7 @@ export function MentionTextarea(p: MentionTextareaProps) {
                       {c.login.slice(0, 1).toUpperCase()}
                     </span>
                   ) : c.avatarUrl ? (
-                    <img className="avatar" src={c.avatarUrl} alt="" width={24} height={24} />
+                    <img className="avatar" src={imageProxyUrl(c.avatarUrl)} alt="" width={24} height={24} />
                   ) : (
                     <span className="avatar avatar-initial" aria-hidden="true">
                       {c.login.slice(0, 1).toUpperCase()}

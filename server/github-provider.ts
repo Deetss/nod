@@ -56,8 +56,9 @@ import {
   type ReviewEvent,
   type Stale,
 } from '../shared/types';
-import { assetId, type FetchedImage, type ImageTarget } from '../shared/image-url';
+import { assetId, imageMaxAgeSeconds, type FetchedImage, type ImageTarget } from '../shared/image-url';
 import { AttachmentImages } from './attachment-images';
+import { ImageStore } from './image-store';
 import type { UploadResult, UploadType } from '../shared/image-upload';
 import { ApiError, type GithubClient } from './github-client';
 import type { NumberHit } from '../shared/number-query';
@@ -412,6 +413,7 @@ export class GithubProvider implements Provider {
     project: ProjectConfig = new ProjectConfig(undefined, undefined, log),
     private readonly conn: GithubConnection = new GithubConnection(client, undefined, undefined, log),
     private readonly rulesets: RulesetBypass = new RulesetBypass(client),
+    private readonly images: ImageStore = new ImageStore(),
   ) {
     this.issueSvc = new IssueService(client, seen, issueStore, now, project);
     this.attachments = AttachmentImages.over(client, log, now);
@@ -1574,10 +1576,13 @@ export class GithubProvider implements Provider {
   }
 
   image(target: ImageTarget): Promise<FetchedImage> {
+    if (target.kind === 'contents') return this.client.image(target);
     const id = assetId(target);
-    if (!id) return this.client.image(target);
-    const node = target.kind === 'attachment' ? target.node : undefined;
-    return this.attachments.image(id, () => this.client.image(target), node);
+    return this.images.get(id ?? target.url, imageMaxAgeSeconds(target) * 1000, () => {
+      if (!id) return this.client.image(target);
+      const node = target.kind === 'attachment' ? target.node : undefined;
+      return this.attachments.image(id, () => this.client.image(target), node);
+    });
   }
 
   async uploadImage(repo: string, name: string, contentType: UploadType, bytes: Uint8Array): Promise<UploadResult> {

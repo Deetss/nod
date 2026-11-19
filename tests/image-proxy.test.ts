@@ -116,6 +116,13 @@ describe('GET /api/image', () => {
     expect(p.seen).toHaveLength(1);
   });
 
+  it('caches an avatar for a day', async () => {
+    const p = new Fake(async () => ({ bytes: PNG, contentType: 'image/png' }));
+    const res = await get(appWith(p), 'https://avatars.githubusercontent.com/u/1?v=4');
+    expect(res.status).toBe(200);
+    expect(res.headers.get('cache-control')).toBe('private, max-age=86400');
+  });
+
   it('answers 400 without calling the provider for a disallowed URL', async () => {
     const p = new Fake(async () => ({ bytes: PNG, contentType: 'image/png' }));
     for (const u of ['https://evil.com/a.png', 'https://github.com/other/R/blob/x/a.png', '']) {

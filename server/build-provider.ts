@@ -1,4 +1,7 @@
 import { DiskCache } from './disk-cache';
+import { join } from 'node:path';
+import { cacheDir } from './app-paths';
+import { ImageStore } from './image-store';
 import { FixtureProvider } from './fixture-provider';
 import { IssueCache } from './issue-cache';
 import { GithubClient } from './github-client';
@@ -35,5 +38,6 @@ export async function buildProvider(fixtures: boolean, settings: Settings = DEFA
     project,
     connection,
     new RulesetBypass(client, disk),
+    new ImageStore(join(cacheDir(), 'images')),
   );
 }
