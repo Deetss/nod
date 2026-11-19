@@ -800,7 +800,7 @@ export function App() {
               ...(mentionPeople ? { people: mentionPeople } : {}),
               ...(inbox.data?.teams ? { teams: inbox.data.teams } : {}),
               hasPendingReview: (d?.pendingReview?.drafts ?? 0) > 0,
-              onPosted: reloadAll,
+              onPosted: detail.reload,
             },
             threads: threadFiles,
           }

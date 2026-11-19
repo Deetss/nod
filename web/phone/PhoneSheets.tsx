@@ -725,7 +725,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
                   ? {
                       comments: {
                         flow: comments,
-                        host: { repo: pr.repo, number: pr.number, onPosted: prData.reload },
+                        host: { repo: pr.repo, number: pr.number, onPosted: prData.detail.reload },
                         threads,
                         onOpenThread: (id: string) => push({ kind: 'thread', id }),
                         pendingCount,
