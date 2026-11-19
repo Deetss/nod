@@ -527,7 +527,9 @@ function registerIpc(): void {
 
   ipcMain.handle('shell:build', (event) => {
     if (!fromApp(event, 'shell:build')) throw new Error('Untrusted sender');
-    return readBuildId(DIST_DIR);
+
+    // A hub page carries the hub's build, which this shell cannot match or relaunch onto.
+    return origin === localOrigin ? readBuildId(DIST_DIR) : null;
   });
 
   ipcMain.handle('shell:relaunch', (event) => {

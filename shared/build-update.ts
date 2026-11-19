@@ -44,10 +44,11 @@ export function reloadDecision({ signal, client, reloaded, draft }: ReloadInput)
 /**
  * What the desktop window offers once the page it shows is newer than its Electron shell, which
  * happens when the service updates under an attached window. `shell` is undefined for a shell
- * from before the bridge reported its build, so it can only be restarted by hand.
+ * from before the bridge reported its build, so it can only be restarted by hand. `shell` is null
+ * on a hub page, whose build belongs to the hub.
  */
-export function shellNotice(page: string, shell: string | undefined): 'none' | 'relaunch' | 'restart' {
-  if (page === DEV_BUILD || shell === DEV_BUILD) return 'none';
+export function shellNotice(page: string, shell: string | null | undefined): 'none' | 'relaunch' | 'restart' {
+  if (shell === null || page === DEV_BUILD || shell === DEV_BUILD) return 'none';
   if (shell === undefined) return 'restart';
   return shell === page ? 'none' : 'relaunch';
 }
