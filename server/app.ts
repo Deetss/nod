@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { bodyLimit } from 'hono/body-limit';
 import { DEFAULT_CLOSED_WINDOW, isClosedWindow } from '../shared/closed';
 import { isUploadType, uploadName, UPLOAD_MAX_BYTES } from '../shared/image-upload';
-import { parseImageUrl, sniffImageType } from '../shared/image-url';
+import { imageMaxAgeSeconds, parseImageUrl, sniffImageType } from '../shared/image-url';
 import { DEFAULT_SETTINGS, statusNames, type Settings } from '../shared/settings';
 import type { SettingsSaveResult, SettingsSavedState } from '../shared/settings-save';
 import type { Restarter } from './restart';
@@ -431,7 +431,7 @@ export function createApp(opts: AppOptions): Hono {
       const img = await provider.image(target);
       c.header('Content-Type', img.contentType);
       c.header('X-Content-Type-Options', 'nosniff');
-      c.header('Cache-Control', 'private, max-age=300');
+      c.header('Cache-Control', `private, max-age=${imageMaxAgeSeconds(target)}`);
       return c.body(img.bytes as Uint8Array<ArrayBuffer>);
     } catch (e) {
       const status = e instanceof ApiError && e.status === 413 ? 413 : 502;

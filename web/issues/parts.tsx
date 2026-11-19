@@ -3,6 +3,7 @@ import { GitPullRequestIcon, IssueClosedIcon, IssueOpenedIcon, SkipIcon } from '
 import { chipColors } from '../../shared/label-chip';
 import type { CloseReason, IssueLabel, IssueStateKind, SubIssueCount, SubIssueState } from '../../shared/issue-types';
 import { statusSlug, type ProjectStatus } from '../../shared/project-status';
+import { imageProxyUrl } from '../../shared/image-url';
 
 /** Both theme palettes are set as variables; CSS picks the one for the active theme. */
 function chipVars(color: string): CSSProperties {
@@ -32,7 +33,7 @@ export function StatusChip({ status }: { status: ProjectStatus }) {
 
 export function Avatar({ login, url, size = 18 }: { login: string; url?: string; size?: number }) {
   return url ? (
-    <img className="avatar" src={url} width={size} height={size} alt="" />
+    <img className="avatar" src={imageProxyUrl(url)} width={size} height={size} alt="" />
   ) : (
     <span className="avatar avatar-initial" style={{ width: size, height: size }} aria-hidden="true">
       {login.slice(0, 1).toUpperCase()}
