@@ -965,6 +965,17 @@ export class GithubProvider implements Provider {
           };
         }
       }
+      return this.fetchDetail(ref, prKey);
+    });
+  }
+
+  /** Detail fetches in flight, so a user opening a PR the prefetch is loading shares its request. */
+  private readonly fetching = new Map<string, Promise<PrDetail>>();
+
+  private fetchDetail(ref: PrRef, prKey: string): Promise<PrDetail> {
+    const running = this.fetching.get(prKey);
+    if (running) return running;
+    const p = (async () => {
       const data = await this.client.graphql<DetailResponse>(DETAIL_QUERY, {
         owner: repoOwner(ref.repo),
         name: repoName(ref.repo),
@@ -985,7 +996,9 @@ export class GithubProvider implements Provider {
         });
       }
       return detail;
-    });
+    })().finally(() => this.fetching.delete(prKey));
+    this.fetching.set(prKey, p);
+    return p;
   }
 
   private async buildDetail(
