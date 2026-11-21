@@ -156,9 +156,9 @@ describe('fix helpers', () => {
 
 describe('bot checks', () => {
   it("matches the bot's own workflow by label or name, case-insensitively", () => {
-    const b = { ...TEST_BOT, name: 'Laurel', label: 'laurel' };
-    expect(isBotCheck('laurel / laurel', b)).toBe(true);
-    expect(isBotCheck('Laurel / check', b)).toBe(true);
+    const b = { ...TEST_BOT, name: 'Helper', label: 'helper' };
+    expect(isBotCheck('helper / helper', b)).toBe(true);
+    expect(isBotCheck('Helper / check', b)).toBe(true);
     expect(isBotCheck('evidence / check', b)).toBe(false);
     expect(isBotCheck('lint', b)).toBe(false);
   });
@@ -210,7 +210,7 @@ describe('PR evidence checks', () => {
       [
         `/bot fix the failing check "evidence / check": ${EV}/222/job/2`,
         `"evidence / check" reads the PR description, not the code. Write an evidence block for the changed pages, ` +
-          `per the "PR evidence" section of this repo's AGENTS.md, to .laurel/evidence.md; it is copied into the ` +
+          `per the "PR evidence" section of this repo's AGENTS.md, to .${TEST_BOT.label}/evidence.md; it is copied into the ` +
           `PR description. Push no code for it.`,
       ].join('\n'),
     );
