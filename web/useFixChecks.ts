@@ -5,6 +5,7 @@ import {
   failingChecks,
   failingKey,
   botStatus,
+  isBotCheck,
   orcaCanFix,
   orcaStatus,
   type FixStatus,
@@ -97,10 +98,13 @@ export function useFixChecks(o: Options): { controls: FixControls | undefined; d
   const [recorded, setRecorded] = useState<Recorded>();
 
   const prId = detail?.summary.id;
-  const failing = useMemo(() => failingChecks(detail?.checks ?? []), [detail?.checks]);
+  const failing = useMemo(
+    () => failingChecks(detail?.checks ?? []).filter((c) => !isBotCheck(c.name, bot())),
+    [detail?.checks],
+  );
   const orcaChoice = orcaChoiceFor(detail, orca);
   const botOn = bot().enabled;
-  const fixable = detail !== undefined && canFix(detail) && (botOn || orcaChoice !== 'absent');
+  const fixable = detail !== undefined && canFix(detail) && failing.length > 0 && (botOn || orcaChoice !== 'absent');
   const scope = useMemo(
     () => (scopeKey === ALL_FAILING ? failing : failing.filter((c) => c.name === scopeKey)),
     [scopeKey, failing],

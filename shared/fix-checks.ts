@@ -30,6 +30,12 @@ export function isEvidenceCheck(name: string): boolean {
   return parts.pop() === 'check' && parts.some((p) => p.includes('evidence'));
 }
 
+/** A check run by the bot's own workflow, such as `laurel / laurel`. Asking the bot to fix it loops. */
+export function isBotCheck(name: string, b: BotSettings): boolean {
+  const first = name.toLowerCase().split('/')[0]?.trim();
+  return first === b.label.toLowerCase() || first === b.name.toLowerCase();
+}
+
 export const checksNoun = (n: number): string => `${n} check${n === 1 ? '' : 's'}`;
 
 /** The Fix controls show only on an open PR with at least one failing check. */
@@ -42,8 +48,8 @@ export const orcaCanFix = (detail: PrDetail): boolean => detail.headIsFork !== t
 
 const evidenceAsk = (evidence: readonly CheckItem[]): string =>
   `${evidence.map((c) => `"${c.name}"`).join(', ')} ${evidence.length === 1 ? 'reads' : 'read'} the PR description, ` +
-  'not the code. Add an evidence block for the changed pages to the PR description, per the "PR evidence" section ' +
-  "of this repo's AGENTS.md. Push no code for it.";
+  'not the code. Write an evidence block for the changed pages, per the "PR evidence" section of this repo\'s ' +
+  'AGENTS.md, to .laurel/evidence.md; it is copied into the PR description. Push no code for it.';
 
 /** Drops list lines from the end until the comment fits COMMENT_MAX. */
 function fitComment(head: string, lines: readonly string[], tail: readonly string[]): string {

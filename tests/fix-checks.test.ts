@@ -10,6 +10,7 @@ import {
   fixPrompt,
   fixWorktreeName,
   isEvidenceCheck,
+  isBotCheck,
   botComment,
   orcaCanFix,
 } from '../shared/fix-checks';
@@ -153,6 +154,16 @@ describe('fix helpers', () => {
   });
 });
 
+describe('bot checks', () => {
+  it("matches the bot's own workflow by label or name, case-insensitively", () => {
+    const b = { ...TEST_BOT, name: 'Laurel', label: 'laurel' };
+    expect(isBotCheck('laurel / laurel', b)).toBe(true);
+    expect(isBotCheck('Laurel / check', b)).toBe(true);
+    expect(isBotCheck('evidence / check', b)).toBe(false);
+    expect(isBotCheck('lint', b)).toBe(false);
+  });
+});
+
 describe('PR evidence checks', () => {
   const EV = 'https://github.com/acme-co/acme-web/actions/runs';
   const evOld: CheckItem = {
@@ -198,8 +209,9 @@ describe('PR evidence checks', () => {
     expect(c).toBe(
       [
         `/bot fix the failing check "evidence / check": ${EV}/222/job/2`,
-        `"evidence / check" reads the PR description, not the code. Add an evidence block for the changed pages ` +
-          `to the PR description, per the "PR evidence" section of this repo's AGENTS.md. Push no code for it.`,
+        `"evidence / check" reads the PR description, not the code. Write an evidence block for the changed pages, ` +
+          `per the "PR evidence" section of this repo's AGENTS.md, to .laurel/evidence.md; it is copied into the ` +
+          `PR description. Push no code for it.`,
       ].join('\n'),
     );
     expect(commentProblem(c, TEST_BOT)).toBeUndefined();
