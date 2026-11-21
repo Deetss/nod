@@ -30,7 +30,7 @@ export function isEvidenceCheck(name: string): boolean {
   return parts.pop() === 'check' && parts.some((p) => p.includes('evidence'));
 }
 
-/** A check run by the bot's own workflow, such as `laurel / laurel`. Asking the bot to fix it loops. */
+/** A check run by the bot's own workflow, such as `bot / bot`. Asking the bot to fix it loops. */
 export function isBotCheck(name: string, b: BotSettings): boolean {
   const first = name.toLowerCase().split('/')[0]?.trim();
   return first === b.label.toLowerCase() || first === b.name.toLowerCase();
@@ -46,10 +46,10 @@ export function canFix(detail: PrDetail): boolean {
 /** True when an Orca worktree can work on the PR head. A fork head cannot be pushed to. */
 export const orcaCanFix = (detail: PrDetail): boolean => detail.headIsFork !== true;
 
-const evidenceAsk = (evidence: readonly CheckItem[]): string =>
+const evidenceAsk = (evidence: readonly CheckItem[], b: BotSettings): string =>
   `${evidence.map((c) => `"${c.name}"`).join(', ')} ${evidence.length === 1 ? 'reads' : 'read'} the PR description, ` +
   'not the code. Write an evidence block for the changed pages, per the "PR evidence" section of this repo\'s ' +
-  'AGENTS.md, to .laurel/evidence.md; it is copied into the PR description. Push no code for it.';
+  `AGENTS.md, to .${b.label}/evidence.md; it is copied into the PR description. Push no code for it.`;
 
 /** Drops list lines from the end until the comment fits COMMENT_MAX. */
 function fitComment(head: string, lines: readonly string[], tail: readonly string[]): string {
@@ -67,7 +67,7 @@ function fitComment(head: string, lines: readonly string[], tail: readonly strin
 /** The bot command comment, built from the loaded checks. Evidence checks get a description-only ask. */
 export function botComment(failing: readonly CheckItem[], b: BotSettings): string {
   const evidence = failing.filter((c) => isEvidenceCheck(c.name));
-  const tail = evidence.length > 0 ? [evidenceAsk(evidence)] : [];
+  const tail = evidence.length > 0 ? [evidenceAsk(evidence, b)] : [];
   const [only] = failing;
   if (failing.length === 1 && only) {
     return fitComment(`${b.command} fix the failing check "${only.name}": ${only.url ?? ''}`.trimEnd(), [], tail);
