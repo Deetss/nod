@@ -10,6 +10,7 @@ import {
   CommentIcon,
   CopyIcon as OcticonCopy,
   DiffIcon as OcticonDiff,
+  EyeClosedIcon as EyeClosedOcticon,
   EyeIcon as OcticonEye,
   GitCommitIcon,
   GitMergeIcon,
@@ -117,6 +118,10 @@ export function DiffIcon({ size = 16 }: IconProps) {
 
 export function EyeIcon({ size = 16 }: IconProps) {
   return <OcticonEye size={size} />;
+}
+
+export function EyeClosedIcon({ size = 16 }: IconProps) {
+  return <EyeClosedOcticon size={size} />;
 }
 
 export function CommitIcon({ size = 16 }: IconProps) {

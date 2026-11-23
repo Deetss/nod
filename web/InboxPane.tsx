@@ -5,7 +5,8 @@ import { ListBanner } from './Banner';
 import type { VisibleSection } from './inbox-utils';
 import { orgLogin } from './org-settings';
 import { PrRow } from './PrRow';
-import { Btn, CheckIcon, Chevron, KeyCap, Legend } from './ui';
+import { Btn, CheckIcon, Chevron, EyeClosedIcon, EyeIcon, KeyCap, Legend } from './ui';
+import type { HideKey } from './hidden-sections';
 
 interface InboxPaneProps {
   data: InboxView | undefined;
@@ -27,6 +28,18 @@ interface InboxPaneProps {
   onShowOrg: () => void;
   /** The closed section, shown under the open sections. */
   closed?: ReactNode;
+  /** Hidden sections, listed at the foot of the list so each can come back. */
+  hidden: { key: HideKey; title: string }[];
+  onHide: (key: HideKey) => void;
+  onShow: (key: HideKey) => void;
+}
+
+function HideBtn({ title, onHide }: { title: string; onHide: () => void }) {
+  return (
+    <button type="button" className="sec-hide" title={`Hide ${title}`} aria-label={`Hide ${title}`} onClick={onHide}>
+      <EyeClosedIcon size={14} />
+    </button>
+  );
 }
 
 function Skeleton() {
@@ -100,7 +113,7 @@ export function InboxPane(p: InboxPaneProps) {
   const quiet =
     data !== undefined &&
     data.sections.every((s) => s.key === 'org' || s.count === 0) &&
-    p.sections.find((s) => s.section.key === 'org')?.open === false;
+    p.sections.find((s) => s.section.key === 'org')?.open !== true;
 
   let body;
   if (!data) {
@@ -143,7 +156,7 @@ export function InboxPane(p: InboxPaneProps) {
         />
         <div className={data.stale ? 'is-stale' : undefined}>
           {p.sections.map(({ section, prs, open }) => (
-            <section key={section.key}>
+            <section key={section.key} className="sec-wrap">
               <button
                 type="button"
                 className="sec-h"
@@ -154,6 +167,7 @@ export function InboxPane(p: InboxPaneProps) {
                 <span className="sec-name">{section.title}</span>
                 <span className="count">{section.count}</span>
               </button>
+              <HideBtn title={section.title} onHide={() => p.onHide(section.key)} />
               {open
                 ? prs.map((pr) => (
                     <PrRow
@@ -195,7 +209,23 @@ export function InboxPane(p: InboxPaneProps) {
       </div>
       <div className="scroll inbox-list" role="listbox" tabIndex={0} ref={p.listRef}>
         {body}
-        {data && !(data.syncing && data.prs.length === 0) && data.connection?.state !== 'none' ? p.closed : null}
+        {data && p.closed && !(data.syncing && data.prs.length === 0) && data.connection?.state !== 'none' ? (
+          <div className="sec-wrap">
+            {p.closed}
+            <HideBtn title="Closed" onHide={() => p.onHide('closed')} />
+          </div>
+        ) : null}
+        {data && p.hidden.length > 0 ? (
+          <div className="sec-hidden">
+            <span className="muted small">Hidden</span>
+            {p.hidden.map((h) => (
+              <button type="button" key={h.key} className="sec-show" title={`Show ${h.title}`} onClick={() => p.onShow(h.key)}>
+                <EyeIcon size={14} />
+                {h.title}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
       <Legend />
     </aside>

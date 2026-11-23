@@ -693,3 +693,65 @@
   color: var(--fgColor-onEmphasis);
   font: 600 12px/18px var(--fontStack-system);
 }
+
+/* Hide a section: an icon on its header, shown on hover or focus. Hidden ones list at the foot. */
+.sec-wrap {
+  position: relative;
+}
+
+.sec-hide {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  color: var(--fgColor-muted);
+  cursor: pointer;
+  opacity: 0;
+}
+
+html[data-density='comfortable'] .sec-hide {
+  height: var(--list-group-h);
+  right: calc(var(--space-5) + 22px);
+}
+
+.sec-wrap:has(> .sec-h:hover) > .sec-hide,
+.sec-wrap:has(> section > .sec-h:hover) > .sec-hide,
+.sec-hide:hover,
+.sec-hide:focus-visible {
+  opacity: 1;
+}
+
+.sec-hide:hover {
+  color: var(--fgColor-default);
+}
+
+.sec-hidden {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 10px var(--space-5);
+}
+
+.sec-show {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  background: none;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  color: var(--fgColor-muted);
+  font: 400 12px/18px var(--fontStack-system);
+  cursor: pointer;
+}
+
+.sec-show:hover {
+  color: var(--fgColor-default);
+  background: var(--bgColor-muted);
+}

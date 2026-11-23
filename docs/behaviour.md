@@ -4,6 +4,7 @@
 
 - The inbox is one GraphQL search of every open org PR (100 per page). The front end derives the sections (Needs my review, Mine, Org open, Dependabot) from it. The filter box, search, sort and NEW / UPDATED markers never trigger a request.
 - The PR and Issues lists end in a collapsed `Closed · last 30 days` section. It runs its own read-only search (merged, closed unmerged, completed and not planned items, 100 per page) once when it first opens. It runs again when `W` switches the window to 90 days, and never on the poll loop.
+- Any PR list section, Closed included, can be hidden from the eye icon on its header. Hidden sections are listed at the foot of the list, where one click brings each back. The choice is saved per device in local storage, and `g o` or opening a PR from search brings Org open back.
 - Rows live in memory only. The server logs the rate-limit cost of each page.
 - The routes are `GET /api/closed/prs` and `GET /api/closed/issues`, with `window` (30 or 90) and an optional `after` cursor.
 

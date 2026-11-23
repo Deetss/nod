@@ -69,6 +69,9 @@ function renderPane(data: InboxView | undefined, selectedId: string | undefined)
         onRetry: () => {},
         onFixConnection: () => {},
         onShowOrg: () => {},
+        hidden: [],
+        onHide: () => {},
+        onShow: () => {},
       }),
     );
   });
