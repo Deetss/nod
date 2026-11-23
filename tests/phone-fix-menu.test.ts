@@ -134,6 +134,7 @@ describe('phone fix sheet rows match the desktop FixMenu', () => {
         disabled: false,
       },
       { title: 'Ask Bot', sub: 'Bot cannot resolve conflicts yet. It has no git merge.', disabled: true },
+      { title: 'Copy for agent', sub: 'Copies the prompt to paste into any agent', disabled: false },
     ]);
   });
 
@@ -145,8 +146,8 @@ describe('phone fix sheet rows match the desktop FixMenu', () => {
   it('Orca absent leaves the Orca row out', () => {
     const ids = (mode: 'checks' | 'conflicts') =>
       phoneFixItems({ mode, orca: 'absent', writesOff: false, busy: false }).map((i) => i.id);
-    expect(ids('conflicts')).toEqual(['fix-bot']);
-    expect(ids('checks')).toEqual(['fix-bot']);
+    expect(ids('conflicts')).toEqual(['fix-bot', 'fix-copy']);
+    expect(ids('checks')).toEqual(['fix-bot', 'fix-copy']);
   });
 
   it('busy shows Dispatching... on the conflicts Orca row', () => {
@@ -156,7 +157,12 @@ describe('phone fix sheet rows match the desktop FixMenu', () => {
   it('offline turns every row off', () => {
     for (const mode of ['checks', 'conflicts'] as const) {
       const items = phoneFixItems({ mode, orca: 'ready', writesOff: true, busy: false });
-      expect(items.every((i) => i.disabled !== undefined)).toBe(true);
+      expect(items.filter((i) => i.id !== 'fix-copy').every((i) => i.disabled !== undefined)).toBe(true);
+      const copy = items.find((i) => i.id === 'fix-copy');
+      expect(copy).toBeDefined();
+      expect(copy?.disabled).toBeUndefined();
+      expect(copy?.confirm).toBeUndefined();
+      expect(copy?.opens).toBeUndefined();
     }
   });
 });
@@ -193,6 +199,7 @@ describe('desktop FixMenu is unchanged', () => {
           disabled: false,
         },
         { title: 'Ask Bot', sub: 'Bot cannot resolve conflicts yet. It has no git merge.', disabled: true },
+        { title: 'Copy for agent', sub: 'Copies the prompt to paste into any agent', disabled: false },
       ],
     });
   });
@@ -203,6 +210,7 @@ describe('desktop FixMenu is unchanged', () => {
       rows: [
         { title: 'Ask Bot', sub: 'Posts a /bot comment on the PR', disabled: false },
         { title: 'Dispatch with Orca', sub: 'Repo not in Orca', disabled: true },
+        { title: 'Copy for agent', sub: 'Copies the prompt to paste into any agent', disabled: false },
       ],
     });
   });
@@ -211,6 +219,7 @@ describe('desktop FixMenu is unchanged', () => {
     expect(menuText(controls({ mode: 'comments', all: true, count: 3, busy: true, busyKind: 'dispatch' })).rows).toEqual([
       { title: 'Ask Bot', sub: 'Posts one /bot comment listing 3 comments', disabled: false },
       { title: 'Dispatch with Orca', sub: 'Dispatching...', disabled: false },
+      { title: 'Copy for agent', sub: 'Copies the prompt to paste into any agent', disabled: false },
     ]);
   });
 });
@@ -310,7 +319,7 @@ describe('phone fix sheet from the PR Overview', () => {
     const el = await openOverview();
     act(() => button(el, 'This branch has conflicts').click());
     const sheet = el.querySelector('[role="dialog"][aria-label="Resolve conflicts"]')!;
-    expect([...sheet.querySelectorAll('.ph-arow-title')].map((t) => t.textContent)).toEqual(['Ask Bot', 'Resolve on GitHub']);
+    expect([...sheet.querySelectorAll('.ph-arow-title')].map((t) => t.textContent)).toEqual(['Ask Bot', 'Copy for agent', 'Resolve on GitHub']);
   });
 
   it('the More sheet lists Fix conflicts… and opens the same sheet', async () => {

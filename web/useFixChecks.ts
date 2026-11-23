@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   canFix,
   failedStatus,
+  fixPrompt,
   failingChecks,
   failingKey,
   botStatus,
@@ -10,10 +11,11 @@ import {
   orcaStatus,
   type FixStatus,
 } from '../shared/fix-checks';
-import { canResolve, conflictsDispatch } from '../shared/fix-conflicts';
-import { DEFAULT_AGENT, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../shared/orca';
+import { canResolve, conflictsDispatch, conflictsPrompt } from '../shared/fix-conflicts';
+import { DEFAULT_AGENT, agentPrompt, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../shared/orca';
 import type { CheckItem, PrDetail } from '../shared/types';
 import { api } from './api';
+import { copyLink } from './phone/link-actions';
 import { bot } from './org-settings';
 import { repoLabel } from './repo-label';
 
@@ -25,6 +27,13 @@ export type OrcaChoice = 'absent' | 'unmapped' | 'ready';
 export const orcaChoiceFor = (detail: PrDetail | undefined, orca: OrcaInfo | undefined): OrcaChoice =>
   !detail || !orca?.available || !orcaCanFix(detail) ? 'absent' : repoInOrca(orca, detail.summary.repo) ? 'ready' : 'unmapped';
 export type FixDialog = 'bot' | 'dispatch';
+export type FixKind = FixDialog | 'copy';
+
+/** Copies a fix prompt and toasts the result. */
+export async function copyAgentPrompt(headRef: string, prompt: string, notify: (ok: boolean, message: string) => void): Promise<void> {
+  const res = await copyLink(agentPrompt(headRef, prompt));
+  notify(res.ok, res.ok ? 'Prompt copied' : 'Could not copy prompt');
+}
 
 /** Scope key for the Resolve conflicts button. */
 export const RESOLVE_SCOPE = 'conflicts';
@@ -48,7 +57,7 @@ export interface MenuControls {
   menu: string | undefined;
   openMenu: (scope: string) => void;
   closeMenu: () => void;
-  pick: (kind: FixDialog) => void;
+  pick: (kind: FixKind) => void;
 }
 
 export interface FixControls extends MenuControls {
@@ -103,8 +112,7 @@ export function useFixChecks(o: Options): { controls: FixControls | undefined; d
     [detail?.checks],
   );
   const orcaChoice = orcaChoiceFor(detail, orca);
-  const botOn = bot().enabled;
-  const fixable = detail !== undefined && canFix(detail) && failing.length > 0 && (botOn || orcaChoice !== 'absent');
+  const fixable = detail !== undefined && canFix(detail) && failing.length > 0;
   const scope = useMemo(
     () => (scopeKey === ALL_FAILING ? failing : failing.filter((c) => c.name === scopeKey)),
     [scopeKey, failing],
@@ -130,19 +138,23 @@ export function useFixChecks(o: Options): { controls: FixControls | undefined; d
       if (!fixable || limited) return;
       setScopeKey(key);
       setError(undefined);
-      // With one choice left the menu has nothing to offer.
-      if (orcaChoice === 'absent') setDialog('bot');
-      else if (!botOn && orcaChoice === 'ready') setDialog('dispatch');
-      else setMenu(key);
+      setMenu(key);
     },
-    [fixable, limited, orcaChoice, botOn],
+    [fixable, limited],
   );
   const closeMenu = useCallback(() => setMenu(undefined), []);
-  const pick = useCallback((kind: FixDialog) => {
-    setMenu(undefined);
-    setError(undefined);
-    setDialog(kind);
-  }, []);
+  const pick = useCallback(
+    (kind: FixKind) => {
+      setMenu(undefined);
+      setError(undefined);
+      if (kind === 'copy') {
+        if (detail) void copyAgentPrompt(detail.headRef, fixPrompt(detail.summary.repo, detail.summary.number, detail.headRef, scope), notify);
+        return;
+      }
+      setDialog(kind);
+    },
+    [detail, scope, notify],
+  );
   const close = useCallback(() => {
     if (!busy) setDialog(undefined);
   }, [busy]);
@@ -250,7 +262,12 @@ export function useResolveConflicts(o: ResolveOptions): MenuControls | undefined
   const closeMenu = useCallback(() => setMenu(undefined), []);
 
   const pick = useCallback(
-    (kind: FixDialog) => {
+    (kind: FixKind) => {
+      if (kind === 'copy') {
+        setMenu(undefined);
+        if (detail) void copyAgentPrompt(detail.headRef, conflictsPrompt(detail.summary.repo, detail.summary.number, detail.headRef, detail.baseRef), notify);
+        return;
+      }
       if (kind !== 'dispatch' || !detail || busy || orcaChoice !== 'ready') return;
       const { repo, number } = detail.summary;
       const agents = orca?.agents ?? [];

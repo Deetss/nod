@@ -29,6 +29,7 @@ export type ActionId =
   | 'fix-conflicts'
   | 'fix-bot'
   | 'fix-dispatch'
+  | 'fix-copy'
   | 'edit-title'
   | 'hand-bot'
   | 'setup-bot'

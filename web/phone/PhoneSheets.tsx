@@ -13,12 +13,12 @@ import { bypassFields, NO_ACCESS, reviewAccess } from '../../shared/pr-actions';
 import { usePhoneBypass } from './PhoneBypass';
 import { DEFAULT_AGENT, dispatchPrompt, prDispatchPrompt, prWorktreeName, repoInOrca, worktreeName } from '../../shared/orca';
 import { hasBotLabel } from '../../shared/bot';
-import { canFix, checksDispatch, failingChecks, botComment } from '../../shared/fix-checks';
-import { canResolve, conflictsDispatch } from '../../shared/fix-conflicts';
+import { canFix, checksDispatch, failingChecks, botComment, fixPrompt } from '../../shared/fix-checks';
+import { canResolve, conflictsDispatch, conflictsPrompt } from '../../shared/fix-conflicts';
 import type { OrcaDispatchRequest } from '../../shared/orca';
 import { launchLine, phoneAgent } from '../../shared/agent-models';
 import { useOrcaModels } from '../orca/ModelFields';
-import { orcaChoiceFor } from '../useFixChecks';
+import { copyAgentPrompt, orcaChoiceFor } from '../useFixChecks';
 import { PhoneFixBot, PhoneFixDispatch } from './PhoneFix';
 import { phoneFixItems, phoneFixTitle } from './phone-fix';
 import { isProjectStatus } from '../../shared/project-status';
@@ -443,6 +443,14 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
   };
 
   const runFix = (mode: FixMode, item: ActionItem) => {
+    if (item.id === 'fix-copy') {
+      if (detail) {
+        const { repo, number } = detail.summary;
+        const prompt = mode === 'conflicts' ? conflictsPrompt(repo, number, detail.headRef, detail.baseRef) : fixPrompt(repo, number, detail.headRef, failing);
+        void copyAgentPrompt(detail.headRef, prompt, (ok, message) => writes.notify(message, ok));
+      }
+      return pop();
+    }
     if (item.id === 'fix-bot' && mode === 'checks') return replaceTop({ kind: 'fix-bot' });
     if (item.id === 'fix-dispatch') {
       setFixDone(undefined);

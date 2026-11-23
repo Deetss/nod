@@ -2,7 +2,8 @@
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { OrcaInfo } from '../shared/orca';
+import { conflictsPrompt } from '../shared/fix-conflicts';
+import { agentPrompt, type OrcaInfo } from '../shared/orca';
 import type { PrDetail } from '../shared/types';
 import { FixButton } from '../web/FixMenu';
 import { MergeStatusBox } from '../web/MergeStatusBox';
@@ -80,7 +81,8 @@ const rows = (el: HTMLElement) => [...el.querySelectorAll('[role="menuitem"]')];
 describe('Resolve conflicts menu', () => {
   it('lists Dispatch with Orca then a disabled Ask Bot with its reason', () => {
     const r = rows(menu(controls()));
-    expect(r.map((i) => i.querySelector('.fix-menu-title')?.textContent)).toEqual(['Dispatch with Orca', 'Ask Bot']);
+    expect(r.map((i) => i.querySelector('.fix-menu-title')?.textContent)).toEqual(['Dispatch with Orca', 'Ask Bot', 'Copy for agent']);
+    expect(r[2]?.getAttribute('aria-disabled')).toBeNull();
     expect(r[0]?.getAttribute('aria-disabled')).toBeNull();
     expect(r[1]?.getAttribute('aria-disabled')).toBe('true');
     expect(r[1]?.textContent).toContain('Bot cannot resolve conflicts yet. It has no git merge.');
@@ -92,9 +94,9 @@ describe('Resolve conflicts menu', () => {
     expect(r[0]?.textContent).toContain('Repo not in Orca');
   });
 
-  it('leaves only the disabled Bot row when Orca is absent', () => {
+  it('leaves the disabled Bot row and Copy for agent when Orca is absent', () => {
     const r = rows(menu(controls({ orca: 'absent' })));
-    expect(r).toHaveLength(1);
+    expect(r).toHaveLength(2);
     expect(r[0]?.getAttribute('aria-disabled')).toBe('true');
   });
 
@@ -161,6 +163,20 @@ describe('useResolveConflicts', () => {
     expect(probe(detailOf(), { ...orca, repos: ['other'] }).out()?.orca).toBe('unmapped');
     expect(probe(detailOf(), { available: false, agents: [] }).out()?.orca).toBe('absent');
     expect(probe(detailOf({ headIsFork: true }), orca).out()?.orca).toBe('absent');
+  });
+
+  it('copies the conflicts prompt without Orca and closes the menu', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    const notify = vi.fn();
+    const d = detailOf();
+    const p = probe(d, { available: false, agents: [] }, notify);
+    act(() => p.out()?.openMenu(RESOLVE_SCOPE));
+    await act(async () => p.out()?.pick('copy'));
+    expect(writeText).toHaveBeenCalledWith(agentPrompt(d.headRef, conflictsPrompt('acme-web', 42, d.headRef, d.baseRef)));
+    expect(notify).toHaveBeenCalledWith(true, 'Prompt copied');
+    expect(p.out()?.menu).toBeUndefined();
+    expect(api.orcaDispatch).not.toHaveBeenCalled();
   });
 
   it('dispatches the conflicts prompt in PR mode and toasts on success', async () => {
