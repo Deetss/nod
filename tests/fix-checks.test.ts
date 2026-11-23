@@ -22,7 +22,7 @@ import { DetailBody } from '../web/DetailBody';
 import { useHotkeys, type HotkeyHandlers } from '../web/hooks';
 import { DispatchDialog } from '../web/issues/IssueDialogs';
 import { HELP_KEYS } from '../web/keys';
-import type { OrcaInfo } from '../shared/orca';
+import { agentPrompt, type OrcaInfo } from '../shared/orca';
 import { ALL_FAILING, useFixChecks, type FixControls } from '../web/useFixChecks';
 import { TEST_BOT } from './bot-settings';
 
@@ -301,12 +301,13 @@ describe('Fix menu', () => {
     expect(items(el).map((i) => i.querySelector('.fix-menu-title')?.textContent)).toEqual([
       'Ask Bot',
       'Dispatch with Orca',
+      'Copy for agent',
     ]);
   });
 
   it('hides Dispatch with Orca when Orca is not detected', () => {
     const el = menu(controls({ orca: 'absent' }));
-    expect(items(el)).toHaveLength(1);
+    expect(items(el).map((i) => i.querySelector('.fix-menu-title')?.textContent)).toEqual(['Ask Bot', 'Copy for agent']);
   });
 
   it('shows Dispatch disabled when the repo is not in Orca', () => {
@@ -430,12 +431,33 @@ describe('useFixChecks', () => {
     expect(p.out().controls).toBeUndefined();
   });
 
-  it('skips the menu and opens Ask Bot when Orca is not detected', () => {
+  it('opens the menu even when Orca is not detected', () => {
     const p = probe(detailOf(checks), { available: false, agents: [] });
     expect(p.out().controls?.orca).toBe('absent');
     act(() => p.out().controls?.openMenu(ALL_FAILING));
-    expect(p.out().controls?.menu).toBeUndefined();
-    expect(p.out().dialogs?.dialog).toBe('bot');
+    expect(p.out().controls?.menu).toBe(ALL_FAILING);
+    expect(p.out().dialogs?.dialog).toBeUndefined();
+  });
+
+  it('copies the agent prompt and opens no dialog when Copy for agent is picked', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    const notify = vi.fn();
+    let latest: Out | undefined;
+    const d = detailOf(checks);
+    function Copier() {
+      latest = useFixChecks({ detail: d, limited: false, orca, notify, onDone: noop });
+      return null;
+    }
+    render(createElement(Copier));
+    act(() => latest?.controls?.openMenu(ALL_FAILING));
+    await act(async () => latest?.controls?.pick('copy'));
+    expect(writeText).toHaveBeenCalledWith(
+      agentPrompt(d.headRef, fixPrompt(d.summary.repo, d.summary.number, d.headRef, failingChecks(d.checks))),
+    );
+    expect(notify).toHaveBeenCalledWith(true, 'Prompt copied');
+    expect(latest?.controls?.menu).toBeUndefined();
+    expect(latest?.dialogs?.dialog).toBeUndefined();
   });
 
   it('opens the menu when Orca is detected, and drops Orca for a fork head', () => {

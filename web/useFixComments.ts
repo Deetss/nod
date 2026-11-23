@@ -13,7 +13,7 @@ import { DEFAULT_AGENT, type OrcaInfo } from '../shared/orca';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
 import { bot } from './org-settings';
-import { orcaChoiceFor, type FixDialog, type MenuControls } from './useFixChecks';
+import { copyAgentPrompt, orcaChoiceFor, type FixDialog, type FixKind, type MenuControls } from './useFixChecks';
 import { repoLabel } from './repo-label';
 
 /** Scope key for the Thread header button: every fixable comment. */
@@ -48,12 +48,11 @@ export function useFixComments(o: Options): CommentControls | undefined {
   const threads = useMemo(() => (detail ? fixableThreads(detail) : []), [detail]);
   const fixableIds = useMemo(() => new Set(threads.map((t) => t.id)), [threads]);
   const orcaChoice = orcaChoiceFor(detail, orca);
-  // With no bot configured and no Orca, nothing can fix a comment, so the buttons stay away.
+  // Copy for agent is always available, so the buttons show whenever there are inline comments.
   const shows =
     detail !== undefined &&
     detail.isOpen !== false &&
-    inlineThreads(detail).length > 0 &&
-    (bot().enabled || orcaChoice !== 'absent');
+    inlineThreads(detail).length > 0;
 
   useEffect(() => setMenu(undefined), [prId]);
   // A menu for a comment that stops being fixable, or a header menu with none left, closes.
@@ -71,12 +70,17 @@ export function useFixComments(o: Options): CommentControls | undefined {
   const closeMenu = useCallback(() => setMenu(undefined), []);
 
   const pick = useCallback(
-    (kind: FixDialog) => {
+    (kind: FixKind) => {
       if (!detail || busy || menu === undefined || (kind === 'dispatch' && orcaChoice !== 'ready')) return;
       const scope = menu;
       const sent: ThreadItem[] = scope === ALL_COMMENTS ? threads : threads.filter((t) => t.id === scope);
       const [first] = sent;
       if (!first) return setMenu(undefined);
+      if (kind === 'copy') {
+        setMenu(undefined);
+        void copyAgentPrompt(detail.headRef, commentPrompt(detail.summary.repo, detail.summary.number, detail.headRef, sent), notify);
+        return;
+      }
       const { repo, number } = detail.summary;
       const ref = `${repoLabel(repo)} #${number}`;
       setBusy({ scope, kind });

@@ -21,6 +21,7 @@ export const phoneFixTitle = (mode: FixMode): string => fixMenuLabel({ mode });
 export function phoneFixItems({ mode, orca, writesOff, busy }: PhoneFixInput): ActionItem[] {
   const rows = fixRowsFor({ mode, orca, busy, disabled: writesOff ? OFFLINE : undefined });
   return rows.map((r): ActionItem => {
+    if (r.kind === 'copy') return { id: 'fix-copy', label: r.title, sub: r.sub };
     const off = r.disabled ? r.sub : writesOff ? OFFLINE : undefined;
     return {
       id: r.kind === 'bot' ? 'fix-bot' : 'fix-dispatch',

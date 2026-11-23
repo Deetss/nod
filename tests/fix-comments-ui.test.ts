@@ -2,7 +2,8 @@
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { OrcaInfo } from '../shared/orca';
+import { commentPrompt, fixableThreads } from '../shared/fix-comments';
+import { agentPrompt, type OrcaInfo } from '../shared/orca';
 import type { PrDetail, PrThreadItem } from '../shared/types';
 import { ThreadCard } from '../web/DetailBody';
 import { api } from '../web/api';
@@ -121,6 +122,20 @@ describe('useFixComments actions', () => {
     expect(p.out()?.busy).toBe(false);
   });
 
+  it('copies the agent prompt and closes the menu when Copy for agent is picked', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    const notify = vi.fn();
+    const d = detailOf([thread(1)]);
+    const p = probe(d, { available: false, agents: [] }, { notify });
+    act(() => p.out()?.openMenu('T1'));
+    await act(async () => p.out()?.pick('copy'));
+    expect(writeText).toHaveBeenCalledWith(agentPrompt('build-bot/cart', commentPrompt('acme-web', 42, 'build-bot/cart', fixableThreads(d))));
+    expect(notify).toHaveBeenCalledWith(true, 'Prompt copied');
+    expect(p.out()?.menu).toBeUndefined();
+    expect(p.out()?.busy).toBe(false);
+  });
+
   it('asks Bot about every fixable comment from the header scope', async () => {
     const notify = vi.fn();
     const p = probe(detailOf([thread(1), thread(2), thread(3, { resolved: true })]), orca, { notify });
@@ -229,7 +244,7 @@ describe('ThreadCard with comment controls', () => {
     const m = document.body.querySelector('[role="menu"]');
     expect(m?.getAttribute('aria-label')).toBe('Fix review comment');
     const rows = [...(m?.querySelectorAll('[role="menuitem"]') ?? [])];
-    expect(rows.map((r) => r.querySelector('.fix-menu-title')?.textContent)).toEqual(['Ask Bot', 'Dispatch with Orca']);
+    expect(rows.map((r) => r.querySelector('.fix-menu-title')?.textContent)).toEqual(['Ask Bot', 'Dispatch with Orca', 'Copy for agent']);
     expect(rows[0]?.textContent).toContain('Posts /bot asking to fix this comment');
     expect(rows[1]?.textContent).toContain('The agent fixes this comment.');
   });
@@ -244,7 +259,7 @@ describe('ThreadCard with comment controls', () => {
 
   it('keeps one row when Orca is absent, and disables Orca when the repo is unmapped', () => {
     card([thread(1)], { menu: 'T1' }, { available: false, agents: [] });
-    expect(document.body.querySelectorAll('[role="menuitem"]')).toHaveLength(1);
+    expect(document.body.querySelectorAll('[role="menuitem"]')).toHaveLength(2);
     act(() => root?.unmount());
     card([thread(1)], { menu: 'T1' }, { ...orca, repos: ['x'] });
     const rows = [...document.body.querySelectorAll('[role="menuitem"]')];
@@ -276,7 +291,10 @@ describe('ThreadCard with comment controls', () => {
   it('rows read Offline and are disabled when offline', () => {
     card([thread(1)], { menu: 'T1', disabled: 'Offline' });
     const rows = [...document.body.querySelectorAll('[role="menuitem"]')];
-    expect(rows.every((r) => r.getAttribute('aria-disabled') === 'true' && r.textContent?.includes('Offline'))).toBe(true);
+    const [bot, orcaRow, copy] = rows;
+    expect([bot, orcaRow].every((r) => r?.getAttribute('aria-disabled') === 'true' && r.textContent?.includes('Offline'))).toBe(true);
+    expect(copy?.textContent).toContain('Copy for agent');
+    expect(copy?.getAttribute('aria-disabled')).not.toBe('true');
   });
 
   it('closes the menu when the pane scrolls, unless busy', () => {

@@ -34,6 +34,10 @@ export interface OrcaDispatchResult {
 
 export const DEFAULT_AGENT = 'claude';
 
+/** A dispatch prompt for pasting into any agent, which may not start on the PR branch. */
+export const agentPrompt = (headRef: string, prompt: string): string =>
+  `Check out ${headRef} first if you are not on it.\n${prompt}`;
+
 const SLUG_MAX = 40;
 
 /** True when Orca is installed and has this GitHub repo. */

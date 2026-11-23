@@ -1,10 +1,10 @@
 import { commentsNoun } from '../shared/fix-comments';
 import { bot } from './org-settings';
-import type { MenuControls } from './useFixChecks';
+import type { FixKind, MenuControls } from './useFixChecks';
 
 /** One row of a fix menu: the desktop popover and the phone action sheet both draw these. */
 export interface FixRow {
-  kind: 'bot' | 'dispatch';
+  kind: FixKind;
   title: string;
   sub: string;
   disabled: boolean;
@@ -16,6 +16,13 @@ export type FixRowInput = Pick<MenuControls, 'mode' | 'disabled' | 'orca' | 'bus
 const DISPATCHING = 'Dispatching...';
 const POSTING = 'Posting...';
 const UNMAPPED = 'Repo not in Orca';
+/** Last in every mode. Needs neither Orca nor the bot, so it is never disabled. */
+const COPY_ROW: FixRow = {
+  kind: 'copy',
+  title: 'Copy for agent',
+  sub: 'Copies the prompt to paste into any agent',
+  disabled: false,
+};
 const CONFLICTS_ORCA_SUB = 'New worktree on the PR branch. The agent merges the base branch and resolves conflicts.';
 
 /**
@@ -37,7 +44,7 @@ function conflictRowsFor(fix: FixRowInput): FixRow[] {
   if (b.enabled) {
     rows.push({ kind: 'bot', title: `Ask ${b.name}`, sub: `${b.name} cannot resolve conflicts yet. It has no git merge.`, disabled: true });
   }
-  return rows;
+  return [...rows, COPY_ROW];
 }
 
 /** Comments mode: the bot (when configured) then Orca. A picked row shows its progress in the sub line. */
@@ -75,7 +82,7 @@ function commentRowsFor(fix: FixRowInput): FixRow[] {
       disabled: off !== undefined || unmapped,
     });
   }
-  return rows;
+  return [...rows, COPY_ROW];
 }
 
 /** Checks mode: the bot (when configured) then Orca. */
@@ -94,7 +101,7 @@ function checkRowsFor(fix: FixRowInput): FixRow[] {
       disabled: off !== undefined || unmapped,
     });
   }
-  return rows;
+  return [...rows, COPY_ROW];
 }
 
 export function fixRowsFor(fix: FixRowInput): FixRow[] {
