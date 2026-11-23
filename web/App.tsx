@@ -55,6 +55,7 @@ import { LinkRouterContext, isKnownRepo, openExternal, resolveItemLink, type Ite
 
 const CHECKS_POLL_MS = 5000;
 import { DEFAULT_COLLAPSED, allPrs, filterPrs, visibleSections, walkOrder } from './inbox-utils';
+import { useHiddenSections, type HideKey } from './hidden-sections';
 import type { NotifyTarget } from '../shared/notify-rules';
 import { bypassFields, NO_ACCESS, reviewAccess } from '../shared/pr-actions';
 import { useBypassMerge } from './BypassMerge';
@@ -109,6 +110,7 @@ export function App() {
 
   const [filter, setFilter] = useState('');
   const [collapsed, setCollapsed] = useState<ReadonlySet<SectionKey>>(new Set(DEFAULT_COLLAPSED));
+  const { hidden, hide: hideSection, show: showSection } = useHiddenSections();
   const [selectedId, setSelectedId] = useState<string>();
   const [issueSeen, setIssueSeen] = useState<ReadonlySet<string>>(new Set());
   const [issueTarget, setIssueTarget] = useState<IssueTarget>();
@@ -220,19 +222,26 @@ export function App() {
   );
 
   const sections = useMemo(() => {
-    const base = visibleSections(inbox.data, filter, collapsed);
+    const base = visibleSections(inbox.data, filter, collapsed).filter((s) => !hidden.has(s.section.key));
     return base.map((s) => ({
       ...s,
       prs: s.prs.map((p) =>
         seenLocal.has(p.id) ? { ...p, seen: 'seen' as const, updatedNote: undefined } : p,
       ),
     }));
-  }, [inbox.data, filter, collapsed, seenLocal]);
+  }, [inbox.data, filter, collapsed, seenLocal, hidden]);
+
+  const hiddenList = useMemo(() => {
+    const list: { key: HideKey; title: string }[] = (inbox.data?.sections ?? [])
+      .filter((s) => hidden.has(s.key))
+      .map((s) => ({ key: s.key, title: s.title }));
+    return hidden.has('closed') ? [...list, { key: 'closed' as const, title: 'Closed' }] : list;
+  }, [inbox.data, hidden]);
 
   // j and k walk the open rows, then the closed rows once that section is open.
   const closedRows = useMemo(
-    () => (closed.state.open ? filterPrs(closed.state.items, filter) : []),
-    [closed.state.open, closed.state.items, filter],
+    () => (closed.state.open && !hidden.has('closed') ? filterPrs(closed.state.items, filter) : []),
+    [closed.state.open, closed.state.items, filter, hidden],
   );
   const order = useMemo(() => [...walkOrder(sections), ...closedRows], [sections, closedRows]);
   const everyPr = useMemo(() => allPrs(inbox.data), [inbox.data]);
@@ -423,12 +432,13 @@ export function App() {
   }, []);
 
   const showOrg = useCallback(() => {
+    showSection('org');
     setCollapsed((c) => {
       const n = new Set(c);
       n.delete('org');
       return n;
     });
-  }, []);
+  }, [showSection]);
 
   const viewer = inbox.data?.viewer ?? '';
   const access = useMemo(
@@ -954,8 +964,11 @@ export function App() {
             onRetry={reloadAll}
             onFixConnection={openConnection}
             onShowOrg={showOrg}
+            hidden={hiddenList}
+            onHide={hideSection}
+            onShow={showSection}
             closed={
-              <ClosedSection
+              hidden.has('closed') ? undefined : <ClosedSection
                 state={closed.state}
                 items={closedRows}
                 narrow={narrow}
