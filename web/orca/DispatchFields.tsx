@@ -36,10 +36,12 @@ interface Props {
   /** Agent and Worktree name side by side above Model, as in Dispatch all. */
   paired?: boolean;
   disabled?: boolean;
+  /** Reusing an existing worktree, so there is no name to give. Unpaired layout only. */
+  hideName?: boolean;
 }
 
 /** The Agent select, Model and Effort, and the Worktree name input of the dispatch dialogs. */
-export function DispatchFields({ f, agents, paired, disabled }: Props) {
+export function DispatchFields({ f, agents, paired, disabled, hideName }: Props) {
   const agent = (
     <>
       <label className="field-label" htmlFor="dp-agent">
@@ -68,8 +70,8 @@ export function DispatchFields({ f, agents, paired, disabled }: Props) {
       <>
         {agent}
         <ModelFields agent={f.agent} m={f.m} />
-        {name}
-        {nameNote}
+        {hideName ? null : name}
+        {hideName ? null : nameNote}
       </>
     );
   }

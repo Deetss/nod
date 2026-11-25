@@ -68,9 +68,12 @@ describe('prefs', () => {
     ['a non-boolean switch', { enabled: 'yes' }],
     ['an unknown override value', { repos: { 'acme-co/acme-api': 'maybe' } }],
     ['an upper-case repo key', { repos: { 'Acme-API': 'on' } }],
-    ['a chosen entry without a session', { chosen: { PR_1: { worktreeId: 'w' } } }],
   ])('falls back to the defaults for %s', (_label, raw) => {
     expect(parseOrcaPrefs(raw)).toEqual(DEFAULT_ORCA_PREFS);
+  });
+
+  it('keeps a chosen worktree without a session, as a dispatch records it', () => {
+    expect(parseOrcaPrefs({ chosen: { PR_1: { worktreeId: 'w' } } }).chosen).toEqual({ PR_1: { host: 'local', worktreeId: 'w' } });
   });
 
   it('applies a patch without mutating', () => {

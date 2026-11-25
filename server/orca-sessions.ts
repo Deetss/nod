@@ -1,5 +1,5 @@
 import { oneLine } from '../shared/orca-message';
-import { mapSessionState, type LinkedItem, type SessionCandidate } from '../shared/orca-sessions';
+import { mapSessionState, type LinkedItem, type SessionCandidate, type WorktreeCandidate } from '../shared/orca-sessions';
 import { LOCAL_HOST, type HostStatus } from '../shared/orca-hosts';
 import { OrcaUnavailable, type Orca } from './orca';
 import { HOST_PROBE_MS, HOSTS_TTL_MS, OrcaHosts } from './orca-hosts';
@@ -22,6 +22,8 @@ export interface SessionSnapshot {
   /** ms when the read finished. */
   at: number;
   sessions: SessionCandidate[];
+  /** Every non-main, unarchived worktree, idle or not. */
+  worktrees: WorktreeCandidate[];
   /** Terminal handle and writable flag by `sessionKey`. A session without a terminal cannot be sent to. */
   terminals: Map<string, TerminalInfo>;
   /** Every host read for this snapshot. Offline hosts add no sessions. */
@@ -31,7 +33,7 @@ export interface SessionSnapshot {
 /** Session ids are unique on one host only, and a terminal handle belongs to the host that issued it. */
 export const sessionKey = (host: string, id: string): string => `${host}\n${id}`;
 
-const EMPTY = (at: number, available = false): SessionSnapshot => ({ available, at, sessions: [], terminals: new Map(), hosts: [] });
+const EMPTY = (at: number, available = false): SessionSnapshot => ({ available, at, sessions: [], worktrees: [], terminals: new Map(), hosts: [] });
 
 type Obj = Record<string, unknown>;
 const obj = (v: unknown): Obj | undefined => (typeof v === 'object' && v !== null && !Array.isArray(v) ? (v as Obj) : undefined);
@@ -70,7 +72,7 @@ function linksOf(w: Obj, key: 'linkedPR' | 'linkedIssue', type: 'pr' | 'issue'):
 const basename = (p: string): string => p.replace(/\/+$/, '').split('/').pop() ?? p;
 
 /**
- * Reduces `worktree ps` and `terminal list` output to live agent sessions. It reads state, agent
+ * Reduces `worktree ps` and `terminal list` output to agent sessions and worktrees. It reads state, agent
  * rows' pane key and live flag, names, branch and link numbers. It never reads prompts, assistant
  * text, tool input or terminal previews.
  */
@@ -102,6 +104,7 @@ export function parseSessions(
   }
 
   const sessions: SessionCandidate[] = [];
+  const worktreeRows: WorktreeCandidate[] = [];
   const terminals = new Map<string, TerminalInfo>();
   for (const r of rows) {
     const w = obj(r);
@@ -112,6 +115,10 @@ export function parseSessions(
     const repo = repoId ? repoNameOf(repoId) : undefined;
     const branch = (str(w.branch) ?? '').replace(/^refs\/heads\//, '');
     const name = oneLine(str(w.displayName) ?? basename(str(w.path) ?? '') ?? branch).slice(0, NAME_MAX) || branch || 'session';
+    const linkedPrs = linksOf(w, 'linkedPR', 'pr');
+    const linkedIssues = linksOf(w, 'linkedIssue', 'issue');
+    let live = false;
+    let latest = num(w.lastOutputAt);
     for (const a of agents) {
       const agent = obj(a);
       const paneKey = str(agent?.paneKey);
@@ -127,15 +134,29 @@ export function parseSessions(
         state: mapSessionState(agent.state),
         ...(repo ? { repo } : {}),
         branch,
-        linkedPrs: linksOf(w, 'linkedPR', 'pr'),
-        linkedIssues: linksOf(w, 'linkedIssue', 'issue'),
+        linkedPrs,
+        linkedIssues,
         live: agent.hasLivePty === true,
         ...(lastOutputAt ? { lastOutputAt } : {}),
       });
+      live ||= agent.hasLivePty === true;
+      if (lastOutputAt && lastOutputAt > (latest ?? 0)) latest = lastOutputAt;
       if (term) terminals.set(sessionKey(host, id), { handle: term.handle, writable: term.writable });
     }
+    if (w.isMainWorktree === true || w.isArchived === true) continue;
+    worktreeRows.push({
+      host,
+      worktreeId,
+      name,
+      ...(repo ? { repo } : {}),
+      branch,
+      linkedPrs,
+      linkedIssues,
+      live,
+      ...(latest ? { lastOutputAt: latest } : {}),
+    });
   }
-  return { available: true, at, sessions, terminals, hosts: [] };
+  return { available: true, at, sessions, worktrees: worktreeRows, terminals, hosts: [] };
 }
 
 /**
@@ -195,6 +216,7 @@ export class OrcaSessions {
       if (!r.snap) continue;
       next.available = true;
       next.sessions.push(...r.snap.sessions);
+      next.worktrees.push(...r.snap.worktrees);
       for (const [key, term] of r.snap.terminals) next.terminals.set(key, term);
     }
     this.snap = next;

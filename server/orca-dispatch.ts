@@ -24,6 +24,8 @@ export const dispatchBodyFor = (agents: readonly string[]) => z.object({
   /** `''` is the harness default. Absent (a phone dispatch) means the model last chosen for the agent. */
   model: z.union([z.literal(''), modelId]).optional(),
   effort: effortLevel.optional(),
+  /** PR mode: create a new worktree even when one already exists for the PR. */
+  newWorktree: z.boolean().optional(),
 })
   .refine((b) => !b.pr || b.baseBranch !== undefined, { message: 'PR mode needs the head branch', path: ['baseBranch'] })
   .refine((b) => !b.effort || !!b.model, { message: 'Effort needs a model', path: ['effort'] });
@@ -32,7 +34,14 @@ export const dispatchBodyFor = (agents: readonly string[]) => z.object({
 export const dispatchBody = dispatchBodyFor(DEFAULT_SETTINGS.orcaAgents);
 export type DispatchBody = z.infer<typeof dispatchBody>;
 
-export type DispatchResult = { ok: true; worktree: string; path?: string } | { ok: false; message: string };
+export interface Dispatched {
+  worktree: string;
+  path?: string;
+  /** Orca's id for the worktree, when the CLI reports it. */
+  worktreeId?: string;
+}
+
+export type DispatchResult = ({ ok: true } & Dispatched) | { ok: false; message: string };
 
 const WRAP_UP_MARK = '## When you finish (Nod)';
 
@@ -107,8 +116,13 @@ export function dispatchArgs(repoId: string, b: DispatchBody): string[] {
   return args;
 }
 
-/** Pulls the worktree name and path out of the CLI's JSON; falls back to the requested name. */
-export function parseCreated(stdout: string, fallback: string): { worktree: string; path?: string } {
+/** `orca-ide agent launch` arguments: a new agent in an existing worktree, with the same prompt and model. */
+export function launchArgs(worktreeId: string, b: DispatchBody): string[] {
+  return ['agent', 'launch', '--agent', b.agent, '--worktree', `id:${worktreeId}`, '--prompt', withWrapUp(b.prompt), ...modelArgs(b), '--json'];
+}
+
+/** Pulls the worktree name, path and id out of the CLI's JSON; falls back to the requested name. */
+export function parseCreated(stdout: string, fallback: string): Dispatched {
   try {
     const parsed = JSON.parse(stdout) as { result?: unknown };
     const result = (parsed.result ?? parsed) as Record<string, unknown>;
@@ -118,7 +132,8 @@ export function parseCreated(stdout: string, fallback: string): { worktree: stri
     >;
     const worktree = [wt.displayName, wt.name, wt.branch].find((v): v is string => typeof v === 'string' && v !== '');
     const path = typeof wt.path === 'string' ? wt.path : undefined;
-    return { worktree: worktree ?? fallback, ...(path ? { path } : {}) };
+    const worktreeId = [wt.worktreeId, wt.id].find((v): v is string => typeof v === 'string' && v !== '');
+    return { worktree: worktree ?? fallback, ...(path ? { path } : {}), ...(worktreeId ? { worktreeId } : {}) };
   } catch {
     return { worktree: fallback };
   }

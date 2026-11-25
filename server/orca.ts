@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { LOCAL_HOST } from '../shared/orca-hosts';
 import { repoName } from '../shared/repo-name';
 import { DEFAULT_SETTINGS, type Settings } from '../shared/settings';
-import { dispatchArgs, parseCreated, type DispatchBody, type DispatchResult } from './orca-dispatch';
+import { dispatchArgs, launchArgs, parseCreated, type DispatchBody, type DispatchResult } from './orca-dispatch';
 import { OrcaFake } from './orca-fake';
 
 const DETECT_TTL_MS = 60_000;
@@ -190,6 +190,24 @@ export class Orca {
       if (e instanceof OrcaUnavailable) return { ok: false, message: e.message };
       const message = cliErrorMessage(e instanceof Error ? e.message : '');
       this.log(`[orca] dispatch failed: ${message}`);
+      return { ok: false, message: `Dispatch failed: ${message}` };
+    }
+  }
+
+  /** Starts an agent in an existing worktree on `host`. `name` is the worktree's name for the result. */
+  async launch(b: DispatchBody, host: string, worktreeId: string, name: string): Promise<DispatchResult> {
+    const args = launchArgs(worktreeId, b);
+    if (this.fixtures) {
+      this.log(`[fixture] orca-ide ${JSON.stringify(hostArgs(args, host))}`);
+      return { ok: true, worktree: name, worktreeId };
+    }
+    try {
+      await this.cli(args, SPAWN_TIMEOUT_MS, host);
+      return { ok: true, worktree: name, worktreeId };
+    } catch (e) {
+      if (e instanceof OrcaUnavailable) return { ok: false, message: e.message };
+      const message = cliErrorMessage(e instanceof Error ? e.message : '');
+      this.log(`[orca] launch failed: ${message}`);
       return { ok: false, message: `Dispatch failed: ${message}` };
     }
   }

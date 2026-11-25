@@ -3,7 +3,7 @@ import { prefillOptions } from '../../shared/orca-message';
 import { orcaEnabledFor, type RepoMode } from '../../shared/orca-prefs';
 import { SEND_MAX, type NoticeResult, type OrcaPrefsView, type PrSessions, type SessionView } from '../../shared/orca-sessions';
 import { carryOffline, LOCAL_ONLY } from './hosts';
-import { prWorktreeName, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../../shared/orca';
+import { dispatchedMessage, prWorktreeName, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../../shared/orca';
 import type { PrDetail } from '../../shared/types';
 import { api } from '../api';
 import { DispatchDialog } from '../issues/IssueDialogs';
@@ -371,7 +371,7 @@ export function useOrca(o: Options): OrcaController {
     api
       .orcaDispatch({ repo: pr.summary.repo, number: pr.summary.number, ...v })
       .then((res) => {
-        toast({ kind: 'ok', message: `Dispatched to ${res.worktree}` });
+        toast({ kind: 'ok', message: dispatchedMessage(res) });
         if (phone && d.tag) onFindingDispatched?.(d.tag, res.worktree);
         setDispatch(undefined);
         setOutcome(undefined);
@@ -458,6 +458,7 @@ export function useOrca(o: Options): OrcaController {
             busy={dispatchBusy}
             error={dispatchError}
             pr={{
+              id: dispatchOpen.detail.summary.id,
               headRef: dispatchOpen.detail.headRef,
               name: dispatchOpen.dispatch.name ?? `pr-${dispatchOpen.detail.summary.number}-message`,
               prompt: dispatchOpen.dispatch.text,
@@ -496,13 +497,14 @@ export function useOrca(o: Options): OrcaController {
           agents: orca?.agents ?? [],
           headRef: detail?.headRef ?? '',
           host: hostChoice(value, summary?.repo ?? ''),
+          ...(sessions?.idle?.[0] ? { idle: sessions.idle[0] } : {}),
         },
         sendAll: async (text, target) => {
           if (!summary) throw new Error('No pull request');
           if (target.kind === 'worktree') {
             const res = await api.orcaDispatch({ repo: summary.repo, number: summary.number, ...target.request });
             setOutcome(undefined);
-            return { name: res.worktree, worktree: true };
+            return { name: res.worktree, worktree: true, ...(res.reused ? { reused: { host: res.host ?? 'local' } } : {}) };
           }
           if (target.remember) choose(summary.id, target.session);
           const r = await api.orcaSend(target.session, text);

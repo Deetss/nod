@@ -83,7 +83,11 @@ export function PhoneDispatchAll({ v, onToggle, onEdit, onRebuild, onCancel, onC
         ) : (
           <>
             <span className="ph-fix-label">Dispatch to</span>
-            <p className="ph-fit-note">{`No session linked to PR #${number}. New worktree on the PR head.`}</p>
+            <p className="ph-fit-note">
+              {offer.idle
+                ? `No agent on PR #${number}. Reuses ${offer.idle.name} on ${offer.idle.host}.`
+                : `No session linked to PR #${number}. New worktree on the PR head.`}
+            </p>
             <PhoneDispatchFields d={d} agents={offer.agents} headRef={offer.headRef} busy={busy} />
           </>
         )}

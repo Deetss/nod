@@ -45,6 +45,20 @@ describe('GET /api/orca/sessions', () => {
     expect(s.h.calls.filter((c) => c[2] === 'list' && c[1] === 'terminal')).toHaveLength(1);
   });
 
+  it('lists an idle worktree for a PR whose only match is idle', async () => {
+    const res = await setup([{ ...linked, hasLivePty: false }]).sessions();
+    const row = res.byPr['PR_acme-co/acme-api_305'];
+    expect(row?.related).toEqual([]);
+    expect(row?.idle?.map((w) => [w.name, w.host, w.via])).toEqual([['bot-305', 'local', 'pr']]);
+  });
+
+  it('omits idle when every match is live', async () => {
+    const res = await setup([{ ...linked, state: 'working' }]).sessions();
+    const row = res.byPr['PR_acme-co/acme-api_305'];
+    expect(row?.related.map((r) => r.name)).toEqual(['bot-305']);
+    expect(row).not.toHaveProperty('idle');
+  });
+
   it('lists the live sessions Orca links to each issue', async () => {
     const res = await setup([crew, possible, { ...possible, name: 'gone-412', hasLivePty: false }]).sessions();
     expect(res.byIssue['I_acme-co/acme-api_412']?.map((r) => [r.name, r.state, r.reason])).toEqual([

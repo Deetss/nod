@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { matchSessions, relatedToIssue } from '../shared/orca-match';
-import { mapSessionState, type SessionCandidate } from '../shared/orca-sessions';
+import { matchSessions, matchWorktrees, relatedToIssue } from '../shared/orca-match';
+import { mapSessionState, type SessionCandidate, type WorktreeCandidate } from '../shared/orca-sessions';
 
 function session(over: Partial<SessionCandidate> = {}): SessionCandidate {
   return {
@@ -106,6 +106,58 @@ describe('relatedToIssue', () => {
     const a = session({ linkedIssues: [{ number: 412 }] });
     const b = session({ id: 'b|1', linkedIssues: [{ number: 412, repo: 'acme-api' }] });
     expect(relatedToIssue('acme-co/acme-web', 412, [a, b]).map((m) => m.session.id)).toEqual(['wt1|pane1']);
+  });
+});
+
+describe('matchWorktrees', () => {
+  const wt = (over: Partial<WorktreeCandidate> = {}): WorktreeCandidate => ({
+    host: 'local',
+    worktreeId: 'wt1',
+    name: 'crew-1355',
+    repo: 'acme-web',
+    branch: '',
+    linkedPrs: [],
+    linkedIssues: [],
+    live: false,
+    ...over,
+  });
+
+  it('matches an idle worktree linked to the PR', () => {
+    const m = matchWorktrees(pr, [wt({ linkedPrs: [{ number: 1355 }] })]);
+    expect(m).toHaveLength(1);
+    expect(m[0]).toMatchObject({ via: 'pr', reason: 'linked PR #1355' });
+    expect(m[0]?.worktree.live).toBe(false);
+  });
+
+  it('matches a worktree on the PR head branch in the same repo', () => {
+    const m = matchWorktrees(pr, [wt({ branch: 'build-bot/posthog-opt-in' })]);
+    expect(m[0]).toMatchObject({ via: 'branch' });
+  });
+
+  it('puts the chosen worktree first even when another link is newer', () => {
+    const newer = wt({ worktreeId: 'wt2', linkedPrs: [{ number: 1355 }], lastOutputAt: 9_000 });
+    const older = wt({ worktreeId: 'wt1', linkedPrs: [{ number: 1355 }], lastOutputAt: 1_000 });
+    const m = matchWorktrees(pr, [newer, older], { host: 'local', worktreeId: 'wt1' });
+    expect(m.map((x) => [x.worktree.worktreeId, x.via])).toEqual([
+      ['wt1', 'chosen'],
+      ['wt2', 'pr'],
+    ]);
+  });
+
+  it('does not match a chosen worktree id on another host', () => {
+    const m = matchWorktrees(pr, [wt({ host: 'laptop' })], { host: 'local', worktreeId: 'wt1' });
+    expect(m).toEqual([]);
+  });
+
+  it('matches a worktree on host laptop', () => {
+    const m = matchWorktrees(pr, [wt({ host: 'laptop', linkedPrs: [{ number: 1355 }] })]);
+    expect(m).toHaveLength(1);
+    expect(m[0]?.worktree.host).toBe('laptop');
+  });
+
+  it('does not match the same PR number in another repo', () => {
+    const m = matchWorktrees(pr, [wt({ repo: 'acme-api', linkedPrs: [{ number: 1355 }] })]);
+    expect(m).toEqual([]);
   });
 });
 

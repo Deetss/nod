@@ -9,7 +9,7 @@ import {
   shortRef,
   type ThreadItem,
 } from '../shared/fix-comments';
-import { DEFAULT_AGENT, type OrcaInfo } from '../shared/orca';
+import { DEFAULT_AGENT, dispatchedMessage, type OrcaInfo } from '../shared/orca';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
 import { bot } from './org-settings';
@@ -115,9 +115,9 @@ export function useFixComments(o: Options): CommentControls | undefined {
           prompt: commentPrompt(repo, number, detail.headRef, sent),
           pr: true,
         })
-        .then(() => {
+        .then((res) => {
           finish();
-          notify(true, `Dispatched Orca for ${ref}`);
+          notify(true, res.reused ? dispatchedMessage(res) : `Dispatched Orca for ${ref}`);
         })
         .catch((e: unknown) => {
           finish();

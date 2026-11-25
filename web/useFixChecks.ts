@@ -12,7 +12,7 @@ import {
   type FixStatus,
 } from '../shared/fix-checks';
 import { canResolve, conflictsDispatch, conflictsPrompt } from '../shared/fix-conflicts';
-import { DEFAULT_AGENT, agentPrompt, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../shared/orca';
+import { DEFAULT_AGENT, agentPrompt, dispatchedMessage, repoInOrca, type OrcaDispatchRequest, type OrcaInfo } from '../shared/orca';
 import type { CheckItem, PrDetail } from '../shared/types';
 import { api } from './api';
 import { copyLink } from './phone/link-actions';
@@ -67,6 +67,7 @@ export interface FixControls extends MenuControls {
 
 export interface FixDialogState {
   dialog: FixDialog | undefined;
+  prId: string;
   repo: string;
   number: number;
   headRef: string;
@@ -200,7 +201,7 @@ export function useFixChecks(o: Options): { controls: FixControls | undefined; d
       api
         .orcaDispatch({ repo, number, ...v })
         .then((res) => {
-          notify(true, `Dispatched to ${res.worktree}`);
+          notify(true, dispatchedMessage(res));
           record(orcaStatus(res.worktree));
           setDialog(undefined);
         })
@@ -226,6 +227,7 @@ export function useFixChecks(o: Options): { controls: FixControls | undefined; d
       dialog,
       repo: detail.summary.repo,
       number: detail.summary.number,
+      prId: detail.summary.id,
       headRef: detail.headRef,
       scope,
       agents: orca?.agents ?? [],
@@ -274,9 +276,9 @@ export function useResolveConflicts(o: ResolveOptions): MenuControls | undefined
       setBusy(true);
       api
         .orcaDispatch(conflictsDispatch(detail, agents.includes(DEFAULT_AGENT) ? DEFAULT_AGENT : (agents[0] ?? DEFAULT_AGENT)))
-        .then(() => {
+        .then((res) => {
           setMenu(undefined);
-          notify(true, `Dispatched Orca for ${repoLabel(repo)} #${number}`);
+          notify(true, res.reused ? dispatchedMessage(res) : `Dispatched Orca for ${repoLabel(repo)} #${number}`);
         })
         .catch((e: unknown) => {
           setMenu(undefined);

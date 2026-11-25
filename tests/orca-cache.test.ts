@@ -46,6 +46,30 @@ describe('parseSessions', () => {
     expect(snap.terminals.size).toBe(0);
   });
 
+  it('lists a worktree with no agents as not live', () => {
+    const raw = JSON.parse(psJson([a])) as { result: { worktrees: Record<string, unknown>[] } };
+    raw.result.worktrees[0]!.agents = [];
+    const snap = parseSessions(JSON.stringify(raw), listJson([a]), names, 5);
+    expect(snap.sessions).toHaveLength(0);
+    expect(snap.worktrees).toHaveLength(1);
+    expect(snap.worktrees[0]).toMatchObject({ name: 'crew-1355', host: 'local', live: false });
+  });
+
+  it('skips main and archived worktrees', () => {
+    const raw = JSON.parse(psJson([a, b, { ...a, name: 'old-1' }])) as { result: { worktrees: Record<string, unknown>[] } };
+    raw.result.worktrees[0]!.isMainWorktree = true;
+    raw.result.worktrees[2]!.isArchived = true;
+    const snap = parseSessions(JSON.stringify(raw), listJson([a, b]), names, 5);
+    expect(snap.worktrees.map((w) => w.name)).toEqual(['bot-1343']);
+  });
+
+  it('marks a worktree live when any agent has a live pty', () => {
+    const raw = JSON.parse(psJson([{ ...a, hasLivePty: false }])) as { result: { worktrees: { agents: Record<string, unknown>[] }[] } };
+    raw.result.worktrees[0]!.agents.push({ ...raw.result.worktrees[0]!.agents[0], paneKey: 'tab-x:leaf-x', hasLivePty: true });
+    const snap = parseSessions(JSON.stringify(raw), listJson([a]), names, 5);
+    expect(snap.worktrees[0]?.live).toBe(true);
+  });
+
   it('reads a linked PR object with a url and a number-only linked item', () => {
     const raw = JSON.parse(psJson([a])) as { result: { worktrees: Record<string, unknown>[] } };
     raw.result.worktrees[0]!.linkedPR = { number: 9, url: 'https://github.com/acme-co/acme-api/pull/9' };
