@@ -28,6 +28,8 @@ interface FakeWorktree {
   linkedIssue?: number;
   state: string;
   writable?: boolean;
+  /** No agent is running: `ps` lists no agents and `terminal list` omits it. */
+  idle?: boolean;
   outputAgoS: number;
 }
 
@@ -68,10 +70,12 @@ export const FIXTURE_OFFLINE_HOST = 'desktop';
 
 /**
  * `NOD_FIXTURE_SESSIONS` reshapes the sessions for PR #365, so every Dispatch target shows:
- * `several` adds a second linked session (the picker), `none` unlinks it (a new worktree).
+ * `several` adds a second linked session (the picker), `none` unlinks it (a new worktree), `idle`
+ * leaves its worktree with no agent running (reuse).
  */
 function fixtureWorktrees(mode = appEnv('FIXTURE_SESSIONS')): FakeWorktree[] {
   if (mode === 'none') return WORKTREES.filter((w) => w.linkedPr !== 365);
+  if (mode === 'idle') return WORKTREES.map((w) => (w.linkedPr === 365 ? { ...w, idle: true } : w));
   if (mode === 'several') {
     return [...WORKTREES, { repo: 'orders-api', name: 'review-365', branch: 'sam-lee/review-365', linkedPr: 365, state: 'done', outputAgoS: 300 }];
   }
@@ -151,7 +155,7 @@ export class OrcaFake {
           linkedPR: w.linkedPr ? { number: w.linkedPr } : null,
           linkedIssue: w.linkedIssue ? { number: w.linkedIssue } : null,
           linkedItems: [],
-          agents: [
+          agents: w.idle ? [] : [
             {
               state: w.state,
               agentType: 'claude',
@@ -170,7 +174,7 @@ export class OrcaFake {
       result: {
         totalCount: worktrees.length,
         truncated: false,
-        terminals: worktrees.map((w) => ({
+        terminals: worktrees.filter((w) => !w.idle).map((w) => ({
           handle: handle(host, w),
           worktreeId: wid(w),
           tabId: `tab-${w.name}`,

@@ -3,7 +3,7 @@ import { createApp } from '../server/app';
 import { FixtureProvider } from '../server/fixture-provider';
 import { dispatchPrompt, repoInOrca, worktreeName } from '../shared/orca';
 import { cliErrorMessage, Orca, repoFromRemote, type OrcaExec } from '../server/orca';
-import { dispatchArgs, dispatchBody, parseCreated, withWrapUp, WRAP_UP } from '../server/orca-dispatch';
+import { dispatchArgs, dispatchBody, launchArgs, parseCreated, withWrapUp, WRAP_UP } from '../server/orca-dispatch';
 
 const PORT = 4477;
 const TOKEN = 'test-token';
@@ -96,7 +96,27 @@ describe('dispatchArgs', () => {
   });
 });
 
+describe('launchArgs', () => {
+  it('launches an agent into an existing worktree with the wrap-up prompt', () => {
+    expect(launchArgs('wt-1', dispatchBody.parse(good))).toEqual([
+      'agent', 'launch', '--agent', 'claude', '--worktree', 'id:wt-1', '--prompt', withWrapUp('Work on it'), '--json',
+    ]);
+  });
+
+  it('adds model and effort before --json', () => {
+    const args = launchArgs('wt-1', dispatchBody.parse({ ...good, model: 'sonnet', effort: 'high' }));
+    expect(args.slice(-5)).toEqual(['--model', 'sonnet', '--effort', 'high', '--json']);
+  });
+});
+
 describe('parseCreated', () => {
+  it('picks the worktree id from worktreeId or id', () => {
+    const a = JSON.stringify({ result: { worktree: { displayName: 'wt', worktreeId: 'r1::/p/wt' } } });
+    const b = JSON.stringify({ result: { worktree: { displayName: 'wt', id: 'r1::/p/wt' } } });
+    expect(parseCreated(a, 'x').worktreeId).toBe('r1::/p/wt');
+    expect(parseCreated(b, 'x').worktreeId).toBe('r1::/p/wt');
+  });
+
   it('reads the worktree from the CLI envelope', () => {
     const out = JSON.stringify({ ok: true, result: { worktree: { displayName: 'wt', path: '/p/wt' } } });
     expect(parseCreated(out, 'x')).toEqual({ worktree: 'wt', path: '/p/wt' });
