@@ -29,7 +29,7 @@ Out of scope: editing the finding before sending, other bots, and severities bel
 | `.btn`, `.btn-primary`, `.btn[disabled]`, `.btn.is-busy`, `.spinner` | All buttons | `web/base.css` |
 | `.kbd`, `KeyCap` | Key caps | `web/base.css`, `web/ui.tsx` |
 | `.badge`, `.tl-pill-danger` | Pill shape reference for severity badges | `web/base.css`, `web/timeline.css` |
-| `.dialog`, `.dialog-head`, `.dialog-actions`, `.fix-dialog`, `.scrim` | Bulk confirm | `web/detail.css`, `web/FixDialogs.tsx` |
+| `AppDialog`, `PhoneFitSheet` | Bulk confirm (desktop, phone) | `web/AppDialog.tsx`, `web/phone/PhoneFitSheet.tsx` |
 | `SessionPicker`, `.picker`, `.picker-row-2`, `.picker-act`, `.orca-picker` | No-session picker | `web/orca/SessionPicker.tsx`, `web/issues.css` |
 | `SendDialog`, `useOrca` | Dispatch flow (prefilled dialog, sent, not confirmed, blocked, Orca down) | `web/orca/SendDialog.tsx`, `web/orca/useOrca.tsx` |
 | `.toast`, `.toast-icon-ok`, `.toast-icon-err` | Result toasts | `web/detail.css` |

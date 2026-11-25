@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { oneLine } from '../shared/orca-message';
 import { DISPATCH_ALL_MAX } from '../shared/findings';
 import { STATE_WORD, type SessionView, type WorktreeView } from '../shared/orca-sessions';
+import { AppDialog } from './AppDialog';
 import { REUSE_NOTE, ReuseRow, SECOND_NOTE } from './orca/ReuseChoice';
-import { BulkShell, SeverityBadge, StatusLine } from './FindingParts';
+import { SeverityBadge, StatusLine } from './FindingParts';
 import { DispatchFields, useDispatchFields } from './orca/DispatchFields';
 import { HostFallback, HostTag, NewWorktreeRow, OfflineNote, useWorktreeHost, type WorktreeHost } from './orca/HostPicker';
 import { Row } from './orca/SessionPicker';
-import { KeyCap } from './ui';
+import { Btn, KeyCap } from './ui';
 import type { BulkRow, DispatchAllView, DispatchTarget } from './useFindings';
 
 export interface DispatchAllProps {
@@ -93,7 +94,6 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   const [pick, setPick] = useState(() => Math.max(0, candidates.findIndex((c) => c.s.id === offer.single?.id)));
   const f = useDispatchFields(offer.agents, `pr-${number}-findings`);
   const primary = useRef<HTMLButtonElement>(null);
-  useEffect(() => primary.current?.focus(), []);
 
   // With paired hosts or an idle worktree, the list ends with the idle worktree, then a New worktree row.
   const { idle } = offer;
@@ -103,7 +103,6 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   const over = v.text.length > DISPATCH_ALL_MAX;
   const ready = n > 0 && !over && v.text.trim() !== '' && (!worktree || (reusing ? f.m.choice.valid : f.valid));
   const failed = v.error !== undefined && !busy;
-  const title = dispatchAllTitle(n);
 
   const target = (): DispatchTarget | undefined => {
     if (path === 'session' && offer.single) return { kind: 'session', session: offer.single };
@@ -129,14 +128,49 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   );
 
   return (
-    <BulkShell title={title} className="dispatch-dialog finding-dispatch-all" busy={busy} ctrlEnter onCancel={onCancel} onConfirm={go}>
-      <div className="dispatch-all-top">
-        <div className="dialog-head">
-          <h2>{title}</h2>
-          <span className="muted small">{`${repo} #${number}`}</span>
-        </div>
-        <p className="muted small">One prompt with every ticked finding. Human threads are left out.</p>
-      </div>
+    <AppDialog
+      title={dispatchAllTitle(n)}
+      busy={busy}
+      width={560}
+      className="dispatch-dialog finding-dispatch-all"
+      initialFocusRef={primary}
+      onClose={onCancel}
+      onKeyDown={(e) => {
+        if (e.key !== 'Enter' || e.nativeEvent.isComposing || !(e.ctrlKey || e.metaKey)) return;
+        e.preventDefault();
+        go();
+      }}
+      footer={
+        <>
+          <Btn disabled={busy} onClick={onCancel}>
+            Cancel <KeyCap>Esc</KeyCap>
+          </Btn>
+          <button
+            ref={primary}
+            type="button"
+            className={`btn btn-primary${busy ? ' is-busy' : ''}`}
+            disabled={!busy && !ready}
+            aria-disabled={busy || undefined}
+            aria-busy={busy || undefined}
+            onClick={go}
+          >
+            {busy ? (
+              <>
+                <span className="spinner" aria-hidden="true" />
+                {worktree ? 'Dispatching...' : 'Sending...'}
+              </>
+            ) : (
+              <>
+                {failed ? 'Retry' : `${worktree ? 'Dispatch' : 'Send'} ${n}`}
+                <KeyCap>Ctrl+Enter</KeyCap>
+              </>
+            )}
+          </button>
+        </>
+      }
+    >
+      <p className="muted small">{`${repo} #${number}`}</p>
+      <p className="muted small">One prompt with every ticked finding. Human threads are left out.</p>
       <div className={`dispatch-all-body${busy ? ' is-locked' : ''}`}>
         <div className="dispatch-all-field">
           <div className="dispatch-all-label">
@@ -200,33 +234,7 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
         </div>
         {failed ? <StatusLine tone="err">{v.error}</StatusLine> : null}
       </div>
-      <div className="dialog-actions">
-        <button type="button" className="btn" aria-disabled={busy || undefined} onClick={() => !busy && onCancel()}>
-          Cancel <KeyCap>Esc</KeyCap>
-        </button>
-        <button
-          ref={primary}
-          type="button"
-          className={`btn btn-primary${busy ? ' is-busy' : ''}`}
-          disabled={!busy && !ready}
-          aria-disabled={busy || undefined}
-          aria-busy={busy || undefined}
-          onClick={go}
-        >
-          {busy ? (
-            <>
-              <span className="spinner" aria-hidden="true" />
-              {worktree ? 'Dispatching...' : 'Sending...'}
-            </>
-          ) : (
-            <>
-              {failed ? 'Retry' : `${worktree ? 'Dispatch' : 'Send'} ${n}`}
-              <KeyCap>Ctrl+Enter</KeyCap>
-            </>
-          )}
-        </button>
-      </div>
-    </BulkShell>
+    </AppDialog>
   );
 }
 

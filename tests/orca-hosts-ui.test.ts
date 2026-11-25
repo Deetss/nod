@@ -250,11 +250,13 @@ describe('one machine', () => {
   it('draws the dispatch dialog exactly as before hosts', () => {
     const local = { related: [session(), { ...review, host: 'local' }], possible: [{ ...crew, host: 'local' }] };
     render(dialog(view(local)));
-    const before = document.body.innerHTML;
+    // Primer's Dialog labels itself with React ids, which differ between mounts.
+    const html = (): string => document.body.innerHTML.replace(/_r_\w+_/g, 'id');
+    const before = html();
     act(() => root?.unmount());
     document.body.innerHTML = '';
     render(dialog(view({ ...local, host: choice(LOCAL_ONLY) })));
-    const after = document.body.innerHTML;
+    const after = html();
     expect(after).toBe(before);
     expect(after).not.toMatch(/New worktree|This machine|local \(hub\)|orca-host/);
   });

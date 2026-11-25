@@ -1,10 +1,11 @@
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { SEVERITY_WORD, bulkTitle, handPreview, type Banner, type Severity } from '../shared/findings';
 import type { BulkRow } from './useFindings';
 import { bot } from './org-settings';
 import { AlertIcon, Btn, CheckIcon, KeyCap } from './ui';
-import { useFocusTrap } from './useFocusTrap';
+import { AppDialog } from './AppDialog';
+import { PhoneFitSheet, PhoneSheetBar } from './phone/PhoneFitSheet';
 
 /** 12px octagon with a bar: the Blocker and Merge blocked glyph. */
 export function OctagonIcon({ size = 12 }: { size?: number }) {
@@ -126,51 +127,6 @@ export function FindingBanner({ banner, botOn, canHand, cap, onHandAll, canDispa
   );
 }
 
-interface ShellProps {
-  title: string;
-  /** Extra classes on the dialog. */
-  className: string;
-  busy: boolean;
-  phone?: boolean;
-  /** Ctrl+Enter confirms from anywhere; otherwise Enter outside buttons and inputs does. */
-  ctrlEnter?: boolean;
-  onCancel: () => void;
-  onConfirm: () => void;
-  children: ReactNode;
-}
-
-/** The bulk confirm's shell: scrim, focus trap, Esc to cancel (not while busy) and the confirm key. */
-export function BulkShell({ title, className, busy, phone, ctrlEnter, onCancel, onConfirm, children }: ShellProps) {
-  const trap = useFocusTrap();
-  return createPortal(
-    <div className={`scrim${phone ? ' ph-scrim finding-bulk-scrim' : ''}`} onMouseDown={() => !busy && onCancel()}>
-      <div
-        ref={trap}
-        tabIndex={-1}
-        className={`dialog finding-bulk ${className}${phone ? ' is-phone' : ''}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape' && !busy) {
-            e.stopPropagation();
-            onCancel();
-          } else if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
-            const plain = !(e.target instanceof HTMLButtonElement || e.target instanceof HTMLInputElement);
-            if (ctrlEnter ? !(e.ctrlKey || e.metaKey) : !plain) return;
-            e.preventDefault();
-            onConfirm();
-          }
-        }}
-      >
-        {children}
-      </div>
-    </div>,
-    document.body,
-  );
-}
-
 interface BulkProps {
   rows: BulkRow[];
   busy: boolean;
@@ -180,53 +136,100 @@ interface BulkProps {
   onConfirm: () => void;
 }
 
-/** Confirm for Hand all: one reply per ticked finding. Human threads never appear. */
-export function BulkDialog({ rows, busy, phone, onToggle, onCancel, onConfirm }: BulkProps) {
+const BULK_NOTE = 'One reply per thread. The command comes from Settings.';
+
+/** One row per finding: the tick, its severity and the reply it will post. */
+function BulkRows({ rows, busy, onToggle }: Pick<BulkProps, 'rows' | 'busy' | 'onToggle'>) {
   const b = bot();
+  return (
+    <ul className="finding-bulk-rows">
+      {rows.map(({ finding, checked }) => {
+        const preview = handPreview(finding, b);
+        return (
+          <li key={finding.thread.id} className="finding-bulk-row">
+            <label className="finding-bulk-check">
+              <input type="checkbox" checked={checked} disabled={busy} onChange={() => onToggle(finding.thread.id)} />
+              <SeverityBadge severity={finding.severity} />
+            </label>
+            <code className="finding-bulk-cmd" title={preview}>
+              {preview}
+            </code>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** Confirm for Hand all: one reply per ticked finding. Human threads never appear. */
+export function BulkDialog(p: BulkProps) {
+  return p.phone ? <PhoneBulk {...p} /> : <DesktopBulk {...p} />;
+}
+
+function DesktopBulk({ rows, busy, onToggle, onCancel, onConfirm }: BulkProps) {
   const n = rows.filter((r) => r.checked).length;
-  const title = bulkTitle(n, b.name);
+  const primary = useRef<HTMLButtonElement>(null);
   const go = (): void => {
     if (!busy && n > 0) onConfirm();
   };
   return (
-    <BulkShell title={title} className="fix-dialog" busy={busy} phone={phone} onCancel={onCancel} onConfirm={go}>
-      <div className="dialog-head">
-        <h2>{title}</h2>
+    <AppDialog
+      title={bulkTitle(n, bot().name)}
+      busy={busy}
+      width={520}
+      className="finding-bulk"
+      initialFocusRef={primary}
+      onClose={onCancel}
+      onKeyDown={(e) => {
+        if (e.key !== 'Enter' || e.nativeEvent.isComposing) return;
+        if (e.target instanceof HTMLButtonElement || e.target instanceof HTMLInputElement) return;
+        e.preventDefault();
+        go();
+      }}
+      footer={
+        <>
+          <Btn disabled={busy} onClick={onCancel}>
+            Cancel <KeyCap>Esc</KeyCap>
+          </Btn>
+          <button
+            ref={primary}
+            type="button"
+            className={`btn btn-primary${busy ? ' is-busy' : ''}`}
+            disabled={!busy && n === 0}
+            aria-busy={busy || undefined}
+            onClick={go}
+          >
+            {busy ? <span className="spinner" aria-hidden="true" /> : null}
+            {`Hand ${n} to bot`}
+            <KeyCap>Enter</KeyCap>
+          </button>
+        </>
+      }
+    >
+      <p className="muted small">{BULK_NOTE}</p>
+      <BulkRows rows={rows} busy={busy} onToggle={onToggle} />
+    </AppDialog>
+  );
+}
+
+/** The phone's bottom sheet, mounted on the phone root because the Thread tab sits in a transformed pager. */
+function PhoneBulk({ rows, busy, onToggle, onCancel, onConfirm }: BulkProps) {
+  const n = rows.filter((r) => r.checked).length;
+  return createPortal(
+    <PhoneFitSheet
+      title={bulkTitle(n, bot().name)}
+      sub={BULK_NOTE}
+      busy={busy}
+      onClose={onCancel}
+      bar={
+        <PhoneSheetBar busy={busy} primary={`Hand ${n} to bot`} busyLabel={`Hand ${n} to bot`} disabled={n === 0} onCancel={onCancel} onPrimary={onConfirm} />
+      }
+    >
+      <div className="finding-bulk is-phone">
+        <BulkRows rows={rows} busy={busy} onToggle={onToggle} />
       </div>
-      <p className="muted small">One reply per thread. The command comes from Settings.</p>
-      <ul className="finding-bulk-rows">
-        {rows.map(({ finding, checked }) => {
-          const preview = handPreview(finding, b);
-          return (
-            <li key={finding.thread.id} className="finding-bulk-row">
-              <label className="finding-bulk-check">
-                <input type="checkbox" checked={checked} disabled={busy} onChange={() => onToggle(finding.thread.id)} />
-                <SeverityBadge severity={finding.severity} />
-              </label>
-              <code className="finding-bulk-cmd" title={preview}>
-                {preview}
-              </code>
-            </li>
-          );
-        })}
-      </ul>
-      <div className="dialog-actions">
-        <Btn disabled={busy} onClick={onCancel}>
-          Cancel {phone ? null : <KeyCap>Esc</KeyCap>}
-        </Btn>
-        <button
-          type="button"
-          className={`btn btn-primary${busy ? ' is-busy' : ''}`}
-          disabled={!busy && n === 0}
-          aria-busy={busy || undefined}
-          onClick={go}
-        >
-          {busy ? <span className="spinner" aria-hidden="true" /> : null}
-          {`Hand ${n} to bot`}
-          {phone ? null : <KeyCap>Enter</KeyCap>}
-        </button>
-      </div>
-    </BulkShell>
+    </PhoneFitSheet>,
+    document.querySelector('.phone') ?? document.body,
   );
 }
 
