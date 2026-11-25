@@ -45,6 +45,34 @@ export interface SessionCandidate {
   lastOutputAt?: number;
 }
 
+/**
+ * One Orca worktree, whether or not an agent runs in it. Lets a PR find the worktree an earlier
+ * dispatch made after that agent exits. Main and archived worktrees are left out.
+ */
+export interface WorktreeCandidate {
+  host: string;
+  worktreeId: string;
+  name: string;
+  repo?: string;
+  branch: string;
+  linkedPrs: LinkedItem[];
+  linkedIssues: LinkedItem[];
+  /** Some agent in the worktree has a live pty. */
+  live: boolean;
+  lastOutputAt?: number;
+}
+
+/** A worktree with no live agent, as the client sees it. A dispatch for its PR reuses it. */
+export interface WorktreeView {
+  worktreeId: string;
+  host: string;
+  name: string;
+  branch: string;
+  via: MatchVia;
+  reason: string;
+  lastOutputAt?: number;
+}
+
 export type MatchVia = 'pr' | 'branch' | 'issue' | 'number' | 'chosen';
 
 /** A candidate as the client sees it. */
@@ -69,6 +97,8 @@ export interface PrSessions {
   possible: SessionView[];
   /** The remembered session id for this PR, when it is still live. Its host is on the related entry. */
   chosen?: string;
+  /** Worktrees for this PR with no live agent. The first one is where the next dispatch goes. */
+  idle?: WorktreeView[];
 }
 
 /** The prefs the web reads. The host fields are absent from servers older than hosts. */

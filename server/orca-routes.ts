@@ -2,10 +2,10 @@ import type { Context, Hono } from 'hono';
 import { z } from 'zod';
 import { DISPATCH_ALL_MAX } from '../shared/findings';
 import { LOCAL_HOST, hostName, type HostPrefs, type HostStatus } from '../shared/orca-hosts';
-import { matchSessions, relatedToIssue, type Matched } from '../shared/orca-match';
+import { matchSessions, matchWorktrees, relatedToIssue, type Matched, type MatchedWorktree } from '../shared/orca-match';
 import { prepareSend } from '../shared/orca-message';
 import { patchHost, prefsPatchBody, type OrcaPrefs } from '../shared/orca-prefs';
-import { SEND_MAX, type OrcaPrefsView, type OrcaSessionsResponse, type PrSessions, type SessionCandidate, type SessionView } from '../shared/orca-sessions';
+import { SEND_MAX, type OrcaPrefsView, type OrcaSessionsResponse, type PrSessions, type SessionCandidate, type SessionView, type WorktreeView } from '../shared/orca-sessions';
 import { writeBrief } from './dispatch-brief';
 import type { Orca } from './orca';
 import type { OrcaNotifier } from './notify-orca';
@@ -50,6 +50,16 @@ const view = (m: Matched): SessionView => ({
   ...(m.session.lastOutputAt ? { lastOutputAt: m.session.lastOutputAt } : {}),
 });
 
+const idleView = (m: MatchedWorktree): WorktreeView => ({
+  worktreeId: m.worktree.worktreeId,
+  host: m.worktree.host,
+  name: m.worktree.name,
+  branch: m.worktree.branch,
+  via: m.via,
+  reason: m.reason,
+  ...(m.worktree.lastOutputAt ? { lastOutputAt: m.worktree.lastOutputAt } : {}),
+});
+
 /** The prefs the web reads: automatic messages and the host choices, never the chosen sessions. */
 const prefsView = (p: OrcaPrefs): OrcaPrefsView => ({
   enabled: p.enabled,
@@ -74,13 +84,16 @@ export async function sessionsResponse(deps: OrcaRouteDeps, state: string | unde
   const byPr: Record<string, PrSessions> = {};
   for (const pr of inbox.prs) {
     const chosen = prefs.chosen[pr.id];
-    const m = matchSessions({ repo: pr.repo, number: pr.number, headRef: pr.headRef, closes: pr.closes }, snap.sessions, chosen);
-    if (m.related.length === 0 && m.possible.length === 0) continue;
+    const target = { repo: pr.repo, number: pr.number, headRef: pr.headRef, closes: pr.closes };
+    const m = matchSessions(target, snap.sessions, chosen);
+    const idle = matchWorktrees(target, snap.worktrees, chosen).filter((w) => !w.worktree.live);
+    if (m.related.length === 0 && m.possible.length === 0 && idle.length === 0) continue;
     const picked = m.related.find((r) => r.via === 'chosen');
     byPr[pr.id] = {
       related: m.related.map(view),
       possible: m.possible.map(view),
       ...(picked ? { chosen: picked.session.id } : {}),
+      ...(idle.length > 0 ? { idle: idle.map(idleView) } : {}),
     };
   }
   return { ...out, byPr, byIssue: await issueSessions(deps, state, snap.sessions) };

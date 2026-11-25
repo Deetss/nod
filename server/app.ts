@@ -41,6 +41,7 @@ import type { ActionResult } from '../shared/types';
 import { OrcaNotifier, type NotifyRequest } from './notify-orca';
 import { OrcaPrefsStore } from './orca-prefs';
 import { registerOrcaRoutes, resolveHost } from './orca-routes';
+import { dispatchWithReuse } from './orca-reuse';
 import { registerConnectionsRoutes } from './connections';
 import { TailscaleServe } from './tailscale-serve';
 import type { NodMode } from '../shared/connections';
@@ -840,11 +841,11 @@ export function createApp(opts: AppOptions): Hono {
     const chosen = body.model !== undefined;
     const remembered = orcaPrefs.get().dispatch[body.agent];
     const req = chosen ? body : { ...body, ...remembered };
-    const res = await orca.dispatch(req, pick.host);
+    const res = await dispatchWithReuse({ orca, sessions: orcaSessions, prefs: orcaPrefs, provider }, req, pick.host);
     if (res.ok && chosen) {
       orcaPrefs.rememberDispatch(body.agent, { ...(body.model ? { model: body.model } : {}), ...(body.effort ? { effort: body.effort } : {}) });
     }
-    return res.ok ? c.json(res) : c.json({ error: res.message }, 502);
+    return res.ok ? c.json(res) : c.json({ error: res.message }, res.status);
   });
 
   app.get('/api/orca/models', async (c) => {

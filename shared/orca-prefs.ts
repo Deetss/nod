@@ -11,7 +11,10 @@ const agentId = z.string().regex(/^[a-z0-9][a-z0-9-]{0,30}$/);
 /** Lower-case `owner/name`. A bare name saved before owners existed still loads and matches nothing. */
 export const prefRepo = z.string().regex(/^(?:(?!\.{1,2}\/)[a-z0-9._-]{1,100}\/)?(?!\.{1,2}$)[a-z0-9._-]{1,100}$/);
 
-/** The session chosen for a PR. Without a session id any live agent in the worktree serves. */
+/**
+ * The session or worktree chosen for a PR, by the user or by a dispatch. Without a session id any
+ * live agent in the worktree serves.
+ */
 export interface ChosenSession {
   host: string;
   worktreeId: string;
@@ -22,7 +25,7 @@ const worktreeIdPref = z.string().min(1).max(500);
 
 /** A saved choice. Entries from before hosts existed (no host, or a bare worktree id) read as `local`. */
 const chosenPref = z.union([
-  z.object({ host: hostName.default(LOCAL_HOST), worktreeId: worktreeIdPref, sessionId: z.string().min(1).max(600) }),
+  z.object({ host: hostName.default(LOCAL_HOST), worktreeId: worktreeIdPref, sessionId: z.string().min(1).max(600).optional() }),
   worktreeIdPref.transform((worktreeId): ChosenSession => ({ host: LOCAL_HOST, worktreeId })),
 ]);
 
