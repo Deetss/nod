@@ -53,6 +53,15 @@ With only `local` in the host list, nothing below shows and every surface looks 
 - `POST /api/orca/prefs` takes `{defaultHost}` or `{repo, host}`, where `null` clears the choice and a host must be in the live list.
 - An entry saved before hosts existed, as `{worktreeId, sessionId}` or a bare worktree id, reads as host `local` and is written back in the new shape on the next save.
 
+### Reusing a PR's worktree
+
+- A PR dispatch first looks for a worktree already linked to the PR on any online host, with or without a live agent.
+- A live match returns 409 naming the worktree and host, so send to that session instead.
+- An idle match, where the agent has exited, gets the new agent. This is the default.
+- `newWorktree: true` skips the search. The Fix dialog and Dispatch all send it only when you pick New worktree.
+- `GET /api/orca/sessions` lists idle worktrees per PR as `idle`, and the dialogs offer the first one as the default row.
+- The phone reuses the idle worktree without a choice. Start a second worktree from the desktop.
+
 ## Automatic messages
 
 Nod sends a message for these actions: approve, request changes, comment, auto-merge on, admin merge, ready for review, issue close and issue reopen. A PR merge made later by GitHub is not an app action, so none is sent.
@@ -81,7 +90,7 @@ Settings, Orca messages has one global box (default on) and a per-repo Default, 
 
 ## Fixture mode
 
-Fixture mode uses an in-memory Orca stand-in with synthetic sessions and records sends in memory (`GET /api/orca/fixture-sends`, each with its host). It has two paired hosts: `laptop`, online with sessions of its own, and `desktop`, offline. `NOD_FIXTURE_SESSIONS=hosts` adds `review-365` and `crew-310` on `laptop`, so #365's Send to list spans two hosts. `NOD_FIXTURE_DESKTOP_UP_S=<seconds>` keeps `desktop` online for that long after start with `webhooks-373` on #373, so its chip can be seen going offline. Put `fixture-down`, `fixture-exited`, `fixture-blocked`, `fixture-unconfirmed` or `fixture-echo` (unconfirmed by Orca, confirmed from the terminal) in a message to see each result.
+Fixture mode uses an in-memory Orca stand-in with synthetic sessions and records sends in memory (`GET /api/orca/fixture-sends`, each with its host). It has two paired hosts: `laptop`, online with sessions of its own, and `desktop`, offline. `NOD_FIXTURE_SESSIONS=hosts` adds `review-365` and `crew-310` on `laptop`, so #365's Send to list spans two hosts. `NOD_FIXTURE_SESSIONS=idle` leaves #365's worktree with no agent, so its dispatch offers reuse. `NOD_FIXTURE_DESKTOP_UP_S=<seconds>` keeps `desktop` online for that long after start with `webhooks-373` on #373, so its chip can be seen going offline. Put `fixture-down`, `fixture-exited`, `fixture-blocked`, `fixture-unconfirmed` or `fixture-echo` (unconfirmed by Orca, confirmed from the terminal) in a message to see each result.
 
 ## Dispatch from a phone
 

@@ -192,8 +192,12 @@ export function NewWorktreeRow({ hosts, host, on, busy, radio, onSelect, onPick 
     >
       {radio ? <span className={`picker-radio${on ? ' is-on' : ''}`} aria-hidden="true" /> : null}
       <span className="mono orca-new-name">New worktree</span>
-      <span className="orca-new-on">on</span>
-      <HostSelect hosts={hosts} value={host} disabled={busy} label="Run the new worktree on" onPick={onPick} />
+      {hosts.length > 1 ? (
+        <>
+          <span className="orca-new-on">on</span>
+          <HostSelect hosts={hosts} value={host} disabled={busy} label="Run the new worktree on" onPick={onPick} />
+        </>
+      ) : null}
     </div>
   );
 }

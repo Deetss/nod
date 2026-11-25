@@ -19,7 +19,7 @@ import {
 import type { ThreadItem } from '../shared/fix-comments';
 import { BUZZ, buzz } from './phone/haptics';
 import type { OrcaDispatchRequest } from '../shared/orca';
-import type { SendResult, SessionView } from '../shared/orca-sessions';
+import type { SendResult, SessionView, WorktreeView } from '../shared/orca-sessions';
 import type { PrDetail } from '../shared/types';
 import { api } from './api';
 import type { HostChoice } from './orca/OrcaContext';
@@ -54,6 +54,8 @@ export interface DispatchOffer {
   headRef: string;
   /** The Orca hosts and where a new worktree goes. Absent means this machine only. */
   host?: HostChoice;
+  /** The PR's worktree with no agent, offered before a new one. */
+  idle?: WorktreeView;
 }
 
 /** The target Dispatch all confirmed. `remember` saves a related session as this PR's choice. */
@@ -61,8 +63,8 @@ export type DispatchTarget =
   | { kind: 'session'; session: SessionView; remember?: boolean }
   | { kind: 'worktree'; request: Omit<OrcaDispatchRequest, 'repo' | 'number'> };
 
-/** A send names its session and Orca's status; a dispatch names its new worktree. */
-export type SendAllResult = { name: string; status: SendResult['status'] } | { name: string; worktree: true };
+/** A send names its session and Orca's status; a dispatch names its worktree, and its host when reused. */
+export type SendAllResult = { name: string; status: SendResult['status'] } | { name: string; worktree: true; reused?: { host: string } };
 
 /** What the Orca Send flow offers the findings. Absent when Orca or the repo is not available. */
 export interface FindingSender {
@@ -429,7 +431,8 @@ export function useFindings(o: Options): FindingControls | undefined {
           if (failure === undefined) {
             mark({ s: 'done', at: Date.now(), note: res.name, ...('worktree' in res ? { worktree: true } : {}) });
             setAll(undefined);
-            notify(true, `Dispatched ${noun} to ${res.name}`);
+            const reused = 'reused' in res ? res.reused : undefined;
+            notify(true, reused ? `Reused ${res.name} on ${reused.host} for ${noun}` : `Dispatched ${noun} to ${res.name}`);
           } else if ('status' in res && (res.status === 'blocked' || res.status === 'not-writable')) {
             keep(`${failure}. Your text is kept.`);
           } else {

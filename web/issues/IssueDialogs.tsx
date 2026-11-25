@@ -5,6 +5,7 @@ import { dispatchPrompt, worktreeName, type OrcaDispatchRequest } from '../../sh
 import { DispatchFields, useDispatchFields } from '../orca/DispatchFields';
 import { HostFallback, NewWorktreeRow, useWorktreeHost } from '../orca/HostPicker';
 import { useHostChoice } from '../orca/OrcaContext';
+import { ReuseChoice, useIdleWorktree } from '../orca/ReuseChoice';
 import { bot } from '../org-settings';
 import { Btn, KeyCap } from '../ui';
 import { AppDialog } from '../AppDialog';
@@ -322,7 +323,8 @@ interface DispatchDialogProps {
   onConfirm: (v: Omit<OrcaDispatchRequest, 'repo' | 'number'>) => void;
   onCancel: () => void;
   /** PR mode: the worktree starts on the PR head, which is shown read only in place of the base branch. */
-  pr?: { headRef: string; name: string; prompt: string };
+  /** `id` is the PR's summary id, which finds its idle worktree. */
+  pr?: { id?: string; headRef: string; name: string; prompt: string };
 }
 
 export function DispatchDialog(p: DispatchDialogProps) {
@@ -336,12 +338,16 @@ export function DispatchDialog(p: DispatchDialogProps) {
   const base = baseBranch.trim();
   const baseOk = base === '' || /^[A-Za-z0-9._/-]{1,100}$/.test(base);
   const promptOk = prompt.trim() !== '' && prompt.length <= 4000;
-  const ready = f.valid && baseOk && promptOk && !p.busy;
+  const idle = useIdleWorktree(p.pr?.id);
+  const [reuse, setReuse] = useState(true);
+  const reusing = idle !== undefined && reuse;
+  const ready = (reusing ? f.m.choice.valid : f.valid) && baseOk && promptOk && !p.busy;
   const wh = useWorktreeHost(useHostChoice(repo));
   const go = () => {
     if (!ready) return;
-    const host = wh.multi ? { host: wh.host } : {};
-    if (p.pr) p.onConfirm({ ...f.request(), ...host, baseBranch: p.pr.headRef, prompt, pr: true });
+    const host = wh.multi && !reusing ? { host: wh.host } : {};
+    const fresh = idle && !reuse ? { newWorktree: true } : {};
+    if (p.pr) p.onConfirm({ ...f.request(), ...host, ...fresh, baseBranch: p.pr.headRef, prompt, pr: true });
     else p.onConfirm({ ...f.request(), ...host, ...(base ? { baseBranch: base } : {}), prompt });
   };
 
@@ -381,7 +387,9 @@ export function DispatchDialog(p: DispatchDialogProps) {
       <p className="muted small">
         {repoLabel(repo)} #{number}
       </p>
-      {wh.multi ? (
+      {idle ? (
+        <ReuseChoice idle={idle} reuse={reuse} onReuse={setReuse} wh={wh} busy={p.busy} />
+      ) : wh.multi ? (
         <>
           <div className="orca-new-box">
             <NewWorktreeRow hosts={wh.hosts} host={wh.host} on busy={p.busy} onPick={wh.pick} />
@@ -389,7 +397,7 @@ export function DispatchDialog(p: DispatchDialogProps) {
           <HostFallback fallback={wh.fallback} />
         </>
       ) : null}
-      <DispatchFields f={f} agents={p.agents} />
+      <DispatchFields f={f} agents={p.agents} hideName={reusing} />
       {p.pr ? (
         <>
           <label className="field-label" htmlFor="dp-head">

@@ -11,7 +11,7 @@ import { PhoneBotSplit } from './PhoneBotSplit';
 import type { PrSummary } from '../../shared/types';
 import { bypassFields, NO_ACCESS, reviewAccess } from '../../shared/pr-actions';
 import { usePhoneBypass } from './PhoneBypass';
-import { DEFAULT_AGENT, dispatchPrompt, prDispatchPrompt, prWorktreeName, repoInOrca, worktreeName } from '../../shared/orca';
+import { DEFAULT_AGENT, dispatchedMessage, dispatchPrompt, prDispatchPrompt, prWorktreeName, repoInOrca, worktreeName } from '../../shared/orca';
 import { hasBotLabel } from '../../shared/bot';
 import { canFix, checksDispatch, failingChecks, botComment, fixPrompt } from '../../shared/fix-checks';
 import { canResolve, conflictsDispatch, conflictsPrompt } from '../../shared/fix-conflicts';
@@ -390,7 +390,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
       const res = await api.orcaDispatch({ repo: pr.repo, number: pr.number, ...v });
       setPrDispatch({ busy: false });
       buzz(BUZZ.success);
-      writes.notify(`Dispatched to ${res.worktree}`);
+      writes.notify(dispatchedMessage(res));
       pop();
     } catch (e) {
       setPrDispatch({ busy: false, error: e instanceof Error ? e.message : 'Dispatch failed' });
@@ -427,9 +427,9 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     setDispatching(true);
     try {
       const res = await api.orcaDispatch(mode === 'conflicts' ? conflictsDispatch(detail, agent) : checksDispatch(detail, agent));
-      setFixDone(`Dispatched to ${res.worktree}`);
+      setFixDone(dispatchedMessage(res));
       buzz(BUZZ.success);
-      writes.notify(`Dispatched to ${res.worktree}`);
+      writes.notify(dispatchedMessage(res));
     } catch (e) {
       writes.notify(`Could not dispatch: ${e instanceof Error ? e.message : 'Dispatch failed'}`, false);
     } finally {

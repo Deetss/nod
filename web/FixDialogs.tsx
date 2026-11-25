@@ -101,7 +101,7 @@ export function FixDialogs({ fix }: { fix: FixDialogState | undefined }) {
       agents={fix.agents}
       busy={fix.busy}
       error={fix.error}
-      pr={{ headRef, name: fixWorktreeName(number), prompt: fixPrompt(repo, number, headRef, scope) }}
+      pr={{ id: fix.prId, headRef, name: fixWorktreeName(number), prompt: fixPrompt(repo, number, headRef, scope) }}
       onConfirm={fix.dispatch}
       onCancel={fix.close}
     />

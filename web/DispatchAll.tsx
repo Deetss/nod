@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { oneLine } from '../shared/orca-message';
 import { DISPATCH_ALL_MAX } from '../shared/findings';
-import { STATE_WORD, type SessionView } from '../shared/orca-sessions';
+import { STATE_WORD, type SessionView, type WorktreeView } from '../shared/orca-sessions';
+import { REUSE_NOTE, ReuseRow, SECOND_NOTE } from './orca/ReuseChoice';
 import { BulkShell, SeverityBadge, StatusLine } from './FindingParts';
 import { DispatchFields, useDispatchFields } from './orca/DispatchFields';
 import { HostFallback, HostTag, NewWorktreeRow, OfflineNote, useWorktreeHost, type WorktreeHost } from './orca/HostPicker';
@@ -94,11 +95,13 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
   const primary = useRef<HTMLButtonElement>(null);
   useEffect(() => primary.current?.focus(), []);
 
-  // With paired hosts the list always offers a New worktree row, after the sessions.
-  const path = offer.single && !changing ? 'session' : candidates.length > 0 || wh.multi ? 'pick' : 'worktree';
-  const worktree = path === 'worktree' || (path === 'pick' && wh.multi && pick === candidates.length);
+  // With paired hosts or an idle worktree, the list ends with the idle worktree, then a New worktree row.
+  const { idle } = offer;
+  const path = offer.single && !changing ? 'session' : candidates.length > 0 || wh.multi || idle ? 'pick' : 'worktree';
+  const worktree = path === 'worktree' || (path === 'pick' && pick >= candidates.length);
+  const reusing = idle !== undefined && path === 'pick' && pick === candidates.length;
   const over = v.text.length > DISPATCH_ALL_MAX;
-  const ready = n > 0 && !over && v.text.trim() !== '' && (!worktree || f.valid);
+  const ready = n > 0 && !over && v.text.trim() !== '' && (!worktree || (reusing ? f.m.choice.valid : f.valid));
   const failed = v.error !== undefined && !busy;
   const title = dispatchAllTitle(n);
 
@@ -106,7 +109,9 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
     if (path === 'session' && offer.single) return { kind: 'session', session: offer.single };
     const c = candidates[pick];
     if (path === 'pick' && !worktree) return c ? { kind: 'session', session: c.s, remember: c.kind === 'related' } : undefined;
-    return { kind: 'worktree', request: { ...f.request(), ...(wh.multi ? { host: wh.host } : {}), baseBranch: offer.headRef, prompt: v.text, pr: true } };
+    const base = { ...f.request(), baseBranch: offer.headRef, prompt: v.text, pr: true };
+    if (reusing) return { kind: 'worktree', request: base };
+    return { kind: 'worktree', request: { ...base, ...(wh.multi ? { host: wh.host } : {}), ...(idle ? { newWorktree: true } : {}) } };
   };
   const go = (): void => {
     const t = busy || !ready ? undefined : target();
@@ -152,7 +157,7 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
               <span className="ph-fit-pill">Linked</span>
               <HostTag host={offer.single.host} />
               <span className="dispatch-all-state muted small">{STATE_WORD[offer.single.state]}</span>
-              {(candidates.length > 1 || wh.multi) && !busy ? (
+              {(candidates.length > 1 || wh.multi || idle) && !busy ? (
                 <button type="button" className="btn finding-btn" onClick={() => setChanging(true)}>
                   Change
                 </button>
@@ -160,11 +165,12 @@ export function DispatchAllDialog({ v, onToggle, onEdit, onRebuild, onCancel, on
             </div>
           ) : null}
           {path === 'pick' ? (
-            <SessionChoice candidates={candidates} pick={pick} busy={busy} worktreeRow={wh.multi ? wh : undefined} onPick={setPick} />
+            <SessionChoice candidates={candidates} pick={pick} busy={busy} idle={idle} worktreeRow={wh.multi || idle ? wh : undefined} onPick={setPick} />
           ) : null}
           {path === 'pick' && worktree ? (
             <div className="dispatch-all-worktree">
-              <DispatchFields f={f} agents={offer.agents} paired disabled={busy} />
+              {idle ? <span className="muted small">{reusing ? REUSE_NOTE : SECOND_NOTE}</span> : null}
+              {reusing ? <DispatchFields f={f} agents={offer.agents} hideName disabled={busy} /> : <DispatchFields f={f} agents={offer.agents} paired disabled={busy} />}
               {head}
             </div>
           ) : null}
@@ -228,17 +234,20 @@ interface ChoiceProps {
   candidates: Candidate[];
   pick: number;
   busy: boolean;
-  /** Paired hosts: a New worktree row closes the list, at index `candidates.length`. */
+  /** The PR's worktree with no agent, at index `candidates.length`. */
+  idle?: WorktreeView;
+  /** A New worktree row closes the list, after the sessions and any idle worktree. */
   worktreeRow: WorktreeHost | undefined;
   onPick: (i: number) => void;
 }
 
 /** Related and possible sessions with a radio. Up and Down move the choice. */
-function SessionChoice({ candidates, pick, busy, worktreeRow, onPick }: ChoiceProps) {
+function SessionChoice({ candidates, pick, busy, idle, worktreeRow, onPick }: ChoiceProps) {
   const group = (kind: Candidate['kind']) => candidates.map((c, i) => ({ c, i })).filter(({ c }) => c.kind === kind);
   const related = group('related');
   const possible = group('possible');
-  const last = candidates.length - (worktreeRow ? 0 : 1);
+  const newAt = candidates.length + (idle ? 1 : 0);
+  const last = worktreeRow ? newAt : newAt - 1;
   const rows = (list: typeof related) =>
     list.map(({ c, i }) => (
       <Row key={`${c.s.host}|${c.s.id}`} s={c.s} focused={pick === i} radio hint={c.kind === 'possible' ? 'Send once' : ''} onPick={() => !busy && onPick(i)} />
@@ -273,21 +282,22 @@ function SessionChoice({ candidates, pick, busy, worktreeRow, onPick }: ChoicePr
             {rows(possible)}
           </>
         ) : null}
+        {idle ? <ReuseRow w={idle} on={pick === candidates.length} busy={busy} onSelect={() => onPick(candidates.length)} /> : null}
         {worktreeRow ? (
           <NewWorktreeRow
             hosts={worktreeRow.hosts}
             host={worktreeRow.host}
-            on={pick === candidates.length}
+            on={pick === newAt}
             busy={busy}
             radio
-            onSelect={() => onPick(candidates.length)}
+            onSelect={() => onPick(newAt)}
             onPick={worktreeRow.pick}
           />
         ) : null}
       </div>
       {worktreeRow ? (
         <>
-          <HostFallback fallback={worktreeRow.fallback} />
+          <HostFallback fallback={idle && pick === candidates.length ? undefined : worktreeRow.fallback} />
           <OfflineNote hosts={worktreeRow.hosts} className="muted small orca-offline-note" />
         </>
       ) : null}

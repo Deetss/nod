@@ -24,13 +24,23 @@ export interface OrcaDispatchRequest {
   effort?: Effort;
   /** The Orca host for the new worktree. Absent: the server picks the repo's or the default host. */
   host?: string;
+  /** PR mode: start a new worktree even when the PR already has one. */
+  newWorktree?: boolean;
 }
 
 export interface OrcaDispatchResult {
   ok: true;
   worktree: string;
   path?: string;
+  host?: string;
+  worktreeId?: string;
+  /** The agent started in the PR's existing worktree. */
+  reused?: true;
 }
+
+/** The toast after a dispatch. */
+export const dispatchedMessage = (res: Pick<OrcaDispatchResult, 'worktree' | 'host' | 'reused'>): string =>
+  res.reused ? `Reused ${res.worktree} on ${res.host ?? 'local'}` : `Dispatched to ${res.worktree}`;
 
 export const DEFAULT_AGENT = 'claude';
 
