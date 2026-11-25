@@ -454,10 +454,6 @@
   font: 400 12px/18px var(--fontStack-monospace);
 }
 
-.finding-bulk .btn {
-  height: 32px;
-}
-
 /* Phone: 44px targets, a 2 x 2 action grid, bottom-sheet confirm, no key caps. */
 .ph-thread .finding-card {
   border: 0;
@@ -573,26 +569,6 @@
   width: 92px;
 }
 
-.finding-bulk.is-phone {
-  width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 20px 20px 0 0;
-  padding: 20px 16px 24px;
-}
-
 .finding-bulk.is-phone .finding-bulk-row {
   min-height: 44px;
-}
-
-.finding-bulk.is-phone .btn {
-  flex: 1;
-  height: 48px;
-  justify-content: center;
-}
-
-.finding-bulk-scrim {
-  align-items: flex-end;
 }

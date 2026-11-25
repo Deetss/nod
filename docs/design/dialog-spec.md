@@ -80,9 +80,17 @@ pinned. Dialog max height is `100vh - 64px`. The page never scrolls.
 - `web/issues/IssueDialogs.tsx`
 - `web/issues/SplitDialog.tsx`
 - `web/issues/SubIssueDialogs.tsx`
-- `web/issues/Picker.tsx`
 - `web/orca/SendDialog.tsx`
-- `web/orca/SessionPicker.tsx`
+- `web/FindingParts.tsx` (`BulkDialog`; its phone variant is a `PhoneFitSheet`)
+- `web/DispatchAll.tsx`
+
+## Kept as popovers
+
+`web/issues/Picker.tsx` and `web/orca/SessionPicker.tsx` stay custom popovers on
+`.picker` and `.scrim`. Primer's `SelectPanel` and `ActionMenu` cannot hold the
+label picker's create row and mixed ordering, or the session picker's two-line
+rows and its remember and send-once choices, without a redesign. A redesign
+goes through design rounds first. `AddExistingPicker` shares the same CSS.
 
 Note: `SettingsDialog` keeps its left nav and uses a custom width of `840`; its
 own header and footer map to the wrapper's.

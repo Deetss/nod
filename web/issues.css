@@ -1019,12 +1019,6 @@ html[data-density='compact'] .filter-row .dd-btn > svg {
   outline-offset: -2px;
 }
 
-.dialog-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
 .dispatch-dialog {
   width: min(560px, calc(100vw - 32px));
 }

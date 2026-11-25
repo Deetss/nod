@@ -22,28 +22,10 @@
   text-overflow: ellipsis;
 }
 
-.finding-dispatch-all {
-  max-height: calc(100vh - 32px);
-}
-
-.dispatch-all-top {
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* The middle scrolls; the head and the actions stay pinned. */
 .dispatch-all-body {
-  min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.finding-dispatch-all .dialog-actions {
-  flex: none;
 }
 
 .dispatch-all-field {
@@ -131,7 +113,7 @@
   margin-left: auto;
 }
 
-.finding-bulk .dispatch-all-session .btn {
+.finding-dispatch-all .dispatch-all-session .btn {
   height: 28px;
 }
 
@@ -232,12 +214,6 @@
 
 .dispatch-all-body.is-locked .ph-fit-dot {
   background: var(--fgColor-muted);
-}
-
-.finding-dispatch-all .dialog-actions .btn[aria-disabled='true']:not(.btn-primary) {
-  border-style: dashed;
-  color: var(--fgColor-muted);
-  cursor: default;
 }
 
 /* Phone: the two banner buttons split the row; sheet rows grow to 56 with the text on a second line. */
