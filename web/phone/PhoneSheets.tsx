@@ -113,7 +113,7 @@ export function PhoneSheets({ sheets, prs, issues, viewer, projectStatus, writes
     detail: prData.detail.data,
     orca: orca.data,
     active: pr !== undefined,
-    syncedAt: undefined,
+    rev: undefined,
     repoNames: [],
     toast: (t) => writes.notify(t.message, t.kind !== 'err'),
     onDetails: () => undefined,

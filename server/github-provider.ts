@@ -400,6 +400,10 @@ export class GithubProvider implements Provider {
   private readonly issueSvc: IssueService;
   /** The newest sync failure, shown on both the PR and issue lists. */
   private stale: Stale | undefined;
+  /** Moves whenever the lists or the stale marker change, so clients refetch only then. */
+  private rev = Date.now();
+  /** The PR state minus its sync time, as last written to disk. */
+  private savedKey: string | undefined;
   private readonly attachments: AttachmentImages;
 
   constructor(
@@ -606,8 +610,15 @@ export class GithubProvider implements Provider {
       }
     }
     await this.expire();
-    await this.store.saveState(this.state);
-    return this.listsKey() !== before;
+    // A quiet poll only moves lastSync; a delta from an older saved lastSync is still correct.
+    const saved = JSON.stringify({ ...this.state, lastSync: 0 });
+    if (saved !== this.savedKey) {
+      await this.store.saveState(this.state);
+      this.savedKey = saved;
+    }
+    const changed = this.listsKey() !== before;
+    if (changed) this.rev += 1;
+    return changed;
   }
 
   /** A delta is a full sweep when nothing is saved or the last sweep is an hour old. */
@@ -741,7 +752,10 @@ export class GithubProvider implements Provider {
     else if (prev === 'approved' && !rowChanged) kind = 'approved';
     else kind = autoMerge ? 'auto-merge' : prev === 'merging' ? 'merging' : undefined;
     const followChanged = this.putFollow(pr.id, kind, kind === 'merged' ? (before ?? pr) : undefined);
-    if (rowChanged || followChanged) this.emit();
+    if (rowChanged || followChanged) {
+      this.rev += 1;
+      this.emit();
+    }
     return { open, autoMerge: raw.autoMergeRequest !== null };
   }
 
@@ -776,6 +790,7 @@ export class GithubProvider implements Provider {
     // No token, or one without `repo`: sync pauses and the saved lists stay as they are.
     if (!this.features().sync) return { changed: false };
     let changed = false;
+    const wasStale = JSON.stringify(this.stale);
     try {
       changed = await this.sync(mode);
       this.stale = undefined;
@@ -789,7 +804,11 @@ export class GithubProvider implements Provider {
         cachedAt: hhmm(new Date(this.state.lastSync)),
       };
     }
-    this.emit();
+    // The sync's own end notice went out before the stale marker moved, so send another only then.
+    if (JSON.stringify(this.stale) !== wasStale) {
+      this.rev += 1;
+      this.emit();
+    }
     if (changed || !this.warmedOnce) this.warm();
     return { changed };
   }
@@ -883,6 +902,7 @@ export class GithubProvider implements Provider {
       follows: this.followSnapshot(),
       shipped: this.state.shipped,
       syncedAt: this.state.lastSync,
+      rev: this.rev,
       rate: this.rate(),
       ...(stale ? { stale } : {}),
       connection: this.conn.current(),

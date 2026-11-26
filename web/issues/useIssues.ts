@@ -13,10 +13,10 @@ export interface IssuesState {
 }
 
 /**
- * The issue list rides on the PR poll: each time `syncedAt` moves, the server has just
+ * The issue list rides on the PR poll: each time `rev` moves (only when a sync changed something), the server has just
  * merged issues into its saved state, so reading it costs nothing. Sections are derived here.
  */
-export function useIssues(syncedAt: number | undefined): IssuesState {
+export function useIssues(rev: number | undefined): IssuesState {
   const [raw, setRaw] = useState<IssueInboxData>();
   const [error, setError] = useState<string>();
   const [tick, setTick] = useState(0);
@@ -36,7 +36,7 @@ export function useIssues(syncedAt: number | undefined): IssuesState {
     return () => {
       cancelled = true;
     };
-  }, [syncedAt, tick]);
+  }, [rev, tick]);
 
   const reload = useCallback(() => setTick((t) => t + 1), []);
   const data = useMemo(

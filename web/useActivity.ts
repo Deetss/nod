@@ -4,11 +4,11 @@ import { api } from './api';
 import type { ActivityHandle } from './activity-ui';
 
 /**
- * The Activity feed. It refetches when `syncedAt` moves, like the issue list, and keeps the last good
+ * The Activity feed. It refetches when `rev` moves (only when a sync changed something), like the issue list, and keeps the last good
  * feed under an error so the cached list stays visible. Opening the view records a visit, but the
  * unread dots keep the previous visit time until the view closes, so they stay readable during the visit.
  */
-export function useActivity(syncedAt: number | undefined, active: boolean): ActivityHandle {
+export function useActivity(rev: number | undefined, active: boolean): ActivityHandle {
   const [feed, setFeed] = useState<ActivityFeed>();
   const [error, setError] = useState<string>();
   const [days, setDays] = useState(ACTIVITY_WINDOW_DAYS);
@@ -31,7 +31,7 @@ export function useActivity(syncedAt: number | undefined, active: boolean): Acti
     return () => {
       cancelled = true;
     };
-  }, [syncedAt, days, tick]);
+  }, [rev, days, tick]);
 
   const loaded = feed !== undefined;
   const lastVisit = feed?.lastVisit;

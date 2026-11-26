@@ -275,3 +275,82 @@ describe('own PRs with CI running', () => {
     expect(m.calls[0]?.vars).toMatchObject({ watchOwn: false });
   });
 });
+
+describe('rev', () => {
+  it('a quiet poll keeps rev and sends one end notice', async () => {
+    const m = mockClient();
+    const { provider, advance } = setup(m.client);
+    await provider.poll('delta');
+    const first = await provider.inbox(undefined, 'none');
+    const events: { syncing?: boolean }[] = [];
+    provider.subscribe((e) => events.push(e));
+    advance(MINUTE);
+    await provider.poll('delta');
+    const second = await provider.inbox(undefined, 'none');
+    expect(second.rev).toBe(first.rev);
+    expect(second.syncedAt).toBeGreaterThan(first.syncedAt);
+    expect(events).toHaveLength(2);
+    expect(events.filter((e) => e.syncing)).toHaveLength(1);
+    expect(events.filter((e) => !e.syncing)).toHaveLength(1);
+  });
+
+  it('a changed poll moves rev', async () => {
+    let fresh = false;
+    const m = mockClient({
+      poll: () => (fresh ? { ...quietPoll, prs: { ...NO_PAGE, nodes: [pr(7)] } } : quietPoll),
+    });
+    const { provider, advance } = setup(m.client);
+    await provider.poll('delta');
+    const first = (await provider.inbox(undefined, 'none')).rev;
+    fresh = true;
+    advance(MINUTE);
+    await provider.poll('delta');
+    expect((await provider.inbox(undefined, 'none')).rev).toBeGreaterThan(first);
+  });
+
+  it('a quiet poll does not rewrite the saved lists', async () => {
+    let prWrites = 0;
+    let issueWrites = 0;
+    class CountPrs extends PrCache {
+      override async saveState(...a: Parameters<PrCache['saveState']>) {
+        prWrites += 1;
+        return super.saveState(...a);
+      }
+    }
+    class CountIssues extends IssueCache {
+      override async saveState(...a: Parameters<IssueCache['saveState']>) {
+        issueWrites += 1;
+        return super.saveState(...a);
+      }
+    }
+    const m = mockClient();
+    const { provider, advance } = setup(m.client, new CountPrs(), new CountIssues());
+    await provider.poll('delta');
+    prWrites = 0;
+    issueWrites = 0;
+    advance(MINUTE);
+    await provider.poll('delta');
+    expect(prWrites).toBe(0);
+    expect(issueWrites).toBe(0);
+  });
+
+  it('a rate limit moves rev once', async () => {
+    let limited = false;
+    const resetAt = new Date(START + 10 * MINUTE).toISOString();
+    const m = mockClient({
+      poll: () => {
+        if (limited) throw new ApiError('GitHub rate limit reached', 'ratelimit', 403, resetAt);
+        return quietPoll;
+      },
+    });
+    const { provider, advance } = setup(m.client);
+    await provider.poll('delta');
+    const first = (await provider.inbox(undefined, 'none')).rev;
+    advance(MINUTE);
+    limited = true;
+    await provider.poll('delta');
+    const second = await provider.inbox(undefined, 'none');
+    expect(second.stale?.kind).toBe('ratelimit');
+    expect(second.rev).toBeGreaterThan(first);
+  });
+});

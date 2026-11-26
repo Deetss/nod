@@ -77,7 +77,7 @@ export class FakeProvider {
 
   async inbox(): Promise<InboxData> {
     const { prs = [], teams = [], shipped = [] } = this.current;
-    return { viewer: VIEWER, teams, prs, shipped, syncedAt: this.polls, follows: {} };
+    return { viewer: VIEWER, teams, prs, shipped, syncedAt: this.polls, rev: this.polls, follows: {} };
   }
 
   async issues(): Promise<IssueInboxData> {

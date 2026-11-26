@@ -181,7 +181,7 @@ export function App() {
     if (captureSelectsClosed() && firstClosedId) setSelectedId((id) => id ?? firstClosedId);
   }, [firstClosedId]);
   // Issues ride on the PR poll: each sync updates the server's saved issue list, and this reads it.
-  const issues = useIssues(inbox.data?.syncedAt);
+  const issues = useIssues(inbox.data?.rev);
   const reloadInbox = inbox.reload;
   const reloadIssues = issues.reload;
   const reloadLists = useCallback(() => {
@@ -196,7 +196,7 @@ export function App() {
     setSettingsOpen(true);
   }, []);
   const connections = useConnections();
-  const activity = useActivity(inbox.data?.syncedAt, listView === 'activity' || (phone && phoneActivity));
+  const activity = useActivity(inbox.data?.rev, listView === 'activity' || (phone && phoneActivity));
   const issueUnseen = (issues.data?.issues ?? []).filter((i) => i.seen !== 'seen' && !issueSeen.has(i.id)).length;
   const prUnseen = inbox.data ? allPrs(inbox.data).filter((p) => p.seen !== 'seen' && !seenLocal.has(p.id)).length : 0;
   const activityUnseen = activity.feed ? activityBadge(activity.feed, activity.lastVisit) : 0;
@@ -551,7 +551,7 @@ export function App() {
     detail: detail.data,
     orca: orca.data,
     active: !phone,
-    syncedAt: inbox.data?.syncedAt,
+    rev: inbox.data?.rev,
     repoNames,
     toast: pushToast,
     onDetails: goActivity,

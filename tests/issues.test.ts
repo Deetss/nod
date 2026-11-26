@@ -304,7 +304,7 @@ describe('thread timeline', () => {
 });
 
 describe('issue notifications', () => {
-  const pr: InboxData = { viewer: 'me', prs: [], syncedAt: 0, follows: {} };
+  const pr: InboxData = { viewer: 'me', prs: [], syncedAt: 0, rev: 1, follows: {} };
   const data = (issues: IssueSummary[], mentionedIds: string[] = []): IssueInboxData => ({
     viewer: 'me',
     issues,

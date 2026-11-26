@@ -39,7 +39,7 @@ function mount(): { ctl: () => OrcaController; el: HTMLElement } {
       detail,
       orca: undefined,
       active: true,
-      syncedAt: undefined,
+      rev: undefined,
       repoNames: [],
       toast: () => undefined,
       onDetails: () => undefined,

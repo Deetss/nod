@@ -196,7 +196,7 @@ export class FixtureProvider implements Provider {
     console.log(`[fixtures] would call InboxSync:${sync}`);
     const now = this.born;
     const connection = this.conn.get(state);
-    const base: InboxData = { viewer: VIEWER, teams: ['sam-leads'], prs: [], syncedAt: Date.now() - 14_000, follows: {}, connection };
+    const base: InboxData = { viewer: VIEWER, teams: ['sam-leads'], prs: [], syncedAt: Date.now() - 14_000, rev: 1, follows: {}, connection };
     if (state === 'loading') return { ...base, syncing: { done: 38, total: 61 } };
     if (connection.state === 'none') return { ...base, viewer: '', teams: [], syncedAt: 0 };
 
