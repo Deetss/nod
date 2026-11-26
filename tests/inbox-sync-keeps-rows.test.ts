@@ -39,6 +39,7 @@ function view(prs: PrSummary[], syncing?: { done: number; total: number }): Inbo
     viewer: 'me',
     prs,
     syncedAt: Date.now(),
+    rev: 1,
     follows: {},
     syncing,
     sections: deriveSections('me', prs),

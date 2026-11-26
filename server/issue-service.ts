@@ -120,6 +120,7 @@ export class IssueService {
   /** The viewer's node id, read free from every sync query. Start work assigns it. */
   viewerId: string | undefined;
   private loading: Promise<void> | undefined;
+  private savedKey: string | undefined;
   private readonly repoIds = new Map<string, string>();
 
   constructor(
@@ -239,9 +240,13 @@ export class IssueService {
     await this.settle();
   }
 
+  /** Writes the list only when more than its sync time changed. */
   private async settle(): Promise<void> {
     await this.expire();
+    const saved = JSON.stringify({ ...this.state, lastSync: 0 });
+    if (saved === this.savedKey) return;
     await this.cache.saveState(this.state);
+    this.savedKey = saved;
   }
 
   private rate(): RateInfo | undefined {

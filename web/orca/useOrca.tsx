@@ -55,7 +55,7 @@ interface Options {
   orca: OrcaInfo | undefined;
   /** Polls while true. */
   active: boolean;
-  syncedAt: number | undefined;
+  rev: number | undefined;
   repoNames: string[];
   toast: (t: ToastInput) => void;
   /** Opens the Activity view, for a failed notification's Details. */
@@ -72,7 +72,7 @@ const msg = (e: unknown, fallback: string): string => (e instanceof Error ? e.me
 
 /** Everything behind the Orca session surfaces: polling, the card, the picker, the dialog, results and toasts. */
 export function useOrca(o: Options): OrcaController {
-  const { detail, orca, active, syncedAt, toast, onFindingResult, onFindingDispatched, phone = false } = o;
+  const { detail, orca, active, rev, toast, onFindingResult, onFindingDispatched, phone = false } = o;
   const remote = useRemote(active ? 'orca-sessions' : null, () => api.orcaSessions());
   const { reload } = remote;
   const [localPrefs, setLocalPrefs] = useState<Prefs>();
@@ -127,7 +127,7 @@ export function useOrca(o: Options): OrcaController {
       return;
     }
     reload();
-  }, [syncedAt, reload]);
+  }, [rev, reload]);
 
   const data = remote.data;
   const available = data?.available === true;

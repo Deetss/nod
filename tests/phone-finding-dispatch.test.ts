@@ -63,7 +63,7 @@ function mount(phone: boolean) {
       detail,
       orca: { available: true, agents: ['claude', 'codex'] },
       active: true,
-      syncedAt: undefined,
+      rev: undefined,
       repoNames: [],
       toast: () => undefined,
       onDetails: () => undefined,

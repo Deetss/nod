@@ -28,7 +28,7 @@ function pr(over: Partial<PrSummary> & { number: number }): PrSummary {
 }
 
 function inbox(prs: PrSummary[], teams: string[] = []): InboxData {
-  return { viewer: VIEWER, teams, prs, syncedAt: 1, follows: {} };
+  return { viewer: VIEWER, teams, prs, syncedAt: 1, rev: 1, follows: {} };
 }
 
 function run(prev: InboxData | undefined, next: InboxData, over: Partial<NotifyInput> = {}) {

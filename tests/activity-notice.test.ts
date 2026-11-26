@@ -23,7 +23,7 @@ const pr = (id: string, repo: string, n: number, createdMinAgo: number): PrSumma
     url: `https://example.test/${n}`,
   }) as PrSummary;
 
-const inbox = (prs: PrSummary[]): InboxData => ({ viewer: 'acme-dev', prs, syncedAt: NOW, follows: {} });
+const inbox = (prs: PrSummary[]): InboxData => ({ viewer: 'acme-dev', prs, syncedAt: NOW, rev: 1, follows: {} });
 
 const item = (p: PrSummary): ActivityItemRef => ({ kind: 'pr', id: p.id, repo: p.repo, number: p.number, title: p.title, url: p.url });
 

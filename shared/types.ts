@@ -102,6 +102,8 @@ export interface InboxData {
   /** Every open PR. The front end derives the sections. */
   prs: PrSummary[];
   syncedAt: number;
+  /** Moves only when the lists or the stale marker change; `syncedAt` moves on every poll. */
+  rev: number;
   rate?: RateInfo;
   stale?: Stale;
   /** What the GitHub token allows. Absent from servers older than the field. */

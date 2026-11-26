@@ -59,6 +59,7 @@ const inbox = (prs: PrSummary[], follows: InboxData['follows'] = {}): InboxData 
   viewer: 'acme-dev',
   prs,
   syncedAt: NOW,
+  rev: 1,
   follows,
 });
 const issues = (list: IssueSummary[], mentionedIds: string[] = []): IssueInboxData => ({
